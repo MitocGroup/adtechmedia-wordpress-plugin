@@ -1,3 +1,3 @@
-[![Build Status](https://travis-ci.com/MitocGroup/atm.svg?token=K6deyi9kwkfxRyXwcv6c&branch=master)](https://travis-ci.com/MitocGroup/atm)
-[![Test Coverage](https://codeclimate.com/repos/57a060a407d52e68a80049b3/badges/07123f9abd69477b5450/coverage.svg)](https://codeclimate.com/repos/57a060a407d52e68a80049b3/coverage)
+[![Build Status](https://travis-ci.org/AdTechMedia/wordpress-plugin.svg?branch=master)](https://travis-ci.org/AdTechMedia/wordpress-plugin)
+[![Test Coverage](https://codeclimate.com/repos/57dfe67fae0dd4779b000af9/badges/d2ee63a489117c6df852/coverage.svg)](https://codeclimate.com/repos/57dfe67fae0dd4779b000af9/coverage)
 
