@@ -5,10 +5,12 @@
 
 source $(dirname $0)/_head.sh
 
+echo "Install npm"
+
 ########################
 ### Install NPM deps ###
 ########################
-__CMD="npm install"
+__CMD="sudo npm install"
 
 subpath_run_cmd "${__SRC_PATH}" "$__CMD" "$__CMD" "${1}"
 
@@ -32,3 +34,5 @@ if [ "$__IS_CONCURRENT_SCRIPT" == "$__NONE" ] || [ "$__IS_CONCURRENT_SCRIPT" == 
   ##########################
   echo "Need to add install dependencies here"
 fi
+
+echo "Done install npm"
