@@ -136,3 +136,7 @@ _vars.sh
 **/.sass-cache/
 **/coverage/
 **/coverages/
+
+# Composer stuff
+composer.lock
+**/vendor
