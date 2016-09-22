@@ -25,7 +25,7 @@
     "squizlabs/php_codesniffer": "^2.3"
   },
   "scripts": {
-    "install-deps": "composer install",
-    "test": "echo 'No php test specified' && npm test"
+    "post-install-cmd": "composer create-project wp-coding-standards/wpcs:dev-master --no-dev && ./vendor/bin/phpcs --config-set installed_paths wpcs/",
+    "test": "echo 'No php test specified' && exit 0"
   }
 }
