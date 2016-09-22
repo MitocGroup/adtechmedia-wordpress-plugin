@@ -24,6 +24,9 @@ after_success:
 after_script:
   - npm run remove-coverage
 env:
+  matrix:
+    - TEST_SUITE=backend
+    - TEST_SUITE=frontend
   global:
     - NODE_RELEASE=4.x
     - 'MAJOR_VERSIONS=master,stage'
@@ -50,10 +53,11 @@ php:
   - 5.6
   - 7
 install:
-  - composer install-deps
+  - composer install
   - npm install
 script:
   - composer test
+  - npm test
 notifications:
   slack:
     secure: 
