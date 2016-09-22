@@ -24,9 +24,6 @@ after_success:
 after_script:
   - npm run remove-coverage
 env:
-  matrix:
-    - TEST_SUITE=backend
-    - TEST_SUITE=frontend
   global:
     - NODE_RELEASE=4.x
     - 'MAJOR_VERSIONS=master,stage'
