@@ -1,5 +1,8 @@
 language: php
 sudo: required
+node_js:
+  - '4.3'
+  - '6.7'
 cache:
   edge: true
   directories:
@@ -23,6 +26,18 @@ after_success:
   - npm run coverage
 after_script:
   - npm run remove-coverage
+dist: trusty
+group: edge
+php:
+  - 5.5
+  - 5.6
+  - 7
+install:
+  - composer install
+  - npm install
+script:
+  - composer test
+  - npm test
 env:
   global:
     - NODE_RELEASE=4.x
@@ -43,21 +58,9 @@ env:
         zG6nRF2uGQnT5bMz+DPdIWhy0DAx+YVL5BYSMlekgwK5MjH1y0fgQ8Mwnsa3opN41fand/ShmHwxEEzeE9fpVSOXl6pkEP2MiNiOY/y8A7XkXV0ZEEhBZwf86IUN3zj/NJHmTyo2uyh9+1bsDiQXKicujSWrAfTHnPBm/TaiUvDYh2SP7iM8CSDqf5Om19mUsbhMcdEiTjedGJw3684oti+0VMHtiNZUqUzh8E1jl845Sf65ANWk78ZlU5FnRX8UlQDhLEQoN46GyvEbaehyJhK4c/HBFCCi2RlgbNIUdJtWsY9KF5JMUBxeToAYxbf0rlwHEJjv+kCwPs8myRQL2zVJrGo2KXvUE1pkirj0KtfBTUtGpEiF+nOY6MhlW2p38nWy4jWuYvw0OeIGJVuritWl0z331SqVPwolkhKw6DEWC8uei5VyK5LBjfM8AJmxe+r2M/j3PFh2MKwCubaFicYAM6mQ4WY+2u/W07Tdwei4E2hqJ0MHZ8NYgacPBDGQuD4z1b8+HvrLV6VZJXaiSqnnlw4i9vYE0pmSezmNZy2XSyq0TX/kjpA3sI4wFZyJ0xTwjeu6q31y1PjGHkQ9Gb9WGBB7tzwYKgvF75MWpCgqt7PlzLLgctkij8fvwarK5rSn+63rv2sas8mlXoYqnDmdSMgg0EmiAqUqKJC0ynw=
     - secure: 
         q/YFqdaQeCtsLBh0j2vavYw87GMoPPOodfXhIQ/7W5ydIpaKuJvpSobubshsL/0ntBEySFu6G7dkzKnUeipuemE8RqywlVXbU0AWJtNklWH5UYIzMmGP15uwFlHdL9ZWU7fbgHXq49Krdp5bVXoQ2mV6i9766gPsx+YbTl9K3J+Zib9/to1iJEvhX53Tyxf7i3BOkHRVnjDHnHvpk8euBN/oK0vGpeYaqK5Ux5W80jn3QuOuVz6Bm+qcrxQ/s+ea8kWGkeYHDZl760vTNjUVLeoS9mgAGsJ10U4aLRIKbOic567Lu7k8ojFcmBawpoi+V52dpAj4H58esjQ90VJ3X08irA8AeXze2AkdiQhq4KwclN5z0TVXt0YI+uLoD8cSF1Jp5GNNtTi+qqOzydJZUqMmLHiND5Q63srITwXz3FiGT/c8DktkwevccdNLkCQNHaBUONMCFvAQ2JWnXr3iAsvilW79WX5H+Nj3cecCeCB4G133mkPAWlQiNhsSFMDOqwbNPf4dJe/ICKSnR5xRb6Ty0DdbSrPzfXhJwFJQ7pARY7GMDyLv2QH/IIbf/KrfLjfG0SqSbK9nqS8KdZPGqto6cWX5okhliiv0Mc0rLTMtQT+tGBB3d9gHdqgZyy8mfuuwjYpLF+7Lg9ALZNJkH1yoLfNunob8S9H9XHC+P74=
-dist: trusty
-group: edge
-php:
-  - 5.5
-  - 5.6
-  - 7
-install:
-  - composer install
-  - npm install
-script:
-  - composer test
-  - npm test
 notifications:
   slack:
-    - secure:
+    - secure: 
         WTAhVQkRLevsF6aJhkji6gbQ7QiDBYKDmLI4kUV37j5TZCNq7rCY5BeDWo8Ezk5hmrWqmckaxgV3G3horGRDaYsIqbT7vhdL4P1FSKbJKDZQQDV86c5SLNjRX3a/W33HCZGiy/8cIn7vFh8BdPHgTgxHV1Ay8TpGDq6yIiUBdEFaD9Yxqr/TVffHPn5C/NOoAC8o3JNRCmfiRX5ql7HoekS5Wlwpl1p5j6A+kNtnVbyEJYMj6xZfsz3tXhcC5T46QXEDfGP+wFYBtEAqGashlLC5tkKnZ3Q0T8ON240kr/X392kwPulMXTZbsqBRNX+Y57Z4K1kRzaaM2eG1mBBDxviZQ9KhObzGyRU6Vrm/7waTelFw1EslOpQxEQZKVPK+hu8c3TboVEPIGx8cDQXXWLMHo2PJtf4MUv/7Ke92I6mH9jVXii4mEfzH8tRRaGTFj/mU3W4yiubhWNGE2eZ1Q9KY00EBZGPs8q7sMBoNAy3NPgNMhZNXupDdC0HADIZ1FbbupPrvCk8Olmt+ZadwM2RvVqrbeD0mNt6INel9ttiQ0Uezt4UyHgWw/GekXE+oZaB53TrBWueOUze+MzVYNiVgw2j1ZHpHvL2j76o925lz9cX/cAOOizMHI/BSpC4tDwQQFMdLRbHhR0X4IwMehH02igEeFFrqhbVc2e8n0FI=
-    - secure:
+    - secure: 
         IR1VHI3lXG+LIBK6rUsg2bosgvt0EthJvrz1V2ZVMtcS022o+47Hxs6HrheQZg9d+mZWGsXeqVkZGOxWcPfrEWiagUzH5QtBYtmpOrkPRRuhj8EqwmPJQJ1Wm0IanHTxI7TEfZkhc1bcqLgCIUft+Mf1vcDU9iACfBwX21NSUKUWhyGR9cI2C2vGunol9CMcqh6vr4VTwmunCiI9N3sF3wmWOCdt9j8ac1vCBfdPoXeu1fKUs1aXvOKWcbO1TthtytVlSh3vZIwb/7EYf9s5RL4A6AuL//TGB0EZrvmPrjSST5dlsBJWxqxwZZo7T4YachHSXpFnbCPpr2YdgOmdRqDFFOcSEkoueoMBqoMp6QODkLY3VMLxp6S/Ftiv1lUaknn6fn96+0eStF8DtFmsq4E3EWISua//dsF7sNfRpFJPUkw9sFRd/w63We3v0UOvg7En6w5zFZpuIn85ylA/ouMn+JG7X7FFieTVwvu8pecSB2ICv2H71awtXZPA+87nTmsWNYX0SGlqB6Ofgl9zdOa/yo9lMcOhR4KcuLN5P2ozDj1t/YR3xSseTSi03nvLJV71MWZmx9CseU40eBQhUtzzvdzcbl2FnpazPLmJJuHouLpHwEYlv1UGW9T32vNGIBrmgLXRfeDgqNaQh8AItSUnmwaWvOBNEKZ7mUz76kc=
