@@ -13,6 +13,7 @@ class Adtechmedia_Request
      * @param $contentId
      * @param $propertyId
      * @param $content
+     * @param $key
      * @return bool|mixed
      */
     public static function contentCreate($contentId, $propertyId, $content, $key)
@@ -69,11 +70,11 @@ class Adtechmedia_Request
             'GET',
             ['X-Api-Key' => $key],
             $data,
-            ['Id']
+            ['Content']
         );
 
-        if ($response && isset($response['Id'])) {
-            return $response['Id'];
+        if ($response && isset($response['Content'])) {
+            return $response['Content'];
         } else {
             return false;
         }
@@ -147,8 +148,16 @@ class Adtechmedia_Request
      * @param $key
      * @return array|bool
      */
-    public static function propertyUpdate($id, $container, $selector, $price,$authorName, $authorAvatar, $adsVideo, $key)
-    {
+    public static function propertyUpdate(
+        $id,
+        $container,
+        $selector,
+        $price,
+        $authorName,
+        $authorAvatar,
+        $adsVideo,
+        $key
+    ) {
 
         $data = [
             "Id" => $id,
@@ -243,10 +252,21 @@ class Adtechmedia_Request
         $factor = 1.7;
         $delay = $minDelay;
         while ($tries < $maxTries) {
+
+            if ($method == 'GET') {
+                if (count($body) > 0) {
+                    $url .= '?' . http_build_query($body);
+                    $body = null;
+                }
+            } else {
+                $body = json_encode($body);
+            }
+
             $response = wp_remote_request(
                 $url,
-                ['method' => $method, 'timeout' => 10, 'headers' => $headers, 'body' => json_encode($body)]
+                ['method' => $method, 'timeout' => 10, 'headers' => $headers, 'body' => $body]
             );
+            echo '<pre>' . print_r($response, true) . '</pre>'; exit;
             if (self::checkResponse($response, $exceptedParams)) {
                 return json_decode($response['body'], true);
             }
