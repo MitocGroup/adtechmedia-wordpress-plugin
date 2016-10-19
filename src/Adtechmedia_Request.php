@@ -246,10 +246,10 @@ class Adtechmedia_Request
     {
         $headers = array_merge(['Content-Type' => 'application/json'], $headers);
 
-        $maxTries = 7;
+        $minDelay = Adtechmedia_Config::get('minDelay');
+        $factor = Adtechmedia_Config::get('factor');
+        $maxTries = Adtechmedia_Config::get('maxTries');
         $tries = 0;
-        $minDelay = 150000;
-        $factor = 1.7;
         $delay = $minDelay;
         while ($tries < $maxTries) {
 
