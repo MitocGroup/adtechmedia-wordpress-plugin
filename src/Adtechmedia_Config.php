@@ -11,6 +11,7 @@ class Adtechmedia_Config
     private static $conf =[
         'api_end_point'=>'https://api.adtechmedia.io/dev/',
         'plugin_table_name'=>'adtechmedia',
+        'plugin_cache_table_name'=>'adtechmedia_cache',
     ];
     public static function get($name){
         return self::$conf[$name];

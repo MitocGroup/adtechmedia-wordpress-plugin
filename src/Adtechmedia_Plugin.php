@@ -13,10 +13,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     public function getOptionMetaData()
     {
         //  http://plugin.michael-simpson.com/?page_id=31
-        return array(
-            //'_version' => array('Installed Version'), // Leave this one commented-out. Uncomment to test upgrades.
+        return array(//'_version' => array('Installed Version'), // Leave this one commented-out. Uncomment to test upgrades.
         );
     }
+
     public function getMainData()
     {
         return array(
@@ -27,9 +27,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "website_url" => array(__('website_url', 'adtechmedia-plugin')),
             "support_email" => array(__('support_email', 'adtechmedia-plugin')),
             "country" => array(__('country', 'adtechmedia-plugin')),
-            
+
         );
     }
+
     public function getPluginMetaData()
     {
         return array(
@@ -39,7 +40,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "author_name" => array(__('Author name', 'adtechmedia-plugin')),
             "author_avatar" => array(__('Author avatar', 'adtechmedia-plugin')),
             "ads_video" => array(__('Ads video', 'adtechmedia-plugin')),
-            
+
             /*'ATextInput' => array(__('Enter in some text', 'my-awesome-plugin')),
             'AmAwesome' => array(__('I like this awesome plugin', 'my-awesome-plugin'), 'false', 'true'),
             'CanDoSomething' => array(__('Which user role can do something', 'my-awesome-plugin'),
@@ -86,15 +87,27 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      */
     protected function installDatabaseTables()
     {
-                global $wpdb;
-                $tableName = $this->prefixTableName(Adtechmedia_Config::get('plugin_table_name'));
-                $wpdb->query("CREATE TABLE IF NOT EXISTS `$tableName` (
+        global $wpdb;
+        $tableName = $this->prefixTableName(Adtechmedia_Config::get('plugin_table_name'));
+        $wpdb->query(
+            "CREATE TABLE IF NOT EXISTS `$tableName` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                             `option_name` VARCHAR(191) NOT NULL DEFAULT '',
                             `option_value` LONGTEXT NOT NULL ,
                             PRIMARY KEY (`id`),
                             UNIQUE INDEX `option_name` (`option_name`)
-                        )");
+                        )"
+        );
+        $tableName = $this->prefixTableName(Adtechmedia_Config::get('plugin_cache_table_name'));
+        $wpdb->query(
+            "CREATE TABLE IF NOT EXISTS `$tableName` (
+                            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                            `item_id` VARCHAR(191) NOT NULL DEFAULT '',
+                            `value` LONGTEXT NOT NULL ,
+                            PRIMARY KEY (`id`),
+                            UNIQUE INDEX `item_id` (`item_id`)
+                        )"
+        );
     }
 
     /**
@@ -151,7 +164,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
             }
         }
-
+        add_filter('the_content', array(&$this, 'hideContent'));
         // Adding scripts & styles to all pages
         // Examples:
         //        wp_enqueue_script('jquery');
@@ -168,4 +181,35 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
     }
 
+    public function hideContent($content)
+    {
+
+        if (is_single()) {
+            $id = get_the_ID();
+            $savedContent = Adtechmedia_ContentManager::getContent($id);
+            if (isset($savedContent)) {
+                return $savedContent;
+            } else {
+                Adtechmedia_Request::contentCreate(
+                    $id,
+                    $this->getPluginOption('id'),
+                    $content,
+                    $this->getPluginOption('key')
+                );
+                $newContent = Adtechmedia_Request::contentRetrieve(
+                    $id,
+                    $this->getPluginOption('id'),
+                    "blur+scramble",
+                    "elements",
+                    $this->getPluginOption('selector'),
+                    3,
+                    $this->getPluginOption('key')
+                );
+                Adtechmedia_ContentManager::setContent($id, $newContent);
+                return $newContent;
+            }
+
+        }
+        return $content;
+    }
 }
