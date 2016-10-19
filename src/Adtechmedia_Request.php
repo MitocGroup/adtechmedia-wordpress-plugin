@@ -266,7 +266,7 @@ class Adtechmedia_Request
                 $url,
                 ['method' => $method, 'timeout' => 10, 'headers' => $headers, 'body' => $body]
             );
-            echo '<pre>' . print_r($response, true) . '</pre>'; exit;
+
             if (self::checkResponse($response, $exceptedParams)) {
                 return json_decode($response['body'], true);
             }
