@@ -85,9 +85,10 @@ add_action('plugins_loadedi', 'Adtechmedia_i18n_init');
 // Run the version check.
 // If it is successful, continue with initialization for this plugin
 if (Adtechmedia_PhpVersionCheck()) {
-    // Only load and run the init function if we know PHP version can parse it
+
     include_once('adtechmedia_init.php');
     include_once('Adtechmedia_Request.php');
     include_once('Adtechmedia_Config.php');
+    include_once('Adtechmedia_ContentManager.php');
     Adtechmedia_init(__FILE__);
 }
