@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: yama_gs
+ * Date: 17.10.2016
+ * Time: 14:01
+ */
+class Adtechmedia_Config
+{
+    private static $conf =[
+        'api_end_point'=>'https://api.adtechmedia.io/dev/',
+        'plugin_table_name'=>'adtechmedia',
+    ];
+    public static function get($name){
+        return self::$conf[$name];
+    }
+}
