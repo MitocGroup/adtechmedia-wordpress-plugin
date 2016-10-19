@@ -132,6 +132,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     {
     }
 
+    /**
+     *
+     */
     public function addActionsAndFilters()
     {
 
@@ -151,18 +154,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=37
 
         if (!is_admin()) {
-            if ($script = $this->getPluginOption('BuildPath')) {
-                wp_enqueue_script('Adtechmedia', $script, null, null, true);
-                /*wp_localize_script(
-                    'Adtechmedia',
-                    'window',
-                    [
-                        'ATM_DOMAIN' => 'adtechmedia.loc', // e.g.  www.nytimes.com
-                        'ATM_CONTENT_ID' => 'post-1267', // article id
-                    ]
-                );*/
+            add_action( 'wp_enqueue_scripts', array(&$this,'addAdtechmediaScript'));
 
-            }
         }
         add_filter('the_content', array(&$this, 'hideContent'));
         // Adding scripts & styles to all pages
@@ -181,13 +174,31 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
     }
 
+    public function addAdtechmediaScript(){
+        if ($script = $this->getPluginOption('BuildPath')) {
+            wp_enqueue_script('Adtechmedia', $script, null, null, true);
+            /*wp_localize_script(
+                'Adtechmedia',
+                'window',
+                [
+                    'ATM_DOMAIN' => 'adtechmedia.loc', // e.g.  www.nytimes.com
+                    'ATM_CONTENT_ID' => 'post-1267', // article id
+                ]
+            );*/
+
+        }
+    }
+    /**
+     * @param $content
+     * @return bool|mixed|null
+     */
     public function hideContent($content)
     {
 
         if (is_single()) {
-            $id = get_the_ID();
+            $id = (string)get_the_ID();
             $savedContent = Adtechmedia_ContentManager::getContent($id);
-            if (isset($savedContent)) {
+            if (isset($savedContent)&&!empty($savedContent)) {
                 return $savedContent;
             } else {
                 Adtechmedia_Request::contentCreate(

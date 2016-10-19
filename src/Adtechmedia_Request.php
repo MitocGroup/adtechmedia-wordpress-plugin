@@ -66,7 +66,7 @@ class Adtechmedia_Request
             "Offset" => $offset,
         ];
         $response = self::make(
-            Adtechmedia_Config::get('api_end_point') . 'atm-admin/content/create',
+            Adtechmedia_Config::get('api_end_point') . 'atm-admin/content/retrieve',
             'GET',
             ['X-Api-Key' => $key],
             $data,
@@ -124,8 +124,7 @@ class Adtechmedia_Request
             Adtechmedia_Config::get('api_end_point') . 'atm-admin/api-gateway-key/update',
             'POST',
             [],
-            $data
-            ,
+            $data,
             ['Key']
         );
 
@@ -226,6 +225,7 @@ class Adtechmedia_Request
             ['BuildPath', 'Id']
         );
 
+
         if ($response && isset($response['BuildPath']) && isset($response['Id'])) {
 
             return ['BuildPath' => $response['BuildPath'], 'Id' => $response['Id']];
@@ -251,22 +251,21 @@ class Adtechmedia_Request
         $maxTries = Adtechmedia_Config::get('maxTries');
         $tries = 0;
         $delay = $minDelay;
-        while ($tries < $maxTries) {
 
-            if ($method == 'GET') {
-                if (count($body) > 0) {
-                    $url .= '?' . http_build_query($body);
-                    $body = null;
-                }
-            } else {
-                $body = json_encode($body);
+        if ($method == 'GET') {
+            if (count($body) > 0) {
+                $url .= '?' . http_build_query($body);
+                $body = null;
             }
+        } else {
+            $body = json_encode($body);
+        }
+        while ($tries < $maxTries) {
 
             $response = wp_remote_request(
                 $url,
                 ['method' => $method, 'timeout' => 10, 'headers' => $headers, 'body' => $body]
             );
-
             if (self::checkResponse($response, $exceptedParams)) {
                 return json_decode($response['body'], true);
             }
@@ -286,9 +285,9 @@ class Adtechmedia_Request
     {
         //echo '<pre>'.date('h:i:s') . "\n" .  print_r($response). '</pre>';
         if (is_wp_error($response)) {
-            if (WP_DEBUG) {
+            /*if (WP_DEBUG) {
                 echo '<pre>' . print_r($response->get_error_message(), true) . '</pre>';
-            }
+            }*/
             return false;
         }
         if (isset($response['body'])) {
