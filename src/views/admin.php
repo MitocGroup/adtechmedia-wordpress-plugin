@@ -1,0 +1,424 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: yama_gs
+ * Date: 20.10.2016
+ * Time: 15:00
+ */
+?>
+
+<main>
+    <section>
+        <h1 class="heading">
+            <i class="custom-icon add"></i>
+            Plugin management
+        </h1>
+
+        <div class="content">
+            <div class="general-fields">
+                <div class="custom-radio">
+                    <label class="radio">
+                        <input type="radio" id="radio1" name="radios" checked>
+                        <span class="outer">
+                            <span class="inner"></span>
+                        </span>
+                        Enable plugin
+                    </label>
+
+                    <label class="radio">
+                        <input type="radio" id="radio2" name="radios">
+                        <span class="outer">
+                            <span class="inner"></span>
+                        </span>
+                        Disable plugin
+                    </label>
+                </div>
+
+                <div class="flex-container">
+                    <div class="flex-item-6">
+                        <div class="custom-input">
+                            <input type="text" required/>
+                            <span class="bar"></span>
+                            <label><i class="mdi mdi-email"></i> Email address</label>
+                        </div>
+                    </div>
+                    <div class="flex-item-6 flex-end">
+                        <button type="button" class="btn"><i class="mdi mdi-account-plus"></i> Register</button>
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div class="flex-item-6">
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <form method="post" action="">
+        <h1 class="heading">
+            <i class="custom-icon cog"></i>
+            General configuration
+        </h1>
+
+        <div class="content">
+            <div class="general-fields">
+                <div class="flex-container">
+                    <div class="flex-item-6">
+                        <div class="custom-input">
+                            <input type="text" required/>
+                            <span class="bar"></span>
+                            <label><i class="mdi mdi-key-variant"></i> API Key</label>
+                        </div>
+                    </div>
+                    <div class="flex-item-6 flex-end">
+                        <button type="submit" class="btn"><i class="mdi mdi-autorenew"></i> Regenerate</button>
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div class="flex-item-6">
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="general-fields">
+                <div class="flex-container">
+                    <div class="flex-item-6">
+                        <div class="form-select custom-label">
+                            <label>
+                                <i class="mdi mdi-map-marker"></i> Country
+                            </label>
+                            <select>
+                                <option>United States</option>
+                            </select>
+                        </div>
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+                    <div class="flex-item-6">
+                        <div class="form-select custom-label">
+                            <label>
+                                <i class="mdi mdi-lan"></i> Revenue Model
+                            </label>
+                            <select>
+                                <option>advertising + micropayments</option>
+                                <option>advertising</option>
+                                <option>micropayments</option>
+                            </select>
+                        </div>
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </form>
+    </section>
+
+    <section>
+        <h1 class="heading">
+            <i class="custom-icon edit"></i>
+            Content configuration
+        </h1>
+
+        <div class="content">
+            <div class="flex-container">
+                <div class="flex-item-6 configuration-fields">
+                    <div class="custom-label mixed-fields">
+                        <label><i class="mdi mdi-currency-usd"></i> Content pricing</label>
+
+                        <div class="flex-container">
+                            <div class="flex-item-6">
+                                <div class="custom-input">
+                                    <input type="text" placeholder="number" required/>
+                                    <span class="bar"></span>
+                                </div>
+                            </div>
+                            <div class="flex-item-6">
+                                <div class="form-select">
+                                    <select>
+                                        <option>currency units</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+
+                    <div class="custom-label mixed-fields">
+                        <label><i class="mdi mdi-currency-usd"></i> Content paywall</label>
+
+                        <div class="flex-container">
+                            <div class="flex-item-6">
+                                <div class="custom-input">
+                                    <input type="text" placeholder="number" required/>
+                                    <span class="bar"></span>
+                                </div>
+                            </div>
+                            <div class="flex-item-6">
+                                <div class="form-select">
+                                    <select>
+                                        <option>transactions</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+
+                    <div class="custom-label mixed-fields">
+                        <label><i class="mdi mdi-eye"></i> Content preview</label>
+
+                        <div class="flex-container">
+                            <div class="flex-item-6">
+                                <div class="custom-input">
+                                    <input type="text" placeholder="number" required/>
+                                    <span class="bar"></span>
+                                </div>
+                            </div>
+                            <div class="flex-item-6">
+                                <div class="form-select">
+                                    <select>
+                                        <option>paragraphs</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+
+                    <div class="custom-label mixed-fields">
+                        <label>
+                            <i class="mdi mdi-lock-open"></i> Content unlocking algorithm
+                        </label>
+                        <div class="form-select">
+                            <select>
+                                <option>blur</option>
+                                <option>scramble</option>
+                                <option>keywords</option>
+                                <option>blur + scramble</option>
+                            </select>
+                        </div>
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+
+                    <div class="custom-input">
+                        <input type="text" required/>
+                        <span class="bar"></span>
+                        <label><i class="mdi mdi-dns"></i> DNS access</label>
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+
+                    <div class="custom-input">
+                        <input type="text" required/>
+                        <span class="bar"></span>
+                        <label><i class="mdi mdi-share-variant"></i> Social media credentials</label>
+
+                        <div class="block-info">
+                            It is a long established fact that a reader will be distracted
+                            by the readable content of a page when looking at its layout.
+                            The point of using Lorem Ipsum is that it has a more-or-less normal
+                            distribution of letters
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-item-6">
+                    <div class="mockup">
+                        <img class="logo-img" src="./images/logo.svg" alt="AdTechMedia"/>
+
+                        <div class="mockup-head">
+                            <div class="flex-container">
+                                <div class="flex-item-6">
+                                    <h1>Article Title</h1>
+                                </div>
+                                <div class="flex-item-6 flex-center">
+                                    <div class="icons-cont align-right">
+                                        <i>5&cent;</i>
+                                        <i class="mdi mdi-facebook"></i>
+                                        <i class="mdi mdi-twitter"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-container">
+                                <div class="flex-item-6">
+                                    By John Smith, <i>author</i>
+                                </div>
+                                <div class="flex-item-6 align-right">September 22nd, 2016</div>
+                            </div>
+                        </div>
+
+                        <div class="mockup-cont">
+                            <img src="./images/Collaborative-team.jpg"/>
+
+                            <p>It is a long established fact that a reader will be distracted by
+                                the readable content of a page when looking at its layout.
+                            </p>
+
+                            <p>It is a long established fact that a reader will be distracted by
+                                the readable content of a page when looking at its layout.
+                                The point of using Lorem Ipsum is that it has a more-or-less normal
+                                distribution of letters, as opposed to using 'Content here, content here',
+                                making it look like readable English.
+                            </p>
+
+                            <div class="blurry">
+                                <p>It is a long established fact that a reader will be distracted by
+                                    the readable content of a page when looking at its layout.
+                                    The point of using Lorem Ipsum is that it has a more-or-less normal
+                                    distribution of letters, as opposed to using 'Content here, content here',
+                                    making it look like readable English.
+                                    It is a long established fact that a reader will be distracted by
+                                    the readable content of a page when looking at its layout.
+                                    The point of using Lorem Ipsum is that it has a more-or-less normal
+                                    distribution of letters, as opposed to using 'Content here, content here',
+                                    making it look like readable English.
+                                </p>
+                                <button type="button" class="btn">
+                                    <i class="mdi mdi-lock-open-outline"></i>
+                                    unlock content
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h1 class="heading">
+            <i class="custom-icon templates"></i>
+            Templates management
+        </h1>
+
+        <div class="content templating">
+            <div class="flex-container">
+                <div class="flex-item-1">
+                    <ul class="templates-menu">
+                        <li class="custom-tooltip active">
+                            <i class="mdi mdi-library"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Pledge View</span>
+                            </div>
+                        </li>
+                        <li class="custom-tooltip">
+                            <i class="mdi mdi-video"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Advertising View</span>
+                            </div>
+                        </li>
+                        <li class="custom-tooltip">
+                            <i class="mdi mdi-credit-card"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Pay View</span>
+                            </div>
+                        </li>
+                        <li class="custom-tooltip">
+                            <i class="mdi mdi-backup-restore"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Refund View</span>
+                            </div>
+                        </li>
+                        <li class="custom-tooltip">
+                            <i class="mdi mdi-lock-open"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Unlock View</span>
+                            </div>
+                        </li>
+                        <li class="custom-tooltip">
+                            <i class="mdi mdi-currency-usd"></i>
+                            <div class="tooltip">
+                                <div class="tooltip__background"></div>
+                                <span class="tooltip__label">Price View</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="flex-item-8">
+                    <img src="./images/editor.jpg"/>
+                </div>
+
+                <div class="flex-item-3">
+                    <div class="testing-fields">
+                        <h3><span class="accent-color">A/B</span> Testing</h3>
+                        <div class="field">
+                            <span class="accent-color">A</span>
+                            <input type="text" placeholder="75%"/>
+                        </div>
+                        <div class="field clearfix">
+                            <span class="accent-color">B</span>
+                            <input type="text" placeholder="20%"/>
+                            <div class="pull-right">
+                                <input type="checkbox" id="unchecked1" class="cbx hidden"/>
+                                <label for="unchecked1" class="custom-checkbox"></label>
+                            </div>
+                        </div>
+                        <div class="field clearfix">
+                            <span class="accent-color">C</span>
+                            <input type="text" placeholder="5%"/>
+                            <div class="pull-right">
+                                <input type="checkbox" id="unchecked2" class="cbx hidden"/>
+                                <label for="unchecked2" class="custom-checkbox"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+

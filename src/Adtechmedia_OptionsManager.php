@@ -405,6 +405,8 @@ class Adtechmedia_OptionsManager
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.', 'adtechmedia'));
         }
+        require_once 'views/admin.php';
+        return;
         $mainData = $this->getMainData();
         $pluginMetaData = $this->getPluginMetaData();
         $mainDataClass = get_class($this) . '-main-settings-group';

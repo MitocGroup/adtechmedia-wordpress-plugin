@@ -157,8 +157,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=37
 
         if (!is_admin()) {
-            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScript'));
-
+            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScripts'));
+        }else{
+            add_action('admin_enqueue_scripts', array(&$this, 'addAdtechmediaAdminScripts'));
         }
         add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
         add_action('save_post', array(&$this, 'clearCacheOnUpdate'));
@@ -177,11 +178,21 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=41
 
     }
-
     /**
      *
      */
-    public function addAdtechmediaScript()
+    public function addAdtechmediaAdminScripts($hook)
+    {
+        if($hook != 'plugins_page_'.$this->getSettingsSlug()) {
+            return;
+        }
+        wp_enqueue_style('adtechmedia-style-materialdesignicons', plugins_url('/css/materialdesignicons.css', __FILE__));
+        wp_enqueue_style('adtechmedia-style-main', plugins_url('/css/main.css', __FILE__));
+    }
+    /**
+     *
+     */
+    public function addAdtechmediaScripts()
     {
         if ($script = $this->getPluginOption('BuildPath')) {
             wp_enqueue_script('Adtechmedia', $script, null, null, true);
