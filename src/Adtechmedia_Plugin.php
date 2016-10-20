@@ -27,7 +27,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "website_url" => array(__('website_url', 'adtechmedia-plugin')),
             "support_email" => array(__('support_email', 'adtechmedia-plugin')),
             "country" => array(__('country', 'adtechmedia-plugin')),
-
+            "revenue_method" => array(
+                __('revenueMethod', 'adtechmedia-plugin'),
+                'advertising+micropayments',
+                'advertising',
+                'micropayments'
+            ),
         );
     }
 
@@ -41,8 +46,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "author_avatar" => array(__('Author avatar', 'adtechmedia-plugin')),
             "ads_video" => array(__('Ads video', 'adtechmedia-plugin')),
             "content_offset" => array(__('Offset', 'adtechmedia-plugin')),
-            "content_lock" => array(__('Lock', 'adtechmedia-plugin')),
-            "revenue_method" => array(__('revenueMethod', 'adtechmedia-plugin')),
+            "content_lock" => array(
+                __('Lock', 'adtechmedia-plugin'),
+                'blur+scramble',
+                'blur',
+                'scramble',
+                'keywords',
+            ),
             "payment_pledged" => array(__('payment.pledged', 'adtechmedia-plugin')),
             /*'ATextInput' => array(__('Enter in some text', 'my-awesome-plugin')),
             'AmAwesome' => array(__('I like this awesome plugin', 'my-awesome-plugin'), 'false', 'true'),
@@ -158,7 +168,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
         if (!is_admin()) {
             add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScripts'));
-        }else{
+        } else {
             add_action('admin_enqueue_scripts', array(&$this, 'addAdtechmediaAdminScripts'));
         }
         add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
@@ -178,17 +188,22 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=41
 
     }
+
     /**
      *
      */
     public function addAdtechmediaAdminScripts($hook)
     {
-        if($hook != 'plugins_page_'.$this->getSettingsSlug()) {
+        if ($hook != 'plugins_page_' . $this->getSettingsSlug()) {
             return;
         }
-        wp_enqueue_style('adtechmedia-style-materialdesignicons', plugins_url('/css/materialdesignicons.css', __FILE__));
+        wp_enqueue_style(
+            'adtechmedia-style-materialdesignicons',
+            plugins_url('/css/materialdesignicons.css', __FILE__)
+        );
         wp_enqueue_style('adtechmedia-style-main', plugins_url('/css/main.css', __FILE__));
     }
+
     /**
      *
      */

@@ -405,13 +405,13 @@ class Adtechmedia_OptionsManager
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.', 'adtechmedia'));
         }
-        require_once 'views/admin.php';
-        return;
+        
         $mainData = $this->getMainData();
         $pluginMetaData = $this->getPluginMetaData();
         $mainDataClass = get_class($this) . '-main-settings-group';
         $pluginMetaDataClass = get_class($this) . '-data-settings-group';
 
+        // Save Posted Options
         if (isset($_POST['option_page']) && $_POST['option_page'] == $mainDataClass) {
             $this->tryToSavePost($mainData);
             $key = Adtechmedia_Request::apiKeyCreate(
@@ -434,10 +434,10 @@ class Adtechmedia_OptionsManager
             $this->tryToSavePost($pluginMetaData);
             $this->updateProp();
         }
-        // Save Posted Options
+        
+        require_once 'views/admin.php';
 
-
-        $this->settingForm(
+        /*$this->settingForm(
             $mainData,
             __('Key Settings', 'adtechmedia'),
             __('Regenerate', 'adtechmedia'),
@@ -448,7 +448,7 @@ class Adtechmedia_OptionsManager
             __('Settings', 'adtechmedia'),
             __('Save Changes', 'adtechmedia'),
             $pluginMetaDataClass
-        );
+        );*/
 
 
     }
@@ -554,7 +554,7 @@ class Adtechmedia_OptionsManager
         if (is_array($aOptionMeta) && count($aOptionMeta) >= 2) { // Drop-down list
             $choices = array_slice($aOptionMeta, 1);
             ?>
-            <p><select name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>">
+            <select name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>">
                     <?php
                     foreach ($choices as $aChoice) {
                         $selected = ($aChoice == $savedOptionValue) ? 'selected' : '';
@@ -566,13 +566,13 @@ class Adtechmedia_OptionsManager
                         <?php
                     }
                     ?>
-                </select></p>
+                </select>
             <?php
 
         } else { // Simple input field
             ?>
-            <p><input type="text" name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>"
-                      value="<?php echo esc_attr($savedOptionValue) ?>" size="100"/></p>
+            <input type="text" name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>"
+                      value="<?php echo esc_attr($savedOptionValue) ?>" size="100"/>
             <?php
 
         }
