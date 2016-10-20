@@ -154,10 +154,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=37
 
         if (!is_admin()) {
-            add_action( 'wp_enqueue_scripts', array(&$this,'addAdtechmediaScript'));
+            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScript'));
 
         }
-        add_filter('the_content', array(&$this, 'hideContent'));
+        add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
+        add_action('save_post', array(&$this, 'clearCacheOnUpdate'));
         // Adding scripts & styles to all pages
         // Examples:
         //        wp_enqueue_script('jquery');
@@ -174,20 +175,21 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
     }
 
-    public function addAdtechmediaScript(){
+    public function addAdtechmediaScript()
+    {
         if ($script = $this->getPluginOption('BuildPath')) {
             wp_enqueue_script('Adtechmedia', $script, null, null, true);
-            /*wp_localize_script(
-                'Adtechmedia',
-                'window',
-                [
-                    'ATM_DOMAIN' => 'adtechmedia.loc', // e.g.  www.nytimes.com
-                    'ATM_CONTENT_ID' => 'post-1267', // article id
-                ]
-            );*/
-
         }
     }
+
+    public function clearCacheOnUpdate($postId)
+    {
+        if (wp_is_post_revision($postId)) {
+            return;
+        }
+        Adtechmedia_ContentManager::clearContent($postId);
+    }
+
     /**
      * @param $content
      * @return bool|mixed|null
@@ -198,8 +200,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         if (is_single()) {
             $id = (string)get_the_ID();
             $savedContent = Adtechmedia_ContentManager::getContent($id);
-            if (isset($savedContent)&&!empty($savedContent)) {
-                return $savedContent;
+            if (isset($savedContent) && !empty($savedContent)) {
+                return $this->contentWrapper($savedContent);
             } else {
                 Adtechmedia_Request::contentCreate(
                     $id,
@@ -217,10 +219,21 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                     $this->getPluginOption('key')
                 );
                 Adtechmedia_ContentManager::setContent($id, $newContent);
-                return $newContent;
+                return $this->contentWrapper($newContent);
             }
 
         }
         return $content;
+    }
+
+    public function contentWrapper($content)
+    {
+        $propertyId = $this->getPluginOption('id');
+        $contentId = (string)get_the_ID();
+        $script = "<script>
+                    window.ATM_PROPERTY_ID = '$propertyId'; 
+                    window.ATM_CONTENT_ID = '$contentId'; 
+                    </script>";
+        return "<span id='content-for-atm'>$content</span>" . $script;
     }
 }

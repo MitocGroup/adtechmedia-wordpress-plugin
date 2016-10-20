@@ -52,4 +52,15 @@ class Adtechmedia_ContentManager
             )
         );
     }
+
+    public static function clearContent($id){
+        global $wpdb;
+        $tableName =self::getCacheTableName();
+        $wpdb->query(
+            $wpdb->prepare(
+                "UPDATE `$tableName` SET  `value` = '' WHERE `item_id` = %s ",
+                $id
+            )
+        );
+    }
 }
