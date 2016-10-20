@@ -393,6 +393,7 @@ class Adtechmedia_OptionsManager
             $this->getPluginOption("revenue_method"),
             $this->getPluginOption("payment_pledged")
         );
+        Adtechmedia_ContentManager::clearAllContent();
     }
 
     /**

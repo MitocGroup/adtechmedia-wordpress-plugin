@@ -66,4 +66,9 @@ class Adtechmedia_ContentManager
             )
         );
     }
+    public static function clearAllContent(){
+        global $wpdb;
+        $tableName =self::getCacheTableName();
+        $wpdb->query("UPDATE `$tableName` SET  `value` = '' ");
+    }
 }

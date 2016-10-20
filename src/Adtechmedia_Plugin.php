@@ -247,10 +247,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                 $newContent = Adtechmedia_Request::contentRetrieve(
                     $id,
                     $this->getPluginOption('id'),
-                    "blur+scramble",
+                    $this->getPluginOption('content_lock'),
                     "elements",
                     $this->getPluginOption('selector'),
-                    3,
+                    $this->getPluginOption('content_offset'),
                     $this->getPluginOption('key')
                 );
                 Adtechmedia_ContentManager::setContent($id, $newContent);
