@@ -1,0 +1,47 @@
+---
+engines:
+  duplication:
+    config:
+      languages:
+        javascript:
+          mass_threshold: 350
+        php:
+          mass_threshold: 350
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php,inc,lib"
+      standard: "WordPress"
+      ignore_warnings: true
+      encoding: utf-8
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/ElseExpression:
+        enabled: false
+      Controversial/Superglobals:
+        enabled: false
+ratings:
+  paths:
+  - "**.inc"
+  - "**.module"
+  - "**.php"
+  - '**.css'
+  - '**.inc'
+  - '**.js'
+  - '**.jsx'
+  - '**.es6'
+  - '**.module'
+exclude_paths:
+  - "**/bin"
+  - "**/test"
+  - "**/tests"
+  - "**/tmp"
+  - "**/vendor"
+  - "**/.idea"
+  - "**.spec.js"
+  - "**.min.js"
+  - "**.min.css"
+  - "**/dist"
+  - "**/node_modules"
+  - "**/packages"
