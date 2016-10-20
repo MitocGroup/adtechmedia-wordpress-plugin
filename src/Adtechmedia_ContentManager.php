@@ -53,6 +53,9 @@ class Adtechmedia_ContentManager
         );
     }
 
+    /**
+     * @param $id
+     */
     public static function clearContent($id){
         global $wpdb;
         $tableName =self::getCacheTableName();

@@ -363,7 +363,7 @@ class Adtechmedia_OptionsManager
     }
 
     /**
-     * 
+     *
      */
     public function registerSettings()
     {
@@ -375,7 +375,7 @@ class Adtechmedia_OptionsManager
     }
 
     /**
-     * 
+     *
      */
     public function updateProp()
     {
@@ -387,7 +387,11 @@ class Adtechmedia_OptionsManager
             $this->getPluginOption('author_name'),
             $this->getPluginOption('author_avatar'),
             $this->getPluginOption('ads_video'),
-            $this->getPluginOption('key')
+            $this->getPluginOption('key'),
+            $this->getPluginOption("content_offset"),
+            $this->getPluginOption("content_lock"),
+            $this->getPluginOption("revenue_method"),
+            $this->getPluginOption("payment_pledged")
         );
     }
 

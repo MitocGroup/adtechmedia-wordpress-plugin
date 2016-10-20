@@ -40,7 +40,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "author_name" => array(__('Author name', 'adtechmedia-plugin')),
             "author_avatar" => array(__('Author avatar', 'adtechmedia-plugin')),
             "ads_video" => array(__('Ads video', 'adtechmedia-plugin')),
-
+            "content_offset" => array(__('Offset', 'adtechmedia-plugin')),
+            "content_lock" => array(__('Lock', 'adtechmedia-plugin')),
+            "revenue_method" => array(__('revenueMethod', 'adtechmedia-plugin')),
+            "payment_pledged" => array(__('payment.pledged', 'adtechmedia-plugin')),
             /*'ATextInput' => array(__('Enter in some text', 'my-awesome-plugin')),
             'AmAwesome' => array(__('I like this awesome plugin', 'my-awesome-plugin'), 'false', 'true'),
             'CanDoSomething' => array(__('Which user role can do something', 'my-awesome-plugin'),
@@ -175,6 +178,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
     }
 
+    /**
+     *
+     */
     public function addAdtechmediaScript()
     {
         if ($script = $this->getPluginOption('BuildPath')) {
@@ -182,6 +188,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         }
     }
 
+    /**
+     * @param $postId
+     */
     public function clearCacheOnUpdate($postId)
     {
         if (wp_is_post_revision($postId)) {
@@ -226,6 +235,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         return $content;
     }
 
+    /**
+     * @param $content
+     * @return string
+     */
     public function contentWrapper($content)
     {
         $propertyId = $this->getPluginOption('id');

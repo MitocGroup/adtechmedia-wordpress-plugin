@@ -65,7 +65,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      */
     public function activate()
     {
-        $website =  get_home_url();
+        $website = get_home_url();
         $name = preg_replace('/https?:\/\//', '', $website);
         $admin_email = get_option('admin_email');
         $this->checkApiKeyExists();
@@ -80,6 +80,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->addPluginOption('website_url', $website);
         $this->addPluginOption('support_email', $admin_email);
         $this->addPluginOption('country', "US");
+        $this->addPluginOption("content_offset", '2');
+        $this->addPluginOption("content_lock", 'blur+scramble');
+        $this->addPluginOption("revenue_method", 'advertising+micropayments');
+        $this->addPluginOption("payment_pledged", '2');
     }
 
     /**
@@ -90,7 +94,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $key = $this->getPluginOption('key');
         //$site=get_site_url();
         if (empty($key)) {
-            $key = Adtechmedia_Request::apiKeyCreate($this->getPluginOption('website_domain_name'), $this->getPluginOption('website_url'));
+            $key = Adtechmedia_Request::apiKeyCreate(
+                $this->getPluginOption('website_domain_name'),
+                $this->getPluginOption('website_url')
+            );
             $this->addPluginOption('key', $key);
         }
     }
