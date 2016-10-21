@@ -470,24 +470,26 @@
                             </ul>
                         </div>
                         <div class="flex-item-10" id="pledge-view">
+                            <h3>Pledge View</h3>
                             <textarea id="rekl-view-editor" name="rekl-view-editor">Area1
                             </textarea>
                         </div>
                         <div class="flex-item-10" id="rekl-view">
+                            <h3>Advertising View</h3>
                             <textarea id="rekl-view-editor" name="rekl-view-editor">Area2
                             </textarea>
                         </div>
                         <div class="flex-item-10" id="pay-view">
-                            Pay View
+                            <h3>Pay View</h3>
                         </div>
                         <div class="flex-item-10" id="refund-view">
-                            Refund View
+                            <h3>Refund View</h3>
                         </div>
                         <div class="flex-item-10" id="unlock-view">
-                            Unlock View
+                            <h3>Unlock View</h3>
                         </div>
                         <div class="flex-item-10" id="price-view">
-                            Price View
+                            <h3>Price View</h3>
                         </div>
                     </div>
                 </div>
