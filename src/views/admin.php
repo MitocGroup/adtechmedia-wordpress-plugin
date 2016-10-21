@@ -16,24 +16,6 @@
 
         <div class="content">
             <div class="general-fields">
-                <div class="custom-radio">
-                    <label class="radio">
-                        <input type="radio" id="radio1" name="radios" checked>
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                        Enable plugin
-                    </label>
-
-                    <label class="radio">
-                        <input type="radio" id="radio2" name="radios">
-                        <span class="outer">
-                            <span class="inner"></span>
-                        </span>
-                        Disable plugin
-                    </label>
-                </div>
-
                 <div class="flex-container">
                     <div class="flex-item-6">
                         <div class="custom-input">
@@ -67,10 +49,7 @@
                 <i class="custom-icon cog"></i>
                 General configuration
             </h1>
-
             <div class="content">
-
-
                 <div class="general-fields">
                     <div class="flex-container">
                         <div class="flex-item-6">
@@ -99,7 +78,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="general-fields">
                     <div class="flex-container">
                         <div class="flex-item-6">
@@ -139,8 +117,7 @@
                     </div>
                 </div>
                 <h2>Additional fields</h2>
-
-                <?php $fields = ["BuildPath", "Id", "website_domain_name", "website_url", "support_email"];
+                <?php $fields = [ "support_email"];
                 foreach ($fields as $field) {
                     ?>
                     <div class="general-fields">
@@ -211,7 +188,11 @@
                             <div class="flex-container">
                                 <div class="flex-item-6">
                                     <div class="custom-input">
-                                        <input type="text" placeholder="number"/>
+                                        <?php $this->createFormControl(
+                                            'payment_pledged',
+                                            $pluginMetaData['payment_pledged'],
+                                            $this->getPluginOption('payment_pledged')
+                                        ); ?>
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -239,9 +220,9 @@
                                 <div class="flex-item-6">
                                     <div class="custom-input">
                                         <?php $this->createFormControl(
-                                            'selector',
-                                            $pluginMetaData['selector'],
-                                            $this->getPluginOption('selector')
+                                            'content_offset',
+                                            $pluginMetaData['content_offset'],
+                                            $this->getPluginOption('content_offset')
                                         ); ?>
                                         <span class="bar"></span>
                                     </div>
@@ -280,40 +261,13 @@
                                 distribution of letters
                             </div>
                         </div>
-
-                        <div class="custom-input">
-                            <input type="text"/>
-                            <span class="bar"></span>
-                            <label><i class="mdi mdi-dns"></i> DNS access</label>
-                            <div class="block-info">
-                                It is a long established fact that a reader will be distracted
-                                by the readable content of a page when looking at its layout.
-                                The point of using Lorem Ipsum is that it has a more-or-less normal
-                                distribution of letters
-                            </div>
-                        </div>
-
-                        <div class="custom-input">
-                            <input type="text"/>
-                            <span class="bar"></span>
-                            <label><i class="mdi mdi-share-variant"></i> Social media credentials</label>
-
-                            <div class="block-info">
-                                It is a long established fact that a reader will be distracted
-                                by the readable content of a page when looking at its layout.
-                                The point of using Lorem Ipsum is that it has a more-or-less normal
-                                distribution of letters
-                            </div>
-                        </div>
-                        <h2>Additional fields</h2>
+                        
 
                         <?php $fields = [
-                            "container",
+                            /*"container",
                             "author_name",
-                            "author_avatar",
+                            "author_avatar",*/
                             "ads_video",
-                            "content_offset",
-                            "payment_pledged"
                         ];
                         foreach ($fields as $field) {
                             ?>
@@ -401,131 +355,6 @@
         </form>
     </section>
 
-    <section>
-        <h1 class="heading">
-            <i class="custom-icon templates"></i>
-            Templates management
-        </h1>
-
-        <div class="content templating">
-            <div class="flex-container">
-                <div class="flex-item-9">
-                    <div class="flex-container" id="tabs">
-                        <div class="flex-item-2">
-                            <ul class="templates-menu">
-                                <li class="custom-tooltip active">
-                                    <a href="#pledge-view">
-                                        <i class="mdi mdi-library"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Pledge View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="custom-tooltip">
-                                    <a href="#rekl-view">
-                                        <i class="mdi mdi-video"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Advertising View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="custom-tooltip">
-                                    <a href="#pay-view">
-                                        <i class="mdi mdi-credit-card"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Pay View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="custom-tooltip">
-                                    <a href="#refund-view">
-                                        <i class="mdi mdi-backup-restore"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Refund View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="custom-tooltip">
-                                    <a href="#unlock-view">
-                                        <i class="mdi mdi-lock-open"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Unlock View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="custom-tooltip">
-                                    <a href="#price-view">
-                                        <i class="mdi mdi-currency-usd"></i>
-                                        <div class="tooltip">
-                                            <div class="tooltip__background"></div>
-                                            <span class="tooltip__label">Price View</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="flex-item-10" id="pledge-view">
-                            <h3>Pledge View</h3>
-                            <textarea id="rekl-view-editor" name="rekl-view-editor">Area1
-                            </textarea>
-                        </div>
-                        <div class="flex-item-10" id="rekl-view">
-                            <h3>Advertising View</h3>
-                            <textarea id="rekl-view-editor" name="rekl-view-editor">Area2
-                            </textarea>
-                        </div>
-                        <div class="flex-item-10" id="pay-view">
-                            <h3>Pay View</h3>
-                        </div>
-                        <div class="flex-item-10" id="refund-view">
-                            <h3>Refund View</h3>
-                        </div>
-                        <div class="flex-item-10" id="unlock-view">
-                            <h3>Unlock View</h3>
-                        </div>
-                        <div class="flex-item-10" id="price-view">
-                            <h3>Price View</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <!--<div class="flex-item-8">
-                    <img src="<?= plugins_url('../images/editor.jpg', __FILE__) ?>"/>
-                </div>-->
-
-                <div class="flex-item-3">
-                    <div class="testing-fields">
-                        <h3><span class="accent-color">A/B</span> Testing</h3>
-                        <div class="field">
-                            <span class="accent-color">A</span>
-                            <input type="text" placeholder="75%"/>
-                        </div>
-                        <div class="field clearfix">
-                            <span class="accent-color">B</span>
-                            <input type="text" placeholder="20%"/>
-                            <div class="pull-right">
-                                <input type="checkbox" id="unchecked1" class="cbx hidden"/>
-                                <label for="unchecked1" class="custom-checkbox"></label>
-                            </div>
-                        </div>
-                        <div class="field clearfix">
-                            <span class="accent-color">C</span>
-                            <input type="text" placeholder="5%"/>
-                            <div class="pull-right">
-                                <input type="checkbox" id="unchecked2" class="cbx hidden"/>
-                                <label for="unchecked2" class="custom-checkbox"></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </main>
 
 
