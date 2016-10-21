@@ -71,8 +71,6 @@
             <div class="content">
 
 
-
-
                 <div class="general-fields">
                     <div class="flex-container">
                         <div class="flex-item-6">
@@ -142,8 +140,8 @@
                 </div>
                 <h2>Additional fields</h2>
 
-                <?php $fields=["BuildPath", "Id", "website_domain_name", "website_url", "support_email"];
-                foreach ($fields as $field){
+                <?php $fields = ["BuildPath", "Id", "website_domain_name", "website_url", "support_email"];
+                foreach ($fields as $field) {
                     ?>
                     <div class="general-fields">
                         <div class="flex-container">
@@ -155,7 +153,7 @@
                                         $this->getPluginOption($field)
                                     ); ?>
                                     <span class="bar"></span>
-                                    <label><i class="mdi mdi-key-variant"></i> <?=$mainData[$field][0]?></label>
+                                    <label><i class="mdi mdi-key-variant"></i> <?= $mainData[$field][0] ?></label>
                                 </div>
                             </div>
                         </div>
@@ -213,7 +211,7 @@
                             <div class="flex-container">
                                 <div class="flex-item-6">
                                     <div class="custom-input">
-                                        <input type="text" placeholder="number" />
+                                        <input type="text" placeholder="number"/>
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -284,7 +282,7 @@
                         </div>
 
                         <div class="custom-input">
-                            <input type="text" />
+                            <input type="text"/>
                             <span class="bar"></span>
                             <label><i class="mdi mdi-dns"></i> DNS access</label>
                             <div class="block-info">
@@ -296,7 +294,7 @@
                         </div>
 
                         <div class="custom-input">
-                            <input type="text" />
+                            <input type="text"/>
                             <span class="bar"></span>
                             <label><i class="mdi mdi-share-variant"></i> Social media credentials</label>
 
@@ -309,10 +307,17 @@
                         </div>
                         <h2>Additional fields</h2>
 
-                        <?php $fields=["container", "author_name", "author_avatar", "ads_video", "content_offset", "payment_pledged"];
-                        foreach ($fields as $field){
-                        ?>
-                        <div class="custom-input">
+                        <?php $fields = [
+                            "container",
+                            "author_name",
+                            "author_avatar",
+                            "ads_video",
+                            "content_offset",
+                            "payment_pledged"
+                        ];
+                        foreach ($fields as $field) {
+                            ?>
+                            <div class="custom-input">
 
                                 <?php $this->createFormControl(
                                     $field,
@@ -320,9 +325,9 @@
                                     $this->getPluginOption($field)
                                 ); ?>
                                 <span class="bar"></span>
-                                <label><i class="mdi mdi-share-variant"></i> <?=$pluginMetaData[$field][0]?></label>
+                                <label><i class="mdi mdi-share-variant"></i> <?= $pluginMetaData[$field][0] ?></label>
 
-                        </div>
+                            </div>
                         <?php } ?>
 
                         <div class="custom-input">
@@ -333,7 +338,8 @@
                     </div>
                     <div class="flex-item-6">
                         <div class="mockup">
-                            <img class="logo-img" src="<?=plugins_url('../images/logo.svg', __FILE__)?>" alt="AdTechMedia"/>
+                            <img class="logo-img" src="<?= plugins_url('../images/logo.svg', __FILE__) ?>"
+                                 alt="AdTechMedia"/>
 
                             <div class="mockup-head">
                                 <div class="flex-container">
@@ -357,7 +363,7 @@
                             </div>
 
                             <div class="mockup-cont">
-                                <img src="<?=plugins_url('../images/Collaborative-team.jpg', __FILE__)?>"/>
+                                <img src="<?= plugins_url('../images/Collaborative-team.jpg', __FILE__) ?>"/>
 
                                 <p>It is a long established fact that a reader will be distracted by
                                     the readable content of a page when looking at its layout.
@@ -403,56 +409,92 @@
 
         <div class="content templating">
             <div class="flex-container">
-                <div class="flex-item-1">
-                    <ul class="templates-menu">
-                        <li class="custom-tooltip active">
-                            <i class="mdi mdi-library"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Pledge View</span>
-                            </div>
-                        </li>
-                        <li class="custom-tooltip">
-                            <i class="mdi mdi-video"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Advertising View</span>
-                            </div>
-                        </li>
-                        <li class="custom-tooltip">
-                            <i class="mdi mdi-credit-card"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Pay View</span>
-                            </div>
-                        </li>
-                        <li class="custom-tooltip">
-                            <i class="mdi mdi-backup-restore"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Refund View</span>
-                            </div>
-                        </li>
-                        <li class="custom-tooltip">
-                            <i class="mdi mdi-lock-open"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Unlock View</span>
-                            </div>
-                        </li>
-                        <li class="custom-tooltip">
-                            <i class="mdi mdi-currency-usd"></i>
-                            <div class="tooltip">
-                                <div class="tooltip__background"></div>
-                                <span class="tooltip__label">Price View</span>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="flex-item-9">
+                    <div class="flex-container" id="tabs">
+                        <div class="flex-item-2">
+                            <ul class="templates-menu">
+                                <li class="custom-tooltip active">
+                                    <a href="#pledge-view">
+                                        <i class="mdi mdi-library"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Pledge View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="custom-tooltip">
+                                    <a href="#rekl-view">
+                                        <i class="mdi mdi-video"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Advertising View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="custom-tooltip">
+                                    <a href="#pay-view">
+                                        <i class="mdi mdi-credit-card"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Pay View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="custom-tooltip">
+                                    <a href="#refund-view">
+                                        <i class="mdi mdi-backup-restore"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Refund View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="custom-tooltip">
+                                    <a href="#unlock-view">
+                                        <i class="mdi mdi-lock-open"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Unlock View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="custom-tooltip">
+                                    <a href="#price-view">
+                                        <i class="mdi mdi-currency-usd"></i>
+                                        <div class="tooltip">
+                                            <div class="tooltip__background"></div>
+                                            <span class="tooltip__label">Price View</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex-item-10" id="pledge-view">
+                            <textarea id="rekl-view-editor" name="rekl-view-editor">Area1
+                            </textarea>
+                        </div>
+                        <div class="flex-item-10" id="rekl-view">
+                            <textarea id="rekl-view-editor" name="rekl-view-editor">Area2
+                            </textarea>
+                        </div>
+                        <div class="flex-item-10" id="pay-view">
+                            Pay View
+                        </div>
+                        <div class="flex-item-10" id="refund-view">
+                            Refund View
+                        </div>
+                        <div class="flex-item-10" id="unlock-view">
+                            Unlock View
+                        </div>
+                        <div class="flex-item-10" id="price-view">
+                            Price View
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flex-item-8">
-                    <img src="<?=plugins_url('../images/editor.jpg', __FILE__)?>"/>
-                </div>
+                <!--<div class="flex-item-8">
+                    <img src="<?= plugins_url('../images/editor.jpg', __FILE__) ?>"/>
+                </div>-->
 
                 <div class="flex-item-3">
                     <div class="testing-fields">

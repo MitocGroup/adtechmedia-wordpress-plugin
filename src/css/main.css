@@ -271,6 +271,10 @@ h1.heading .custom-icon {
     flex: 0 0 66.66667%;
     -webkit-flex: 0 0 66.66667%;
     max-width: 66.66667%; }
+.flex-container .flex-item-9 {
+    flex: 0 0 75%;
+    -webkit-flex: 0 0 75%;
+    max-width: 75%; }
 .flex-container .flex-item-10 {
     flex: 0 0 83.33333%;
     -webkit-flex: 0 0 83.33333%;
@@ -279,6 +283,10 @@ h1.heading .custom-icon {
     flex: 0 0 91.66667%;
     -webkit-flex: 0 0 91.66667%;
     max-width: 91.66667%; }
+.flex-container .flex-item-12 {
+    flex: 0 0 100%;
+    -webkit-flex: 0 0 100%;
+    max-width: 100%; }
 
 .general-fields {
     padding-bottom: 20px;
@@ -553,4 +561,4 @@ select {
 .custom-radio {
     margin: 0 0 20px; }
 
-/*# sourceMappingURL=main.css.map */
+
