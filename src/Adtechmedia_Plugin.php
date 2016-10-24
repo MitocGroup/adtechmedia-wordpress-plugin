@@ -44,7 +44,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             "price" => array(__('Price', 'adtechmedia-plugin')),
             "author_name" => array(__('Author name', 'adtechmedia-plugin')),
             "author_avatar" => array(__('Author avatar', 'adtechmedia-plugin')),
-            "ads_video" => array(__('Ads youtube video link', 'adtechmedia-plugin')),
+            "ads_video" => array(__('Link to video ad', 'adtechmedia-plugin')),
             "content_offset" => array(__('Offset', 'adtechmedia-plugin')),
             "content_lock" => array(
                 __('Lock', 'adtechmedia-plugin'),

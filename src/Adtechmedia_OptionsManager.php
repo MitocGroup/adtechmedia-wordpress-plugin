@@ -548,9 +548,10 @@ class Adtechmedia_OptionsManager
      * @param  $aOptionKey string name of the option (un-prefixed)
      * @param  $aOptionMeta mixed meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...)
      * @param  $savedOptionValue string current value for $aOptionKey
+     * @param  $placeholder 
      * @return void
      */
-    protected function createFormControl($aOptionKey, $aOptionMeta, $savedOptionValue)
+    protected function createFormControl($aOptionKey, $aOptionMeta, $savedOptionValue ,$placeholder="")
     {
         if (is_array($aOptionMeta) && count($aOptionMeta) >= 2) { // Drop-down list
             $choices = array_slice($aOptionMeta, 1);
@@ -572,7 +573,7 @@ class Adtechmedia_OptionsManager
 
         } else { // Simple input field
             ?>
-            <input type="text" name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>"
+            <input type="text" placeholder="<?=$placeholder?>" name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>"
                       value="<?php echo esc_attr($savedOptionValue) ?>" size="100"/>
             <?php
 
