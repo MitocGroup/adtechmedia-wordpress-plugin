@@ -70,7 +70,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $admin_email = get_option('admin_email');
         $this->checkApiKeyExists();
         $this->checkProp();
-        $this->addPluginOption('container', "article");
+        $this->addPluginOption('container', "#content-for-atm");
         $this->addPluginOption('selector', "p");
         $this->addPluginOption('price', "5");
         $this->addPluginOption('author_name', "");
@@ -79,11 +79,14 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->addPluginOption('website_domain_name', $name);
         $this->addPluginOption('website_url', $website);
         $this->addPluginOption('support_email', $admin_email);
-        $this->addPluginOption('country', "US");
+        $this->addPluginOption('country', "United States");
         $this->addPluginOption("content_offset", '2');
         $this->addPluginOption("content_lock", 'blur+scramble');
         $this->addPluginOption("revenue_method", 'advertising+micropayments');
         $this->addPluginOption("payment_pledged", '2');
+        $this->addPluginOption("price_currency", 'usd');
+        $this->addPluginOption("content_paywall", 'transactions');
+        $this->addPluginOption("content_offset_type", 'paragraphs');
     }
 
     /**

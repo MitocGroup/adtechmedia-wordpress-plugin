@@ -5,6 +5,21 @@
  * Date: 20.10.2016
  * Time: 15:00
  */
+
+$countriesList = Adtechmedia_Request::getCountriesList($this->getPluginOption('key'));
+$currencies = [];
+$countries = [];
+foreach ($countriesList as $countriesElement) {
+    $countries[$countriesElement['Name']] = $countriesElement['RevenueMethod'];
+    foreach ($countriesElement['Currency'] as $currency) {
+        if (!in_array($currency, $currencies)) {
+            $currencies[] = $currency;
+        }
+    }
+}
+$contentPaywall=['transactions',
+'pledged currency'];
+$contentOffsetTypes=['paragraphs','words'];
 ?>
 
 <main>
@@ -107,8 +122,18 @@
                                 </div>
                                 <div class="flex-item-6">
                                     <div class="form-select">
-                                        <select>
-                                            <option>USD</option>
+                                        <select name="price_currency" id="price_currency">
+                                            <?php
+                                            $priceCurrencyValue=$this->getPluginOption('price_currency');
+                                            foreach ($currencies as $currency) {
+                                                echo "<option value='$currency' " .
+                                                    (($currency == $priceCurrencyValue) ? 'selected' : '')
+                                                    . " >" .
+                                                    strtoupper(
+                                                        $currency
+                                                    ) . "</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -137,9 +162,15 @@
                                 </div>
                                 <div class="flex-item-6">
                                     <div class="form-select">
-                                        <select>
-                                            <option>transactions</option>
-                                            <option>pledged currency</option>
+                                        <select name="content_paywall" id="content_paywall">
+                                            <?php
+                                            $contentPaywallValue=$this->getPluginOption('content_paywall');
+                                            foreach ($contentPaywall as $contentPaywallOne) {
+                                                echo "<option value='$contentPaywallOne' " .
+                                                    (($contentPaywallOne == $contentPaywallValue) ? 'selected' : '')
+                                                    . " >" .$contentPaywallOne . "</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -168,9 +199,15 @@
                                 </div>
                                 <div class="flex-item-6">
                                     <div class="form-select">
-                                        <select>
-                                            <option>paragraphs</option>
-                                            <option>words</option>
+                                        <select name="content_offset_type" id="content_offset_type">
+                                            <?php
+                                            $offsetTypeValue=$this->getPluginOption('content_offset_type');
+                                            foreach ($contentOffsetTypes as $contentOffsetType) {
+                                                echo "<option value='$contentOffsetType' " .
+                                                    (($contentOffsetType == $offsetTypeValue) ? 'selected' : '')
+                                                    . " >" .$contentOffsetType . "</option>";
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>

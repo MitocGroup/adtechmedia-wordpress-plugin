@@ -391,7 +391,9 @@ class Adtechmedia_OptionsManager
             $this->getPluginOption("content_offset"),
             $this->getPluginOption("content_lock"),
             $this->getPluginOption("revenue_method"),
-            $this->getPluginOption("payment_pledged")
+            $this->getPluginOption("payment_pledged"),
+            $this->getPluginOption("content_offset_type"),
+            $this->getPluginOption("price_currency")
         );
         Adtechmedia_ContentManager::clearAllContent();
     }
