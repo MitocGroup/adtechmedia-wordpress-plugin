@@ -87,6 +87,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->addPluginOption("price_currency", 'usd');
         $this->addPluginOption("content_paywall", 'transactions');
         $this->addPluginOption("content_offset_type", 'paragraphs');
+        $this->updateProp();
     }
 
     /**

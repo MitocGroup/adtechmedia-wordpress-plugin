@@ -176,6 +176,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         }
         add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
         add_action('save_post', array(&$this, 'clearCacheOnUpdate'));
+        add_filter( 'http_response',  array(&$this,'wp_log_http_requests'), 10, 3 );
         // Adding scripts & styles to all pages
         // Examples:
         //        wp_enqueue_script('jquery');
@@ -191,6 +192,38 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=41
 
     }
+public function wp_log_http_requests( $response, $args, $url ) {
+        // set your log file location here
+        $logfile = plugin_dir_path( __FILE__ ) . '/http_requests.txt';
+        // parse request and response body to a hash for human readable log output
+        //$log_response = $response;
+        /*if ( isset( $args['body'] ) ) {
+            parse_str( $args['body'], $args['body_parsed'] );
+        }
+        if ( isset( $log_response['body'] ) ) {
+            parse_str( $log_response['body'], $log_response['body_parsed'] );
+        }*/
+        // write into logfile
+    $output = 'Request on ' . date( 'c' ) . PHP_EOL;
+    $output .= 'Url: ' . $url . PHP_EOL;
+    $output .= " - Method:". $args['method'] . PHP_EOL;
+$output .= ' - Headers:' . PHP_EOL;
+
+foreach ($args['headers'] as $key => $value) {
+    $output .= "   - $key: $value" . PHP_EOL;
+}
+
+$output .= 'Response' . PHP_EOL;
+$output .= ' - Headers:' . PHP_EOL;
+
+foreach ($response['headers'] as $key => $value) {
+    $output .= "   - $key: $value" . PHP_EOL;
+}
+        //file_put_contents( $logfile, sprintf( "### %s, URL: %s\nREQUEST: %sRESPONSE: %s\n", date( 'c' ), $url, print_r( $args, true ), print_r( $log_response, true ) ), FILE_APPEND );
+        file_put_contents( $logfile, $output.PHP_EOL.PHP_EOL, FILE_APPEND );
+        return $response;
+    }
+// hook into WP_Http::_dispatch_request()
 
     /**
      *
@@ -279,6 +312,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         $script = "<script>
                     window.ATM_PROPERTY_ID = '$propertyId'; 
                     window.ATM_CONTENT_ID = '$contentId'; 
+                    window.ATM_CONTENT_PRELOADED = true;
                     </script>";
         return "<span id='content-for-atm'>$content</span>" . $script;
     }
