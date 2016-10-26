@@ -2,12 +2,13 @@
 /**
  * Plugin config file
  *
+ * @file
  * @package Adtechmedia_Plugin
  */
 class Adtechmedia_Config {
 
 	/**
-	 * plugin config
+	 * Plugin config
 	 *
 	 * @var array
 	 */
@@ -21,12 +22,12 @@ class Adtechmedia_Config {
 	];
 
 	/**
-	 * function to get param value
+	 * Function to get param value
 	 *
 	 * @param string $name
 	 * @return mixed
 	 */
 	public static function get( $name ) {
-		return self::$conf[$name];
+		return self::$conf[ $name ];
 	}
 }
