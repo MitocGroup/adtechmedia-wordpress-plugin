@@ -3,6 +3,7 @@
  * Plugin config file
  *
  * @file
+ * Adtechmedia-Config.php
  * @package Adtechmedia_Plugin
  */
 class Adtechmedia_Config {
@@ -24,7 +25,7 @@ class Adtechmedia_Config {
 	/**
 	 * Function to get param value
 	 *
-	 * @param string $name
+	 * @param string $name kay name
 	 * @return mixed
 	 */
 	public static function get( $name ) {
