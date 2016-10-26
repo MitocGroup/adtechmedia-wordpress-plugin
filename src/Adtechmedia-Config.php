@@ -7,7 +7,9 @@
 class Adtechmedia_Config {
 
 	/**
-	 * @var array plugin config
+	 * plugin config
+	 *
+	 * @var array
 	 */
 	private static $conf = [
 		'api_end_point' => 'https://api.adtechmedia.io/dev/',
@@ -20,10 +22,11 @@ class Adtechmedia_Config {
 
 	/**
 	 * function to get param value
-	 * @param string $name config key
+	 *
+	 * @param string $name
 	 * @return mixed
 	 */
-	public static function get($name) {
+	public static function get( $name ) {
 		return self::$conf[$name];
 	}
 }
