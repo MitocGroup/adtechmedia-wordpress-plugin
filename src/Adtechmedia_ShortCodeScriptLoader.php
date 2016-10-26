@@ -31,30 +31,30 @@ include_once('Adtechmedia_ShortCodeLoader.php');
 abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLoader
 {
 
-    var $doAddScript;
+    var $do_add_acript;
 
     public function register($shortcodeName)
     {
-        $this->registerShortcodeToFunction($shortcodeName, 'handleShortcodeWrapper');
+        $this->register_shortcode_to_function($shortcodeName, 'handle_shortcode_wrapper');
 
         // It will be too late to enqueue the script in the header,
         // but can add them to the footer
-        add_action('wp_footer', array($this, 'addScriptWrapper'));
+        add_action('wp_footer', array($this, 'add_script_wrapper'));
     }
 
-    public function handleShortcodeWrapper($atts)
+    public function handle_shortcode_wrapper($atts)
     {
         // Flag that we need to add the script
-        $this->doAddScript = true;
-        return $this->handleShortcode($atts);
+        $this->do_add_acript = true;
+        return $this->handle_shortcode($atts);
     }
 
 
-    public function addScriptWrapper()
+    public function add_script_wrapper()
     {
         // Only add the script if the shortcode was actually called
-        if ($this->doAddScript) {
-            $this->addScript();
+        if ($this->do_add_acript) {
+            $this->add_script();
         }
     }
 
@@ -65,6 +65,6 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
      *   wp_print_scripts('my-script');
      * @return void
      */
-    public abstract function addScript();
+    public abstract function add_script();
 
 }

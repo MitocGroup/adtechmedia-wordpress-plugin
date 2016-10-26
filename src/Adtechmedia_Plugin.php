@@ -104,9 +104,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     protected function install_database_tables()
     {
         global $wpdb;
-        $tableName = $this->prefix_table_name(Adtechmedia_Config::get('plugin_table_name'));
+        $table_name = $this->prefix_table_name(Adtechmedia_Config::get('plugin_table_name'));
         $wpdb->query(
-            "CREATE TABLE IF NOT EXISTS `$tableName` (
+            "CREATE TABLE IF NOT EXISTS `$table_name` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                             `option_name` VARCHAR(191) NOT NULL DEFAULT '',
                             `option_value` LONGTEXT NOT NULL ,
@@ -114,9 +114,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                             UNIQUE INDEX `option_name` (`option_name`)
                         )"
         );
-        $tableName = $this->prefix_table_name(Adtechmedia_Config::get('plugin_cache_table_name'));
+        $table_name = $this->prefix_table_name(Adtechmedia_Config::get('plugin_cache_table_name'));
         $wpdb->query(
-            "CREATE TABLE IF NOT EXISTS `$tableName` (
+            "CREATE TABLE IF NOT EXISTS `$table_name` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
                             `item_id` VARCHAR(191) NOT NULL DEFAULT '',
                             `value` LONGTEXT NOT NULL ,
@@ -156,8 +156,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
         // Add options administration page
         // http://plugin.michael-simpson.com/?page_id=47
-        add_action('admin_menu', array(&$this, 'addSettingsSubMenuPage'));
-        $propertyId = $this->get_plugin_option('id');
+        add_action('admin_menu', array(&$this, 'add_settings_sub_menu_page'));
+        $property_id = $this->get_plugin_option('id');
         $key = $this->get_plugin_option('key');
 
 
@@ -173,28 +173,28 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=37
 
         if (is_admin()) {
-            add_action('admin_enqueue_scripts', array(&$this, 'addAdtechmediaAdminScripts'));
+            add_action('admin_enqueue_scripts', array(&$this, 'add_adtechmedia_admin_scripts'));
         }
-        add_action('save_post', array(&$this, 'clearCacheOnUpdate'));
+        add_action('save_post', array(&$this, 'clear_cache_on_update'));
         add_filter('http_response', array(&$this, 'wp_log_http_requests'), 10, 3);//todo remove this
-        if (!is_admin() && (empty($key) || empty($propertyId))) {
+        if (!is_admin() && (empty($key) || empty($property_id))) {
             return;
         }
         if (strpos($_SERVER['REQUEST_URI'], $this->get_settings_slug()) !== false) {
-            $keyCheck = $this->check_api_key_exists();
-            $propertyCheck = $this->check_prop();
+            $key_check = $this->check_api_key_exists();
+            $property_check = $this->check_prop();
 
-            if (!$keyCheck) {
-                add_action('admin_notices', array(&$this, 'keyNotExistsError'));
+            if (!$key_check) {
+                add_action('admin_notices', array(&$this, 'key_not_exists_error'));
             }
-            if (!$propertyCheck) {
-                add_action('admin_notices', array(&$this, 'propertyIdNotExistsError'));
+            if (!$property_check) {
+                add_action('admin_notices', array(&$this, 'property_id_not_exists_error'));
             }
         }
         if (!is_admin()) {
-            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScripts'));
+            add_action('wp_enqueue_scripts', array(&$this, 'add_adtechmedia_scripts'));
         }
-        add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
+        add_filter('the_content', array(&$this, 'hide_content'), 99999);//try do this after any other filter
 
         // Adding scripts & styles to all pages
         // Examples:
@@ -248,7 +248,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      *
      */
-    public function addAdtechmediaAdminScripts($hook)
+    public function add_adtechmedia_admin_scripts($hook)
     {
         if ($hook != 'plugins_page_' . $this->get_settings_slug()) {
             return;
@@ -270,7 +270,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      *
      */
-    public function addAdtechmediaScripts()
+    public function add_adtechmedia_scripts()
     {
         if ($script = $this->get_plugin_option('BuildPath')) {
             wp_enqueue_script('Adtechmedia', $script, null, null, true);
@@ -280,7 +280,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      * @param $postId
      */
-    public function clearCacheOnUpdate($postId)
+    public function clear_cache_on_update($postId)
     {
         if (wp_is_post_revision($postId)) {
             return;
@@ -292,22 +292,22 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      * @param $content
      * @return bool|mixed|null
      */
-    public function hideContent($content)
+    public function hide_content($content)
     {
 
         if (is_single()) {
             $id = (string)get_the_ID();
-            $savedContent = Adtechmedia_ContentManager::get_content($id);
-            if (isset($savedContent) && !empty($savedContent)) {
-                return $this->contentWrapper($savedContent);
+            $saved_content = Adtechmedia_ContentManager::get_content($id);
+            if (isset($saved_content) && !empty($saved_content)) {
+                return $this->content_wrapper($saved_content);
             } else {
-                Adtechmedia_Request::contentCreate(
+                Adtechmedia_Request::content_create(
                     $id,
                     $this->get_plugin_option('id'),
                     $content,
                     $this->get_plugin_option('key')
                 );
-                $newContent = Adtechmedia_Request::contentRetrieve(
+                $new_content = Adtechmedia_Request::content_retrieve(
                     $id,
                     $this->get_plugin_option('id'),
                     $this->get_plugin_option('content_lock'),
@@ -316,8 +316,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                     $this->get_plugin_option('content_offset'),
                     $this->get_plugin_option('key')
                 );
-                Adtechmedia_ContentManager::set_content($id, $newContent);
-                return $this->contentWrapper($newContent);
+                Adtechmedia_ContentManager::set_content($id, $new_content);
+                return $this->content_wrapper($new_content);
             }
 
         }
@@ -328,13 +328,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      * @param $content
      * @return string
      */
-    public function contentWrapper($content)
+    public function content_wrapper($content)
     {
-        $propertyId = $this->get_plugin_option('id');
-        $contentId = (string)get_the_ID();
+        $property_id = $this->get_plugin_option('id');
+        $content_id = (string)get_the_ID();
         $script = "<script>
-                    window.ATM_PROPERTY_ID = '$propertyId'; 
-                    window.ATM_CONTENT_ID = '$contentId'; 
+                    window.ATM_PROPERTY_ID = '$property_id'; 
+                    window.ATM_CONTENT_ID = '$content_id'; 
                     window.ATM_CONTENT_PRELOADED = true;
                     </script>";
         return "<span id='content-for-atm'>$content</span>" . $script;
@@ -343,7 +343,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      *
      */
-    public function propertyIdNotExistsError()
+    public function property_id_not_exists_error()
     {
         ?>
         <div class="error notice">
@@ -358,7 +358,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      *
      */
-    public function keyNotExistsError()
+    public function key_not_exists_error()
     {
         ?>
         <div class="error notice">

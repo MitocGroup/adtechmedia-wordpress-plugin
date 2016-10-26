@@ -24,14 +24,14 @@ include_once( 'Adtechmedia_OptionsManager.php' );
 class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 
 
-	const option_installed = '_installed';
-	const option_version = '_version';
+	const OPTION_INSTALLED = '_installed';
+	const OPTION_VERSION = '_version';
 
 	/**
 	 * @return bool indicating if the plugin is installed already
 	 */
 	public function is_installed() {
-		return $this->get_option( self::option_installed ) == true;
+		return $this->get_option( self::OPTION_INSTALLED ) == true;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function mark_as_installed() {
-		return $this->update_option( self::option_installed, true );
+		return $this->update_option( self::OPTION_INSTALLED, true );
 	}
 
 	/**
@@ -51,7 +51,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * false implies it was not.
 	 */
 	protected function mark_as_un_installed() {
-		return $this->delete_option( self::option_installed );
+		return $this->delete_option( self::OPTION_INSTALLED );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function get_version_saved() {
-		return $this->get_option( self::option_version );
+		return $this->get_option( self::OPTION_VERSION );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function set_version_saved( $version ) {
-		return $this->update_option( self::option_version, $version );
+		return $this->update_option( self::OPTION_VERSION, $version );
 	}
 
 	/**
@@ -143,11 +143,11 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	/**
 	 * Used to see if the installed code is an earlier version than the input version
 	 *
-	 * @param  $aVersion string
+	 * @param  $a_version string
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
-	public function is_saved_version_less_than( $aVersion ) {
-		return $this->is_version_less_than( $this->get_version_saved(), $aVersion );
+	public function is_saved_version_less_than( $a_version ) {
+		return $this->is_version_less_than( $this->get_version_saved(), $a_version );
 	}
 
 	/**
@@ -157,11 +157,11 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * For example, $this->isSavedVersionLessThanEqual('2.3') == true indicates that the saved version is not upgraded
 	 * past 2.3 yet and therefore you would perform some appropriate upgrade action.
 	 *
-	 * @param  $aVersion string
+	 * @param  $a_version string
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
-	public function is_saved_version_less_than_equal( $aVersion ) {
-		return $this->is_version_less_than_equal( $this->get_version_saved(), $aVersion );
+	public function is_saved_version_less_than_equal( $a_version ) {
+		return $this->is_version_less_than_equal( $this->get_version_saved(), $a_version );
 	}
 
 	/**

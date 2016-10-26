@@ -6,24 +6,24 @@
  * Time: 15:00
  */
 
-$countriesList = Adtechmedia_Request::getCountriesList($this->getPluginOption('key'));
+$countries_list = Adtechmedia_Request::get_countries_list($this->get_plugin_option('key'));
 $currencies = [];
 $countries = [];
-if(is_array($countriesList)) {
-    foreach ($countriesList as $countriesElement) {
-        $countries[$countriesElement['Name']] = $countriesElement['RevenueMethod'];
-        foreach ($countriesElement['Currency'] as $currency) {
+if(is_array($countries_list)) {
+    foreach ($countries_list as $countries_element) {
+        $countries[$countries_element['Name']] = $countries_element['RevenueMethod'];
+        foreach ($countries_element['Currency'] as $currency) {
             if (!in_array($currency, $currencies)) {
                 $currencies[] = $currency;
             }
         }
     }
 }
-$contentPaywall = [
+$content_paywall = [
     'transactions',
     'pledged currency'
 ];
-$contentOffsetTypes = ['paragraphs', 'words'];
+$content_offset_types = ['paragraphs', 'words'];
 ?>
 
 <main>
@@ -55,9 +55,9 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                                 <label>
                                     <i class="mdi mdi-lan"></i> Revenue Model
                                 </label>
-                                <?php $this->createFormControl(
+                                <?php $this->create_form_control(
                                     'revenue_method',
-                                    $mainData['revenue_method'],
+                                    $main_data['revenue_method'],
                                     $this->getPluginOption('revenue_method')
                                 ); ?>
                             </div>
@@ -71,9 +71,9 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                     <div class="flex-container">
                         <div class="flex-item-6">
                             <div class="custom-input">
-                                <?php $this->createFormControl(
+                                <?php $this->create_form_control(
                                     'support_email',
-                                    $mainData['support_email'],
+                                    $main_data['support_email'],
                                     $this->getPluginOption('support_email'),
                                     "e.g. john.smith@mail.com"
                                 ); ?>
@@ -100,7 +100,7 @@ $contentOffsetTypes = ['paragraphs', 'words'];
 
     <section>
         <form method="post" action="">
-            <?php settings_fields($pluginMetaDataClass); ?>
+            <?php settings_fields($plugin_meta_data_class); ?>
             <h1 class="heading">
                 <i class="custom-icon edit"></i>
                 Content configuration
@@ -115,9 +115,9 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                             <div class="flex-container">
                                 <div class="flex-item-6">
                                     <div class="custom-input">
-                                        <?php $this->createFormControl(
+                                        <?php $this->create_form_control(
                                             'price',
-                                            $pluginMetaData['price'],
+                                            $plugin_meta_data['price'],
                                             $this->getPluginOption('price'),
                                             "e.g. 0.10"
                                         ); ?>
@@ -128,10 +128,10 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                                     <div class="form-select">
                                         <select name="price_currency" id="price_currency">
                                             <?php
-                                            $priceCurrencyValue = $this->getPluginOption('price_currency');
+                                            $price_currency_value = $this->get_plugin_pption('price_currency');
                                             foreach ($currencies as $currency) {
                                                 echo "<option value='$currency' " .
-                                                    (($currency == $priceCurrencyValue) ? 'selected' : '')
+                                                    (($currency == $price_currency_value) ? 'selected' : '')
                                                     . " >" .
                                                     strtoupper(
                                                         $currency
@@ -155,10 +155,10 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                             <div class="flex-container">
                                 <div class="flex-item-6">
                                     <div class="custom-input">
-                                        <?php $this->createFormControl(
+                                        <?php $this->create_form_control(
                                             'payment_pledged',
-                                            $pluginMetaData['payment_pledged'],
-                                            $this->getPluginOption('payment_pledged'),
+                                            $plugin_meta_data['payment_pledged'],
+                                            $this->get_plugin_pption('payment_pledged'),
                                             "e.g. 5"
                                         ); ?>
                                         <span class="bar"></span>
@@ -168,11 +168,11 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                                     <div class="form-select">
                                         <select name="content_paywall" id="content_paywall">
                                             <?php
-                                            $contentPaywallValue = $this->getPluginOption('content_paywall');
-                                            foreach ($contentPaywall as $contentPaywallOne) {
-                                                echo "<option value='$contentPaywallOne' " .
-                                                    (($contentPaywallOne == $contentPaywallValue) ? 'selected' : '')
-                                                    . " >" . $contentPaywallOne . "</option>";
+                                            $content_paywall_value = $this->get_plugin_pption('content_paywall');
+                                            foreach ($content_paywall as $content_paywall_one) {
+                                                echo "<option value='$content_paywall_one' " .
+                                                    (($content_paywall_one == $content_paywall_value) ? 'selected' : '')
+                                                    . " >" . $content_paywall_one . "</option>";
                                             }
                                             ?>
                                         </select>
@@ -192,10 +192,10 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                             <div class="flex-container">
                                 <div class="flex-item-6">
                                     <div class="custom-input">
-                                        <?php $this->createFormControl(
+                                        <?php $this->create_form_control(
                                             'content_offset',
-                                            $pluginMetaData['content_offset'],
-                                            $this->getPluginOption('content_offset'),
+                                            $plugin_meta_data['content_offset'],
+                                            $this->get_plugin_pption('content_offset'),
                                             "e.g. 2"
                                         ); ?>
                                         <span class="bar"></span>
@@ -205,11 +205,11 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                                     <div class="form-select">
                                         <select name="content_offset_type" id="content_offset_type">
                                             <?php
-                                            $offsetTypeValue = $this->getPluginOption('content_offset_type');
-                                            foreach ($contentOffsetTypes as $contentOffsetType) {
-                                                echo "<option value='$contentOffsetType' " .
-                                                    (($contentOffsetType == $offsetTypeValue) ? 'selected' : '')
-                                                    . " >" . $contentOffsetType . "</option>";
+                                            $offset_type_value = $this->get_plugin_pption('content_offset_type');
+                                            foreach ($content_offset_types as $content_offset_type) {
+                                                echo "<option value='$content_offset_type' " .
+                                                    (($content_offset_type == $offset_type_value) ? 'selected' : '')
+                                                    . " >" . $content_offset_type . "</option>";
                                             }
                                             ?>
                                         </select>
@@ -227,10 +227,10 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                                 <i class="mdi mdi-lock-open"></i> Content unlocking algorithm
                             </label>
                             <div class="form-select">
-                                <?php $this->createFormControl(
+                                <?php $this->create_form_control(
                                     'content_lock',
-                                    $pluginMetaData['content_lock'],
-                                    $this->getPluginOption('content_lock')
+                                    $plugin_meta_data['content_lock'],
+                                    $this->get_plugin_pption('content_lock')
                                 ); ?>
                             </div>
                             <div class="block-info">
@@ -242,10 +242,10 @@ $contentOffsetTypes = ['paragraphs', 'words'];
                             <div class="flex-container">
                                 <div class="flex-item-12">
                                     <div class="custom-input">
-                                        <?php $this->createFormControl(
+                                        <?php $this->create_form_control(
                                             'ads_video',
-                                            $pluginMetaData['ads_video'],
-                                            $this->getPluginOption('ads_video'),
+                                            $plugin_meta_data['ads_video'],
+                                            $this->get_plugin_pption('ads_video'),
                                             "e.g. https://youtu.be/DiBh8r3lPpM"
                                         ); ?>
                                         <span class="bar"></span>

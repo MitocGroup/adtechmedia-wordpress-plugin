@@ -32,26 +32,26 @@ abstract class Adtechmedia_ShortCodeLoader
      */
     public function register($shortcodeName)
     {
-        $this->registerShortcodeToFunction($shortcodeName, 'handleShortcode');
+        $this->register_shortcode_to_function($shortcodeName, 'handle_shortcode');
     }
 
     /**
-     * @param  $shortcodeName mixed either string name of the shortcode
+     * @param  $shortcode_name mixed either string name of the shortcode
      * (as it would appear in a post, e.g. [shortcodeName])
      * or an array of such names in case you want to have more than one name
      * for the same shortcode
-     * @param  $functionName string name of public function in this class to call as the
+     * @param  $function_name string name of public function in this class to call as the
      * shortcode handler
      * @return void
      */
-    protected function registerShortcodeToFunction($shortcodeName, $functionName)
+    protected function register_shortcode_to_function($shortcode_name, $function_name)
     {
-        if (is_array($shortcodeName)) {
-            foreach ($shortcodeName as $aName) {
-                add_shortcode($aName, array($this, $functionName));
+        if (is_array($shortcode_name)) {
+            foreach ($shortcode_name as $a_name) {
+                add_shortcode($a_name, array($this, $function_name));
             }
         } else {
-            add_shortcode($shortcodeName, array($this, $functionName));
+            add_shortcode($shortcode_name, array($this, $function_name));
         }
     }
 
@@ -60,6 +60,6 @@ abstract class Adtechmedia_ShortCodeLoader
      * @param  $atts shortcode inputs
      * @return string shortcode content
      */
-    public abstract function handleShortcode($atts);
+    public abstract function handle_shortcode($atts);
 
 }
