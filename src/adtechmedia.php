@@ -87,7 +87,7 @@ if (Adtechmedia_PhpVersionCheck()) {
 
 	include_once('adtechmedia-init.php');
 	include_once('adtechmedia-request.php');
-	include_once('adtechmedia-config2.php');
+	include_once('adtechmedia-config.php');
 	include_once('adtechmedia-contentmanager.php');
 	Adtechmedia_init(__FILE__);
 }
