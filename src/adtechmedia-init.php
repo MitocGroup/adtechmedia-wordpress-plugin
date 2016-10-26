@@ -44,9 +44,9 @@ function Adtechmedia_init( $file ) {
 		$file = __FILE__;
 	}
 	// Register the Plugin Activation Hook
-	register_activation_hook($file, array( &$adtechmedia_plugin, 'activate' ));
+	register_activation_hook( $file, array( &$adtechmedia_plugin, 'activate' ) );
 
 
 	// Register the Plugin Deactivation Hook
-	register_deactivation_hook($file, array( &$adtechmedia_plugin, 'deactivate' ));
+	register_deactivation_hook( $file, array( &$adtechmedia_plugin, 'deactivate' ) );
 }

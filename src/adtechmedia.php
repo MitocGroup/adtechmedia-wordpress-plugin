@@ -40,20 +40,20 @@ $Adtechmedia_minimalRequiredPhpVersion = '5.0';
 function Adtechmedia_noticePhpVersionWrong() {
 	global $Adtechmedia_minimalRequiredPhpVersion;
 	echo '<div class="updated fade">' .
-		__('Error: plugin "Adtechmedia" requires a newer version of PHP to be running.', 'adtechmedia') .
+		__( 'Error: plugin "Adtechmedia" requires a newer version of PHP to be running.', 'adtechmedia' ) .
 		'<br/>' . __(
 			'Minimal version of PHP required: ',
 			'adtechmedia'
 		) . '<strong>' . $Adtechmedia_minimalRequiredPhpVersion . '</strong>' .
-		'<br/>' . __('Your server\'s PHP version: ', 'adtechmedia') . '<strong>' . phpversion() . '</strong>' .
+		'<br/>' . __( 'Your server\'s PHP version: ', 'adtechmedia' ) . '<strong>' . phpversion() . '</strong>' .
 		'</div>';
 }
 
 
 function Adtechmedia_PhpVersionCheck() {
 	global $Adtechmedia_minimalRequiredPhpVersion;
-	if (version_compare(phpversion(), $Adtechmedia_minimalRequiredPhpVersion) < 0) {
-		add_action('admin_notices', 'Adtechmedia_noticePhpVersionWrong');
+	if (version_compare( phpversion(), $Adtechmedia_minimalRequiredPhpVersion ) < 0) {
+		add_action( 'admin_notices', 'Adtechmedia_noticePhpVersionWrong' );
 		return false;
 	}
 	return true;
@@ -69,8 +69,8 @@ function Adtechmedia_PhpVersionCheck() {
  * @return void
  */
 function Adtechmedia_i18n_init() {
-	$pluginDir = dirname(plugin_basename(__FILE__));
-	load_plugin_textdomain('adtechmedia', false, $pluginDir . '/languages/');
+	$pluginDir = dirname( plugin_basename( __FILE__ ) );
+	load_plugin_textdomain( 'adtechmedia', false, $pluginDir . '/languages/' );
 }
 
 
@@ -79,7 +79,7 @@ function Adtechmedia_i18n_init() {
 /////////////////////////////////
 
 // Initialize i18n
-add_action('plugins_loadedi', 'Adtechmedia_i18n_init');
+add_action( 'plugins_loadedi', 'Adtechmedia_i18n_init' );
 
 // Run the version check.
 // If it is successful, continue with initialization for this plugin
@@ -89,5 +89,5 @@ if (Adtechmedia_PhpVersionCheck()) {
 	include_once('adtechmedia-request.php');
 	include_once('adtechmedia-config.php');
 	include_once('adtechmedia-contentmanager.php');
-	Adtechmedia_init(__FILE__);
+	Adtechmedia_init( __FILE__ );
 }

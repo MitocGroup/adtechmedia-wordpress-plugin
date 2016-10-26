@@ -23,7 +23,7 @@
 class Adtechmedia_OptionsManager {
 
 	public function get_option_name_prefix() {
-		return get_class($this) . '_';
+		return get_class( $this ) . '_';
 	}
 
 
@@ -66,7 +66,7 @@ class Adtechmedia_OptionsManager {
 	 * @return array of string name of options
 	 */
 	public function get_option_names() {
-		return array_keys($this->get_option_meta_data());
+		return array_keys( $this->get_option_meta_data() );
 	}
 
 	/**
@@ -84,10 +84,10 @@ class Adtechmedia_OptionsManager {
 	 */
 	protected function delete_saved_options() {
 		$option_meta_data = $this->get_option_meta_data();
-		if (is_array($option_meta_data)) {
+		if (is_array( $option_meta_data )) {
 			foreach ($option_meta_data as $a_option_key => $a_option_meta) {
-				$prefixedOptionName = $this->prefix($a_option_key); // how it is stored in DB
-				delete_option($prefixedOptionName);
+				$prefixedOptionName = $this->prefix( $a_option_key ); // how it is stored in DB
+				delete_option( $prefixedOptionName );
 			}
 		}
 	}
@@ -97,7 +97,7 @@ class Adtechmedia_OptionsManager {
 	 * Just returns the class name. Override this method to return something more readable
 	 */
 	public function get_plugin_display_name() {
-		return get_class($this);
+		return get_class( $this );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function prefix( $name ) {
 		$option_name_prefix = $this->get_option_name_prefix();
-		if (strpos($name, $option_name_prefix) === 0) { // 0 but not false
+		if (strpos( $name, $option_name_prefix ) === 0) { // 0 but not false
 			return $name; // already prefixed
 		}
 		return $option_name_prefix . $name;
@@ -124,8 +124,8 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function &unPrefix( $name ) {
 		$option_name_prefix = $this->get_option_name_prefix();
-		if (strpos($name, $option_name_prefix) === 0) {
-			return substr($name, strlen($option_name_prefix));
+		if (strpos( $name, $option_name_prefix ) === 0) {
+			return substr( $name, strlen( $option_name_prefix ) );
 		}
 		return $name;
 	}
@@ -140,8 +140,8 @@ class Adtechmedia_OptionsManager {
 	 * if option is not set.
 	 */
 	public function get_option( $option_name, $default = null ) {
-		$prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
-		$ret_val = get_option($prefixed_option_name);
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		$ret_val = get_option( $prefixed_option_name );
 		if (!$ret_val && $default) {
 			$ret_val = $default;
 		}
@@ -156,12 +156,12 @@ class Adtechmedia_OptionsManager {
 	public function get_plugin_option( $option_name, $default = null ) {
 		global $wpdb;
 		$ret_val = null;
-		$table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
 		$row = $wpdb->get_row(
-			$wpdb->prepare("SELECT option_value FROM $table_name WHERE option_name = %s LIMIT 1", $option_name)
+			$wpdb->prepare( "SELECT option_value FROM $table_name WHERE option_name = %s LIMIT 1", $option_name )
 		);
 
-		if (is_object($row)) {
+		if (is_object( $row )) {
 			$ret_val = $row->option_value;
 		}
 
@@ -179,8 +179,8 @@ class Adtechmedia_OptionsManager {
 	 * @return bool from delegated call to delete_option()
 	 */
 	public function delete_option( $option_name ) {
-		$prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
-		return delete_option($prefixed_option_name);
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		return delete_option( $prefixed_option_name );
 	}
 
 	/**
@@ -189,8 +189,8 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function delete_plugin_option( $option_name ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
-		$result = $wpdb->delete($table_name, array( 'option_name' => $option_name ));
+		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		$result = $wpdb->delete( $table_name, array( 'option_name' => $option_name ) );
 		if (!$result) {
 			return false;
 		}
@@ -206,8 +206,8 @@ class Adtechmedia_OptionsManager {
 	 * @return null from delegated call to delete_option()
 	 */
 	public function add_option( $option_mame, $value ) {
-		$prefixed_option_name = $this->prefix($option_mame); // how it is stored in DB
-		return add_option($prefixed_option_name, $value);
+		$prefixed_option_name = $this->prefix( $option_mame ); // how it is stored in DB
+		return add_option( $prefixed_option_name, $value );
 	}
 
 	/**
@@ -217,7 +217,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function add_plugin_option( $option_name, $value ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
 		$result = $wpdb->query(
 			$wpdb->prepare(
 				"INSERT INTO `$table_name` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
@@ -240,8 +240,8 @@ class Adtechmedia_OptionsManager {
 	 * @return null from delegated call to delete_option()
 	 */
 	public function update_option( $option_name, $value ) {
-		$prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
-		return update_option($prefixed_option_name, $value);
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		return update_option( $prefixed_option_name, $value );
 	}
 
 	/**
@@ -251,8 +251,8 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function update_plugin_option( $option_name, $value ) {
 		global $wpdb;
-		$table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
-		$result = $wpdb->update($table_name, [ 'option_value' => $value ], array( 'option_name' => $option_name ));
+		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		$result = $wpdb->update( $table_name, [ 'option_value' => $value ], array( 'option_name' => $option_name ) );
 		if (!$result) {
 			return false;
 		}
@@ -271,7 +271,7 @@ class Adtechmedia_OptionsManager {
 	 * @return string role name
 	 */
 	public function get_role_option( $option_name ) {
-		$role_allowed = $this->get_option($option_name);
+		$role_allowed = $this->get_option( $option_name );
 		if (!$role_allowed || $role_allowed == '') {
 			$role_allowed = 'Administrator';
 		}
@@ -313,8 +313,8 @@ class Adtechmedia_OptionsManager {
 		if ('Anyone' == $role_name) {
 			return true;
 		}
-		$capability = $this->role_to_capability($role_name);
-		return current_user_can($capability);
+		$capability = $this->role_to_capability( $role_name );
+		return current_user_can( $capability );
 	}
 
 	/**
@@ -322,11 +322,11 @@ class Adtechmedia_OptionsManager {
 	 * @return bool indicates if the user has adequate permissions
 	 */
 	public function can_user_do_role_option( $option_name ) {
-		$role_allowed = $this->get_role_option($option_name);
+		$role_allowed = $this->get_role_option( $option_name );
 		if ('Anyone' == $role_allowed) {
 			return true;
 		}
-		return $this->is_user_role_equal_or_better_than($role_allowed);
+		return $this->is_user_role_equal_or_better_than( $role_allowed );
 	}
 
 	/**
@@ -341,23 +341,23 @@ class Adtechmedia_OptionsManager {
 			$pluginName . ' Plugin Settings',
 			$pluginName,
 			'administrator',
-			get_class($this),
+			get_class( $this ),
 			array( &$this, 'settings_page' )
 		/*,plugins_url('/images/icon.png', __FILE__)*/
 		); // if you call 'plugins_url; be sure to "require_once" it
 
 		//call register settings function
-		add_action('admin_init', array( &$this, 'register_settings' ));
+		add_action( 'admin_init', array( &$this, 'register_settings' ) );
 	}
 
 	/**
 	 *
 	 */
 	public function register_settings() {
-		$settings_group = get_class($this) . '-settings-group';
+		$settings_group = get_class( $this ) . '-settings-group';
 		$option_meta_data = $this->get_option_meta_data();
 		foreach ($option_meta_data as $a_option_key => $a_option_meta) {
-			register_setting($settings_group, $a_option_meta);
+			register_setting( $settings_group, $a_option_meta );
 		}
 	}
 
@@ -366,21 +366,21 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function update_prop() {
 		$prop = Adtechmedia_Request::property_update(
-			$this->get_plugin_option('id'),
-			$this->get_plugin_option('container'),
-			$this->get_plugin_option('selector'),
-			$this->get_plugin_option('price'),
-			$this->get_plugin_option('author_name'),
-			$this->get_plugin_option('author_avatar'),
-			$this->get_plugin_option('ads_video'),
-			$this->get_plugin_option('key'),
-			$this->get_plugin_option("content_offset"),
-			$this->get_plugin_option("content_lock"),
-			$this->get_plugin_option("revenue_method"),
-			$this->get_plugin_option("payment_pledged"),
-			$this->get_plugin_option("content_offset_type"),
-			$this->get_plugin_option("price_currency"),
-			$this->get_plugin_option("content_paywall")
+			$this->get_plugin_option( 'id' ),
+			$this->get_plugin_option( 'container' ),
+			$this->get_plugin_option( 'selector' ),
+			$this->get_plugin_option( 'price' ),
+			$this->get_plugin_option( 'author_name' ),
+			$this->get_plugin_option( 'author_avatar' ),
+			$this->get_plugin_option( 'ads_video' ),
+			$this->get_plugin_option( 'key' ),
+			$this->get_plugin_option( "content_offset" ),
+			$this->get_plugin_option( "content_lock" ),
+			$this->get_plugin_option( "revenue_method" ),
+			$this->get_plugin_option( "payment_pledged" ),
+			$this->get_plugin_option( "content_offset_type" ),
+			$this->get_plugin_option( "price_currency" ),
+			$this->get_plugin_option( "content_paywall" )
 		);
 		Adtechmedia_ContentManager::clear_all_content();
 	}
@@ -392,36 +392,36 @@ class Adtechmedia_OptionsManager {
 	 * @return void
 	 */
 	public function settingsPage() {
-		if (!current_user_can('manage_options')) {
-			wp_die(__('You do not have sufficient permissions to access this page.', 'adtechmedia'));
+		if (!current_user_can( 'manage_options' )) {
+			wp_die( __( 'You do not have sufficient permissions to access this page.', 'adtechmedia' ) );
 		}
 
 		$main_data = $this->get_main_data();
 		$plugin_meta_data = $this->get_plugin_meta_data();
-		$main_data_class = get_class($this) . '-main-settings-group';
-		$plugin_meta_data_class = get_class($this) . '-data-settings-group';
+		$main_data_class = get_class( $this ) . '-main-settings-group';
+		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options
 		if (isset($_POST['option_page']) && $_POST['option_page'] == $main_data_class) {
-			$this->try_to_save_post($main_data);
+			$this->try_to_save_post( $main_data );
 			$key = Adtechmedia_Request::api_key_create(
-				$this->get_plugin_option('website_domain_name'),
-				$this->get_plugin_option('website_url')
+				$this->get_plugin_option( 'website_domain_name' ),
+				$this->get_plugin_option( 'website_url' )
 			);
-			$this->add_plugin_option('key', $key);
+			$this->add_plugin_option( 'key', $key );
 			$prop = Adtechmedia_Request::property_create(
-				$this->get_plugin_option('website_domain_name'),
-				$this->get_plugin_option('website_url'),
-				$this->get_plugin_option('support_email'),
-				$this->get_plugin_option('country'),
+				$this->get_plugin_option( 'website_domain_name' ),
+				$this->get_plugin_option( 'website_url' ),
+				$this->get_plugin_option( 'support_email' ),
+				$this->get_plugin_option( 'country' ),
 				$key
 			);
-			$this->add_plugin_option('BuildPath', $prop['BuildPath']);
-			$this->add_plugin_option('Id', $prop['Id']);
+			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
+			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
 		} elseif (isset($_POST['option_page']) && $_POST['option_page'] == $plugin_meta_data_class) {
 
-			$this->try_to_save_post($plugin_meta_data);
+			$this->try_to_save_post( $plugin_meta_data );
 			$this->update_prop();
 		}
 
@@ -450,7 +450,7 @@ class Adtechmedia_OptionsManager {
 		if ($options != null) {
 			foreach ($options as $a_option_key => $a_option_meta) {
 				if (isset($_POST[ $a_option_key ])) {
-					$this->update_plugin_option($a_option_key, $_POST[ $a_option_key ]);
+					$this->update_plugin_option( $a_option_key, $_POST[ $a_option_key ] );
 				}
 			}
 		}
@@ -465,7 +465,7 @@ class Adtechmedia_OptionsManager {
 				echo ' ' . $title_text; ?></h2>
 
 			<form method="post" action="">
-				<?php settings_fields($settings_group); ?>
+				<?php settings_fields( $settings_group ); ?>
 				<style type="text/css">
 					table.plugin-options-table {
 						width: 100%;
@@ -502,7 +502,7 @@ class Adtechmedia_OptionsManager {
 					<?php
 					if ($option_meta_data != null) {
 						foreach ($option_meta_data as $a_option_key => $a_option_meta) {
-							$display_text = is_array($a_option_meta) ? $a_option_meta[0] : $a_option_meta;
+							$display_text = is_array( $a_option_meta ) ? $a_option_meta[0] : $a_option_meta;
 							?>
 							<tr valign="top">
 								<th scope="row"><p><label
@@ -512,7 +512,7 @@ class Adtechmedia_OptionsManager {
 									<?php $this->create_form_control(
 										$a_option_key,
 										$a_option_meta,
-										$this->get_plugin_option($a_option_key)
+										$this->get_plugin_option( $a_option_key )
 									); ?>
 								</td>
 							</tr>
@@ -541,8 +541,8 @@ class Adtechmedia_OptionsManager {
 	 * @return void
 	 */
 	protected function create_form_control( $a_option_key, $a_option_meta, $saved_option_value, $placeholder = "" ) {
-		if (is_array($a_option_meta) && count($a_option_meta) >= 2) { // Drop-down list
-			$choices = array_slice($a_option_meta, 1);
+		if (is_array( $a_option_meta ) && count( $a_option_meta ) >= 2) { // Drop-down list
+			$choices = array_slice( $a_option_meta, 1 );
 			?>
 			<select name="<?php echo $a_option_key ?>" id="<?php echo $a_option_key ?>">
 				<?php
@@ -563,7 +563,7 @@ class Adtechmedia_OptionsManager {
 			?>
 			<input type="text" placeholder="<?= $placeholder ?>" name="<?php echo $a_option_key ?>"
 				   id="<?php echo $a_option_key ?>"
-				   value="<?php echo esc_attr($saved_option_value) ?>" size="100"/>
+				   value="<?php echo esc_attr( $saved_option_value ) ?>" size="100"/>
 			<?php
 
 		}
@@ -587,21 +587,21 @@ class Adtechmedia_OptionsManager {
 	protected function get_option_value_i18n_string( $option_value ) {
 		switch ($option_value) {
 			case 'true':
-				return __('true', 'adtechmedia');
+				return __( 'true', 'adtechmedia' );
 			case 'false':
-				return __('false', 'adtechmedia');
+				return __( 'false', 'adtechmedia' );
 			case 'Administrator':
-				return __('Administrator', 'adtechmedia');
+				return __( 'Administrator', 'adtechmedia' );
 			case 'Editor':
-				return __('Editor', 'adtechmedia');
+				return __( 'Editor', 'adtechmedia' );
 			case 'Author':
-				return __('Author', 'adtechmedia');
+				return __( 'Author', 'adtechmedia' );
 			case 'Contributor':
-				return __('Contributor', 'adtechmedia');
+				return __( 'Contributor', 'adtechmedia' );
 			case 'Subscriber':
-				return __('Subscriber', 'adtechmedia');
+				return __( 'Subscriber', 'adtechmedia' );
 			case 'Anyone':
-				return __('Anyone', 'adtechmedia');
+				return __( 'Anyone', 'adtechmedia' );
 		}
 		return $option_value;
 	}
@@ -613,7 +613,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	protected function get_my_sql_version() {
 		global $wpdb;
-		$rows = $wpdb->get_results('select version() as mysqlversion');
+		$rows = $wpdb->get_results( 'select version() as mysqlversion' );
 		if (!empty($rows)) {
 			return $rows[0]->mysqlversion;
 		}
@@ -631,9 +631,9 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_email_domain() {
 		// Get the site domain and get rid of www.
-		$sitename = strtolower($_SERVER['SERVER_NAME']);
-		if (substr($sitename, 0, 4) == 'www.') {
-			$sitename = substr($sitename, 4);
+		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
+		if (substr( $sitename, 0, 4 ) == 'www.') {
+			$sitename = substr( $sitename, 4 );
 		}
 		return $sitename;
 	}

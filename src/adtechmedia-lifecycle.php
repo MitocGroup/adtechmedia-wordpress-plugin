@@ -63,25 +63,25 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function activate() {
 		$website = get_home_url();
-		$name = preg_replace('/https?:\/\//', '', $website);
-		$admin_email = get_option('admin_email');
-		$this->add_plugin_option('container', "#content-for-atm");
-		$this->add_plugin_option('selector', "p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure");
-		$this->add_plugin_option('price', "5");
-		$this->add_plugin_option('author_name', "");
-		$this->add_plugin_option('author_avatar', "");
-		$this->add_plugin_option('ads_video', "");
-		$this->add_plugin_option('website_domain_name', $name);
-		$this->add_plugin_option('website_url', $website);
-		$this->add_plugin_option('support_email', $admin_email);
-		$this->add_plugin_option('country', "United States");
-		$this->add_plugin_option("content_offset", '2');
-		$this->add_plugin_option("content_lock", 'blur+scramble');
-		$this->add_plugin_option("revenue_method", 'advertising+micropayments');
-		$this->add_plugin_option("payment_pledged", '2');
-		$this->add_plugin_option("price_currency", 'usd');
-		$this->add_plugin_option("content_paywall", 'transactions');
-		$this->add_plugin_option("content_offset_type", 'paragraphs');
+		$name = preg_replace( '/https?:\/\//', '', $website );
+		$admin_email = get_option( 'admin_email' );
+		$this->add_plugin_option( 'container', "#content-for-atm" );
+		$this->add_plugin_option( 'selector', "p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure" );
+		$this->add_plugin_option( 'price', "5" );
+		$this->add_plugin_option( 'author_name', "" );
+		$this->add_plugin_option( 'author_avatar', "" );
+		$this->add_plugin_option( 'ads_video', "" );
+		$this->add_plugin_option( 'website_domain_name', $name );
+		$this->add_plugin_option( 'website_url', $website );
+		$this->add_plugin_option( 'support_email', $admin_email );
+		$this->add_plugin_option( 'country', "United States" );
+		$this->add_plugin_option( "content_offset", '2' );
+		$this->add_plugin_option( "content_lock", 'blur+scramble' );
+		$this->add_plugin_option( "revenue_method", 'advertising+micropayments' );
+		$this->add_plugin_option( "payment_pledged", '2' );
+		$this->add_plugin_option( "price_currency", 'usd' );
+		$this->add_plugin_option( "content_paywall", 'transactions' );
+		$this->add_plugin_option( "content_offset_type", 'paragraphs' );
 		$this->check_api_key_exists();
 		$this->check_prop();
 
@@ -91,17 +91,17 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return bool
 	 */
 	public function check_api_key_exists() {
-		$key = $this->get_plugin_option('key');
+		$key = $this->get_plugin_option( 'key' );
 		//$site=get_site_url();
 		if (empty($key)) {
 			$key = Adtechmedia_Request::api_key_create(
-				$this->get_plugin_option('website_domain_name'),
-				$this->get_plugin_option('website_url')
+				$this->get_plugin_option( 'website_domain_name' ),
+				$this->get_plugin_option( 'website_url' )
 			);
 			if (empty($key)) {
 				return false;
 			} else {
-				$this->add_plugin_option('key', $key);
+				$this->add_plugin_option( 'key', $key );
 			}
 		}
 		return true;
@@ -112,22 +112,22 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return bool
 	 */
 	public function check_prop() {
-		$key = $this->get_plugin_option('key');
+		$key = $this->get_plugin_option( 'key' );
 		if (!empty($key)) {
-			$id = $this->get_plugin_option('Id');
+			$id = $this->get_plugin_option( 'Id' );
 			if (empty($id)) {
 				$prop = Adtechmedia_Request::property_create(
-					$this->get_plugin_option('website_domain_name'),
-					$this->get_plugin_option('website_url'),
-					$this->get_plugin_option('support_email'),
-					$this->get_plugin_option('country'),
+					$this->get_plugin_option( 'website_domain_name' ),
+					$this->get_plugin_option( 'website_url' ),
+					$this->get_plugin_option( 'support_email' ),
+					$this->get_plugin_option( 'country' ),
 					$key
 				);
 				if ((!isset($prop['Id'])) || empty($prop['Id'])) {
 					return false;
 				} else {
-					$this->add_plugin_option('BuildPath', $prop['BuildPath']);
-					$this->add_plugin_option('Id', $prop['Id']);
+					$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
+					$this->add_plugin_option( 'Id', $prop['Id'] );
 					$this->update_prop();
 				}
 			}
@@ -217,7 +217,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * (i.e. the page for setting options)
 	 */
 	protected function get_settings_slug() {
-		return get_class($this) . 'Settings';
+		return get_class( $this ) . 'Settings';
 	}
 
 	protected function add_settings_sub_menu_page_to_plugins_menu() {
@@ -274,7 +274,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
 	 */
 	public function get_ajax_url( $actionName ) {
-		return admin_url('admin-ajax.php') . '?action=' . $actionName;
+		return admin_url( 'admin-ajax.php' ) . '?action=' . $actionName;
 	}
 
 }

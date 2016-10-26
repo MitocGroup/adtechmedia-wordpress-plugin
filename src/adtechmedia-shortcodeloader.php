@@ -30,7 +30,7 @@ abstract class Adtechmedia_ShortCodeLoader {
 	 * @return void
 	 */
 	public function register( $shortcodeName ) {
-		$this->register_shortcode_to_function($shortcodeName, 'handle_shortcode');
+		$this->register_shortcode_to_function( $shortcodeName, 'handle_shortcode' );
 	}
 
 	/**
@@ -43,12 +43,12 @@ abstract class Adtechmedia_ShortCodeLoader {
 	 * @return void
 	 */
 	protected function register_shortcode_to_function( $shortcode_name, $function_name ) {
-		if (is_array($shortcode_name)) {
+		if (is_array( $shortcode_name )) {
 			foreach ($shortcode_name as $a_name) {
-				add_shortcode($a_name, array( $this, $function_name ));
+				add_shortcode( $a_name, array( $this, $function_name ) );
 			}
 		} else {
-			add_shortcode($shortcode_name, array( $this, $function_name ));
+			add_shortcode( $shortcode_name, array( $this, $function_name ) );
 		}
 	}
 

@@ -32,17 +32,17 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 	var $do_add_acript;
 
 	public function register( $shortcodeName ) {
-		$this->register_shortcode_to_function($shortcodeName, 'handle_shortcode_wrapper');
+		$this->register_shortcode_to_function( $shortcodeName, 'handle_shortcode_wrapper' );
 
 		// It will be too late to enqueue the script in the header,
 		// but can add them to the footer
-		add_action('wp_footer', array( $this, 'add_script_wrapper' ));
+		add_action( 'wp_footer', array( $this, 'add_script_wrapper' ) );
 	}
 
 	public function handle_shortcode_wrapper( $atts ) {
 		// Flag that we need to add the script
 		$this->do_add_acript = true;
-		return $this->handle_shortcode($atts);
+		return $this->handle_shortcode( $atts );
 	}
 
 

@@ -25,7 +25,7 @@ class Adtechmedia_Request {
 			"Content" => $content,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/content/create',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/content/create',
 			'PUT',
 			[ 'X-Api-Key' => $key ],
 			$data,
@@ -70,7 +70,7 @@ class Adtechmedia_Request {
 			"Offset" => $offset,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/content/retrieve',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/content/retrieve',
 			'GET',
 			[ 'X-Api-Key' => $key ],
 			$data,
@@ -88,10 +88,10 @@ class Adtechmedia_Request {
 		if (empty($key)) {
 			return false;
 		}
-		$list = get_transient('adtechmedia-supported-countries');
+		$list = get_transient( 'adtechmedia-supported-countries' );
 		if ($list === false) {
 			$response = self::make(
-				Adtechmedia_Config::get('api_end_point') . 'atm-admin/property/supported-countries',
+				Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/supported-countries',
 				'GET',
 				[ 'X-Api-Key' => $key ],
 				null,
@@ -103,7 +103,7 @@ class Adtechmedia_Request {
 			} else {
 				$list = false;
 			}
-			set_transient('adtechmedia-supported-countries', $list, 1);
+			set_transient( 'adtechmedia-supported-countries', $list, 1 );
 		}
 
 		return $list;
@@ -120,7 +120,7 @@ class Adtechmedia_Request {
 			"Hostname" => $host,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/api-gateway-key/create',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/api-gateway-key/create',
 			'PUT',
 			[ ],
 			$data,
@@ -148,7 +148,7 @@ class Adtechmedia_Request {
 			"Hostname" => $host,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/api-gateway-key/update',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/api-gateway-key/update',
 			'POST',
 			[ ],
 			$data,
@@ -225,7 +225,7 @@ class Adtechmedia_Request {
 					'selector' => $selector,
 					"offset" => $content_offset,
 					'lock' => $content_lock,
-					"offsetType" => self::get_offset_type($offset_type),
+					"offsetType" => self::get_offset_type( $offset_type ),
 					'authorCb' => "function(onReady) {
                     var name = document.querySelector('.entry-footer .author .url');
                     var avatar = document.querySelector('.entry-footer .author img');
@@ -248,7 +248,7 @@ class Adtechmedia_Request {
 					"price" => $price,
 					"pledged" => $payment_pledged,
 					"currency" => $currency,
-					"pledgedType" => self::get_pledged_type($pledged_type),
+					"pledgedType" => self::get_pledged_type( $pledged_type ),
 				],
 				/*"templates"=>[
 					"modalComponent"=>"PGRpdiBjbGFzcz0iYXRtLXRhcmdldGVkLW1vZGFsIj4KICAgIDxzbG90IG5hbWU9ImNvbnRlbnQiPgogICAgICAgIDxkaXYgY2xhc3M9ImF0bS1ub3RpZmljYXRpb25zLWNvbnRhaW5lciI+CiAgICAgICAgICAgIDxub3RpZmljYXRpb25zPjwvbm90aWZpY2F0aW9ucz4KICAgICAgICA8L2Rpdj4KICAgICAgICA8ZGl2IGNsYXNzPSJhdG0taGVhZC1tb2RhbCI+CiAgICAgICAgICAgIDxkaXYgdi1pZj0iIXNob3dNb2RhbEJvZHkgfHwgc21hbGwiIGNsYXNzPSJhdG0tbW9kYWwtaGVhZGluZyI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJmbGV4LXJvdyBhbGlnbi1jZW50ZXIiPgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImZsZXgtaXRlbS0xIGF2YXRhci1zbSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxhdXRob3Igc21hbGw9InRydWUiIHYtYmluZDphdXRob3I9ImF1dGhvciI+PC9hdXRob3I+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgPGRpdiB2LWJpbmQ6Y2xhc3M9IlsgJ2F0bS1oZWFkaW5nLWluZm8nLCB7ICdmbGV4LWl0ZW0tMTAnOiAhc21hbGwsICdmbGV4LWl0ZW0tMTEnOiBzbWFsbCB9IF0iPgogICAgICAgICAgICAgICAgICAgICAgICA8c2xvdCBuYW1lPSJoZWFkaW5nIj48L3Nsb3Q+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgPGRpdiB2LWlmPSIhc21hbGwgJiYgIXNob3dNb2RhbEJvZHkiIGNsYXNzPSJmbGV4LWl0ZW0tMSB0ZXh0LXJpZ2h0Ij4KICAgICAgICAgICAgICAgICAgICAgICAgPGkgdi1vbjpjbGljay5zdG9wLnByZXZlbnQ9InNob3dNb2RhbEJvZHkgPSAhc2hvd01vZGFsQm9keSIgY2xhc3M9ImF0bS1vcGVuLW1vZGFsIGF0bS1vcGVuLW1vZGFsLWFjdGlvbiBmYSBmYS1hbmdsZS1jaXJjbGVkLWRvd24iIGFyaWEtaGlkZGVuPSJ0cnVlIj48L2k+CiAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDxkaXYgdi1pZj0ic2hvd01vZGFsQm9keSAmJiAhc21hbGwiIGNsYXNzPSJhdG0tbW9kYWwtYm9keSI+CiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJhdG0tYmFzZS1tb2RhbCI+CiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iYXRtLXNpZGViYXItbGVmdCI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzbG90IG5hbWU9InNpZGViYXJMZWZ0Ij4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxhdXRob3Igdi1iaW5kOmF1dGhvcj0iYXV0aG9yIj48L2F1dGhvcj4KICAgICAgICAgICAgICAgICAgICAgICAgPC9zbG90PgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImF0bS1tYWluIj4KICAgICAgICAgICAgICAgICAgICAgICAgPHNsb3QgbmFtZT0ibWFpbiI+PC9zbG90PgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImF0bS1wYXkgYXRtLW1haW4tYWRkaXRpb24iPgogICAgICAgICAgICAgICAgICAgICAgICA8c2xvdCBuYW1lPSJhZGRpdGlvbiI+PC9zbG90PgogICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8ZGl2IHYtaWY9IiFub0Zvb3RlciIgY2xhc3M9ImF0bS1mb290ZXIiPgogICAgICAgICAgICAgICAgICAgICAgICA8c2xvdCBuYW1lPSJmb290ZXIiPjwvc2xvdD4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICA8L3Nsb3Q+CjwvZGl2Pgo=",
@@ -302,7 +302,7 @@ class Adtechmedia_Request {
 
 
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/property/update-config',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/update-config',
 			'PATCH',
 			[ 'X-Api-Key' => $key ],
 			$data,
@@ -335,7 +335,7 @@ class Adtechmedia_Request {
 			"Country" => $country,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get('api_end_point') . 'atm-admin/property/create',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/create',
 			'PUT',
 			[ 'X-Api-Key' => $key ],
 			$data,
@@ -360,23 +360,23 @@ class Adtechmedia_Request {
 	 * @return array|bool|mixed|object
 	 */
 	public static function make( $url, $method = 'GET', $headers = [ ], $body = [ ], $excepted_params = [ ] ) {
-		$max_time = ini_get("max_execution_time");
-		set_time_limit(0);
-		$headers = array_merge([ 'Content-Type' => 'application/json' ], $headers);
+		$max_time = ini_get( "max_execution_time" );
+		set_time_limit( 0 );
+		$headers = array_merge( [ 'Content-Type' => 'application/json' ], $headers );
 
-		$min_delay = Adtechmedia_Config::get('minDelay');
-		$factor = Adtechmedia_Config::get('factor');
-		$max_tries = Adtechmedia_Config::get('maxTries');
+		$min_delay = Adtechmedia_Config::get( 'minDelay' );
+		$factor = Adtechmedia_Config::get( 'factor' );
+		$max_tries = Adtechmedia_Config::get( 'maxTries' );
 		$tries = 0;
 		$delay = $min_delay;
 
 		if ($method == 'GET') {
-			if (count($body) > 0) {
-				$url .= '?' . http_build_query($body);
+			if (count( $body ) > 0) {
+				$url .= '?' . http_build_query( $body );
 				$body = null;
 			}
 		} else {
-			$body = json_encode($body);
+			$body = json_encode( $body );
 		}
 		while ($tries < $max_tries) {
 
@@ -384,15 +384,15 @@ class Adtechmedia_Request {
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
-			if (self::check_response($response, $excepted_params)) {
-				set_time_limit($max_time);
-				return json_decode($response['body'], true);
+			if (self::check_response( $response, $excepted_params )) {
+				set_time_limit( $max_time );
+				return json_decode( $response['body'], true );
 			}
 			$tries++;
 			$delay *= $factor;
-			usleep($delay);
+			usleep( $delay );
 		}
-		set_time_limit($max_time);
+		set_time_limit( $max_time );
 		return false;
 	}
 
@@ -402,18 +402,18 @@ class Adtechmedia_Request {
 	 * @return bool
 	 */
 	private static function check_response( $response, $params ) {
-		$logfile = plugin_dir_path(__FILE__) . '/http_requests_2.txt';//todo remove logging
-		$output = "\n\n" . date('h:i:s') . "\n" . print_r($response, true) . "\n";
+		$logfile = plugin_dir_path( __FILE__ ) . '/http_requests_2.txt';//todo remove logging
+		$output = "\n\n" . date( 'h:i:s' ) . "\n" . print_r( $response, true ) . "\n";
 
-		file_put_contents($logfile, $output . PHP_EOL . PHP_EOL, FILE_APPEND);
-		if (is_wp_error($response)) {
+		file_put_contents( $logfile, $output . PHP_EOL . PHP_EOL, FILE_APPEND );
+		if (is_wp_error( $response )) {
 			/*if (WP_DEBUG) {
 				echo '<pre>' . print_r($response->get_error_message(), true) . '</pre>';
 			}*/
 			return false;
 		}
 		if (isset($response['body'])) {
-			$body = json_decode($response['body'], true);
+			$body = json_decode( $response['body'], true );
 		} else {
 			return false;
 		}
