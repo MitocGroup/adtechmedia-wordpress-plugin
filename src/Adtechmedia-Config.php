@@ -1,11 +1,10 @@
 <?php
 /**
- * Plugin config file
+ * Adtechmedia_Config File Doc Comment
  *
  * @category Class
  * @package  Adtechmedia_Plugin
  * @author    yama-gs
- *
  */
 class Adtechmedia_Config {
 
