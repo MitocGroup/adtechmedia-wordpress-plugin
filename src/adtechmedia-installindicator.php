@@ -19,7 +19,7 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-include_once('Adtechmedia_OptionsManager.php');
+include_once('adtechmedia-optionsmanager.php');
 
 class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 

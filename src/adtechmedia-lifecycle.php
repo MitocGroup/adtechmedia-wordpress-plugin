@@ -19,7 +19,7 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-include_once('Adtechmedia_InstallIndicator.php');
+include_once('adtechmedia-installindicator.php');
 
 class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 

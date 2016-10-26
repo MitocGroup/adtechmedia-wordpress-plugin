@@ -85,9 +85,9 @@ add_action('plugins_loadedi', 'Adtechmedia_i18n_init');
 // If it is successful, continue with initialization for this plugin
 if (Adtechmedia_PhpVersionCheck()) {
 
-	include_once('adtechmedia_init.php');
-	include_once('Adtechmedia_Request.php');
-	include_once('Adtechmedia-Config.php');
-	include_once('Adtechmedia_ContentManager.php');
+	include_once('adtechmedia-init.php');
+	include_once('adtechmedia-request.php');
+	include_once('adtechmedia-config.php');
+	include_once('adtechmedia-contentmanager.php');
 	Adtechmedia_init(__FILE__);
 }

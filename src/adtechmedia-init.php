@@ -21,7 +21,7 @@
 
 function Adtechmedia_init( $file ) {
 
-	require_once('Adtechmedia_Plugin.php');
+	require_once('adtechmedia-plugin.php');
 	$adtechmedia_plugin = new Adtechmedia_Plugin();
 
 	// Install the plugin

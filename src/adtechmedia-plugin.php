@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('Adtechmedia_LifeCycle.php');
+include_once('adtechmedia-lifecycle.php');
 
 class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 

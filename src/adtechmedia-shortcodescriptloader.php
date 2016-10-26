@@ -19,7 +19,7 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-include_once('Adtechmedia_ShortCodeLoader.php');
+include_once('adtechmedia-shortcodeloader.php');
 
 /**
  * Adapted from this excellent article:

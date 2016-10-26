@@ -1,6 +1,5 @@
 <?php
 /**
- * @file
  * Adtechmedia_Config
  *
  * @category Class
