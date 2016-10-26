@@ -1,18 +1,10 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: yama_gs
- * Date: 17.10.2016
- * Time: 14:01
+ * @file Plugin config file
+ * @package Adtechmedia_Plugin
  */
 
-/**
- * @file
- * Plugin config file
- */
-class Adtechmedia_Config
-{
+class Adtechmedia_Config {
 
     /**
      * @var array plugin config
@@ -30,8 +22,7 @@ class Adtechmedia_Config
      * @param $name
      * @return mixed
      */
-    public static function get($name)
-    {
+    public static function get($name) {
         return self::$conf[$name];
     }
 }
