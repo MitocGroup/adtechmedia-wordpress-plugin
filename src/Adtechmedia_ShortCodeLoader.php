@@ -20,46 +20,43 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-abstract class Adtechmedia_ShortCodeLoader
-{
+abstract class Adtechmedia_ShortCodeLoader {
 
-    /**
-     * @param  $shortcodeName mixed either string name of the shortcode
-     * (as it would appear in a post, e.g. [shortcodeName])
-     * or an array of such names in case you want to have more than one name
-     * for the same shortcode
-     * @return void
-     */
-    public function register($shortcodeName)
-    {
-        $this->register_shortcode_to_function($shortcodeName, 'handle_shortcode');
-    }
+	/**
+	 * @param  $shortcodeName mixed either string name of the shortcode
+	 * (as it would appear in a post, e.g. [shortcodeName])
+	 * or an array of such names in case you want to have more than one name
+	 * for the same shortcode
+	 * @return void
+	 */
+	public function register( $shortcodeName ) {
+		$this->register_shortcode_to_function($shortcodeName, 'handle_shortcode');
+	}
 
-    /**
-     * @param  $shortcode_name mixed either string name of the shortcode
-     * (as it would appear in a post, e.g. [shortcodeName])
-     * or an array of such names in case you want to have more than one name
-     * for the same shortcode
-     * @param  $function_name string name of public function in this class to call as the
-     * shortcode handler
-     * @return void
-     */
-    protected function register_shortcode_to_function($shortcode_name, $function_name)
-    {
-        if (is_array($shortcode_name)) {
-            foreach ($shortcode_name as $a_name) {
-                add_shortcode($a_name, array($this, $function_name));
-            }
-        } else {
-            add_shortcode($shortcode_name, array($this, $function_name));
-        }
-    }
+	/**
+	 * @param  $shortcode_name mixed either string name of the shortcode
+	 * (as it would appear in a post, e.g. [shortcodeName])
+	 * or an array of such names in case you want to have more than one name
+	 * for the same shortcode
+	 * @param  $function_name string name of public function in this class to call as the
+	 * shortcode handler
+	 * @return void
+	 */
+	protected function register_shortcode_to_function( $shortcode_name, $function_name ) {
+		if (is_array($shortcode_name)) {
+			foreach ($shortcode_name as $a_name) {
+				add_shortcode($a_name, array( $this, $function_name ));
+			}
+		} else {
+			add_shortcode($shortcode_name, array( $this, $function_name ));
+		}
+	}
 
-    /**
-     * @abstract Override this function and add actual shortcode handling here
-     * @param  $atts shortcode inputs
-     * @return string shortcode content
-     */
-    public abstract function handle_shortcode($atts);
+	/**
+	 * @abstract Override this function and add actual shortcode handling here
+	 * @param  $atts shortcode inputs
+	 * @return string shortcode content
+	 */
+	public abstract function handle_shortcode( $atts );
 
 }

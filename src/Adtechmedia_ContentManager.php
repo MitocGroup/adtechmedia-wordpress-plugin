@@ -13,7 +13,7 @@ class Adtechmedia_ContentManager {
 	 */
 	private static function get_cache_table_name() {
 		global $wpdb;
-		return  $wpdb->prefix . Adtechmedia_Config::get( 'plugin_cache_table_name' );
+		return $wpdb->prefix . Adtechmedia_Config::get('plugin_cache_table_name');
 	}
 
 	/**
@@ -25,10 +25,10 @@ class Adtechmedia_ContentManager {
 		$ret_val = null;
 		$table_name = self::get_cache_table_name();
 		$row = $wpdb->get_row(
-			$wpdb->prepare( "SELECT value FROM $table_name WHERE item_id = %s LIMIT 1", $id )
+			$wpdb->prepare("SELECT value FROM $table_name WHERE item_id = %s LIMIT 1", $id)
 		);
 
-		if ( is_object( $row ) ) {
+		if (is_object($row)) {
 			$ret_val = $row->value;
 		}
 
@@ -65,9 +65,10 @@ class Adtechmedia_ContentManager {
 			)
 		);
 	}
+
 	public static function clear_all_content() {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
-		$wpdb->query( "UPDATE `$table_name` SET  `value` = '' " );
+		$wpdb->query("UPDATE `$table_name` SET  `value` = '' ");
 	}
 }

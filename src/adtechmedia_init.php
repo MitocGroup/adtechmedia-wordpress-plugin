@@ -19,35 +19,34 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-function Adtechmedia_init($file)
-{
+function Adtechmedia_init( $file ) {
 
-    require_once('Adtechmedia_Plugin.php');
-    $adtechmedia_plugin = new Adtechmedia_Plugin();
+	require_once('Adtechmedia_Plugin.php');
+	$adtechmedia_plugin = new Adtechmedia_Plugin();
 
-    // Install the plugin
-    // NOTE: this file gets run each time you *activate* the plugin.
-    // So in WP when you "install" the plugin, all that does it dump its files in the plugin-templates directory
-    // but it does not call any of its code.
-    // So here, the plugin tracks whether or not it has run its install operation, and we ensure it is run only once
-    // on the first activation
-    if (!$adtechmedia_plugin->is_installed()) {
-        $adtechmedia_plugin->install();
-    } else {
-        // Perform any version-upgrade activities prior to activation (e.g. database changes)
-        $adtechmedia_plugin->upgrade();
-    }
+	// Install the plugin
+	// NOTE: this file gets run each time you *activate* the plugin.
+	// So in WP when you "install" the plugin, all that does it dump its files in the plugin-templates directory
+	// but it does not call any of its code.
+	// So here, the plugin tracks whether or not it has run its install operation, and we ensure it is run only once
+	// on the first activation
+	if (!$adtechmedia_plugin->is_installed()) {
+		$adtechmedia_plugin->install();
+	} else {
+		// Perform any version-upgrade activities prior to activation (e.g. database changes)
+		$adtechmedia_plugin->upgrade();
+	}
 
-    // Add callbacks to hooks
-    $adtechmedia_plugin->add_actions_and_filters();
+	// Add callbacks to hooks
+	$adtechmedia_plugin->add_actions_and_filters();
 
-    if (!$file) {
-        $file = __FILE__;
-    }
-    // Register the Plugin Activation Hook
-    register_activation_hook($file, array(&$adtechmedia_plugin, 'activate'));
+	if (!$file) {
+		$file = __FILE__;
+	}
+	// Register the Plugin Activation Hook
+	register_activation_hook($file, array( &$adtechmedia_plugin, 'activate' ));
 
 
-    // Register the Plugin Deactivation Hook
-    register_deactivation_hook($file, array(&$adtechmedia_plugin, 'deactivate'));
+	// Register the Plugin Deactivation Hook
+	register_deactivation_hook($file, array( &$adtechmedia_plugin, 'deactivate' ));
 }

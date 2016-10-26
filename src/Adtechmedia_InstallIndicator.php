@@ -19,7 +19,7 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-include_once( 'Adtechmedia_OptionsManager.php' );
+include_once('Adtechmedia_OptionsManager.php');
 
 class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 
@@ -31,7 +31,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool indicating if the plugin is installed already
 	 */
 	public function is_installed() {
-		return $this->get_option( self::OPTION_INSTALLED ) == true;
+		return $this->get_option(self::OPTION_INSTALLED) == true;
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function mark_as_installed() {
-		return $this->update_option( self::OPTION_INSTALLED, true );
+		return $this->update_option(self::OPTION_INSTALLED, true);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * false implies it was not.
 	 */
 	protected function mark_as_un_installed() {
-		return $this->delete_option( self::OPTION_INSTALLED );
+		return $this->delete_option(self::OPTION_INSTALLED);
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function get_version_saved() {
-		return $this->get_option( self::OPTION_VERSION );
+		return $this->get_option(self::OPTION_VERSION);
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return null
 	 */
 	protected function set_version_saved( $version ) {
-		return $this->update_option( self::OPTION_VERSION, $version );
+		return $this->update_option(self::OPTION_VERSION, $version);
 	}
 
 	/**
@@ -82,7 +82,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * "Plugin Name", "Version", "Description", "Text Domain", etc.
 	 */
 	protected function get_main_plugin_file_name() {
-		return basename( dirname( __FILE__ ) ) . 'php';
+		return basename(dirname(__FILE__)) . 'php';
 	}
 
 	/**
@@ -94,10 +94,10 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 */
 	public function get_plugin_header_value( $key ) {
 		// Read the string from the comment header of the main plugin file
-		$data = file_get_contents( $this->get_plugin_dir() . DIRECTORY_SEPARATOR . $this->get_main_plugin_file_name() );
+		$data = file_get_contents($this->get_plugin_dir() . DIRECTORY_SEPARATOR . $this->get_main_plugin_file_name());
 		$match = array();
-		preg_match( '/' . $key . ':\s*(\S+)/', $data, $match );
-		if ( count( $match ) >= 1 ) {
+		preg_match('/' . $key . ':\s*(\S+)/', $data, $match);
+		if (count($match) >= 1) {
 			return $match[1];
 		}
 		return null;
@@ -111,7 +111,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return string
 	 */
 	protected function get_plugin_dir() {
-		return dirname( __FILE__ );
+		return dirname(__FILE__);
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return string
 	 */
 	public function get_version() {
-		return $this->get_plugin_header_value( 'Version' );
+		return $this->get_plugin_header_value('Version');
 	}
 
 
@@ -137,7 +137,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * should be taken. Assumes that version string comparable by version_compare, examples: '1', '1.1', '1.1.1', '2.0', etc.
 	 */
 	public function is_installed_code_an_upgrade() {
-		return $this->is_saved_version_less_than( $this->get_version() );
+		return $this->is_saved_version_less_than($this->get_version());
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function is_saved_version_less_than( $a_version ) {
-		return $this->is_version_less_than( $this->get_version_saved(), $a_version );
+		return $this->is_version_less_than($this->get_version_saved(), $a_version);
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function is_saved_version_less_than_equal( $a_version ) {
-		return $this->is_version_less_than_equal( $this->get_version_saved(), $a_version );
+		return $this->is_version_less_than_equal($this->get_version_saved(), $a_version);
 	}
 
 	/**
@@ -170,7 +170,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as the same or earlier
 	 */
 	public function is_version_less_than_equal( $version1, $version2 ) {
-		return (version_compare( $version1, $version2 ) <= 0);
+		return (version_compare($version1, $version2) <= 0);
 	}
 
 	/**
@@ -179,7 +179,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as earlier
 	 */
 	public function is_version_less_than( $version1, $version2 ) {
-		return (version_compare( $version1, $version2 ) < 0);
+		return (version_compare($version1, $version2) < 0);
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return void
 	 */
 	protected function save_installed_version() {
-		$this->set_version_saved( $this->get_version() );
+		$this->set_version_saved($this->get_version());
 	}
 
 
