@@ -157,6 +157,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // Add options administration page
         // http://plugin.michael-simpson.com/?page_id=47
         add_action('admin_menu', array(&$this, 'addSettingsSubMenuPage'));
+        $propertyId = $this->getPluginOption('id');
+        $key = $this->getPluginOption('key');
+
 
         // Example adding a script & style just for the options administration page
         // http://plugin.michael-simpson.com/?page_id=47
@@ -169,14 +172,30 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // Add Actions & Filters
         // http://plugin.michael-simpson.com/?page_id=37
 
-        if (!is_admin()) {
-            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScripts'));
-        } else {
+        if (is_admin()) {
             add_action('admin_enqueue_scripts', array(&$this, 'addAdtechmediaAdminScripts'));
         }
-        add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
         add_action('save_post', array(&$this, 'clearCacheOnUpdate'));
-        add_filter( 'http_response',  array(&$this,'wp_log_http_requests'), 10, 3 );
+        add_filter('http_response', array(&$this, 'wp_log_http_requests'), 10, 3);//todo remove this
+        if (!is_admin() && (empty($key) || empty($propertyId))) {
+            return;
+        }
+        if (strpos($_SERVER['REQUEST_URI'], $this->getSettingsSlug()) !== false) {
+            $keyCheck = $this->checkApiKeyExists();
+            $propertyCheck = $this->checkProp();
+
+            if (!$keyCheck) {
+                add_action('admin_notices', array(&$this, 'keyNotExistsError'));
+            }
+            if (!$propertyCheck) {
+                add_action('admin_notices', array(&$this, 'propertyIdNotExistsError'));
+            }
+        }
+        if (!is_admin()) {
+            add_action('wp_enqueue_scripts', array(&$this, 'addAdtechmediaScripts'));
+        }
+        add_filter('the_content', array(&$this, 'hideContent'), 99999);//try do this after any other filter
+
         // Adding scripts & styles to all pages
         // Examples:
         //        wp_enqueue_script('jquery');
@@ -192,9 +211,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // http://plugin.michael-simpson.com/?page_id=41
 
     }
-public function wp_log_http_requests( $response, $args, $url ) {
+
+    public function wp_log_http_requests($response, $args, $url)
+    {
         // set your log file location here
-        $logfile = plugin_dir_path( __FILE__ ) . '/http_requests.txt';
+        $logfile = plugin_dir_path(__FILE__) . '/http_requests.txt';
         // parse request and response body to a hash for human readable log output
         //$log_response = $response;
         /*if ( isset( $args['body'] ) ) {
@@ -204,26 +225,25 @@ public function wp_log_http_requests( $response, $args, $url ) {
             parse_str( $log_response['body'], $log_response['body_parsed'] );
         }*/
         // write into logfile
-    $output = 'Request on ' . date( 'c' ) . PHP_EOL;
-    $output .= 'Url: ' . $url . PHP_EOL;
-    $output .= " - Method:". $args['method'] . PHP_EOL;
-$output .= ' - Headers:' . PHP_EOL;
+        $output = 'Request on ' . date('c') . PHP_EOL;
+        $output .= 'Url: ' . $url . PHP_EOL;
+        $output .= " - Method:" . $args['method'] . PHP_EOL;
+        $output .= ' - Headers:' . PHP_EOL;
 
-foreach ($args['headers'] as $key => $value) {
-    $output .= "   - $key: $value" . PHP_EOL;
-}
+        foreach ($args['headers'] as $key => $value) {
+            $output .= "   - $key: $value" . PHP_EOL;
+        }
 
-$output .= 'Response' . PHP_EOL;
-$output .= ' - Headers:' . PHP_EOL;
+        $output .= 'Response' . PHP_EOL;
+        $output .= ' - Headers:' . PHP_EOL;
 
-foreach ($response['headers'] as $key => $value) {
-    $output .= "   - $key: $value" . PHP_EOL;
-}
+        foreach ($response['headers'] as $key => $value) {
+            $output .= "   - $key: $value" . PHP_EOL;
+        }
         //file_put_contents( $logfile, sprintf( "### %s, URL: %s\nREQUEST: %sRESPONSE: %s\n", date( 'c' ), $url, print_r( $args, true ), print_r( $log_response, true ) ), FILE_APPEND );
-        file_put_contents( $logfile, $output.PHP_EOL.PHP_EOL, FILE_APPEND );
+        file_put_contents($logfile, $output . PHP_EOL . PHP_EOL, FILE_APPEND);
         return $response;
     }
-// hook into WP_Http::_dispatch_request()
 
     /**
      *
@@ -239,9 +259,12 @@ foreach ($response['headers'] as $key => $value) {
         );
         wp_enqueue_style('adtechmedia-style-main', plugins_url('/css/main.css', __FILE__));
         wp_enqueue_script('jquery-ui-tabs');
-        wp_enqueue_script('adtechmedia-admin-js',
-            plugins_url('/js/main.js', __FILE__),['jquery-ui-tabs']);
-        wp_enqueue_script('adtechmedia-tinymce-js','//cdn.tinymce.com/4/tinymce.min.js',['adtechmedia-admin-js']);
+        wp_enqueue_script(
+            'adtechmedia-admin-js',
+            plugins_url('/js/main.js', __FILE__),
+            ['jquery-ui-tabs']
+        );
+        wp_enqueue_script('adtechmedia-tinymce-js', '//cdn.tinymce.com/4/tinymce.min.js', ['adtechmedia-admin-js']);
     }
 
     /**
@@ -315,5 +338,35 @@ foreach ($response['headers'] as $key => $value) {
                     window.ATM_CONTENT_PRELOADED = true;
                     </script>";
         return "<span id='content-for-atm'>$content</span>" . $script;
+    }
+
+    /**
+     *
+     */
+    public function propertyIdNotExistsError()
+    {
+        ?>
+        <div class="error notice">
+            <p><?php _e(
+                    'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+                    'adtechmedia'
+                ); ?></p>
+        </div>
+        <?php
+    }
+
+    /**
+     *
+     */
+    public function keyNotExistsError()
+    {
+        ?>
+        <div class="error notice">
+            <p><?php _e(
+                    'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+                    'adtechmedia'
+                ); ?></p>
+        </div>
+        <?php
     }
 }

@@ -68,8 +68,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $website = get_home_url();
         $name = preg_replace('/https?:\/\//', '', $website);
         $admin_email = get_option('admin_email');
-        $this->checkApiKeyExists();
-        $this->checkProp();
         $this->addPluginOption('container', "#content-for-atm");
         $this->addPluginOption('selector', "p");
         $this->addPluginOption('price', "5");
@@ -87,11 +85,13 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->addPluginOption("price_currency", 'usd');
         $this->addPluginOption("content_paywall", 'transactions');
         $this->addPluginOption("content_offset_type", 'paragraphs');
-        $this->updateProp();
+        $this->checkApiKeyExists();
+        $this->checkProp();
+
     }
 
     /**
-     *
+     * @return bool
      */
     public function checkApiKeyExists()
     {
@@ -102,27 +102,41 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
                 $this->getPluginOption('website_domain_name'),
                 $this->getPluginOption('website_url')
             );
-            $this->addPluginOption('key', $key);
+            if (empty($key)) {
+                return false;
+            } else {
+                $this->addPluginOption('key', $key);
+            }
         }
+        return true;
     }
 
+
     /**
-     *
+     * @return bool
      */
     public function checkProp()
     {
-
-
-        $prop = Adtechmedia_Request::propertyCreate(
-            $this->getPluginOption('website_domain_name'),
-            $this->getPluginOption('website_url'),
-            $this->getPluginOption('support_email'),
-            $this->getPluginOption('country'),
-            $this->getPluginOption('key')
-        );
-        $this->addPluginOption('BuildPath', $prop['BuildPath']);
-        $this->addPluginOption('Id', $prop['Id']);
+        $key = $this->getPluginOption('key');
+        if (!empty($key)) {
+            $prop = Adtechmedia_Request::propertyCreate(
+                $this->getPluginOption('website_domain_name'),
+                $this->getPluginOption('website_url'),
+                $this->getPluginOption('support_email'),
+                $this->getPluginOption('country'),
+                $key
+            );
+            if ((!isset($prop['Id'])) || empty($prop['Id'])) {
+                return false;
+            } else {
+                $this->addPluginOption('BuildPath', $prop['BuildPath']);
+                $this->addPluginOption('Id', $prop['Id']);
+                $this->updateProp();
+            }
+        }
+        return true;
     }
+
 
     /**
      * See: http://plugin.michael-simpson.com/?page_id=105

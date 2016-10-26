@@ -18,6 +18,9 @@ class Adtechmedia_Request
      */
     public static function contentCreate($contentId, $propertyId, $content, $key)
     {
+        if(empty($key)){
+            return false;
+        }
         $data = [
             "ContentId" => $contentId,
             "PropertyId" => $propertyId,
@@ -57,6 +60,9 @@ class Adtechmedia_Request
         $offset,
         $key
     ) {
+        if(empty($key)){
+            return false;
+        }
         $data = [
             "ContentId" => $contentId,
             "PropertyId" => $propertyId,
@@ -82,6 +88,9 @@ class Adtechmedia_Request
 
     public static function getCountriesList($key)
     {
+        if(empty($key)){
+            return false;
+        }
         $list = get_transient('adtechmedia-supported-countries');
         if ($list === false) {
             $response = self::make(
@@ -205,7 +214,9 @@ class Adtechmedia_Request
         $currency,
         $pledgedType
     ) {
-
+        if(empty($key)){
+            return false;
+        }
         $data = [
             "Id" => $id,
             "ConfigDefaults" => [
@@ -315,6 +326,9 @@ class Adtechmedia_Request
      */
     public static function propertyCreate($name, $website, $supportEmail, $country, $key)
     {
+        if(empty($key)){
+            return false;
+        }
         $data = [
             "Name" => $name,
             "Website" => $website,
@@ -348,6 +362,8 @@ class Adtechmedia_Request
      */
     public static function make($url, $method = 'GET', $headers = [], $body = [], $exceptedParams = [])
     {
+        $maxTime = ini_get("max_execution_time");
+        set_time_limit(0);
         $headers = array_merge(['Content-Type' => 'application/json'], $headers);
 
         $minDelay = Adtechmedia_Config::get('minDelay');
@@ -371,12 +387,14 @@ class Adtechmedia_Request
                 ['method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body]
             );
             if (self::checkResponse($response, $exceptedParams)) {
+                set_time_limit($maxTime);
                 return json_decode($response['body'], true);
             }
             $tries++;
             $delay *= $factor;
             usleep($delay);
         }
+        set_time_limit($maxTime);
         return false;
     }
 
@@ -387,7 +405,7 @@ class Adtechmedia_Request
      */
     private static function checkResponse($response, $params)
     {
-        $logfile = plugin_dir_path( __FILE__ ) . '/http_requests_2.txt';
+        $logfile = plugin_dir_path( __FILE__ ) . '/http_requests_2.txt';//todo remove logging
         $output= "\n\n".date('h:i:s') . "\n" .  print_r($response,true). "\n";
 
         file_put_contents( $logfile, $output.PHP_EOL.PHP_EOL, FILE_APPEND );

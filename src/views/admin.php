@@ -9,17 +9,21 @@
 $countriesList = Adtechmedia_Request::getCountriesList($this->getPluginOption('key'));
 $currencies = [];
 $countries = [];
-foreach ($countriesList as $countriesElement) {
-    $countries[$countriesElement['Name']] = $countriesElement['RevenueMethod'];
-    foreach ($countriesElement['Currency'] as $currency) {
-        if (!in_array($currency, $currencies)) {
-            $currencies[] = $currency;
+if(is_array($countriesList)) {
+    foreach ($countriesList as $countriesElement) {
+        $countries[$countriesElement['Name']] = $countriesElement['RevenueMethod'];
+        foreach ($countriesElement['Currency'] as $currency) {
+            if (!in_array($currency, $currencies)) {
+                $currencies[] = $currency;
+            }
         }
     }
 }
-$contentPaywall=['transactions',
-'pledged currency'];
-$contentOffsetTypes=['paragraphs','words'];
+$contentPaywall = [
+    'transactions',
+    'pledged currency'
+];
+$contentOffsetTypes = ['paragraphs', 'words'];
 ?>
 
 <main>
@@ -124,7 +128,7 @@ $contentOffsetTypes=['paragraphs','words'];
                                     <div class="form-select">
                                         <select name="price_currency" id="price_currency">
                                             <?php
-                                            $priceCurrencyValue=$this->getPluginOption('price_currency');
+                                            $priceCurrencyValue = $this->getPluginOption('price_currency');
                                             foreach ($currencies as $currency) {
                                                 echo "<option value='$currency' " .
                                                     (($currency == $priceCurrencyValue) ? 'selected' : '')
@@ -164,11 +168,11 @@ $contentOffsetTypes=['paragraphs','words'];
                                     <div class="form-select">
                                         <select name="content_paywall" id="content_paywall">
                                             <?php
-                                            $contentPaywallValue=$this->getPluginOption('content_paywall');
+                                            $contentPaywallValue = $this->getPluginOption('content_paywall');
                                             foreach ($contentPaywall as $contentPaywallOne) {
                                                 echo "<option value='$contentPaywallOne' " .
                                                     (($contentPaywallOne == $contentPaywallValue) ? 'selected' : '')
-                                                    . " >" .$contentPaywallOne . "</option>";
+                                                    . " >" . $contentPaywallOne . "</option>";
                                             }
                                             ?>
                                         </select>
@@ -201,11 +205,11 @@ $contentOffsetTypes=['paragraphs','words'];
                                     <div class="form-select">
                                         <select name="content_offset_type" id="content_offset_type">
                                             <?php
-                                            $offsetTypeValue=$this->getPluginOption('content_offset_type');
+                                            $offsetTypeValue = $this->getPluginOption('content_offset_type');
                                             foreach ($contentOffsetTypes as $contentOffsetType) {
                                                 echo "<option value='$contentOffsetType' " .
                                                     (($contentOffsetType == $offsetTypeValue) ? 'selected' : '')
-                                                    . " >" .$contentOffsetType . "</option>";
+                                                    . " >" . $contentOffsetType . "</option>";
                                             }
                                             ?>
                                         </select>
