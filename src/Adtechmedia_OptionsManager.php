@@ -144,7 +144,7 @@ class Adtechmedia_OptionsManager
      * @return string the value from delegated call to get_option(), or optional default value
      * if option is not set.
      */
-    public function getOption($optionName, $default = null)
+    public function get_option($optionName, $default = null)
     {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         $retVal = get_option($prefixedOptionName);
@@ -184,7 +184,7 @@ class Adtechmedia_OptionsManager
      * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
      * @return bool from delegated call to delete_option()
      */
-    public function deleteOption($optionName)
+    public function delete_option($optionName)
     {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         return delete_option($prefixedOptionName);
@@ -247,7 +247,7 @@ class Adtechmedia_OptionsManager
      * @param  $value mixed the new value
      * @return null from delegated call to delete_option()
      */
-    public function updateOption($optionName, $value)
+    public function update_option($optionName, $value)
     {
         $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
         return update_option($prefixedOptionName, $value);
@@ -281,7 +281,7 @@ class Adtechmedia_OptionsManager
      */
     public function getRoleOption($optionName)
     {
-        $roleAllowed = $this->getOption($optionName);
+        $roleAllowed = $this->get_option($optionName);
         if (!$roleAllowed || $roleAllowed == '') {
             $roleAllowed = 'Administrator';
         }
@@ -396,7 +396,7 @@ class Adtechmedia_OptionsManager
             $this->getPluginOption("price_currency"),
             $this->getPluginOption("content_paywall")
         );
-        Adtechmedia_ContentManager::clearAllContent();
+        Adtechmedia_ContentManager::clear_all_content();
     }
 
     /**

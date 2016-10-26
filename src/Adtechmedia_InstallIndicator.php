@@ -24,14 +24,14 @@ include_once( 'Adtechmedia_OptionsManager.php' );
 class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 
 
-	const optionInstalled = '_installed';
-	const optionVersion = '_version';
+	const option_installed = '_installed';
+	const option_version = '_version';
 
 	/**
 	 * @return bool indicating if the plugin is installed already
 	 */
-	public function isInstalled() {
-		return $this->getOption( self::optionInstalled ) == true;
+	public function is_installed() {
+		return $this->get_option( self::option_installed ) == true;
 	}
 
 	/**
@@ -39,8 +39,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 *
 	 * @return null
 	 */
-	protected function markAsInstalled() {
-		return $this->updateOption( self::optionInstalled, true );
+	protected function mark_as_installed() {
+		return $this->update_option( self::option_installed, true );
 	}
 
 	/**
@@ -50,8 +50,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * true implies the plugin was installed at the time of this call,
 	 * false implies it was not.
 	 */
-	protected function markAsUnInstalled() {
-		return $this->deleteOption( self::optionInstalled );
+	protected function mark_as_un_installed() {
+		return $this->delete_option( self::option_installed );
 	}
 
 	/**
@@ -61,8 +61,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 *
 	 * @return null
 	 */
-	protected function getVersionSaved() {
-		return $this->getOption( self::optionVersion );
+	protected function get_version_saved() {
+		return $this->get_option( self::option_version );
 	}
 
 	/**
@@ -73,15 +73,15 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * compared using version_compare (http://php.net/manual/en/function.version-compare.php)
 	 * @return null
 	 */
-	protected function setVersionSaved( $version ) {
-		return $this->updateOption( self::optionVersion, $version );
+	protected function set_version_saved( $version ) {
+		return $this->update_option( self::option_version, $version );
 	}
 
 	/**
 	 * @return string name of the main plugin file that has the header section with
 	 * "Plugin Name", "Version", "Description", "Text Domain", etc.
 	 */
-	protected function getMainPluginFileName() {
+	protected function get_main_plugin_file_name() {
 		return basename( dirname( __FILE__ ) ) . 'php';
 	}
 
@@ -92,9 +92,9 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @param $key string plugin header key
 	 * @return string if found, otherwise null
 	 */
-	public function getPluginHeaderValue( $key ) {
+	public function get_plugin_header_value( $key ) {
 		// Read the string from the comment header of the main plugin file
-		$data = file_get_contents( $this->getPluginDir() . DIRECTORY_SEPARATOR . $this->getMainPluginFileName() );
+		$data = file_get_contents( $this->get_plugin_dir() . DIRECTORY_SEPARATOR . $this->get_main_plugin_file_name() );
 		$match = array();
 		preg_match( '/' . $key . ':\s*(\S+)/', $data, $match );
 		if ( count( $match ) >= 1 ) {
@@ -110,7 +110,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 *
 	 * @return string
 	 */
-	protected function getPluginDir() {
+	protected function get_plugin_dir() {
 		return dirname( __FILE__ );
 	}
 
@@ -122,8 +122,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 *
 	 * @return string
 	 */
-	public function getVersion() {
-		return $this->getPluginHeaderValue( 'Version' );
+	public function get_version() {
+		return $this->get_plugin_header_value( 'Version' );
 	}
 
 
@@ -136,8 +136,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * true indicates that new code is installed and this is the first time it is activated, so upgrade actions
 	 * should be taken. Assumes that version string comparable by version_compare, examples: '1', '1.1', '1.1.1', '2.0', etc.
 	 */
-	public function isInstalledCodeAnUpgrade() {
-		return $this->isSavedVersionLessThan( $this->getVersion() );
+	public function is_installed_code_an_upgrade() {
+		return $this->isSavedVersionLessThan( $this->get_version() );
 	}
 
 	/**
@@ -147,7 +147,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function isSavedVersionLessThan( $aVersion ) {
-		return $this->isVersionLessThan( $this->getVersionSaved(), $aVersion );
+		return $this->isVersionLessThan( $this->get_version_saved(), $aVersion );
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function isSavedVersionLessThanEqual( $aVersion ) {
-		return $this->isVersionLessThanEqual( $this->getVersionSaved(), $aVersion );
+		return $this->isVersionLessThanEqual( $this->get_version_saved(), $aVersion );
 	}
 
 	/**
@@ -190,7 +190,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @return void
 	 */
 	protected function saveInstalledVersion() {
-		$this->setVersionSaved( $this->getVersion() );
+		$this->set_version_saved( $this->get_version() );
 	}
 
 

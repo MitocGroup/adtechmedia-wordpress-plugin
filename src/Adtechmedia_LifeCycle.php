@@ -40,7 +40,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->saveInstalledVersion();
 
         // To avoid running install() more then once
-        $this->markAsInstalled();
+        $this->mark_as_installed();
     }
 
     public function uninstall()
@@ -48,7 +48,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $this->otherUninstall();
         $this->unInstallDatabaseTables();
         $this->deleteSavedOptions();
-        $this->markAsUnInstalled();
+        $this->mark_as_un_installed();
     }
 
     /**
@@ -154,7 +154,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
     {
     }
 
-    public function addActionsAndFilters()
+    public function add_actions_and_filters()
     {
     }
 

@@ -88,7 +88,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         return 'Adtechmedia';
     }
 
-    protected function getMainPluginFileName()
+    protected function get_main_plugin_file_name()
     {
         return 'adtechmedia.php';
     }
@@ -151,7 +151,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     /**
      *
      */
-    public function addActionsAndFilters()
+    public function add_actions_and_filters()
     {
 
         // Add options administration page
@@ -285,7 +285,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         if (wp_is_post_revision($postId)) {
             return;
         }
-        Adtechmedia_ContentManager::clearContent($postId);
+        Adtechmedia_ContentManager::clear_content($postId);
     }
 
     /**
@@ -297,7 +297,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 
         if (is_single()) {
             $id = (string)get_the_ID();
-            $savedContent = Adtechmedia_ContentManager::getContent($id);
+            $savedContent = Adtechmedia_ContentManager::get_content($id);
             if (isset($savedContent) && !empty($savedContent)) {
                 return $this->contentWrapper($savedContent);
             } else {
@@ -316,7 +316,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                     $this->getPluginOption('content_offset'),
                     $this->getPluginOption('key')
                 );
-                Adtechmedia_ContentManager::setContent($id, $newContent);
+                Adtechmedia_ContentManager::set_content($id, $newContent);
                 return $this->contentWrapper($newContent);
             }
 
