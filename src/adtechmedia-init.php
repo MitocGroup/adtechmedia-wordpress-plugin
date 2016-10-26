@@ -19,7 +19,7 @@
     If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-function Adtechmedia_init( $file ) {
+function adtechmedia_init( $file ) {
 
 	require_once('adtechmedia-plugin.php');
 	$adtechmedia_plugin = new Adtechmedia_Plugin();
@@ -30,7 +30,7 @@ function Adtechmedia_init( $file ) {
 	// but it does not call any of its code.
 	// So here, the plugin tracks whether or not it has run its install operation, and we ensure it is run only once
 	// on the first activation
-	if (!$adtechmedia_plugin->is_installed()) {
+	if ( ! $adtechmedia_plugin->is_installed() ) {
 		$adtechmedia_plugin->install();
 	} else {
 		// Perform any version-upgrade activities prior to activation (e.g. database changes)
@@ -40,7 +40,7 @@ function Adtechmedia_init( $file ) {
 	// Add callbacks to hooks
 	$adtechmedia_plugin->add_actions_and_filters();
 
-	if (!$file) {
+	if ( ! $file ) {
 		$file = __FILE__;
 	}
 	// Register the Plugin Activation Hook

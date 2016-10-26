@@ -28,7 +28,7 @@ class Adtechmedia_ContentManager {
 			$wpdb->prepare( "SELECT value FROM $table_name WHERE item_id = %s LIMIT 1", $id )
 		);
 
-		if (is_object( $row )) {
+		if ( is_object( $row ) ) {
 			$ret_val = $row->value;
 		}
 

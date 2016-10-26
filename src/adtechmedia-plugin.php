@@ -68,9 +68,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	protected function init_options() {
 
 		$options = $this->get_option_meta_data();
-		if (!empty($options)) {
+		if ( ! empty($options) ) {
 			foreach ($options as $key => $arr) {
-				if (is_array( $arr ) && count( $arr > 1 )) {
+				if ( is_array( $arr ) && count( $arr > 1 ) ) {
 					$this->add_option( $key, $arr[1] );
 				}
 			}
@@ -165,26 +165,26 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// Add Actions & Filters
 		// http://plugin.michael-simpson.com/?page_id=37
 
-		if (is_admin()) {
+		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'add_adtechmedia_admin_scripts' ) );
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
 		add_filter( 'http_response', array( &$this, 'wp_log_http_requests' ), 10, 3 );//todo remove this
-		if (!is_admin() && (empty($key) || empty($property_id))) {
+		if ( ! is_admin() && (empty($key) || empty($property_id)) ) {
 			return;
 		}
-		if (strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false) {
+		if ( strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false ) {
 			$key_check = $this->check_api_key_exists();
 			$property_check = $this->check_prop();
 
-			if (!$key_check) {
+			if ( ! $key_check ) {
 				add_action( 'admin_notices', array( &$this, 'key_not_exists_error' ) );
 			}
-			if (!$property_check) {
+			if ( ! $property_check ) {
 				add_action( 'admin_notices', array( &$this, 'property_id_not_exists_error' ) );
 			}
 		}
-		if (!is_admin()) {
+		if ( ! is_admin() ) {
 			add_action( 'wp_enqueue_scripts', array( &$this, 'add_adtechmedia_scripts' ) );
 		}
 		add_filter( 'the_content', array( &$this, 'hide_content' ), 99999 );//try do this after any other filter
@@ -241,7 +241,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 *
 	 */
 	public function add_adtechmedia_admin_scripts( $hook ) {
-		if ($hook != 'plugins_page_' . $this->get_settings_slug()) {
+		if ( $hook != 'plugins_page_' . $this->get_settings_slug() ) {
 			return;
 		}
 		wp_enqueue_style(
@@ -262,7 +262,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 *
 	 */
 	public function add_adtechmedia_scripts() {
-		if ($script = $this->get_plugin_option( 'BuildPath' )) {
+		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			wp_enqueue_script( 'Adtechmedia', $script, null, null, true );
 		}
 	}
@@ -271,7 +271,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @param $postId
 	 */
 	public function clear_cache_on_update( $postId ) {
-		if (wp_is_post_revision( $postId )) {
+		if ( wp_is_post_revision( $postId ) ) {
 			return;
 		}
 		Adtechmedia_ContentManager::clear_content( $postId );
@@ -283,10 +283,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function hide_content( $content ) {
 
-		if (is_single()) {
+		if ( is_single() ) {
 			$id = (string)get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
-			if (isset($saved_content) && !empty($saved_content)) {
+			if ( isset($saved_content) && ! empty($saved_content) ) {
 				return $this->content_wrapper( $saved_content );
 			} else {
 				Adtechmedia_Request::content_create(

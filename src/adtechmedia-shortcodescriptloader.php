@@ -48,7 +48,7 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 
 	public function add_script_wrapper() {
 		// Only add the script if the shortcode was actually called
-		if ($this->do_add_acript) {
+		if ( $this->do_add_acript ) {
 			$this->add_script();
 		}
 	}

@@ -16,7 +16,7 @@ class Adtechmedia_Request {
 	 * @return bool|mixed
 	 */
 	public static function content_create( $content_id, $property_id, $content, $key ) {
-		if (empty($key)) {
+		if ( empty($key) ) {
 			return false;
 		}
 		$data = [
@@ -32,7 +32,7 @@ class Adtechmedia_Request {
 			[ 'Id' ]
 		);
 
-		if ($response && isset($response['Id'])) {
+		if ( $response && isset($response['Id']) ) {
 			return $response['Id'];
 		} else {
 			return false;
@@ -58,7 +58,7 @@ class Adtechmedia_Request {
 		$offset,
 		$key
 	) {
-		if (empty($key)) {
+		if ( empty($key) ) {
 			return false;
 		}
 		$data = [
@@ -77,7 +77,7 @@ class Adtechmedia_Request {
 			[ 'Content' ]
 		);
 
-		if ($response && isset($response['Content'])) {
+		if ( $response && isset($response['Content']) ) {
 			return $response['Content'];
 		} else {
 			return false;
@@ -85,11 +85,11 @@ class Adtechmedia_Request {
 	}
 
 	public static function get_countries_list( $key ) {
-		if (empty($key)) {
+		if ( empty($key) ) {
 			return false;
 		}
 		$list = get_transient( 'adtechmedia-supported-countries' );
-		if ($list === false) {
+		if ( $list === false ) {
 			$response = self::make(
 				Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/supported-countries',
 				'GET',
@@ -98,7 +98,7 @@ class Adtechmedia_Request {
 				[ 'Countries' ]
 			);
 
-			if ($response && isset($response['Countries'])) {
+			if ( $response && isset($response['Countries']) ) {
 				$list = $response['Countries'];
 			} else {
 				$list = false;
@@ -127,7 +127,7 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ($response && isset($response['Key'])) {
+		if ( $response && isset($response['Key']) ) {
 
 			return $response['Key'];
 		} else {
@@ -155,7 +155,7 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ($response && isset($response['Key'])) {
+		if ( $response && isset($response['Key']) ) {
 
 			return $response['Key'];
 		} else {
@@ -214,7 +214,7 @@ class Adtechmedia_Request {
 		$currency,
 		$pledged_type
 	) {
-		if (empty($key)) {
+		if ( empty($key) ) {
 			return false;
 		}
 		$data = [
@@ -308,7 +308,7 @@ class Adtechmedia_Request {
 			$data,
 			[ 'BuildPath', 'Id' ]
 		);
-		if ($response && isset($response['BuildPath']) && isset($response['Id'])) {
+		if ( $response && isset($response['BuildPath']) && isset($response['Id']) ) {
 
 			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
 		} else {
@@ -325,7 +325,7 @@ class Adtechmedia_Request {
 	 * @return array|bool
 	 */
 	public static function property_create( $name, $website, $support_email, $country, $key ) {
-		if (empty($key)) {
+		if ( empty($key) ) {
 			return false;
 		}
 		$data = [
@@ -343,7 +343,7 @@ class Adtechmedia_Request {
 		);
 
 
-		if ($response && isset($response['BuildPath']) && isset($response['Id'])) {
+		if ( $response && isset($response['BuildPath']) && isset($response['Id']) ) {
 
 			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
 		} else {
@@ -370,8 +370,8 @@ class Adtechmedia_Request {
 		$tries = 0;
 		$delay = $min_delay;
 
-		if ($method == 'GET') {
-			if (count( $body ) > 0) {
+		if ( $method == 'GET' ) {
+			if ( count( $body ) > 0 ) {
 				$url .= '?' . http_build_query( $body );
 				$body = null;
 			}
@@ -384,7 +384,7 @@ class Adtechmedia_Request {
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
-			if (self::check_response( $response, $excepted_params )) {
+			if ( self::check_response( $response, $excepted_params ) ) {
 				set_time_limit( $max_time );
 				return json_decode( $response['body'], true );
 			}
@@ -406,19 +406,19 @@ class Adtechmedia_Request {
 		$output = "\n\n" . date( 'h:i:s' ) . "\n" . print_r( $response, true ) . "\n";
 
 		file_put_contents( $logfile, $output . PHP_EOL . PHP_EOL, FILE_APPEND );
-		if (is_wp_error( $response )) {
+		if ( is_wp_error( $response ) ) {
 			/*if (WP_DEBUG) {
 				echo '<pre>' . print_r($response->get_error_message(), true) . '</pre>';
 			}*/
 			return false;
 		}
-		if (isset($response['body'])) {
+		if ( isset($response['body']) ) {
 			$body = json_decode( $response['body'], true );
 		} else {
 			return false;
 		}
 		foreach ($params as $key) {
-			if (!isset($body[ $key ])) {
+			if ( ! isset($body[ $key ]) ) {
 				return false;
 			}
 		}
