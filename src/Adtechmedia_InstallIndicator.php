@@ -137,7 +137,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * should be taken. Assumes that version string comparable by version_compare, examples: '1', '1.1', '1.1.1', '2.0', etc.
 	 */
 	public function is_installed_code_an_upgrade() {
-		return $this->isSavedVersionLessThan( $this->get_version() );
+		return $this->is_saved_version_less_than( $this->get_version() );
 	}
 
 	/**
@@ -146,8 +146,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @param  $aVersion string
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
-	public function isSavedVersionLessThan( $aVersion ) {
-		return $this->isVersionLessThan( $this->get_version_saved(), $aVersion );
+	public function is_saved_version_less_than( $aVersion ) {
+		return $this->is_version_less_than( $this->get_version_saved(), $aVersion );
 	}
 
 	/**
@@ -160,8 +160,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @param  $aVersion string
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
-	public function isSavedVersionLessThanEqual( $aVersion ) {
-		return $this->isVersionLessThanEqual( $this->get_version_saved(), $aVersion );
+	public function is_saved_version_less_than_equal( $aVersion ) {
+		return $this->is_version_less_than_equal( $this->get_version_saved(), $aVersion );
 	}
 
 	/**
@@ -169,7 +169,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @param  $version2 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as the same or earlier
 	 */
-	public function isVersionLessThanEqual( $version1, $version2 ) {
+	public function is_version_less_than_equal( $version1, $version2 ) {
 		return (version_compare( $version1, $version2 ) <= 0);
 	}
 
@@ -178,7 +178,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * @param  $version2 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as earlier
 	 */
-	public function isVersionLessThan( $version1, $version2 ) {
+	public function is_version_less_than( $version1, $version2 ) {
 		return (version_compare( $version1, $version2 ) < 0);
 	}
 
@@ -189,7 +189,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 *
 	 * @return void
 	 */
-	protected function saveInstalledVersion() {
+	protected function save_installed_version() {
 		$this->set_version_saved( $this->get_version() );
 	}
 

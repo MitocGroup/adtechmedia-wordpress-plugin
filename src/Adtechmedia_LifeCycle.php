@@ -28,16 +28,16 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
     {
 
         // Initialize Plugin Options
-        $this->initOptions();
+        $this->init_options();
 
         // Initialize DB Tables used by the plugin
-        $this->installDatabaseTables();
+        $this->install_database_tables();
 
         // Other Plugin initialization - for the plugin writer to override as needed
-        $this->otherInstall();
+        $this->other_install();
 
         // Record the installed version
-        $this->saveInstalledVersion();
+        $this->save_installed_version();
 
         // To avoid running install() more then once
         $this->mark_as_installed();
@@ -45,9 +45,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
 
     public function uninstall()
     {
-        $this->otherUninstall();
-        $this->unInstallDatabaseTables();
-        $this->deleteSavedOptions();
+        $this->other_uninstall();
+        $this->un_install_database_tables();
+        $this->delete_saved_options();
         $this->mark_as_un_installed();
     }
 
@@ -68,44 +68,44 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
         $website = get_home_url();
         $name = preg_replace('/https?:\/\//', '', $website);
         $admin_email = get_option('admin_email');
-        $this->addPluginOption('container', "#content-for-atm");
-        $this->addPluginOption('selector', "p");
-        $this->addPluginOption('price', "5");
-        $this->addPluginOption('author_name', "");
-        $this->addPluginOption('author_avatar', "");
-        $this->addPluginOption('ads_video', "");
-        $this->addPluginOption('website_domain_name', $name);
-        $this->addPluginOption('website_url', $website);
-        $this->addPluginOption('support_email', $admin_email);
-        $this->addPluginOption('country', "United States");
-        $this->addPluginOption("content_offset", '2');
-        $this->addPluginOption("content_lock", 'blur+scramble');
-        $this->addPluginOption("revenue_method", 'advertising+micropayments');
-        $this->addPluginOption("payment_pledged", '2');
-        $this->addPluginOption("price_currency", 'usd');
-        $this->addPluginOption("content_paywall", 'transactions');
-        $this->addPluginOption("content_offset_type", 'paragraphs');
-        $this->checkApiKeyExists();
-        $this->checkProp();
+        $this->add_plugin_option('container', "#content-for-atm");
+        $this->add_plugin_option('selector', "p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure");
+        $this->add_plugin_option('price', "5");
+        $this->add_plugin_option('author_name', "");
+        $this->add_plugin_option('author_avatar', "");
+        $this->add_plugin_option('ads_video', "");
+        $this->add_plugin_option('website_domain_name', $name);
+        $this->add_plugin_option('website_url', $website);
+        $this->add_plugin_option('support_email', $admin_email);
+        $this->add_plugin_option('country', "United States");
+        $this->add_plugin_option("content_offset", '2');
+        $this->add_plugin_option("content_lock", 'blur+scramble');
+        $this->add_plugin_option("revenue_method", 'advertising+micropayments');
+        $this->add_plugin_option("payment_pledged", '2');
+        $this->add_plugin_option("price_currency", 'usd');
+        $this->add_plugin_option("content_paywall", 'transactions');
+        $this->add_plugin_option("content_offset_type", 'paragraphs');
+        $this->check_api_key_exists();
+        $this->check_prop();
 
     }
 
     /**
      * @return bool
      */
-    public function checkApiKeyExists()
+    public function check_api_key_exists()
     {
-        $key = $this->getPluginOption('key');
+        $key = $this->get_plugin_option('key');
         //$site=get_site_url();
         if (empty($key)) {
-            $key = Adtechmedia_Request::apiKeyCreate(
-                $this->getPluginOption('website_domain_name'),
-                $this->getPluginOption('website_url')
+            $key = Adtechmedia_Request::api_key_create(
+                $this->get_plugin_option('website_domain_name'),
+                $this->get_plugin_option('website_url')
             );
             if (empty($key)) {
                 return false;
             } else {
-                $this->addPluginOption('key', $key);
+                $this->add_plugin_option('key', $key);
             }
         }
         return true;
@@ -115,23 +115,26 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
     /**
      * @return bool
      */
-    public function checkProp()
+    public function check_prop()
     {
-        $key = $this->getPluginOption('key');
+        $key = $this->get_plugin_option('key');
         if (!empty($key)) {
-            $prop = Adtechmedia_Request::propertyCreate(
-                $this->getPluginOption('website_domain_name'),
-                $this->getPluginOption('website_url'),
-                $this->getPluginOption('support_email'),
-                $this->getPluginOption('country'),
-                $key
-            );
-            if ((!isset($prop['Id'])) || empty($prop['Id'])) {
-                return false;
-            } else {
-                $this->addPluginOption('BuildPath', $prop['BuildPath']);
-                $this->addPluginOption('Id', $prop['Id']);
-                $this->updateProp();
+            $id = $this->get_plugin_option('Id');
+            if (empty($id)) {
+                $prop = Adtechmedia_Request::property_create(
+                    $this->get_plugin_option('website_domain_name'),
+                    $this->get_plugin_option('website_url'),
+                    $this->get_plugin_option('support_email'),
+                    $this->get_plugin_option('country'),
+                    $key
+                );
+                if ((!isset($prop['Id'])) || empty($prop['Id'])) {
+                    return false;
+                } else {
+                    $this->add_plugin_option('BuildPath', $prop['BuildPath']);
+                    $this->add_plugin_option('Id', $prop['Id']);
+                    $this->update_prop();
+                }
             }
         }
         return true;
@@ -150,7 +153,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * See: http://plugin.michael-simpson.com/?page_id=31
      * @return void
      */
-    protected function initOptions()
+    protected function init_options()
     {
     }
 
@@ -166,7 +169,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * (2) make table names lower case only
      * @return void
      */
-    protected function installDatabaseTables()
+    protected function install_database_tables()
     {
     }
 
@@ -175,7 +178,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * Drop plugin-created tables on uninstall.
      * @return void
      */
-    protected function unInstallDatabaseTables()
+    protected function un_install_database_tables()
     {
     }
 
@@ -184,7 +187,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * See: http://plugin.michael-simpson.com/?page_id=33
      * @return void
      */
-    protected function otherInstall()
+    protected function other_install()
     {
     }
 
@@ -193,7 +196,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * See: http://plugin.michael-simpson.com/?page_id=33
      * @return void
      */
-    protected function otherUninstall()
+    protected function other_uninstall()
     {
     }
 
@@ -203,14 +206,14 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * Override with an empty implementation if you don't want a configuration page
      * @return void
      */
-    public function addSettingsSubMenuPage()
+    public function add_settings_sub_menu_page()
     {
-        $this->addSettingsSubMenuPageToPluginsMenu();
+        $this->add_settings_sub_menu_page_to_plugins_menu();
         //$this->addSettingsSubMenuPageToSettingsMenu();
     }
 
 
-    protected function requireExtraPluginFiles()
+    protected function require_extra_plugin_files()
     {
         require_once(ABSPATH . 'wp-includes/pluggable.php');
         require_once(ABSPATH . 'wp-admin/includes/plugin.php');
@@ -220,36 +223,36 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * @return string Slug name for the URL to the Setting page
      * (i.e. the page for setting options)
      */
-    protected function getSettingsSlug()
+    protected function get_settings_slug()
     {
         return get_class($this) . 'Settings';
     }
 
-    protected function addSettingsSubMenuPageToPluginsMenu()
+    protected function add_settings_sub_menu_page_to_plugins_menu()
     {
-        $this->requireExtraPluginFiles();
-        $displayName = $this->getPluginDisplayName();
+        $this->require_extra_plugin_files();
+        $display_name = $this->get_plugin_display_name();
         add_submenu_page(
             'plugins.php',
-            $displayName,
-            $displayName,
+            $display_name,
+            $display_name,
             'manage_options',
-            $this->getSettingsSlug(),
-            array(&$this, 'settingsPage')
+            $this->get_settings_slug(),
+            array(&$this, 'settings_page')
         );
     }
 
 
-    protected function addSettingsSubMenuPageToSettingsMenu()
+    protected function add_settings_sub_menu_page_to_settings_menu()
     {
-        $this->requireExtraPluginFiles();
-        $displayName = $this->getPluginDisplayName();
+        $this->require_extra_plugin_files();
+        $display_name = $this->get_plugin_display_name();
         add_options_page(
-            $displayName,
-            $displayName,
+            $display_name,
+            $display_name,
             'manage_options',
-            $this->getSettingsSlug(),
-            array(&$this, 'settingsPage')
+            $this->get_settings_slug(),
+            array(&$this, 'settings_page')
         );
     }
 
@@ -260,7 +263,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      * The plugin prefix is lower-cases as a best practice that all DB table names are lower case to
      * avoid issues on some platforms
      */
-    protected function prefixTableName($name)
+    protected function prefix_table_name($name)
     {
         global $wpdb;
         return $wpdb->prefix . $name;
@@ -283,7 +286,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator
      *
      * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
      */
-    public function getAjaxUrl($actionName)
+    public function get_ajax_url($actionName)
     {
         return admin_url('admin-ajax.php') . '?action=' . $actionName;
     }

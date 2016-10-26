@@ -117,7 +117,7 @@ class Adtechmedia_Request
      * @param $host
      * @return bool|mixed
      */
-    public static function apiKeyCreate($name, $host)
+    public static function api_key_create($name, $host)
     {
         $data = [
             "Name" => $name,
@@ -197,7 +197,7 @@ class Adtechmedia_Request
      * @param $pledgedType
      * @return array|bool
      */
-    public static function propertyUpdate(
+    public static function property_update(
         $id,
         $container,
         $selector,
@@ -324,7 +324,7 @@ class Adtechmedia_Request
      * @param $key
      * @return array|bool
      */
-    public static function propertyCreate($name, $website, $supportEmail, $country, $key)
+    public static function property_create($name, $website, $supportEmail, $country, $key)
     {
         if(empty($key)){
             return false;

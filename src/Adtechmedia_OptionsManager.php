@@ -23,7 +23,7 @@
 class Adtechmedia_OptionsManager
 {
 
-    public function getOptionNamePrefix()
+    public function get_option_name_prefix()
     {
         return get_class($this) . '_';
     }
@@ -45,7 +45,7 @@ class Adtechmedia_OptionsManager
      *       'CanDoOperationX' => array('Can do Operation X', 'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber'),
      *       'Rating:', 'Excellent', 'Good', 'Fair', 'Poor')
      */
-    public function getOptionMetaData()
+    public function get_option_meta_data()
     {
         return array();
     }
@@ -53,7 +53,7 @@ class Adtechmedia_OptionsManager
     /**
      * @return array
      */
-    public function getMainData()
+    public function get_main_data()
     {
         return array();
     }
@@ -61,7 +61,7 @@ class Adtechmedia_OptionsManager
     /**
      * @return array
      */
-    public function getPluginMetaData()
+    public function get_plugin_meta_data()
     {
         return array();
     }
@@ -69,16 +69,16 @@ class Adtechmedia_OptionsManager
     /**
      * @return array of string name of options
      */
-    public function getOptionNames()
+    public function get_option_names()
     {
-        return array_keys($this->getOptionMetaData());
+        return array_keys($this->get_option_meta_data());
     }
 
     /**
      * Override this method to initialize options to default values and save to the database with add_option
      * @return void
      */
-    protected function initOptions()
+    protected function init_options()
     {
     }
 
@@ -86,12 +86,12 @@ class Adtechmedia_OptionsManager
      * Cleanup: remove all options from the DB
      * @return void
      */
-    protected function deleteSavedOptions()
+    protected function delete_saved_options()
     {
-        $optionMetaData = $this->getOptionMetaData();
-        if (is_array($optionMetaData)) {
-            foreach ($optionMetaData as $aOptionKey => $aOptionMeta) {
-                $prefixedOptionName = $this->prefix($aOptionKey); // how it is stored in DB
+        $option_meta_data = $this->get_option_meta_data();
+        if (is_array($option_meta_data)) {
+            foreach ($option_meta_data as $a_option_key => $a_option_meta) {
+                $prefixedOptionName = $this->prefix($a_option_key); // how it is stored in DB
                 delete_option($prefixedOptionName);
             }
         }
@@ -101,7 +101,7 @@ class Adtechmedia_OptionsManager
      * @return string display name of the plugin to show as a name/title in HTML.
      * Just returns the class name. Override this method to return something more readable
      */
-    public function getPluginDisplayName()
+    public function get_plugin_display_name()
     {
         return get_class($this);
     }
@@ -114,11 +114,11 @@ class Adtechmedia_OptionsManager
      */
     public function prefix($name)
     {
-        $optionNamePrefix = $this->getOptionNamePrefix();
-        if (strpos($name, $optionNamePrefix) === 0) { // 0 but not false
+        $option_name_prefix = $this->get_option_name_prefix();
+        if (strpos($name, $option_name_prefix) === 0) { // 0 but not false
             return $name; // already prefixed
         }
-        return $optionNamePrefix . $name;
+        return $option_name_prefix . $name;
     }
 
     /**
@@ -129,9 +129,9 @@ class Adtechmedia_OptionsManager
      */
     public function &unPrefix($name)
     {
-        $optionNamePrefix = $this->getOptionNamePrefix();
-        if (strpos($name, $optionNamePrefix) === 0) {
-            return substr($name, strlen($optionNamePrefix));
+        $option_name_prefix = $this->get_option_name_prefix();
+        if (strpos($name, $option_name_prefix) === 0) {
+            return substr($name, strlen($option_name_prefix));
         }
         return $name;
     }
@@ -139,66 +139,66 @@ class Adtechmedia_OptionsManager
     /**
      * A wrapper function delegating to WP get_option() but it prefixes the input $optionName
      * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param $optionName string defined in settings.php and set as keys of $this->optionMetaData
+     * @param $option_name string defined in settings.php and set as keys of $this->optionMetaData
      * @param $default string default value to return if the option is not set
      * @return string the value from delegated call to get_option(), or optional default value
      * if option is not set.
      */
-    public function get_option($optionName, $default = null)
+    public function get_option($option_name, $default = null)
     {
-        $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
-        $retVal = get_option($prefixedOptionName);
-        if (!$retVal && $default) {
-            $retVal = $default;
+        $prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
+        $ret_val = get_option($prefixed_option_name);
+        if (!$ret_val && $default) {
+            $ret_val = $default;
         }
-        return $retVal;
+        return $ret_val;
     }
 
     /**
-     * @param $optionName
+     * @param $option_name
      * @param null $default
      * @return null
      */
-    public function getPluginOption($optionName, $default = null)
+    public function get_plugin_option($option_name, $default = null)
     {
         global $wpdb;
-        $retVal = null;
-        $tableName = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+        $ret_val = null;
+        $table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
         $row = $wpdb->get_row(
-            $wpdb->prepare("SELECT option_value FROM $tableName WHERE option_name = %s LIMIT 1", $optionName)
+            $wpdb->prepare("SELECT option_value FROM $table_name WHERE option_name = %s LIMIT 1", $option_name)
         );
 
         if (is_object($row)) {
-            $retVal = $row->option_value;
+            $ret_val = $row->option_value;
         }
 
-        if (!$retVal && $default) {
-            $retVal = $default;
+        if (!$ret_val && $default) {
+            $ret_val = $default;
         }
-        return $retVal;
+        return $ret_val;
     }
 
     /**
      * A wrapper function delegating to WP delete_option() but it prefixes the input $optionName
      * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
+     * @param  $option_name string defined in settings.php and set as keys of $this->optionMetaData
      * @return bool from delegated call to delete_option()
      */
-    public function delete_option($optionName)
+    public function delete_option($option_name)
     {
-        $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
-        return delete_option($prefixedOptionName);
+        $prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
+        return delete_option($prefixed_option_name);
     }
 
     /**
-     * @param $optionName
+     * @param $option_name
      * @return bool
      */
-    public function deletePluginOption($optionName)
+    public function delete_plugin_option($option_name)
     {
         global $wpdb;
-        $tableName = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
-        $result = $wpdb->delete($tableName, array('option_name' => $optionName));
+        $table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+        $result = $wpdb->delete($table_name, array('option_name' => $option_name));
         if (!$result) {
             return false;
         }
@@ -208,29 +208,29 @@ class Adtechmedia_OptionsManager
     /**
      * A wrapper function delegating to WP add_option() but it prefixes the input $optionName
      * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
+     * @param  $option_mame string defined in settings.php and set as keys of $this->optionMetaData
      * @param  $value mixed the new value
      * @return null from delegated call to delete_option()
      */
-    public function addOption($optionName, $value)
+    public function add_option($option_mame, $value)
     {
-        $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
-        return add_option($prefixedOptionName, $value);
+        $prefixed_option_name = $this->prefix($option_mame); // how it is stored in DB
+        return add_option($prefixed_option_name, $value);
     }
 
     /**
-     * @param $optionName
+     * @param $option_name
      * @param $value
      * @return bool
      */
-    public function addPluginOption($optionName, $value)
+    public function add_plugin_option($option_name, $value)
     {
         global $wpdb;
-        $tableName = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+        $table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
         $result = $wpdb->query(
             $wpdb->prepare(
-                "INSERT INTO `$tableName` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
-                $optionName,
+                "INSERT INTO `$table_name` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
+                $option_name,
                 $value
             )
         );
@@ -243,26 +243,26 @@ class Adtechmedia_OptionsManager
     /**
      * A wrapper function delegating to WP add_option() but it prefixes the input $optionName
      * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
-     * @param  $optionName string defined in settings.php and set as keys of $this->optionMetaData
+     * @param  $option_name string defined in settings.php and set as keys of $this->optionMetaData
      * @param  $value mixed the new value
      * @return null from delegated call to delete_option()
      */
-    public function update_option($optionName, $value)
+    public function update_option($option_name, $value)
     {
-        $prefixedOptionName = $this->prefix($optionName); // how it is stored in DB
-        return update_option($prefixedOptionName, $value);
+        $prefixed_option_name = $this->prefix($option_name); // how it is stored in DB
+        return update_option($prefixed_option_name, $value);
     }
 
     /**
-     * @param $optionName
+     * @param $option_name
      * @param $value
      * @return bool
      */
-    public function updatePluginOption($optionName, $value)
+    public function update_plugin_option($option_name, $value)
     {
         global $wpdb;
-        $tableName = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
-        $result = $wpdb->update($tableName, ['option_value' => $value], array('option_name' => $optionName));
+        $table_name = $wpdb->prefix . Adtechmedia_Config::get('plugin_table_name');
+        $result = $wpdb->update($table_name, ['option_value' => $value], array('option_name' => $option_name));
         if (!$result) {
             return false;
         }
@@ -276,27 +276,27 @@ class Adtechmedia_OptionsManager
      * So if a Role Option 'CanDoOperationX' is set to 'Editor' then users which role 'Editor' or above should be
      * able to do Operation X.
      * Also see: canUserDoRoleOption()
-     * @param  $optionName
+     * @param  $option_name
      * @return string role name
      */
-    public function getRoleOption($optionName)
+    public function get_role_option($option_name)
     {
-        $roleAllowed = $this->get_option($optionName);
-        if (!$roleAllowed || $roleAllowed == '') {
-            $roleAllowed = 'Administrator';
+        $role_allowed = $this->get_option($option_name);
+        if (!$role_allowed || $role_allowed == '') {
+            $role_allowed = 'Administrator';
         }
-        return $roleAllowed;
+        return $role_allowed;
     }
 
     /**
      * Given a WP role name, return a WP capability which only that role and roles above it have
      * http://codex.wordpress.org/Roles_and_Capabilities
-     * @param  $roleName
+     * @param  $role_name
      * @return string a WP capability or '' if unknown input role
      */
-    protected function roleToCapability($roleName)
+    protected function role_to_capability($role_name)
     {
-        switch ($roleName) {
+        switch ($role_name) {
             case 'Super Admin':
                 return 'manage_options';
             case 'Administrator':
@@ -316,85 +316,85 @@ class Adtechmedia_OptionsManager
     }
 
     /**
-     * @param $roleName string a standard WP role name like 'Administrator'
+     * @param $role_name string a standard WP role name like 'Administrator'
      * @return bool
      */
-    public function isUserRoleEqualOrBetterThan($roleName)
+    public function is_user_role_equal_or_better_than($role_name)
     {
-        if ('Anyone' == $roleName) {
+        if ('Anyone' == $role_name) {
             return true;
         }
-        $capability = $this->roleToCapability($roleName);
+        $capability = $this->role_to_capability($role_name);
         return current_user_can($capability);
     }
 
     /**
-     * @param  $optionName string name of a Role option (see comments in getRoleOption())
+     * @param  $option_name string name of a Role option (see comments in getRoleOption())
      * @return bool indicates if the user has adequate permissions
      */
-    public function canUserDoRoleOption($optionName)
+    public function can_user_do_role_option($option_name)
     {
-        $roleAllowed = $this->getRoleOption($optionName);
-        if ('Anyone' == $roleAllowed) {
+        $role_allowed = $this->get_role_option($option_name);
+        if ('Anyone' == $role_allowed) {
             return true;
         }
-        return $this->isUserRoleEqualOrBetterThan($roleAllowed);
+        return $this->is_user_role_equal_or_better_than($role_allowed);
     }
 
     /**
      * see: http://codex.wordpress.org/Creating_Options_Pages
      * @return void
      */
-    public function createSettingsMenu()
+    public function create_settings_menu()
     {
-        $pluginName = $this->getPluginDisplayName();
+        $pluginName = $this->get_plugin_display_name();
         //create new top-level menu
         add_menu_page(
             $pluginName . ' Plugin Settings',
             $pluginName,
             'administrator',
             get_class($this),
-            array(&$this, 'settingsPage')
+            array(&$this, 'settings_page')
         /*,plugins_url('/images/icon.png', __FILE__)*/
         ); // if you call 'plugins_url; be sure to "require_once" it
 
         //call register settings function
-        add_action('admin_init', array(&$this, 'registerSettings'));
+        add_action('admin_init', array(&$this, 'register_settings'));
     }
 
     /**
      *
      */
-    public function registerSettings()
+    public function register_settings()
     {
-        $settingsGroup = get_class($this) . '-settings-group';
-        $optionMetaData = $this->getOptionMetaData();
-        foreach ($optionMetaData as $aOptionKey => $aOptionMeta) {
-            register_setting($settingsGroup, $aOptionMeta);
+        $settings_group = get_class($this) . '-settings-group';
+        $option_meta_data = $this->get_option_meta_data();
+        foreach ($option_meta_data as $a_option_key => $a_option_meta) {
+            register_setting($settings_group, $a_option_meta);
         }
     }
 
     /**
      *
      */
-    public function updateProp()
+    public function update_prop()
     {
-        $prop = Adtechmedia_Request::propertyUpdate(
-            $this->getPluginOption('id'),
-            $this->getPluginOption('container'),
-            $this->getPluginOption('selector'),
-            $this->getPluginOption('price'),
-            $this->getPluginOption('author_name'),
-            $this->getPluginOption('author_avatar'),
-            $this->getPluginOption('ads_video'),
-            $this->getPluginOption('key'),
-            $this->getPluginOption("content_offset"),
-            $this->getPluginOption("content_lock"),
-            $this->getPluginOption("revenue_method"),
-            $this->getPluginOption("payment_pledged"),
-            $this->getPluginOption("content_offset_type"),
-            $this->getPluginOption("price_currency"),
-            $this->getPluginOption("content_paywall")
+        $prop = Adtechmedia_Request::property_update(
+            $this->get_plugin_option('id'),
+            $this->get_plugin_option('container'),
+            $this->get_plugin_option('selector'),
+            $this->get_plugin_option('price'),
+            $this->get_plugin_option('author_name'),
+            $this->get_plugin_option('author_avatar'),
+            $this->get_plugin_option('ads_video'),
+            $this->get_plugin_option('key'),
+            $this->get_plugin_option("content_offset"),
+            $this->get_plugin_option("content_lock"),
+            $this->get_plugin_option("revenue_method"),
+            $this->get_plugin_option("payment_pledged"),
+            $this->get_plugin_option("content_offset_type"),
+            $this->get_plugin_option("price_currency"),
+            $this->get_plugin_option("content_paywall")
         );
         Adtechmedia_ContentManager::clear_all_content();
     }
@@ -410,48 +410,48 @@ class Adtechmedia_OptionsManager
             wp_die(__('You do not have sufficient permissions to access this page.', 'adtechmedia'));
         }
         
-        $mainData = $this->getMainData();
-        $pluginMetaData = $this->getPluginMetaData();
-        $mainDataClass = get_class($this) . '-main-settings-group';
-        $pluginMetaDataClass = get_class($this) . '-data-settings-group';
+        $main_data = $this->get_main_data();
+        $plugin_meta_data = $this->get_plugin_meta_data();
+        $main_data_class = get_class($this) . '-main-settings-group';
+        $plugin_meta_data_class = get_class($this) . '-data-settings-group';
 
         // Save Posted Options
-        if (isset($_POST['option_page']) && $_POST['option_page'] == $mainDataClass) {
-            $this->tryToSavePost($mainData);
-            $key = Adtechmedia_Request::apiKeyCreate(
-                $this->getPluginOption('website_domain_name'),
-                $this->getPluginOption('website_url')
+        if (isset($_POST['option_page']) && $_POST['option_page'] == $main_data_class) {
+            $this->try_to_save_post($main_data);
+            $key = Adtechmedia_Request::api_key_create(
+                $this->get_plugin_option('website_domain_name'),
+                $this->get_plugin_option('website_url')
             );
-            $this->addPluginOption('key', $key);
-            $prop = Adtechmedia_Request::propertyCreate(
-                $this->getPluginOption('website_domain_name'),
-                $this->getPluginOption('website_url'),
-                $this->getPluginOption('support_email'),
-                $this->getPluginOption('country'),
+            $this->add_plugin_option('key', $key);
+            $prop = Adtechmedia_Request::property_create(
+                $this->get_plugin_option('website_domain_name'),
+                $this->get_plugin_option('website_url'),
+                $this->get_plugin_option('support_email'),
+                $this->get_plugin_option('country'),
                 $key
             );
-            $this->addPluginOption('BuildPath', $prop['BuildPath']);
-            $this->addPluginOption('Id', $prop['Id']);
-            $this->updateProp();
-        } elseif (isset($_POST['option_page']) && $_POST['option_page'] == $pluginMetaDataClass) {
+            $this->add_plugin_option('BuildPath', $prop['BuildPath']);
+            $this->add_plugin_option('Id', $prop['Id']);
+            $this->update_prop();
+        } elseif (isset($_POST['option_page']) && $_POST['option_page'] == $plugin_meta_data_class) {
 
-            $this->tryToSavePost($pluginMetaData);
-            $this->updateProp();
+            $this->try_to_save_post($plugin_meta_data);
+            $this->update_prop();
         }
         
         require_once 'views/admin.php';
 
         /*$this->settingForm(
-            $mainData,
+            $main_data,
             __('Key Settings', 'adtechmedia'),
             __('Regenerate', 'adtechmedia'),
-            $mainDataClass
+            $main_data_class
         );
         $this->settingForm(
-            $pluginMetaData,
+            $plugin_meta_data,
             __('Settings', 'adtechmedia'),
             __('Save Changes', 'adtechmedia'),
-            $pluginMetaDataClass
+            $plugin_meta_data_class
         );*/
 
 
@@ -460,28 +460,28 @@ class Adtechmedia_OptionsManager
     /**
      * @param $options
      */
-    public function tryToSavePost($options)
+    public function try_to_save_post($options)
     {
         if ($options != null) {
-            foreach ($options as $aOptionKey => $aOptionMeta) {
-                if (isset($_POST[$aOptionKey])) {
-                    $this->updatePluginOption($aOptionKey, $_POST[$aOptionKey]);
+            foreach ($options as $a_option_key => $a_option_meta) {
+                if (isset($_POST[$a_option_key])) {
+                    $this->update_plugin_option($a_option_key, $_POST[$a_option_key]);
                 }
             }
         }
     }
 
-    public function settingForm($optionMetaData, $titleText, $buttonText, $settingsGroup)
+    public function setting_form($option_meta_data, $title_text, $button_text, $settings_group)
     {
 
         ?>
         <div class="wrap">
 
-            <h2><?php echo $this->getPluginDisplayName();
-                echo ' ' . $titleText; ?></h2>
+            <h2><?php echo $this->get_plugin_display_name();
+                echo ' ' . $title_text; ?></h2>
 
             <form method="post" action="">
-                <?php settings_fields($settingsGroup); ?>
+                <?php settings_fields($settings_group); ?>
                 <style type="text/css">
                     table.plugin-options-table {
                         width: 100%;
@@ -516,18 +516,18 @@ class Adtechmedia_OptionsManager
                 <table class="plugin-options-table">
                     <tbody>
                     <?php
-                    if ($optionMetaData != null) {
-                        foreach ($optionMetaData as $aOptionKey => $aOptionMeta) {
-                            $displayText = is_array($aOptionMeta) ? $aOptionMeta[0] : $aOptionMeta;
+                    if ($option_meta_data != null) {
+                        foreach ($option_meta_data as $a_option_key => $a_option_meta) {
+                            $display_text = is_array($a_option_meta) ? $a_option_meta[0] : $a_option_meta;
                             ?>
                             <tr valign="top">
                                 <th scope="row"><p><label
-                                            for="<?php echo $aOptionKey ?>"><?php echo $displayText ?></label></p></th>
+                                            for="<?php echo $a_option_key ?>"><?php echo $display_text ?></label></p></th>
                                 <td>
-                                    <?php $this->createFormControl(
-                                        $aOptionKey,
-                                        $aOptionMeta,
-                                        $this->getPluginOption($aOptionKey)
+                                    <?php $this->create_form_control(
+                                        $a_option_key,
+                                        $a_option_meta,
+                                        $this->get_plugin_option($a_option_key)
                                     ); ?>
                                 </td>
                             </tr>
@@ -539,7 +539,7 @@ class Adtechmedia_OptionsManager
                 </table>
                 <p class="submit">
                     <input type="submit" class="button-primary"
-                           value="<?= $buttonText ?>"/>
+                           value="<?= $button_text ?>"/>
                 </p>
             </form>
         </div>
@@ -548,25 +548,25 @@ class Adtechmedia_OptionsManager
 
     /**
      * Helper-function outputs the correct form element (input tag, select tag) for the given item
-     * @param  $aOptionKey string name of the option (un-prefixed)
-     * @param  $aOptionMeta mixed meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...)
-     * @param  $savedOptionValue string current value for $aOptionKey
+     * @param  $a_option_key string name of the option (un-prefixed)
+     * @param  $a_option_meta mixed meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...)
+     * @param  $saved_option_value string current value for $aOptionKey
      * @param  $placeholder 
      * @return void
      */
-    protected function createFormControl($aOptionKey, $aOptionMeta, $savedOptionValue ,$placeholder="")
+    protected function create_form_control($a_option_key, $a_option_meta, $saved_option_value ,$placeholder="")
     {
-        if (is_array($aOptionMeta) && count($aOptionMeta) >= 2) { // Drop-down list
-            $choices = array_slice($aOptionMeta, 1);
+        if (is_array($a_option_meta) && count($a_option_meta) >= 2) { // Drop-down list
+            $choices = array_slice($a_option_meta, 1);
             ?>
-            <select name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>">
+            <select name="<?php echo $a_option_key ?>" id="<?php echo $a_option_key ?>">
                     <?php
-                    foreach ($choices as $aChoice) {
-                        $selected = ($aChoice == $savedOptionValue) ? 'selected' : '';
+                    foreach ($choices as $a_choice) {
+                        $selected = ($a_choice == $saved_option_value) ? 'selected' : '';
                         ?>
                         <option
-                            value="<?php echo $aChoice ?>" <?php echo $selected ?>><?php echo $this->getOptionValueI18nString(
-                                $aChoice
+                            value="<?php echo $a_choice ?>" <?php echo $selected ?>><?php echo $this->get_option_value_i18n_string(
+                                $a_choice
                             ) ?></option>
                         <?php
                     }
@@ -576,8 +576,8 @@ class Adtechmedia_OptionsManager
 
         } else { // Simple input field
             ?>
-            <input type="text" placeholder="<?=$placeholder?>" name="<?php echo $aOptionKey ?>" id="<?php echo $aOptionKey ?>"
-                      value="<?php echo esc_attr($savedOptionValue) ?>" size="100"/>
+            <input type="text" placeholder="<?=$placeholder?>" name="<?php echo $a_option_key ?>" id="<?php echo $a_option_key ?>"
+                   value="<?php echo esc_attr($saved_option_value) ?>" size="100"/>
             <?php
 
         }
@@ -594,12 +594,12 @@ class Adtechmedia_OptionsManager
      * To do this, follow the convention of defining option values in getOptionMetaData() as canonical names
      * (what you want them to literally be, like 'true') and then add each one to the switch statement in this
      * function, returning the "__()" i18n name of that string.
-     * @param  $optionValue string
+     * @param  $option_value string
      * @return string __($optionValue) if it is listed in this method, otherwise just returns $optionValue
      */
-    protected function getOptionValueI18nString($optionValue)
+    protected function get_option_value_i18n_string($option_value)
     {
-        switch ($optionValue) {
+        switch ($option_value) {
             case 'true':
                 return __('true', 'adtechmedia');
             case 'false':
@@ -617,14 +617,14 @@ class Adtechmedia_OptionsManager
             case 'Anyone':
                 return __('Anyone', 'adtechmedia');
         }
-        return $optionValue;
+        return $option_value;
     }
 
     /**
      * Query MySQL DB for its version
      * @return string|false
      */
-    protected function getMySqlVersion()
+    protected function get_my_sql_version()
     {
         global $wpdb;
         $rows = $wpdb->get_results('select version() as mysqlversion');
@@ -642,7 +642,7 @@ class Adtechmedia_OptionsManager
      * from "wordpress@your-site.com"
      * @return string domain name
      */
-    public function getEmailDomain()
+    public function get_email_domain()
     {
         // Get the site domain and get rid of www.
         $sitename = strtolower($_SERVER['SERVER_NAME']);

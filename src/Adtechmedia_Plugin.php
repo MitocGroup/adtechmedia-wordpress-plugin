@@ -10,14 +10,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      * See: http://plugin.michael-simpson.com/?page_id=31
      * @return array of option meta data.
      */
-    public function getOptionMetaData()
+    public function get_option_meta_data()
     {
         //  http://plugin.michael-simpson.com/?page_id=31
         return array(//'_version' => array('Installed Version'), // Leave this one commented-out. Uncomment to test upgrades.
         );
     }
 
-    public function getMainData()
+    public function get_main_data()
     {
         return array(
             'key' => array(__('Key', 'adtechmedia-plugin')),
@@ -36,7 +36,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         );
     }
 
-    public function getPluginMetaData()
+    public function get_plugin_meta_data()
     {
         return array(
             "container" => array(__('Article container', 'adtechmedia-plugin')),
@@ -68,14 +68,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
 //        return $i18nValue;
 //    }
 
-    protected function initOptions()
+    protected function init_options()
     {
 
-        $options = $this->getOptionMetaData();
+        $options = $this->get_option_meta_data();
         if (!empty($options)) {
             foreach ($options as $key => $arr) {
                 if (is_array($arr) && count($arr > 1)) {
-                    $this->addOption($key, $arr[1]);
+                    $this->add_option($key, $arr[1]);
                 }
             }
         }
@@ -83,7 +83,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
     }
 
 
-    public function getPluginDisplayName()
+    public function get_plugin_display_name()
     {
         return 'Adtechmedia';
     }
@@ -101,10 +101,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      * (2) make table names lower case only
      * @return void
      */
-    protected function installDatabaseTables()
+    protected function install_database_tables()
     {
         global $wpdb;
-        $tableName = $this->prefixTableName(Adtechmedia_Config::get('plugin_table_name'));
+        $tableName = $this->prefix_table_name(Adtechmedia_Config::get('plugin_table_name'));
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS `$tableName` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -114,7 +114,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
                             UNIQUE INDEX `option_name` (`option_name`)
                         )"
         );
-        $tableName = $this->prefixTableName(Adtechmedia_Config::get('plugin_cache_table_name'));
+        $tableName = $this->prefix_table_name(Adtechmedia_Config::get('plugin_cache_table_name'));
         $wpdb->query(
             "CREATE TABLE IF NOT EXISTS `$tableName` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -131,7 +131,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      * Drop plugin-created tables on uninstall.
      * @return void
      */
-    protected function unInstallDatabaseTables()
+    protected function un_install_database_tables()
     {
         //        global $wpdb;
         //        $tableName = $this->prefixTableName('mytable');
@@ -157,8 +157,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         // Add options administration page
         // http://plugin.michael-simpson.com/?page_id=47
         add_action('admin_menu', array(&$this, 'addSettingsSubMenuPage'));
-        $propertyId = $this->getPluginOption('id');
-        $key = $this->getPluginOption('key');
+        $propertyId = $this->get_plugin_option('id');
+        $key = $this->get_plugin_option('key');
 
 
         // Example adding a script & style just for the options administration page
@@ -180,9 +180,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
         if (!is_admin() && (empty($key) || empty($propertyId))) {
             return;
         }
-        if (strpos($_SERVER['REQUEST_URI'], $this->getSettingsSlug()) !== false) {
-            $keyCheck = $this->checkApiKeyExists();
-            $propertyCheck = $this->checkProp();
+        if (strpos($_SERVER['REQUEST_URI'], $this->get_settings_slug()) !== false) {
+            $keyCheck = $this->check_api_key_exists();
+            $propertyCheck = $this->check_prop();
 
             if (!$keyCheck) {
                 add_action('admin_notices', array(&$this, 'keyNotExistsError'));
@@ -250,7 +250,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      */
     public function addAdtechmediaAdminScripts($hook)
     {
-        if ($hook != 'plugins_page_' . $this->getSettingsSlug()) {
+        if ($hook != 'plugins_page_' . $this->get_settings_slug()) {
             return;
         }
         wp_enqueue_style(
@@ -272,7 +272,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      */
     public function addAdtechmediaScripts()
     {
-        if ($script = $this->getPluginOption('BuildPath')) {
+        if ($script = $this->get_plugin_option('BuildPath')) {
             wp_enqueue_script('Adtechmedia', $script, null, null, true);
         }
     }
@@ -303,18 +303,18 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
             } else {
                 Adtechmedia_Request::contentCreate(
                     $id,
-                    $this->getPluginOption('id'),
+                    $this->get_plugin_option('id'),
                     $content,
-                    $this->getPluginOption('key')
+                    $this->get_plugin_option('key')
                 );
                 $newContent = Adtechmedia_Request::contentRetrieve(
                     $id,
-                    $this->getPluginOption('id'),
-                    $this->getPluginOption('content_lock'),
+                    $this->get_plugin_option('id'),
+                    $this->get_plugin_option('content_lock'),
                     "elements",
-                    $this->getPluginOption('selector'),
-                    $this->getPluginOption('content_offset'),
-                    $this->getPluginOption('key')
+                    $this->get_plugin_option('selector'),
+                    $this->get_plugin_option('content_offset'),
+                    $this->get_plugin_option('key')
                 );
                 Adtechmedia_ContentManager::set_content($id, $newContent);
                 return $this->contentWrapper($newContent);
@@ -330,7 +330,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle
      */
     public function contentWrapper($content)
     {
-        $propertyId = $this->getPluginOption('id');
+        $propertyId = $this->get_plugin_option('id');
         $contentId = (string)get_the_ID();
         $script = "<script>
                     window.ATM_PROPERTY_ID = '$propertyId'; 
