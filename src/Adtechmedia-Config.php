@@ -2,9 +2,11 @@
 /**
  * @file
  * Plugin config file
- * @package Adtechmedia_Plugin
  */
 
+/**
+ * @package Adtechmedia_Plugin
+ */
 class Adtechmedia_Config {
 
 	/**
@@ -20,6 +22,7 @@ class Adtechmedia_Config {
 	];
 
 	/**
+	 * function to get param value
 	 * @param $name string config key
 	 * @return mixed
 	 */
