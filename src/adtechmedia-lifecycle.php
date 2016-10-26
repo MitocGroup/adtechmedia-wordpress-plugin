@@ -123,11 +123,11 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'country' ),
 					$key
 				);
-				if ( (! isset($prop['Id'])) || empty($prop['Id']) ) {
+				if ( ( ! isset($prop[ 'Id' ])) || empty($prop[ 'Id' ]) ) {
 					return false;
 				} else {
-					$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
-					$this->add_plugin_option( 'Id', $prop['Id'] );
+					$this->add_plugin_option( 'BuildPath', $prop[ 'BuildPath' ] );
+					$this->add_plugin_option( 'Id', $prop[ 'Id' ] );
 					$this->update_prop();
 				}
 			}

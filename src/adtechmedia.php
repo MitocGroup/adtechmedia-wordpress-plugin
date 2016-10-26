@@ -74,15 +74,12 @@ function adtechmedia_i18n_init() {
 }
 
 
-//////////////////////////////////
-// Run initialization
-/////////////////////////////////
 
-// Initialize i18n
+// Initialize i18n.
 add_action( 'plugins_loadedi', 'adtechmedia_i18n_init' );
 
 // Run the version check.
-// If it is successful, continue with initialization for this plugin
+// If it is successful, continue with initialization for this plugin.
 if ( adtechmedia_php_version_check() ) {
 
 	include_once('adtechmedia-init.php');

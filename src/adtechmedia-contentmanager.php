@@ -1,14 +1,16 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: yama_gs
- * Date: 19.10.2016
- * Time: 14:03
+ * Adtechmedia_ContentManager
+ *
+ * @category Class
+ * @package  Adtechmedia_Plugin
+ * @author    yama-gs
  */
 class Adtechmedia_ContentManager {
 
 	/**
+	 * Get name of table with cache of articles
+	 * 
 	 * @return string
 	 */
 	private static function get_cache_table_name() {
@@ -17,7 +19,9 @@ class Adtechmedia_ContentManager {
 	}
 
 	/**
-	 * @param $id
+	 * Get content of article by id
+	 * 
+	 * @param integer $id id of article.
 	 * @return null
 	 */
 	public static function get_content( $id ) {
@@ -36,7 +40,9 @@ class Adtechmedia_ContentManager {
 	}
 
 	/**
-	 * @param $id
+	 * Set content of article 
+	 * 
+	 * @param integer $id id of article.
 	 * @param $content
 	 */
 	public static function set_content( $id, $content ) {
@@ -53,7 +59,9 @@ class Adtechmedia_ContentManager {
 	}
 
 	/**
-	 * @param $id
+	 * Clear cached content of article by id
+	 * 
+	 * @param integer $id id of article.
 	 */
 	public static function clear_content( $id ) {
 		global $wpdb;
@@ -66,6 +74,9 @@ class Adtechmedia_ContentManager {
 		);
 	}
 
+	/**
+	 * Clear cached content of all articles
+	 */
 	public static function clear_all_content() {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
