@@ -1,18 +1,21 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: yama_gs
- * Date: 13.10.2016
- * Time: 14:50
+ * Adtechmedia_Request
+ *
+ * @category Class
+ * @package  Adtechmedia_Plugin
+ * @author    yama-gs
  */
 class Adtechmedia_Request {
 
 	/**
-	 * @param $content_id
-	 * @param $property_id
-	 * @param $content
-	 * @param $key
+	 * Create content API request
+	 *
+	 * @param string $content_id id of content.
+	 * @param string $property_id id of property.
+	 * @param string $content content.
+	 * @param string $key API key.
 	 * @return bool|mixed
 	 */
 	public static function content_create( $content_id, $property_id, $content, $key ) {
@@ -32,21 +35,23 @@ class Adtechmedia_Request {
 			[ 'Id' ]
 		);
 
-		if ( $response && isset($response['Id']) ) {
-			return $response['Id'];
+		if ( $response && isset($response[ 'Id' ]) ) {
+			return $response[ 'Id' ];
 		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * @param $content_id
-	 * @param $property_id
-	 * @param $scramble_strategy
-	 * @param $offset_type
-	 * @param $offset_element_selector
-	 * @param $offset
-	 * @param $key
+	 * Get content API request
+	 *
+	 * @param string $content_id id of content.
+	 * @param string $property_id id of property.
+	 * @param string $scramble_strategy scramble strategy.
+	 * @param string $offset_type offset type.
+	 * @param string $offset_element_selector  offset element elector.
+	 * @param integer $offset  offset.
+	 * @param string $key API key.
 	 * @return bool|mixed
 	 */
 	public static function content_retrieve(
@@ -77,13 +82,19 @@ class Adtechmedia_Request {
 			[ 'Content' ]
 		);
 
-		if ( $response && isset($response['Content']) ) {
-			return $response['Content'];
+		if ( $response && isset($response[ 'Content' ]) ) {
+			return $response[ 'Content' ];
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Get lis of countries
+	 *
+	 * @param string $key API key.
+	 * @return bool|mixed
+	 */
 	public static function get_countries_list( $key ) {
 		if ( empty($key) ) {
 			return false;
@@ -98,8 +109,8 @@ class Adtechmedia_Request {
 				[ 'Countries' ]
 			);
 
-			if ( $response && isset($response['Countries']) ) {
-				$list = $response['Countries'];
+			if ( $response && isset($response[ 'Countries' ]) ) {
+				$list = $response[ 'Countries' ];
 			} else {
 				$list = false;
 			}
@@ -110,8 +121,10 @@ class Adtechmedia_Request {
 	}
 
 	/**
-	 * @param $name
-	 * @param $host
+	 * Create API key
+	 *
+	 * @param string $name key name.
+	 * @param string $host website host.
 	 * @return bool|mixed
 	 */
 	public static function api_key_create( $name, $host ) {
@@ -127,18 +140,20 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ( $response && isset($response['Key']) ) {
+		if ( $response && isset($response[ 'Key' ]) ) {
 
-			return $response['Key'];
+			return $response[ 'Key' ];
 		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * @param $id
-	 * @param $name
-	 * @param $host
+	 * Update API key
+	 *
+	 * @param string $id id of key.
+	 * @param string $name key name.
+	 * @param string $host website host.
 	 * @return bool|mixed
 	 */
 	public static function api_key_update( $id, $name, $host ) {
@@ -155,14 +170,20 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ( $response && isset($response['Key']) ) {
+		if ( $response && isset($response[ 'Key' ]) ) {
 
-			return $response['Key'];
+			return $response[ 'Key' ];
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Convert pledged type
+	 *
+	 * @param string $pledged_type pledged type.
+	 * @return string
+	 */
 	private static function get_pledged_type( $pledged_type ) {
 		$types = [
 			'transactions' => 'count',
@@ -171,6 +192,11 @@ class Adtechmedia_Request {
 		return $types[ $pledged_type ];
 	}
 
+	/**
+	 * Convert offset type
+	 * @param string $offset_type offset type.
+	 * @return string
+	 */
 	private static function get_offset_type( $offset_type ) {
 		$types = [
 			'words' => 'words',
@@ -180,21 +206,23 @@ class Adtechmedia_Request {
 	}
 
 	/**
-	 * @param $id
-	 * @param $container
-	 * @param $selector
-	 * @param $price
-	 * @param $author_name
-	 * @param $author_avatar
-	 * @param $ads_video
-	 * @param $key
-	 * @param $content_offset
-	 * @param $content_lock
-	 * @param $revenue_method
-	 * @param $payment_pledged
-	 * @param $offset_type
-	 * @param $currency
-	 * @param $pledged_type
+	 * Update property
+	 *
+	 * @param string $id property id.
+	 * @param string $container container of article.
+	 * @param string $selector elements to hide.
+	 * @param integer $price price of page.
+	 * @param string $author_name author name.
+	 * @param string $author_avatar author avatar.
+	 * @param string $ads_video ads video.
+	 * @param string $key API key. 
+	 * @param integer $content_offset offset elements to hide.
+	 * @param string $content_lock lock method.
+	 * @param string $revenue_method evenue method.
+	 * @param integer $payment_pledged payment pledged.
+	 * @param string $offset_type offset type.
+	 * @param string $currency currency.
+	 * @param string $pledged_type pledged type.
 	 * @return array|bool
 	 */
 	public static function property_update(
@@ -308,20 +336,22 @@ class Adtechmedia_Request {
 			$data,
 			[ 'BuildPath', 'Id' ]
 		);
-		if ( $response && isset($response['BuildPath']) && isset($response['Id']) ) {
+		if ( $response && isset($response[ 'BuildPath' ]) && isset($response[ 'Id' ]) ) {
 
-			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
+			return [ 'BuildPath' => $response[ 'BuildPath' ], 'Id' => $response[ 'Id' ] ];
 		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * @param $name
-	 * @param $website
-	 * @param $support_email
-	 * @param $country
-	 * @param $key
+	 * Create a property
+	 * 
+	 * @param string $name property name.
+	 * @param string $website website.
+	 * @param string $support_email admin email.
+	 * @param string $country country.
+	 * @param string $key API key.
 	 * @return array|bool
 	 */
 	public static function property_create( $name, $website, $support_email, $country, $key ) {
@@ -343,20 +373,22 @@ class Adtechmedia_Request {
 		);
 
 
-		if ( $response && isset($response['BuildPath']) && isset($response['Id']) ) {
+		if ( $response && isset($response[ 'BuildPath' ]) && isset($response[ 'Id' ]) ) {
 
-			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
+			return [ 'BuildPath' => $response[ 'BuildPath' ], 'Id' => $response[ 'Id' ] ];
 		} else {
 			return false;
 		}
 	}
 
 	/**
-	 * @param $url
-	 * @param string $method
-	 * @param array $headers
-	 * @param array $body
-	 * @param array $excepted_params
+	 * Make http request
+	 * 
+	 * @param string $url url to request.
+	 * @param string $method request method.
+	 * @param array $headers headers.
+	 * @param array $body body.
+	 * @param array $excepted_params params excepted in response.
 	 * @return array|bool|mixed|object
 	 */
 	public static function make( $url, $method = 'GET', $headers = [ ], $body = [ ], $excepted_params = [ ] ) {
@@ -386,7 +418,7 @@ class Adtechmedia_Request {
 			);
 			if ( self::check_response( $response, $excepted_params ) ) {
 				set_time_limit( $max_time );
-				return json_decode( $response['body'], true );
+				return json_decode( $response[ 'body' ], true );
 			}
 			$tries++;
 			$delay *= $factor;
@@ -397,8 +429,10 @@ class Adtechmedia_Request {
 	}
 
 	/**
-	 * @param $response
-	 * @param $params
+	 * Check response in fine
+	 * 
+	 * @param array $response response.
+	 * @param array $params params excepted in response.
 	 * @return bool
 	 */
 	private static function check_response( $response, $params ) {
@@ -412,8 +446,8 @@ class Adtechmedia_Request {
 			}*/
 			return false;
 		}
-		if ( isset($response['body']) ) {
-			$body = json_decode( $response['body'], true );
+		if ( isset($response[ 'body' ]) ) {
+			$body = json_decode( $response[ 'body' ], true );
 		} else {
 			return false;
 		}
