@@ -86,8 +86,8 @@ class Adtechmedia_OptionsManager {
 		$option_meta_data = $this->get_option_meta_data();
 		if ( is_array( $option_meta_data ) ) {
 			foreach ($option_meta_data as $a_option_key => $a_option_meta) {
-				$prefixedOptionName = $this->prefix( $a_option_key ); // how it is stored in DB
-				delete_option( $prefixedOptionName );
+				$prefixed_option_name = $this->prefix( $a_option_key ); // how it is stored in DB.
+				delete_option( $prefixed_option_name );
 			}
 		}
 	}
@@ -110,7 +110,7 @@ class Adtechmedia_OptionsManager {
 	public function prefix( $name ) {
 		$option_name_prefix = $this->get_option_name_prefix();
 		if ( strpos( $name, $option_name_prefix ) === 0 ) { // 0 but not false
-			return $name; // already prefixed
+			return $name; // already prefixed.
 		}
 		return $option_name_prefix . $name;
 	}
@@ -122,7 +122,7 @@ class Adtechmedia_OptionsManager {
 	 * @param  $name string
 	 * @return string $optionName without the prefix.
 	 */
-	public function &unPrefix( $name ) {
+	public function &un_prefix( $name ) {
 		$option_name_prefix = $this->get_option_name_prefix();
 		if ( strpos( $name, $option_name_prefix ) === 0 ) {
 			return substr( $name, strlen( $option_name_prefix ) );
@@ -206,7 +206,7 @@ class Adtechmedia_OptionsManager {
 	 * @return null from delegated call to delete_option()
 	 */
 	public function add_option( $option_mame, $value ) {
-		$prefixed_option_name = $this->prefix( $option_mame ); // how it is stored in DB
+		$prefixed_option_name = $this->prefix( $option_mame ); // how it is stored in DB.
 		return add_option( $prefixed_option_name, $value );
 	}
 
@@ -240,7 +240,7 @@ class Adtechmedia_OptionsManager {
 	 * @return null from delegated call to delete_option()
 	 */
 	public function update_option( $option_name, $value ) {
-		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB.
 		return update_option( $prefixed_option_name, $value );
 	}
 
@@ -402,7 +402,7 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options
-		if ( isset($_POST['option_page']) && $_POST['option_page'] == $main_data_class ) {
+		if ( isset($_POST[ 'option_page' ]) && $_POST[ 'option_page' ] == $main_data_class ) {
 			$this->try_to_save_post( $main_data );
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
@@ -416,10 +416,10 @@ class Adtechmedia_OptionsManager {
 				$this->get_plugin_option( 'country' ),
 				$key
 			);
-			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
-			$this->add_plugin_option( 'Id', $prop['Id'] );
+			$this->add_plugin_option( 'BuildPath', $prop[ 'BuildPath' ] );
+			$this->add_plugin_option( 'Id', $prop[ 'Id' ] );
 			$this->update_prop();
-		} elseif ( isset($_POST['option_page']) && $_POST['option_page'] == $plugin_meta_data_class ) {
+		} elseif ( isset($_POST[ 'option_page' ]) && $_POST[ 'option_page' ] == $plugin_meta_data_class ) {
 
 			$this->try_to_save_post( $plugin_meta_data );
 			$this->update_prop();
@@ -502,7 +502,7 @@ class Adtechmedia_OptionsManager {
 					<?php
 					if ( $option_meta_data != null ) {
 						foreach ($option_meta_data as $a_option_key => $a_option_meta) {
-							$display_text = is_array( $a_option_meta ) ? $a_option_meta[0] : $a_option_meta;
+							$display_text = is_array( $a_option_meta ) ? $a_option_meta[ 0 ] : $a_option_meta;
 							?>
 							<tr valign="top">
 								<th scope="row"><p><label
@@ -615,7 +615,7 @@ class Adtechmedia_OptionsManager {
 		global $wpdb;
 		$rows = $wpdb->get_results( 'select version() as mysqlversion' );
 		if ( ! empty($rows) ) {
-			return $rows[0]->mysqlversion;
+			return $rows[ 0 ]->mysqlversion;
 		}
 		return false;
 	}
@@ -631,7 +631,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_email_domain() {
 		// Get the site domain and get rid of www.
-		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
+		$sitename = strtolower( $_SERVER[ 'SERVER_NAME' ] );
 		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 			$sitename = substr( $sitename, 4 );
 		}

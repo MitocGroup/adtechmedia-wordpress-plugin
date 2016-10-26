@@ -98,7 +98,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 		$match = array();
 		preg_match( '/' . $key . ':\s*(\S+)/', $data, $match );
 		if ( count( $match ) >= 1 ) {
-			return $match[1];
+			return $match[ 1 ];
 		}
 		return null;
 	}

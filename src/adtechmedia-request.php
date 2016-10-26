@@ -49,8 +49,8 @@ class Adtechmedia_Request {
 	 * @param string $property_id id of property.
 	 * @param string $scramble_strategy scramble strategy.
 	 * @param string $offset_type offset type.
-	 * @param string $offset_element_selector  offset element elector.
-	 * @param integer $offset  offset.
+	 * @param string $offset_element_selector offset element elector.
+	 * @param integer $offset offset.
 	 * @param string $key API key.
 	 * @return bool|mixed
 	 */
@@ -194,6 +194,7 @@ class Adtechmedia_Request {
 
 	/**
 	 * Convert offset type
+	 *
 	 * @param string $offset_type offset type.
 	 * @return string
 	 */
@@ -215,7 +216,7 @@ class Adtechmedia_Request {
 	 * @param string $author_name author name.
 	 * @param string $author_avatar author avatar.
 	 * @param string $ads_video ads video.
-	 * @param string $key API key. 
+	 * @param string $key API key.
 	 * @param integer $content_offset offset elements to hide.
 	 * @param string $content_lock lock method.
 	 * @param string $revenue_method evenue method.
@@ -346,7 +347,7 @@ class Adtechmedia_Request {
 
 	/**
 	 * Create a property
-	 * 
+	 *
 	 * @param string $name property name.
 	 * @param string $website website.
 	 * @param string $support_email admin email.
@@ -383,7 +384,7 @@ class Adtechmedia_Request {
 
 	/**
 	 * Make http request
-	 * 
+	 *
 	 * @param string $url url to request.
 	 * @param string $method request method.
 	 * @param array $headers headers.
@@ -430,7 +431,7 @@ class Adtechmedia_Request {
 
 	/**
 	 * Check response in fine
-	 * 
+	 *
 	 * @param array $response response.
 	 * @param array $params params excepted in response.
 	 * @return bool
