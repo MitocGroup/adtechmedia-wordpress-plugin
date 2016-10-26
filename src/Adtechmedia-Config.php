@@ -1,6 +1,7 @@
 <?php
 /**
- * Adtechmedia_Config File Doc Comment
+ * @file
+ * Adtechmedia_Config
  *
  * @category Class
  * @package  Adtechmedia_Plugin
