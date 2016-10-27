@@ -273,7 +273,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 					</div>
 					<div class="flex-item-6">
 						<div class="mockup">
-							<img class="logo-img" src="<?php echo plugins_url( '../images/logo.svg', __FILE__ ) ?>"
+							<img class="logo-img" src="<?php echo esc_html( plugins_url( '../images/logo.svg', __FILE__ ) ) ?>"
 								 alt="AdTechMedia"/>
 
 							<div class="mockup-head">
@@ -298,7 +298,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 							</div>
 
 							<div class="mockup-cont">
-								<img src="<?php echo plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ?>"/>
+								<img src="<?php echo esc_html( plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ) ?>"/>
 
 								<p>It is a long established fact that a reader will be distracted by
 									the readable content of a page when looking at its layout.
