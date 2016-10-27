@@ -369,7 +369,7 @@ class Adtechmedia_Request {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Create a property
 	 *
