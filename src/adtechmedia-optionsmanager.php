@@ -437,7 +437,10 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options.
-		if ( isset( $_POST['option_page'] ) && wp_verify_nonce( $_POST['_wpnonce'], $main_data_class . '-options' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
+		if ( isset( $_POST['option_page'] )
+			&& isset( $_POST['_wpnonce'] )
+			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), $main_data_class . '-options' )
+			&& sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
 		) {
 			$this->try_to_save_post( $main_data, $_POST );
 			$key = Adtechmedia_Request::api_key_create(
@@ -455,7 +458,10 @@ class Adtechmedia_OptionsManager {
 			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
 			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
-		} elseif ( isset( $_POST['option_page'] ) && wp_verify_nonce( $_POST['_wpnonce'], $plugin_meta_data_class . '-options' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
+		} elseif ( isset( $_POST['option_page'] )
+			&& isset( $_POST['_wpnonce'] )
+			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), $plugin_meta_data_class . '-options' )
+			&& sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
 		) {
 			$this->try_to_save_post( $plugin_meta_data, $_POST );
 			$this->update_prop();
