@@ -88,7 +88,7 @@ class Adtechmedia_ContentManager {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
 		// @codingStandardsIgnoreStart
-		$wpdb->query( $wpdb->prepare( "UPDATE `%1%s` SET  `value` = '' ", $table_name ) );
+		$wpdb->query( "UPDATE `$table_name` SET  `value` = '' ");
 		// @codingStandardsIgnoreEnd
 	}
 }

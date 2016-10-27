@@ -176,8 +176,7 @@ class Adtechmedia_OptionsManager {
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT option_value FROM `%1%s` WHERE option_name = %s LIMIT 1',
-				$table_name,
+				"SELECT option_value FROM `$table_name` WHERE option_name = %s LIMIT 1",
 				$option_name
 			)
 		);
@@ -248,8 +247,7 @@ class Adtechmedia_OptionsManager {
 		// @codingStandardsIgnoreStart
 		$result = $wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO `%1%s` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
-				$table_name,
+				"INSERT INTO `$table_name` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
 				$option_name,
 				$value
 			)
@@ -439,9 +437,9 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options.
-		if ( isset( $_POST['option_page'] ) && check_admin_referer( $main_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
+		if ( isset( $_POST['option_page'] ) && wp_verify_nonce( $_POST['_wpnonce'], $main_data_class . '-options' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
 		) {
-			$this->try_to_save_post( $main_data, $main_data_class );
+			$this->try_to_save_post( $main_data, $_POST );
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
 				$this->get_plugin_option( 'website_url' )
@@ -457,10 +455,9 @@ class Adtechmedia_OptionsManager {
 			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
 			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
-		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer( $plugin_meta_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
+		} elseif ( isset( $_POST['option_page'] ) && wp_verify_nonce( $_POST['_wpnonce'], $plugin_meta_data_class . '-options' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
 		) {
-
-			$this->try_to_save_post( $plugin_meta_data, $plugin_meta_data_class );
+			$this->try_to_save_post( $plugin_meta_data, $_POST );
 			$this->update_prop();
 		}
 
@@ -471,13 +468,13 @@ class Adtechmedia_OptionsManager {
 	 * Try to save data from request
 	 *
 	 * @param array  $options request data.
-	 * @param string $form_class class to verify.
+	 * @param  array $post request data.
 	 */
-	public function try_to_save_post( $options, $form_class ) {
+	public function try_to_save_post( $options, $post ) {
 		if ( null != $options ) {
 			foreach ( $options as $a_option_key => $a_option_meta ) {
-				if ( isset( $_POST[ $a_option_key ] ) && check_admin_referer( $form_class, $a_option_key ) ) {
-					$this->update_plugin_option( $a_option_key, sanitize_text_field( wp_unslash( $_POST[ $a_option_key ] ) ) );
+				if ( isset( $post[ $a_option_key ] ) ) {
+					$this->update_plugin_option( $a_option_key, $post[ $a_option_key ] );
 				}
 			}
 		}
@@ -502,11 +499,7 @@ class Adtechmedia_OptionsManager {
 					$selected = ($a_choice == $saved_option_value) ? 'selected' : '';
 					?>
 					<option
-						value="<?php echo esc_html(
-							$a_choice
-						) ?>" <?php echo esc_html( $selected ) ?>><?php echo $this->get_option_value_i18n_string(
-							esc_html( $a_choice )
-						) ?></option>
+						value="<?php echo esc_html( $a_choice ) ?>" <?php echo esc_html( $selected ) ?>><?php echo esc_html( $a_choice ) ?></option>
 					<?php
 				}
 				?>

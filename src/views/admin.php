@@ -30,7 +30,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 	<section>
 		<form method="post" action="">
 			<?php settings_fields( $main_data_class ); ?>
-			<?php wp_nonce_field( $main_data_class ); ?>
+
 			<h1 class="heading">
 				<i class="custom-icon cog"></i>
 				General configuration
@@ -102,7 +102,6 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 	<section>
 		<form method="post" action="">
 			<?php settings_fields( $plugin_meta_data_class ); ?>
-			<?php wp_nonce_field( $plugin_meta_data_class ); ?>
 			<h1 class="heading">
 				<i class="custom-icon edit"></i>
 				Content configuration
