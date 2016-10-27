@@ -50,7 +50,7 @@ class Adtechmedia_ContentManager {
 	 * Set content of article
 	 *
 	 * @param integer $id id of article.
-	 * @param string $content content of article.
+	 * @param string  $content content of article.
 	 */
 	public static function set_content( $id, $content ) {
 		global $wpdb;
