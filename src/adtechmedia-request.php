@@ -216,8 +216,6 @@ class Adtechmedia_Request {
 	 * @param string  $container container of article.
 	 * @param string  $selector elements to hide.
 	 * @param integer $price price of page.
-	 * @param string  $author_name author name.
-	 * @param string  $author_avatar author avatar.
 	 * @param string  $ads_video ads video.
 	 * @param string  $key API key.
 	 * @param integer $content_offset offset elements to hide.
@@ -229,13 +227,11 @@ class Adtechmedia_Request {
 	 * @param string  $pledged_type pledged type.
 	 * @return array|bool
 	 */
-	public static function property_update(
+	public static function property_update_config(
 		$id,
 		$container,
 		$selector,
 		$price,
-		$author_name,
-		$author_avatar,
 		$ads_video,
 		$key,
 		$content_offset,
@@ -340,6 +336,40 @@ class Adtechmedia_Request {
 		}
 	}
 
+	/**
+	 * Update a property email
+	 *
+	 * @param string $id property id.
+	 * @param string $support_email admin email.
+	 * @param string $country country.
+	 * @param string $key API key.
+	 * @return array|bool
+	 */
+	public static function property_update( $id, $support_email, $country, $key ) {
+		if ( empty( $key ) ) {
+			return false;
+		}
+		$data = [
+			'Name' => $id,
+			'SupportEmail' => $support_email,
+			'Country' => $country,
+		];
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/update',
+			'POST',
+			[ 'X-Api-Key' => $key ],
+			$data,
+			[ 'BuildPath', 'Id' ]
+		);
+
+		if ( $response && isset( $response['BuildPath'] ) && isset( $response['Id'] ) ) {
+
+			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Create a property
 	 *

@@ -34,9 +34,11 @@ class Adtechmedia_ContentManager {
 		$table_name = self::get_cache_table_name();
 		$ret_val = wp_cache_get( $id, 'adtechmedia_scrambled_contents' );
 		if ( ! $ret_val ) {
+			// @codingStandardsIgnoreStart
 			$row = $wpdb->get_row(
-				$wpdb->prepare( 'SELECT value FROM `%1%s` WHERE item_id = %s LIMIT 1', $table_name, $id )
+				$wpdb->prepare( "SELECT value FROM `$table_name` WHERE item_id = %s LIMIT 1", $id )
 			);
+			// @codingStandardsIgnoreEnd
 			if ( is_object( $row ) ) {
 				$ret_val = $row->value;
 			}
@@ -59,8 +61,7 @@ class Adtechmedia_ContentManager {
 		// @codingStandardsIgnoreStart
 		$wpdb->query(
 			$wpdb->prepare(
-				'INSERT INTO `%1%s` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)',
-				$table_name,
+				"INSERT INTO `$table_name` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)",
 				$id,
 				$content
 			)

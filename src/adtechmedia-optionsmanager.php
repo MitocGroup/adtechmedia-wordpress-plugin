@@ -401,13 +401,11 @@ class Adtechmedia_OptionsManager {
 	 * Update property
 	 */
 	public function update_prop() {
-		Adtechmedia_Request::property_update(
+		Adtechmedia_Request::property_update_config(
 			$this->get_plugin_option( 'id' ),
 			$this->get_plugin_option( 'container' ),
 			$this->get_plugin_option( 'selector' ),
 			$this->get_plugin_option( 'price' ),
-			$this->get_plugin_option( 'author_name' ),
-			$this->get_plugin_option( 'author_avatar' ),
 			$this->get_plugin_option( 'ads_video' ),
 			$this->get_plugin_option( 'key' ),
 			$this->get_plugin_option( 'content_offset' ),
@@ -444,20 +442,12 @@ class Adtechmedia_OptionsManager {
 			&& sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
 		) {
 			$this->try_to_save_post( $main_data, $_POST );
-			$key = Adtechmedia_Request::api_key_create(
-				$this->get_plugin_option( 'website_domain_name' ),
-				$this->get_plugin_option( 'website_url' )
-			);
-			$this->add_plugin_option( 'key', $key );
-			$prop = Adtechmedia_Request::property_create(
-				$this->get_plugin_option( 'website_domain_name' ),
-				$this->get_plugin_option( 'website_url' ),
+			Adtechmedia_Request::property_update(
+				$this->get_plugin_option( 'id' ),
 				$this->get_plugin_option( 'support_email' ),
 				$this->get_plugin_option( 'country' ),
-				$key
+				$this->get_plugin_option( 'key' )
 			);
-			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
-			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
 		} elseif ( isset( $_POST['option_page'] )
 			&& isset( $_POST['_wpnonce'] )
