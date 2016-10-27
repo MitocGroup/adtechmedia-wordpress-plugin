@@ -439,10 +439,7 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options.
-		if ( isset( $_POST['option_page'] ) && check_admin_referer(
-				$main_data_class,
-				$_POST['option_page']
-			) && sanitize_text_field( $_POST['option_page'] ) == $main_data_class
+		if ( isset( $_POST['option_page'] ) && check_admin_referer( $main_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
 		) {
 			$this->try_to_save_post( $main_data );
 			$key = Adtechmedia_Request::api_key_create(
@@ -460,10 +457,7 @@ class Adtechmedia_OptionsManager {
 			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
 			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
-		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer(
-				$plugin_meta_data_class,
-				$_POST['option_page']
-			) && sanitize_text_field( $_POST['option_page'] ) == $plugin_meta_data_class
+		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer( $plugin_meta_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
 		) {
 
 			$this->try_to_save_post( $plugin_meta_data );
