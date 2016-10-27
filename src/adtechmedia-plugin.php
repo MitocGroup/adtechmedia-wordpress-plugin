@@ -69,9 +69,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		$options = $this->get_option_meta_data();
 		if ( ! empty( $options ) ) {
-			foreach ($options as $key => $arr) {
+			foreach ( $options as $key => $arr ) {
 				if ( is_array( $arr ) && count( $arr > 1 ) ) {
-					$this->add_option( $key, $arr[ 1 ] );
+					$this->add_option( $key, $arr[1] );
 				}
 			}
 		}
@@ -173,7 +173,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}
-		if ( strpos( $_SERVER[ 'REQUEST_URI' ], $this->get_settings_slug() ) !== false ) {
+		if ( strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false ) {
 			$key_check = $this->check_api_key_exists();
 			$property_check = $this->check_prop();
 
@@ -219,17 +219,17 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// write into logfile
 		$output = 'Request on ' . date( 'c' ) . PHP_EOL;
 		$output .= 'Url: ' . $url . PHP_EOL;
-		$output .= " - Method:" . $args[ 'method' ] . PHP_EOL;
+		$output .= " - Method:" . $args['method'] . PHP_EOL;
 		$output .= ' - Headers:' . PHP_EOL;
 
-		foreach ($args[ 'headers' ] as $key => $value) {
+		foreach ( $args['headers'] as $key => $value ) {
 			$output .= "   - $key: $value" . PHP_EOL;
 		}
 
 		$output .= 'Response' . PHP_EOL;
 		$output .= ' - Headers:' . PHP_EOL;
 
-		foreach ($response[ 'headers' ] as $key => $value) {
+		foreach ( $response['headers'] as $key => $value ) {
 			$output .= "   - $key: $value" . PHP_EOL;
 		}
 		//file_put_contents( $logfile, sprintf( "### %s, URL: %s\nREQUEST: %sRESPONSE: %s\n", date( 'c' ), $url, print_r( $args, true ), print_r( $log_response, true ) ), FILE_APPEND );

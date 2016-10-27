@@ -98,7 +98,7 @@ class Adtechmedia_OptionsManager {
 	protected function delete_saved_options() {
 		$option_meta_data = $this->get_option_meta_data();
 		if ( is_array( $option_meta_data ) ) {
-			foreach ($option_meta_data as $a_option_key => $a_option_meta) {
+			foreach ( $option_meta_data as $a_option_key => $a_option_meta ) {
 				$prefixed_option_name = $this->prefix( $a_option_key ); // how it is stored in DB.
 				delete_option( $prefixed_option_name );
 			}
@@ -155,7 +155,7 @@ class Adtechmedia_OptionsManager {
 	 * if option is not set.
 	 */
 	public function get_option( $option_name, $default = null ) {
-		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB.
 		$ret_val = get_option( $prefixed_option_name );
 		if ( ! $ret_val && $default ) {
 			$ret_val = $default;
@@ -167,7 +167,7 @@ class Adtechmedia_OptionsManager {
 	 * Get plugin option value
 	 *
 	 * @param string $option_name name of plugin option.
-	 * @param null $default default value tu return if not found.
+	 * @param null   $default default value tu return if not found.
 	 * @return null
 	 */
 	public function get_plugin_option( $option_name, $default = null ) {
@@ -175,7 +175,7 @@ class Adtechmedia_OptionsManager {
 		$ret_val = null;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
 		$row = $wpdb->get_row(
-			$wpdb->prepare( "SELECT option_value FROM $table_name WHERE option_name = %s LIMIT 1", $option_name )
+			$wpdb->prepare( 'SELECT option_value FROM `%1%s` WHERE option_name = %s LIMIT 1', $table_name, $option_name )
 		);
 
 		if ( is_object( $row ) ) {
@@ -196,7 +196,7 @@ class Adtechmedia_OptionsManager {
 	 * @return bool from delegated call to delete_option()
 	 */
 	public function delete_option( $option_name ) {
-		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB
+		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB.
 		return delete_option( $prefixed_option_name );
 	}
 
@@ -209,7 +209,9 @@ class Adtechmedia_OptionsManager {
 	public function delete_plugin_option( $option_name ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		// @codingStandardsIgnoreStart
 		$result = $wpdb->delete( $table_name, array( 'option_name' => $option_name ) );
+		// @codingStandardsIgnoreEnd
 		if ( ! $result ) {
 			return false;
 		}
@@ -221,7 +223,7 @@ class Adtechmedia_OptionsManager {
 	 * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
 	 *
 	 * @param string $option_mame defined in settings.php and set as keys of $this->optionMetaData.
-	 * @param mixed $value the new value.
+	 * @param mixed  $value the new value.
 	 * @return null from delegated call to delete_option()
 	 */
 	public function add_option( $option_mame, $value ) {
@@ -239,13 +241,16 @@ class Adtechmedia_OptionsManager {
 	public function add_plugin_option( $option_name, $value ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		// @codingStandardsIgnoreStart
 		$result = $wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO `$table_name` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
+				"INSERT INTO `%1%s` (`option_name`, `option_value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`)",
+				$table_name,
 				$option_name,
 				$value
 			)
 		);
+		// @codingStandardsIgnoreEnd
 		if ( ! $result ) {
 			return false;
 		}
@@ -257,7 +262,7 @@ class Adtechmedia_OptionsManager {
 	 * to enforce "scoping" the options in the WP options table thereby avoiding name conflicts
 	 *
 	 * @param string $option_name defined in settings.php and set as keys of $this->option_meta_data.
-	 * @param mixed $value the new value.
+	 * @param mixed  $value the new value.
 	 * @return null from delegated call to delete_option()
 	 */
 	public function update_option( $option_name, $value ) {
@@ -275,7 +280,9 @@ class Adtechmedia_OptionsManager {
 	public function update_plugin_option( $option_name, $value ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		// @codingStandardsIgnoreStart
 		$result = $wpdb->update( $table_name, [ 'option_value' => $value ], array( 'option_name' => $option_name ) );
+		// @codingStandardsIgnoreEnd
 		if ( ! $result ) {
 			return false;
 		}
@@ -295,7 +302,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_role_option( $option_name ) {
 		$role_allowed = $this->get_option( $option_name );
-		if ( ! $role_allowed || $role_allowed == '' ) {
+		if ( ! $role_allowed || '' == $role_allowed ) {
 			$role_allowed = 'Administrator';
 		}
 		return $role_allowed;
@@ -309,7 +316,7 @@ class Adtechmedia_OptionsManager {
 	 * @return string a WP capability or '' if unknown input role
 	 */
 	protected function role_to_capability( $role_name ) {
-		switch ($role_name) {
+		switch ( $role_name ) {
 			case 'Super Admin':
 				return 'manage_options';
 			case 'Administrator':
@@ -357,13 +364,13 @@ class Adtechmedia_OptionsManager {
 	}
 
 	/**
-	 * see: http://codex.wordpress.org/Creating_Options_Pages
+	 * See: http://codex.wordpress.org/Creating_Options_Pages
 	 *
 	 * @return void
 	 */
 	public function create_settings_menu() {
 		$plugin_name = $this->get_plugin_display_name();
-		//create new top-level menu.
+		// create new top-level menu.
 		add_menu_page(
 			$plugin_name . ' Plugin Settings',
 			$plugin_name,
@@ -372,7 +379,7 @@ class Adtechmedia_OptionsManager {
 			array( &$this, 'settings_page' )
 		); // if you call 'plugins_url; be sure to "require_once" it.
 
-		//call register settings function.
+		// call register settings function.
 		add_action( 'admin_init', array( &$this, 'register_settings' ) );
 	}
 
@@ -382,7 +389,7 @@ class Adtechmedia_OptionsManager {
 	public function register_settings() {
 		$settings_group = get_class( $this ) . '-settings-group';
 		$option_meta_data = $this->get_option_meta_data();
-		foreach ($option_meta_data as $a_option_key => $a_option_meta) {
+		foreach ( $option_meta_data as $a_option_key => $a_option_meta ) {
 			register_setting( $settings_group, $a_option_meta );
 		}
 	}
@@ -457,11 +464,11 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Try to save data from request
 	 *
-	 * @param $options
+	 * @param array $options request data.
 	 */
 	public function try_to_save_post( $options ) {
-		if ( $options != null ) {
-			foreach ($options as $a_option_key => $a_option_meta) {
+		if ( null != $options ) {
+			foreach ( $options as $a_option_key => $a_option_meta ) {
 				if ( isset( $_POST[ $a_option_key ] ) ) {
 					$this->update_plugin_option( $a_option_key, $_POST[ $a_option_key ] );
 				}
@@ -473,7 +480,7 @@ class Adtechmedia_OptionsManager {
 	 * Helper-function outputs the correct form element (input tag, select tag) for the given item
 	 *
 	 * @param string $a_option_key name of the option (un-prefixed).
-	 * @param mixed $a_option_meta meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...).
+	 * @param mixed  $a_option_meta meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...).
 	 * @param string $saved_option_value current value for $a_option_key.
 	 * @param string $placeholder placeholder to field
 	 * @return void
@@ -484,7 +491,7 @@ class Adtechmedia_OptionsManager {
 			?>
 			<select name="<?php echo $a_option_key ?>" id="<?php echo $a_option_key ?>">
 				<?php
-				foreach ($choices as $a_choice) {
+				foreach ( $choices as $a_choice ) {
 					$selected = ($a_choice == $saved_option_value) ? 'selected' : '';
 					?>
 					<option
@@ -523,7 +530,7 @@ class Adtechmedia_OptionsManager {
 	 * @return string __($optionValue) if it is listed in this method, otherwise just returns $optionValue
 	 */
 	protected function get_option_value_i18n_string( $option_value ) {
-		switch ($option_value) {
+		switch ( $option_value ) {
 			case 'true':
 				return __( 'true', 'adtechmedia' );
 			case 'false':

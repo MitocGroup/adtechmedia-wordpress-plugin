@@ -44,7 +44,7 @@ abstract class Adtechmedia_ShortCodeLoader {
 	 */
 	protected function register_shortcode_to_function( $shortcode_name, $function_name ) {
 		if ( is_array( $shortcode_name ) ) {
-			foreach ($shortcode_name as $a_name) {
+			foreach ( $shortcode_name as $a_name ) {
 				add_shortcode( $a_name, array( $this, $function_name ) );
 			}
 		} else {

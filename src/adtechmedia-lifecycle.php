@@ -231,8 +231,8 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * Require extra plugin files
 	 */
 	protected function require_extra_plugin_files() {
-		require_once(ABSPATH . 'wp-includes/pluggable.php');
-		require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+		require_once( ABSPATH . 'wp-includes/pluggable.php' );
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	}
 
 	/**
@@ -294,7 +294,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	/**
 	 * Convenience function for creating AJAX URLs.
 	 *
-	 * @param string $action_name the name of the ajax action registered in a call like.
+	 * @param string $action_name the name of the ajax action registered in a call.
+	 * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
+	 * Example
 	 * add_action('wp_ajax_actionName', array(&$this, 'functionName'));
 	 *     and/or
 	 * add_action('wp_ajax_nopriv_actionName', array(&$this, 'functionName'));
@@ -303,7 +305,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 *    $url = $this->getAjaxUrl('myaction&id=') . urlencode($id);
 	 * or more complex:
 	 *    $url = sprintf($this->getAjaxUrl('myaction&id=%s&var2=%s&var3=%s'), urlencode($id), urlencode($var2), urlencode($var3));
-	 * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
 	 */
 	public function get_ajax_url( $action_name ) {
 		return admin_url( 'admin-ajax.php' ) . '?action=' . $action_name;
