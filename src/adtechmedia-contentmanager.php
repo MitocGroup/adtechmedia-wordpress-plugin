@@ -56,6 +56,7 @@ class Adtechmedia_ContentManager {
 		global $wpdb;
 		$ret_val = null;
 		$table_name = self::get_cache_table_name();
+		// @codingStandardsIgnoreStart
 		$wpdb->query(
 			$wpdb->prepare(
 				'INSERT INTO `%1%s` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)',
@@ -64,6 +65,7 @@ class Adtechmedia_ContentManager {
 				$content
 			)
 		);
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -74,7 +76,9 @@ class Adtechmedia_ContentManager {
 	public static function clear_content( $id ) {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
+		// @codingStandardsIgnoreStart
 		$wpdb->update( $table_name, [ 'value' => '' ], [ 'item_id' => $id ] );
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -83,7 +87,8 @@ class Adtechmedia_ContentManager {
 	public static function clear_all_content() {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
+		// @codingStandardsIgnoreStart
 		$wpdb->query( $wpdb->prepare( "UPDATE `%1%s` SET  `value` = '' ", $table_name ) );
-
+		// @codingStandardsIgnoreEnd
 	}
 }

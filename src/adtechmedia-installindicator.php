@@ -21,6 +21,10 @@
 
 include_once('adtechmedia-optionsmanager.php');
 
+
+/**
+ * Class Adtechmedia_InstallIndicator
+ */
 class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 
 
@@ -28,7 +32,9 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	const OPTION_VERSION = '_version';
 
 	/**
-	 * @return bool indicating if the plugin is installed already
+	 * Check is plugin already installed
+	 *
+	 * @return bool indicating if the plugin is installed already.
 	 */
 	public function is_installed() {
 		return $this->get_option( self::OPTION_INSTALLED ) == true;
@@ -69,8 +75,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * Set a version string in the options.
 	 * need to check if
 	 *
-	 * @param  $version string best practice: use a dot-delimited string like '1.2.3' so version strings can be easily
-	 * compared using version_compare (http://php.net/manual/en/function.version-compare.php)
+	 * @param string $version best practice: use a dot-delimited string like '1.2.3' so version strings can be easily
+	 * compared using version_compare (http://php.net/manual/en/function.version-compare.php).
 	 * @return null
 	 */
 	protected function set_version_saved( $version ) {
@@ -78,6 +84,8 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	}
 
 	/**
+	 * Get plugin main file name
+	 *
 	 * @return string name of the main plugin file that has the header section with
 	 * "Plugin Name", "Version", "Description", "Text Domain", etc.
 	 */
@@ -89,11 +97,11 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * Get a value for input key in the header section of main plugin file.
 	 * E.g. "Plugin Name", "Version", "Description", "Text Domain", etc.
 	 *
-	 * @param $key string plugin header key
+	 * @param string $key  plugin header key.
 	 * @return string if found, otherwise null
 	 */
 	public function get_plugin_header_value( $key ) {
-		// Read the string from the comment header of the main plugin file
+		// Read the string from the comment header of the main plugin file.
 		$data = file_get_contents( $this->get_plugin_dir() . DIRECTORY_SEPARATOR . $this->get_main_plugin_file_name() );
 		$match = array();
 		preg_match( '/' . $key . ':\s*(\S+)/', $data, $match );
@@ -143,7 +151,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	/**
 	 * Used to see if the installed code is an earlier version than the input version
 	 *
-	 * @param  $a_version string
+	 * @param  string $a_version version.
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function is_saved_version_less_than( $a_version ) {
@@ -157,7 +165,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * For example, $this->isSavedVersionLessThanEqual('2.3') == true indicates that the saved version is not upgraded
 	 * past 2.3 yet and therefore you would perform some appropriate upgrade action.
 	 *
-	 * @param  $a_version string
+	 * @param  string $a_version version.
 	 * @return bool true if the saved version is earlier (by natural order) than the input version
 	 */
 	public function is_saved_version_less_than_equal( $a_version ) {
@@ -165,8 +173,10 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	}
 
 	/**
-	 * @param  $version1 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
-	 * @param  $version2 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
+	 * Compare versions
+	 *
+	 * @param string $version1 a version string such as '1', '1.1', '1.1.1', '2.0', etc.
+	 * @param string $version2 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as the same or earlier
 	 */
 	public function is_version_less_than_equal( $version1, $version2 ) {
@@ -174,8 +184,10 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	}
 
 	/**
-	 * @param  $version1 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
-	 * @param  $version2 string a version string such as '1', '1.1', '1.1.1', '2.0', etc.
+	 * Compare versions
+	 *
+	 * @param string $version1 a version string such as '1', '1.1', '1.1.1', '2.0', etc.
+	 * @param string $version2 a version string such as '1', '1.1', '1.1.1', '2.0', etc.
 	 * @return bool true if version_compare of $versions1 and $version2 shows $version1 as earlier
 	 */
 	public function is_version_less_than( $version1, $version2 ) {
@@ -192,6 +204,4 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	protected function save_installed_version() {
 		$this->set_version_saved( $this->get_version() );
 	}
-
-
 }
