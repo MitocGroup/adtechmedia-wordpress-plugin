@@ -1,26 +1,25 @@
 <?php
-/*
-    "WordPress Plugin Template" Copyright (C) 2016 Michael Simpson  (email : michael.d.simpson@gmail.com)
-
-    This file is part of WordPress Plugin Template for WordPress.
-
-    WordPress Plugin Template is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    WordPress Plugin Template is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Contact Form to Database Extension.
-    If not, see http://www.gnu.org/licenses/gpl-3.0.html
-*/
+/**
+ * "WordPress Plugin Template" Copyright (C) 2016 Michael Simpson  (email : michael.d.simpson@gmail.com)
+ * This file is part of WordPress Plugin Template for WordPress.
+ * WordPress Plugin Template is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * WordPress Plugin Template is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with Contact Form to Database Extension.
+ * If not, see http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @category File
+ * @package  Adtechmedia_InstallIndicator
+ * @author    yama-gs
+ */
 
 include_once('adtechmedia-optionsmanager.php');
-
 
 /**
  * Class Adtechmedia_InstallIndicator
@@ -97,7 +96,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 	 * Get a value for input key in the header section of main plugin file.
 	 * E.g. "Plugin Name", "Version", "Description", "Text Domain", etc.
 	 *
-	 * @param string $key  plugin header key.
+	 * @param string $key plugin header key.
 	 * @return string if found, otherwise null
 	 */
 	public function get_plugin_header_value( $key ) {
@@ -106,7 +105,7 @@ class Adtechmedia_InstallIndicator extends Adtechmedia_OptionsManager {
 		$match = array();
 		preg_match( '/' . $key . ':\s*(\S+)/', $data, $match );
 		if ( count( $match ) >= 1 ) {
-			return $match[ 1 ];
+			return $match[1];
 		}
 		return null;
 	}

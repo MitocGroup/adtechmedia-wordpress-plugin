@@ -21,26 +21,35 @@
 
 include_once('adtechmedia-installindicator.php');
 
+/**
+ * Class Adtechmedia_LifeCycle
+ */
 class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
+	/**
+	 * Install plugin
+	 */
 	public function install() {
 
-		// Initialize Plugin Options
+		// Initialize Plugin Options.
 		$this->init_options();
 
-		// Initialize DB Tables used by the plugin
+		// Initialize DB Tables used by the plugin.
 		$this->install_database_tables();
 
-		// Other Plugin initialization - for the plugin writer to override as needed
+		// Other Plugin initialization - for the plugin writer to override as needed.
 		$this->other_install();
 
-		// Record the installed version
+		// Record the installed version.
 		$this->save_installed_version();
 
-		// To avoid running install() more then once
+		// To avoid running install() more then once.
 		$this->mark_as_installed();
 	}
 
+	/**
+	 * Uninstall plugin
+	 */
 	public function uninstall() {
 		$this->other_uninstall();
 		$this->un_install_database_tables();
@@ -57,6 +66,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	}
 
 	/**
+	 * Activation of plugin
 	 * See: http://plugin.michael-simpson.com/?page_id=105
 	 *
 	 * @return void
@@ -88,11 +98,12 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	}
 
 	/**
+	 * Check API key is exists
+	 *
 	 * @return bool
 	 */
 	public function check_api_key_exists() {
 		$key = $this->get_plugin_option( 'key' );
-		//$site=get_site_url();
 		if ( empty($key) ) {
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
@@ -109,6 +120,8 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
 
 	/**
+	 * Check property is exists
+	 *
 	 * @return bool
 	 */
 	public function check_prop() {
@@ -123,11 +136,11 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'country' ),
 					$key
 				);
-				if ( ( ! isset($prop[ 'Id' ])) || empty($prop[ 'Id' ]) ) {
+				if ( ( ! isset($prop['Id'])) || empty($prop['Id']) ) {
 					return false;
 				} else {
-					$this->add_plugin_option( 'BuildPath', $prop[ 'BuildPath' ] );
-					$this->add_plugin_option( 'Id', $prop[ 'Id' ] );
+					$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
+					$this->add_plugin_option( 'Id', $prop['Id'] );
 					$this->update_prop();
 				}
 			}
@@ -137,6 +150,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
 
 	/**
+	 * Deactivation of plugin
 	 * See: http://plugin.michael-simpson.com/?page_id=105
 	 *
 	 * @return void
@@ -145,6 +159,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	}
 
 	/**
+	 * Init options
 	 * See: http://plugin.michael-simpson.com/?page_id=31
 	 *
 	 * @return void
@@ -152,6 +167,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	protected function init_options() {
 	}
 
+	/**
+	 * Add actions and filters
+	 */
 	public function add_actions_and_filters() {
 	}
 
@@ -203,16 +221,20 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function add_settings_sub_menu_page() {
 		$this->add_settings_sub_menu_page_to_plugins_menu();
-		//$this->addSettingsSubMenuPageToSettingsMenu();
 	}
 
 
+	/**
+	 * Require extra plugin files
+	 */
 	protected function require_extra_plugin_files() {
 		require_once(ABSPATH . 'wp-includes/pluggable.php');
 		require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 	}
 
 	/**
+	 * Get setting slug
+	 *
 	 * @return string Slug name for the URL to the Setting page
 	 * (i.e. the page for setting options)
 	 */
@@ -220,6 +242,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		return get_class( $this ) . 'Settings';
 	}
 
+	/**
+	 * Add page to plugin menu
+	 */
 	protected function add_settings_sub_menu_page_to_plugins_menu() {
 		$this->require_extra_plugin_files();
 		$display_name = $this->get_plugin_display_name();
@@ -233,7 +258,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		);
 	}
 
-
+	/**
+	 * Add page to settings menu
+	 */
 	protected function add_settings_sub_menu_page_to_settings_menu() {
 		$this->require_extra_plugin_files();
 		$display_name = $this->get_plugin_display_name();
@@ -247,7 +274,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	}
 
 	/**
-	 * @param  $name string name of a database table
+	 * Get plugin table prefix
+	 *
+	 * @param  string $name name of a database table.
 	 * @return string input prefixed with the WordPress DB table prefix
 	 * plus the prefix for this plugin (lower-cased) to avoid table name collisions.
 	 * The plugin prefix is lower-cases as a best practice that all DB table names are lower case to
@@ -262,7 +291,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	/**
 	 * Convenience function for creating AJAX URLs.
 	 *
-	 * @param $actionName string the name of the ajax action registered in a call like
+	 * @param string $actionName the name of the ajax action registered in a call like
 	 * add_action('wp_ajax_actionName', array(&$this, 'functionName'));
 	 *     and/or
 	 * add_action('wp_ajax_nopriv_actionName', array(&$this, 'functionName'));
