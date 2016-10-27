@@ -174,13 +174,14 @@ class Adtechmedia_OptionsManager {
 		global $wpdb;
 		$ret_val = null;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
+		// @codingStandardsIgnoreStart
 		$row = $wpdb->get_row(
 			$wpdb->prepare(
 				"SELECT option_value FROM `$table_name` WHERE option_name = %s LIMIT 1",
 				$option_name
 			)
 		);
-
+		// @codingStandardsIgnoreEnd
 		if ( is_object( $row ) ) {
 			$ret_val = $row->option_value;
 		}
@@ -473,8 +474,8 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Try to save data from request
 	 *
-	 * @param array  $options request data.
-	 * @param  array $post request data.
+	 * @param array $options request data.
+	 * @param array $post request data.
 	 */
 	public function try_to_save_post( $options, $post ) {
 		if ( null != $options ) {
@@ -567,7 +568,9 @@ class Adtechmedia_OptionsManager {
 	 */
 	protected function get_my_sql_version() {
 		global $wpdb;
+		// @codingStandardsIgnoreStart
 		$rows = $wpdb->get_results( 'select version() as mysqlversion' );
+		// @codingStandardsIgnoreEnd
 		if ( ! empty( $rows ) ) {
 			return $rows[0]->mysqlversion;
 		}
@@ -585,6 +588,9 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_email_domain() {
 		// Get the site domain and get rid of www.
+		if( !isset($_SERVER['SERVER_NAME'])){
+			return '';
+		}
 		$sitename = strtolower( sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) );
 		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 			$sitename = substr( $sitename, 4 );
