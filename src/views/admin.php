@@ -11,8 +11,8 @@
  */
 
 $countries_list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
-$currencies = [];
-$countries = [];
+$currencies = [ ];
+$countries = [ ];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueMethod'];
@@ -25,7 +25,7 @@ if ( is_array( $countries_list ) ) {
 }
 $content_paywall = [
 	'transactions',
-	'pledged currency'
+	'pledged currency',
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
 ?>
@@ -135,12 +135,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
 											foreach ( $currencies as $currency ) {
-												echo "<option value='$currency' " .
+												echo "<option value='";
+												echo esc_html( $currency );
+												echo "' " .
 													(($currency == $price_currency_value) ? 'selected' : '')
 													. ' >' .
-													strtoupper(
-														$currency
-													) . '</option>';
+													esc_html( strtoupper( $currency ) ) . '</option>';
 											}
 											?>
 										</select>
@@ -164,7 +164,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											'payment_pledged',
 											$plugin_meta_data['payment_pledged'],
 											$this->get_plugin_option( 'payment_pledged' ),
-											"e.g. 5"
+											'e.g. 5'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -175,9 +175,11 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											<?php
 											$content_paywall_value = $this->get_plugin_option( 'content_paywall' );
 											foreach ( $content_paywall as $content_paywall_one ) {
-												echo "<option value='$content_paywall_one' " .
+												echo "<option value='";
+												echo esc_html( $content_paywall_one );
+												echo "' " .
 													(($content_paywall_one == $content_paywall_value) ? 'selected' : '')
-													. ' >' . $content_paywall_one . '</option>';
+													. ' >' . esc_html( $content_paywall_one ) . '</option>';
 											}
 											?>
 										</select>
@@ -201,7 +203,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											'content_offset',
 											$plugin_meta_data['content_offset'],
 											$this->get_plugin_option( 'content_offset' ),
-											"e.g. 2"
+											'e.g. 2'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -212,9 +214,11 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											<?php
 											$offset_type_value = $this->get_plugin_option( 'content_offset_type' );
 											foreach ( $content_offset_types as $content_offset_type ) {
-												echo "<option value='$content_offset_type' " .
+												echo "<option value='";
+												echo esc_html( $content_offset_type );
+												echo "' " .
 													(($content_offset_type == $offset_type_value) ? 'selected' : '')
-													. ' >' . $content_offset_type . '</option>';
+													. ' >' . esc_html( $content_offset_type ) . '</option>';
 											}
 											?>
 										</select>

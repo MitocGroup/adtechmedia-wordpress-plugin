@@ -22,7 +22,7 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 
 	/**
 	 * Flag that we need to add the script
-	 * 
+	 *
 	 * @var boolean
 	 */
 	var $do_add_acript;
@@ -63,7 +63,7 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 
 	/**
 	 * Add script
-	 * 
+	 *
 	 * @abstract override this function with calls to insert scripts needed by your shortcode in the footer
 	 * Example:
 	 *   wp_register_script('my-script', plugins_url('js/my-script.js', __FILE__), array('jquery'), '1.0', true);
