@@ -175,7 +175,11 @@ class Adtechmedia_OptionsManager {
 		$ret_val = null;
 		$table_name = $wpdb->prefix . Adtechmedia_Config::get( 'plugin_table_name' );
 		$row = $wpdb->get_row(
-			$wpdb->prepare( 'SELECT option_value FROM `%1%s` WHERE option_name = %s LIMIT 1', $table_name, $option_name )
+			$wpdb->prepare(
+				'SELECT option_value FROM `%1%s` WHERE option_name = %s LIMIT 1',
+				$table_name,
+				$option_name
+			)
 		);
 
 		if ( is_object( $row ) ) {
@@ -426,7 +430,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function settings_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to access this page.', 'adtechmedia' ) );
+			wp_die( esc_html__( 'You do not have sufficient permissions to access this page.', 'adtechmedia' ) );
 		}
 
 		$main_data = $this->get_main_data();
@@ -435,7 +439,11 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options.
-		if ( isset( $_POST['option_page'] ) && check_admin_referer( $main_data_class, $_POST['option_page'] ) && $_POST['option_page'] == $main_data_class ) {
+		if ( isset( $_POST['option_page'] ) && check_admin_referer(
+				$main_data_class,
+				$_POST['option_page']
+			) && sanitize_text_field( $_POST['option_page'] ) == $main_data_class
+		) {
 			$this->try_to_save_post( $main_data );
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
@@ -452,7 +460,11 @@ class Adtechmedia_OptionsManager {
 			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
 			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
-		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer( $plugin_meta_data_class, $_POST['option_page'] ) && $_POST['option_page'] == $plugin_meta_data_class ) {
+		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer(
+				$plugin_meta_data_class,
+				$_POST['option_page']
+			) && sanitize_text_field( $_POST['option_page'] ) == $plugin_meta_data_class
+		) {
 
 			$this->try_to_save_post( $plugin_meta_data );
 			$this->update_prop();
@@ -489,14 +501,16 @@ class Adtechmedia_OptionsManager {
 		if ( is_array( $a_option_meta ) && count( $a_option_meta ) >= 2 ) { // Drop-down list.
 			$choices = array_slice( $a_option_meta, 1 );
 			?>
-			<select name="<?php echo $a_option_key ?>" id="<?php echo $a_option_key ?>">
+			<select name="<?php echo esc_html( $a_option_key ) ?>" id="<?php echo esc_html( $a_option_key ) ?>">
 				<?php
 				foreach ( $choices as $a_choice ) {
 					$selected = ($a_choice == $saved_option_value) ? 'selected' : '';
 					?>
 					<option
-						value="<?php echo $a_choice ?>" <?php echo $selected ?>><?php echo $this->get_option_value_i18n_string(
+						value="<?php echo esc_html(
 							$a_choice
+						) ?>" <?php echo $selected ?>><?php echo $this->get_option_value_i18n_string(
+							esc_html( $a_choice )
 						) ?></option>
 					<?php
 				}
@@ -506,8 +520,9 @@ class Adtechmedia_OptionsManager {
 
 		} else { // Simple input field.
 			?>
-			<input type="text" placeholder="<?= $placeholder ?>" name="<?php echo $a_option_key ?>"
-				   id="<?php echo $a_option_key ?>"
+			<input type="text" placeholder="<?= esc_html( $placeholder ) ?>"
+				   name="<?php echo esc_html( $a_option_key ) ?>"
+				   id="<?php echo esc_html( $a_option_key ) ?>"
 				   value="<?php echo esc_attr( $saved_option_value ) ?>" size="100"/>
 			<?php
 
