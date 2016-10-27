@@ -1,11 +1,14 @@
 <?php
-
 /**
  * Adtechmedia_ContentManager
  *
  * @category Class
  * @package  Adtechmedia_Plugin
  * @author    yama-gs
+ */
+
+/**
+ * Class Adtechmedia_ContentManager
  */
 class Adtechmedia_ContentManager {
 
@@ -55,7 +58,7 @@ class Adtechmedia_ContentManager {
 		$table_name = self::get_cache_table_name();
 		$wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO `%1%s` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)",
+				'INSERT INTO `%1%s` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)',
 				$table_name,
 				$id,
 				$content

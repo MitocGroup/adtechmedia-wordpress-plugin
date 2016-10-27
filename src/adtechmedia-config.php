@@ -2,9 +2,13 @@
 /**
  * Adtechmedia_Config
  *
- * @category Class
+ * @category Adtechmedia_Config
  * @package  Adtechmedia_Plugin
  * @author    yama-gs
+ */
+
+/**
+ * Class Adtechmedia_Config
  */
 class Adtechmedia_Config {
 
