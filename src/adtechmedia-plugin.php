@@ -212,9 +212,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// Adding scripts & styles to all pages.
 		// Examples:.
 		/*
-		wp_enqueue_script('jquery');
-		wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-	    wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));*/
+		* wp_enqueue_script('jquery');
+		* wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+	    * wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
+		*/
 
 		// Register short codes.
 		// http://plugin.michael-simpson.com/?page_id=39.
@@ -226,7 +227,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	/**
 	 * Register plugin scripts
 	 *
-	 * @param string $hook wp hook
+	 * @param string $hook wp hook.
 	 */
 	public function add_adtechmedia_admin_scripts( $hook ) {
 		if ( 'plugins_page_' . $this->get_settings_slug() != $hook ) {
