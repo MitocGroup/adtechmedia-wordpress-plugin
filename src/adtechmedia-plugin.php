@@ -7,7 +7,6 @@
  * @author    yama-gs
  */
 
-
 /**
  * Inclide Adtechmedia_LifeCycle
  */
@@ -24,7 +23,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return array of option meta data.
 	 */
 	public function get_option_meta_data() {
-		//  http://plugin.michael-simpson.com/?page_id=31
+		// http://plugin.michael-simpson.com/?page_id=31.
 		return array();
 	}
 
@@ -38,15 +37,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'key' => array( __( 'Key', 'adtechmedia-plugin' ) ),
 			'BuildPath' => array( __( 'BuildPath', 'adtechmediaplugin' ) ),
 			'Id' => array( __( 'Id', 'adtechmedia-plugin' ) ),
-			"website_domain_name" => array( __( 'website_domain_name', 'adtechmedia-plugin' ) ),
-			"website_url" => array( __( 'website_url', 'adtechmedia-plugin' ) ),
-			"support_email" => array( __( 'support_email', 'adtechmedia-plugin' ) ),
-			"country" => array( __( 'country', 'adtechmedia-plugin' ) ),
-			"revenue_method" => array(
+			'website_domain_name' => array( __( 'website_domain_name', 'adtechmedia-plugin' ) ),
+			'websit e_url' => array( __( 'website_url', 'adtechmedia-plugin' ) ),
+			'support_email' => array( __( 'support_email', 'adtechmedia-plugin' ) ),
+			'country' => array( __( 'country', 'adtechmedia-plugin' ) ),
+			'revenue_method' => array(
 				__( 'revenueMethod', 'adtechmedia-plugin' ),
 				'advertising+micropayments',
 				'advertising',
-				'micropayments'
+				'micropayments',
 			),
 		);
 	}
@@ -58,24 +57,24 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function get_plugin_meta_data() {
 		return array(
-			"container" => array( __( 'Article container', 'adtechmedia-plugin' ) ),
-			"selector" => array( __( 'Article selector', 'adtechmedia-plugin' ) ),
-			"price" => array( __( 'Price', 'adtechmedia-plugin' ) ),
-			"author_name" => array( __( 'Author name', 'adtechmedia-plugin' ) ),
-			"author_avatar" => array( __( 'Author avatar', 'adtechmedia-plugin' ) ),
-			"ads_video" => array( __( 'Link to video ad', 'adtechmedia-plugin' ) ),
-			"content_offset" => array( __( 'Offset', 'adtechmedia-plugin' ) ),
-			"content_lock" => array(
+			'container' => array( __( 'Article container', 'adtechmedia-plugin' ) ),
+			'selector' => array( __( 'Article selector', 'adtechmedia-plugin' ) ),
+			'price' => array( __( 'Price', 'adtechmedia-plugin' ) ),
+			'author_name' => array( __( 'Author name', 'adtechmedia-plugin' ) ),
+			'author_avatar' => array( __( 'Author avatar', 'adtechmedia-plugin' ) ),
+			'ads_video' => array( __( 'Link to video ad', 'adtechmedia-plugin' ) ),
+			'content_offset' => array( __( 'Offset', 'adtechmedia-plugin' ) ),
+			'content_lock' => array(
 				__( 'Lock', 'adtechmedia-plugin' ),
 				'blur+scramble',
 				'blur',
 				'scramble',
 				'keywords',
 			),
-			"payment_pledged" => array( __( 'payment.pledged', 'adtechmedia-plugin' ) ),
-			"price_currency" => array( __( 'price.currency', 'adtechmedia-plugin' ) ),
-			"content_paywall" => array( __( 'content.paywall', 'adtechmedia-plugin' ) ),
-			"content_offset_type" => array( __( 'Offset type', 'adtechmedia-plugin' ) ),
+			'payment_pledged' => array( __( 'payment.pledged', 'adtechmedia-plugin' ) ),
+			'price_currency' => array( __( 'price.currency', 'adtechmedia-plugin' ) ),
+			'content_paywall' => array( __( 'content.paywall', 'adtechmedia-plugin' ) ),
+			'content_offset_type' => array( __( 'Offset type', 'adtechmedia-plugin' ) ),
 		);
 	}
 
@@ -157,9 +156,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return void
 	 */
 	protected function un_install_database_tables() {
-		/*global $wpdb;
-		$tableName = $this->prefixTableName('mytable');
-		$wpdb->query("DROP TABLE IF EXISTS `$tableName`");*/
+		/*
+		 * global $wpdb;
+		 * $tableName = $this->prefixTableName('mytable');
+		 * $wpdb->query("DROP TABLE IF EXISTS `$tableName`");
+		 */
 	}
 
 
@@ -183,17 +184,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
 
-		// Example adding a script & style just for the options administration page.
-		/* http://plugin.michael-simpson.com/?page_id=47
-		        if (strpos($_SERVER['REQUEST_URI'], $this->getSettingsSlug()) !== false) {
-		           wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
-		            wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-		        }*/
-
-
 		// Add Actions & Filters.
 		// http://plugin.michael-simpson.com/?page_id=37.
-
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'add_adtechmedia_admin_scripts' ) );
 		}
@@ -201,7 +193,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}
-		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
 			$key_check = $this->check_api_key_exists();
 			$property_check = $this->check_prop();
 
@@ -215,30 +207,29 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( ! is_admin() ) {
 			add_action( 'wp_enqueue_scripts', array( &$this, 'add_adtechmedia_scripts' ) );
 		}
-		add_filter( 'the_content', array( &$this, 'hide_content' ), 99999 );//try do this after any other filter
+		add_filter( 'the_content', array( &$this, 'hide_content' ), 99999 );// try do this after any other filter.
 
 		// Adding scripts & styles to all pages.
 		// Examples:.
-		/*        wp_enqueue_script('jquery');
-		          wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-	              wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));*/
-
+		/*
+		wp_enqueue_script('jquery');
+		wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+	    wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));*/
 
 		// Register short codes.
 		// http://plugin.michael-simpson.com/?page_id=39.
-
-
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
-
 	}
 
 
 	/**
 	 * Register plugin scripts
+	 *
+	 * @param string $hook wp hook
 	 */
 	public function add_adtechmedia_admin_scripts( $hook ) {
-		if ( $hook != 'plugins_page_' . $this->get_settings_slug() ) {
+		if ( 'plugins_page_' . $this->get_settings_slug() != $hook ) {
 			return;
 		}
 		wp_enqueue_style(
@@ -285,7 +276,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function hide_content( $content ) {
 
 		if ( is_single() ) {
-			$id = (string)get_the_ID();
+			$id = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
 			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
 				return $this->content_wrapper( $saved_content );
@@ -321,7 +312,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function content_wrapper( $content ) {
 		$property_id = $this->get_plugin_option( 'id' );
-		$content_id = (string)get_the_ID();
+		$content_id = (string) get_the_ID();
 		$script = "<script>
                     window.ATM_PROPERTY_ID = '$property_id'; 
                     window.ATM_CONTENT_ID = '$content_id'; 
@@ -336,10 +327,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function property_id_not_exists_error() {
 		?>
 		<div class="error notice">
-			<p><?php _e(
-					'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
-					'adtechmedia'
-				); ?></p>
+			<p><?php esc_html_e( 'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.', 'adtechmedia' ); ?></p>
 		</div>
 		<?php
 	}
@@ -350,10 +338,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function key_not_exists_error() {
 		?>
 		<div class="error notice">
-			<p><?php _e(
-					'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
-					'adtechmedia'
-				); ?></p>
+			<p><?php esc_html_e( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.', 'adtechmedia' ); ?></p>
 		</div>
 		<?php
 	}
