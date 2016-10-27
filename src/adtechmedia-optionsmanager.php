@@ -441,7 +441,7 @@ class Adtechmedia_OptionsManager {
 		// Save Posted Options.
 		if ( isset( $_POST['option_page'] ) && check_admin_referer( $main_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
 		) {
-			$this->try_to_save_post( $main_data );
+			$this->try_to_save_post( $main_data, $main_data_class );
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
 				$this->get_plugin_option( 'website_url' )
@@ -460,7 +460,7 @@ class Adtechmedia_OptionsManager {
 		} elseif ( isset( $_POST['option_page'] ) && check_admin_referer( $plugin_meta_data_class, 'option_page' ) && sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
 		) {
 
-			$this->try_to_save_post( $plugin_meta_data );
+			$this->try_to_save_post( $plugin_meta_data, $plugin_meta_data_class );
 			$this->update_prop();
 		}
 
@@ -470,13 +470,14 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Try to save data from request
 	 *
-	 * @param array $options request data.
+	 * @param array  $options request data.
+	 * @param string $form_class class to verify.
 	 */
-	public function try_to_save_post( $options ) {
+	public function try_to_save_post( $options, $form_class ) {
 		if ( null != $options ) {
 			foreach ( $options as $a_option_key => $a_option_meta ) {
-				if ( isset( $_POST[ $a_option_key ] ) ) {
-					$this->update_plugin_option( $a_option_key, $_POST[ $a_option_key ] );
+				if ( isset( $_POST[ $a_option_key ] ) && check_admin_referer( $form_class, $a_option_key ) ) {
+					$this->update_plugin_option( $a_option_key, sanitize_text_field( wp_unslash( $_POST[ $a_option_key ] ) ) );
 				}
 			}
 		}
@@ -488,10 +489,10 @@ class Adtechmedia_OptionsManager {
 	 * @param string $a_option_key name of the option (un-prefixed).
 	 * @param mixed  $a_option_meta meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...).
 	 * @param string $saved_option_value current value for $a_option_key.
-	 * @param string $placeholder placeholder to field
+	 * @param string $placeholder placeholder to field.
 	 * @return void
 	 */
-	protected function create_form_control( $a_option_key, $a_option_meta, $saved_option_value, $placeholder = "" ) {
+	protected function create_form_control( $a_option_key, $a_option_meta, $saved_option_value, $placeholder = '' ) {
 		if ( is_array( $a_option_meta ) && count( $a_option_meta ) >= 2 ) { // Drop-down list.
 			$choices = array_slice( $a_option_meta, 1 );
 			?>
@@ -503,7 +504,7 @@ class Adtechmedia_OptionsManager {
 					<option
 						value="<?php echo esc_html(
 							$a_choice
-						) ?>" <?php echo $selected ?>><?php echo $this->get_option_value_i18n_string(
+						) ?>" <?php echo esc_html( $selected ) ?>><?php echo $this->get_option_value_i18n_string(
 							esc_html( $a_choice )
 						) ?></option>
 					<?php
@@ -514,7 +515,7 @@ class Adtechmedia_OptionsManager {
 
 		} else { // Simple input field.
 			?>
-			<input type="text" placeholder="<?= esc_html( $placeholder ) ?>"
+			<input type="text" placeholder="<?php echo esc_html( $placeholder ) ?>"
 				   name="<?php echo esc_html( $a_option_key ) ?>"
 				   id="<?php echo esc_html( $a_option_key ) ?>"
 				   value="<?php echo esc_attr( $saved_option_value ) ?>" size="100"/>
@@ -585,7 +586,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_email_domain() {
 		// Get the site domain and get rid of www.
-		$sitename = strtolower( $_SERVER['SERVER_NAME'] );
+		$sitename = strtolower( sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) );
 		if ( substr( $sitename, 0, 4 ) == 'www.' ) {
 			$sitename = substr( $sitename, 4 );
 		}
