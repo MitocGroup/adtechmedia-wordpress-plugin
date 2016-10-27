@@ -588,7 +588,7 @@ class Adtechmedia_OptionsManager {
 	 */
 	public function get_email_domain() {
 		// Get the site domain and get rid of www.
-		if( !isset($_SERVER['SERVER_NAME'])){
+		if ( ! isset( $_SERVER['SERVER_NAME'] ) ) {
 			return '';
 		}
 		$sitename = strtolower( sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) );

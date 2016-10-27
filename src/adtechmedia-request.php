@@ -70,7 +70,7 @@ class Adtechmedia_Request {
 			"ContentId" => $content_id,
 			"PropertyId" => $property_id,
 			"ScrambleStrategy" => $scramble_strategy,
-			"OffsetType" => $offset_type,
+			"OffsetType" => self::get_offset_type( $offset_type ),
 			"OffsetElementSelector" => $offset_element_selector,
 			"Offset" => $offset,
 		];

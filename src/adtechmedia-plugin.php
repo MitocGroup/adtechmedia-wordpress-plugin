@@ -1,8 +1,21 @@
 <?php
+/**
+ * Main plugin class
+ *
+ * @category File
+ * @package  Adtechmedia_Plugin
+ * @author    yama-gs
+ */
 
 
+/**
+ * Inclide Adtechmedia_LifeCycle
+ */
 include_once( 'adtechmedia-lifecycle.php' );
 
+/**
+ * Class Adtechmedia_Plugin
+ */
 class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 	/**
@@ -12,10 +25,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function get_option_meta_data() {
 		//  http://plugin.michael-simpson.com/?page_id=31
-		return array(//'_version' => array('Installed Version'), // Leave this one commented-out. Uncomment to test upgrades.
-		);
+		return array();
 	}
 
+	/**
+	 * Main plugin data fields
+	 *
+	 * @return array
+	 */
 	public function get_main_data() {
 		return array(
 			'key' => array( __( 'Key', 'adtechmedia-plugin' ) ),
@@ -34,6 +51,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 	}
 
+	/**
+	 * Plugin options fields
+	 *
+	 * @return array
+	 */
 	public function get_plugin_meta_data() {
 		return array(
 			"container" => array( __( 'Article container', 'adtechmedia-plugin' ) ),
@@ -54,17 +76,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			"price_currency" => array( __( 'price.currency', 'adtechmedia-plugin' ) ),
 			"content_paywall" => array( __( 'content.paywall', 'adtechmedia-plugin' ) ),
 			"content_offset_type" => array( __( 'Offset type', 'adtechmedia-plugin' ) ),
-			/*'ATextInput' => array(__('Enter in some text', 'my-awesome-plugin')),
-			'AmAwesome' => array(__('I like this awesome plugin', 'my-awesome-plugin'), 'false', 'true'),
-			'CanDoSomething' => array(__('Which user role can do something', 'my-awesome-plugin'),
-										'Administrator', 'Editor', 'Author', 'Contributor', 'Subscriber', 'Anyone')*/
 		);
 	}
-//    protected function getOptionValueI18nString($optionValue) {
-//        $i18nValue = parent::getOptionValueI18nString($optionValue);
-//        return $i18nValue;
-//    }
 
+	/**
+	 *  Init plugin options
+	 */
 	protected function init_options() {
 
 		$options = $this->get_option_meta_data();
@@ -78,11 +95,20 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 	}
 
-
+	/**
+	 * Get plugin name
+	 *
+	 * @return string
+	 */
 	public function get_plugin_display_name() {
 		return 'Adtechmedia';
 	}
 
+	/**
+	 * Get plugin file
+	 *
+	 * @return string
+	 */
 	protected function get_main_plugin_file_name() {
 		return 'adtechmedia.php';
 	}
@@ -99,6 +125,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	protected function install_database_tables() {
 		global $wpdb;
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// @codingStandardsIgnoreStart
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS `$table_name` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -108,7 +135,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                             UNIQUE INDEX `option_name` (`option_name`)
                         )"
 		);
+		// @codingStandardsIgnoreEnd
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
+		// @codingStandardsIgnoreStart
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS `$table_name` (
                             `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -118,6 +147,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                             UNIQUE INDEX `item_id` (`item_id`)
                         )"
 		);
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -127,9 +157,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return void
 	 */
 	protected function un_install_database_tables() {
-		//        global $wpdb;
-		//        $tableName = $this->prefixTableName('mytable');
-		//        $wpdb->query("DROP TABLE IF EXISTS `$tableName`");
+		/*global $wpdb;
+		$tableName = $this->prefixTableName('mytable');
+		$wpdb->query("DROP TABLE IF EXISTS `$tableName`");*/
 	}
 
 
@@ -143,37 +173,35 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 *
+	 * Add plugin actions and filters
 	 */
 	public function add_actions_and_filters() {
 
-		// Add options administration page
-		// http://plugin.michael-simpson.com/?page_id=47
+		// Add options administration page.
+		// http://plugin.michael-simpson.com/?page_id=47.
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
 
+		// Example adding a script & style just for the options administration page.
+		/* http://plugin.michael-simpson.com/?page_id=47
+		        if (strpos($_SERVER['REQUEST_URI'], $this->getSettingsSlug()) !== false) {
+		           wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
+		            wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+		        }*/
 
-		// Example adding a script & style just for the options administration page
-		// http://plugin.michael-simpson.com/?page_id=47
-		//        if (strpos($_SERVER['REQUEST_URI'], $this->getSettingsSlug()) !== false) {
-		//            wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
-		//            wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-		//        }
 
-
-		// Add Actions & Filters
-		// http://plugin.michael-simpson.com/?page_id=37
+		// Add Actions & Filters.
+		// http://plugin.michael-simpson.com/?page_id=37.
 
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'add_adtechmedia_admin_scripts' ) );
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
-		add_filter( 'http_response', array( &$this, 'wp_log_http_requests' ), 10, 3 );//todo remove this
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}
-		if ( strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( $_SERVER['REQUEST_URI'], $this->get_settings_slug() ) !== false ) {
 			$key_check = $this->check_api_key_exists();
 			$property_check = $this->check_prop();
 
@@ -189,56 +217,25 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		add_filter( 'the_content', array( &$this, 'hide_content' ), 99999 );//try do this after any other filter
 
-		// Adding scripts & styles to all pages
-		// Examples:
-		//        wp_enqueue_script('jquery');
-		//        wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-		//        wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
+		// Adding scripts & styles to all pages.
+		// Examples:.
+		/*        wp_enqueue_script('jquery');
+		          wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+	              wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));*/
 
 
-		// Register short codes
-		// http://plugin.michael-simpson.com/?page_id=39
+		// Register short codes.
+		// http://plugin.michael-simpson.com/?page_id=39.
 
 
-		// Register AJAX hooks
-		// http://plugin.michael-simpson.com/?page_id=41
+		// Register AJAX hooks.
+		// http://plugin.michael-simpson.com/?page_id=41.
 
 	}
 
-	public function wp_log_http_requests( $response, $args, $url ) {
-		// set your log file location here
-		$logfile = plugin_dir_path( __FILE__ ) . '/http_requests.txt';
-		// parse request and response body to a hash for human readable log output
-		//$log_response = $response;
-		/*if ( isset( $args['body'] ) ) {
-			parse_str( $args['body'], $args['body_parsed'] );
-		}
-		if ( isset( $log_response['body'] ) ) {
-			parse_str( $log_response['body'], $log_response['body_parsed'] );
-		}*/
-		// write into logfile
-		$output = 'Request on ' . date( 'c' ) . PHP_EOL;
-		$output .= 'Url: ' . $url . PHP_EOL;
-		$output .= " - Method:" . $args['method'] . PHP_EOL;
-		$output .= ' - Headers:' . PHP_EOL;
-
-		foreach ( $args['headers'] as $key => $value ) {
-			$output .= "   - $key: $value" . PHP_EOL;
-		}
-
-		$output .= 'Response' . PHP_EOL;
-		$output .= ' - Headers:' . PHP_EOL;
-
-		foreach ( $response['headers'] as $key => $value ) {
-			$output .= "   - $key: $value" . PHP_EOL;
-		}
-		//file_put_contents( $logfile, sprintf( "### %s, URL: %s\nREQUEST: %sRESPONSE: %s\n", date( 'c' ), $url, print_r( $args, true ), print_r( $log_response, true ) ), FILE_APPEND );
-		file_put_contents( $logfile, $output . PHP_EOL . PHP_EOL, FILE_APPEND );
-		return $response;
-	}
 
 	/**
-	 *
+	 * Register plugin scripts
 	 */
 	public function add_adtechmedia_admin_scripts( $hook ) {
 		if ( $hook != 'plugins_page_' . $this->get_settings_slug() ) {
@@ -259,7 +256,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 *
+	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
@@ -268,17 +265,21 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 * @param $postId
+	 * Clear post cache
+	 *
+	 * @param integer $post_id id of post.
 	 */
-	public function clear_cache_on_update( $postId ) {
-		if ( wp_is_post_revision( $postId ) ) {
+	public function clear_cache_on_update( $post_id ) {
+		if ( wp_is_post_revision( $post_id ) ) {
 			return;
 		}
-		Adtechmedia_ContentManager::clear_content( $postId );
+		Adtechmedia_ContentManager::clear_content( $post_id );
 	}
 
 	/**
-	 * @param $content
+	 * Hide post content
+	 *
+	 * @param string $content content of post.
 	 * @return bool|mixed|null
 	 */
 	public function hide_content( $content ) {
@@ -299,7 +300,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$id,
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'content_lock' ),
-					"elements",
+					$this->get_plugin_option( 'content_offset_type' ),
 					$this->get_plugin_option( 'selector' ),
 					$this->get_plugin_option( 'content_offset' ),
 					$this->get_plugin_option( 'key' )
@@ -313,7 +314,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 * @param $content
+	 * Wrap content of post
+	 *
+	 * @param string $content content of post.
 	 * @return string
 	 */
 	public function content_wrapper( $content ) {
@@ -328,7 +331,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 *
+	 * Show error if Property Id not exists
 	 */
 	public function property_id_not_exists_error() {
 		?>
@@ -342,7 +345,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 *
+	 * Show error if  API key not exists
 	 */
 	public function key_not_exists_error() {
 		?>
