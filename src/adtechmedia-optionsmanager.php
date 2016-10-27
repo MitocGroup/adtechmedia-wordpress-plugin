@@ -362,11 +362,11 @@ class Adtechmedia_OptionsManager {
 	 * @return void
 	 */
 	public function create_settings_menu() {
-		$pluginName = $this->get_plugin_display_name();
+		$plugin_name = $this->get_plugin_display_name();
 		//create new top-level menu.
 		add_menu_page(
-			$pluginName . ' Plugin Settings',
-			$pluginName,
+			$plugin_name . ' Plugin Settings',
+			$plugin_name,
 			'administrator',
 			get_class( $this ),
 			array( &$this, 'settings_page' )
@@ -428,7 +428,7 @@ class Adtechmedia_OptionsManager {
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
 		// Save Posted Options.
-		if ( isset($_POST['option_page']) && $_POST['option_page'] == $main_data_class ) {
+		if ( isset( $_POST['option_page'] ) && $_POST['option_page'] == $main_data_class ) {
 			$this->try_to_save_post( $main_data );
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
@@ -445,7 +445,7 @@ class Adtechmedia_OptionsManager {
 			$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
 			$this->add_plugin_option( 'Id', $prop['Id'] );
 			$this->update_prop();
-		} elseif ( isset($_POST['option_page']) && $_POST['option_page'] == $plugin_meta_data_class ) {
+		} elseif ( isset( $_POST['option_page'] ) && $_POST['option_page'] == $plugin_meta_data_class ) {
 
 			$this->try_to_save_post( $plugin_meta_data );
 			$this->update_prop();
@@ -462,7 +462,7 @@ class Adtechmedia_OptionsManager {
 	public function try_to_save_post( $options ) {
 		if ( $options != null ) {
 			foreach ($options as $a_option_key => $a_option_meta) {
-				if ( isset($_POST[ $a_option_key ]) ) {
+				if ( isset( $_POST[ $a_option_key ] ) ) {
 					$this->update_plugin_option( $a_option_key, $_POST[ $a_option_key ] );
 				}
 			}
@@ -474,7 +474,7 @@ class Adtechmedia_OptionsManager {
 	 *
 	 * @param string $a_option_key name of the option (un-prefixed).
 	 * @param mixed $a_option_meta meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...).
-	 * @param string $saved_option_value  current value for $a_option_key.
+	 * @param string $saved_option_value current value for $a_option_key.
 	 * @param string $placeholder placeholder to field
 	 * @return void
 	 */
@@ -552,7 +552,7 @@ class Adtechmedia_OptionsManager {
 	protected function get_my_sql_version() {
 		global $wpdb;
 		$rows = $wpdb->get_results( 'select version() as mysqlversion' );
-		if ( ! empty($rows) ) {
+		if ( ! empty( $rows ) ) {
 			return $rows[0]->mysqlversion;
 		}
 		return false;

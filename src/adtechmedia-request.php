@@ -19,7 +19,7 @@ class Adtechmedia_Request {
 	 * @return bool|mixed
 	 */
 	public static function content_create( $content_id, $property_id, $content, $key ) {
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 		$data = [
@@ -35,7 +35,7 @@ class Adtechmedia_Request {
 			[ 'Id' ]
 		);
 
-		if ( $response && isset($response[ 'Id' ]) ) {
+		if ( $response && isset( $response[ 'Id' ] ) ) {
 			return $response[ 'Id' ];
 		} else {
 			return false;
@@ -63,7 +63,7 @@ class Adtechmedia_Request {
 		$offset,
 		$key
 	) {
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 		$data = [
@@ -82,7 +82,7 @@ class Adtechmedia_Request {
 			[ 'Content' ]
 		);
 
-		if ( $response && isset($response[ 'Content' ]) ) {
+		if ( $response && isset( $response[ 'Content' ] ) ) {
 			return $response[ 'Content' ];
 		} else {
 			return false;
@@ -96,7 +96,7 @@ class Adtechmedia_Request {
 	 * @return bool|mixed
 	 */
 	public static function get_countries_list( $key ) {
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 		$list = get_transient( 'adtechmedia-supported-countries' );
@@ -109,7 +109,7 @@ class Adtechmedia_Request {
 				[ 'Countries' ]
 			);
 
-			if ( $response && isset($response[ 'Countries' ]) ) {
+			if ( $response && isset( $response[ 'Countries' ] ) ) {
 				$list = $response[ 'Countries' ];
 			} else {
 				$list = false;
@@ -140,7 +140,7 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ( $response && isset($response[ 'Key' ]) ) {
+		if ( $response && isset( $response[ 'Key' ] ) ) {
 
 			return $response[ 'Key' ];
 		} else {
@@ -170,7 +170,7 @@ class Adtechmedia_Request {
 			[ 'Key' ]
 		);
 
-		if ( $response && isset($response[ 'Key' ]) ) {
+		if ( $response && isset( $response[ 'Key' ] ) ) {
 
 			return $response[ 'Key' ];
 		} else {
@@ -243,7 +243,7 @@ class Adtechmedia_Request {
 		$currency,
 		$pledged_type
 	) {
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 		$data = [
@@ -337,7 +337,7 @@ class Adtechmedia_Request {
 			$data,
 			[ 'BuildPath', 'Id' ]
 		);
-		if ( $response && isset($response[ 'BuildPath' ]) && isset($response[ 'Id' ]) ) {
+		if ( $response && isset( $response[ 'BuildPath' ] ) && isset( $response[ 'Id' ] ) ) {
 
 			return [ 'BuildPath' => $response[ 'BuildPath' ], 'Id' => $response[ 'Id' ] ];
 		} else {
@@ -356,7 +356,7 @@ class Adtechmedia_Request {
 	 * @return array|bool
 	 */
 	public static function property_create( $name, $website, $support_email, $country, $key ) {
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			return false;
 		}
 		$data = [
@@ -374,7 +374,7 @@ class Adtechmedia_Request {
 		);
 
 
-		if ( $response && isset($response[ 'BuildPath' ]) && isset($response[ 'Id' ]) ) {
+		if ( $response && isset( $response[ 'BuildPath' ] ) && isset( $response[ 'Id' ] ) ) {
 
 			return [ 'BuildPath' => $response[ 'BuildPath' ], 'Id' => $response[ 'Id' ] ];
 		} else {
@@ -447,13 +447,13 @@ class Adtechmedia_Request {
 			}*/
 			return false;
 		}
-		if ( isset($response[ 'body' ]) ) {
+		if ( isset( $response[ 'body' ] ) ) {
 			$body = json_decode( $response[ 'body' ], true );
 		} else {
 			return false;
 		}
 		foreach ($params as $key) {
-			if ( ! isset($body[ $key ]) ) {
+			if ( ! isset( $body[ $key ] ) ) {
 				return false;
 			}
 		}

@@ -1,7 +1,7 @@
 <?php
 
 
-include_once('adtechmedia-lifecycle.php');
+include_once( 'adtechmedia-lifecycle.php' );
 
 class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
@@ -68,7 +68,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	protected function init_options() {
 
 		$options = $this->get_option_meta_data();
-		if ( ! empty($options) ) {
+		if ( ! empty( $options ) ) {
 			foreach ($options as $key => $arr) {
 				if ( is_array( $arr ) && count( $arr > 1 ) ) {
 					$this->add_option( $key, $arr[ 1 ] );
@@ -170,7 +170,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
 		add_filter( 'http_response', array( &$this, 'wp_log_http_requests' ), 10, 3 );//todo remove this
-		if ( ! is_admin() && (empty($key) || empty($property_id)) ) {
+		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}
 		if ( strpos( $_SERVER[ 'REQUEST_URI' ], $this->get_settings_slug() ) !== false ) {
@@ -286,7 +286,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( is_single() ) {
 			$id = (string)get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
-			if ( isset($saved_content) && ! empty($saved_content) ) {
+			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
 				return $this->content_wrapper( $saved_content );
 			} else {
 				Adtechmedia_Request::content_create(

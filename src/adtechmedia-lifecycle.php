@@ -22,7 +22,7 @@
 /**
  * Inclide Adtechmedia_InstallIndicator
  */
-include_once('adtechmedia-installindicator.php');
+include_once( 'adtechmedia-installindicator.php' );
 
 /**
  * Class Adtechmedia_LifeCycle
@@ -107,12 +107,12 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function check_api_key_exists() {
 		$key = $this->get_plugin_option( 'key' );
-		if ( empty($key) ) {
+		if ( empty( $key ) ) {
 			$key = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'website_domain_name' ),
 				$this->get_plugin_option( 'website_url' )
 			);
-			if ( empty($key) ) {
+			if ( empty( $key ) ) {
 				return false;
 			} else {
 				$this->add_plugin_option( 'key', $key );
@@ -129,9 +129,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function check_prop() {
 		$key = $this->get_plugin_option( 'key' );
-		if ( ! empty($key) ) {
+		if ( ! empty( $key ) ) {
 			$id = $this->get_plugin_option( 'Id' );
-			if ( empty($id) ) {
+			if ( empty( $id ) ) {
 				$prop = Adtechmedia_Request::property_create(
 					$this->get_plugin_option( 'website_domain_name' ),
 					$this->get_plugin_option( 'website_url' ),
@@ -139,7 +139,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'country' ),
 					$key
 				);
-				if ( ( ! isset($prop['Id'])) || empty($prop['Id']) ) {
+				if ( ( ! isset( $prop['Id'] )) || empty( $prop['Id'] ) ) {
 					return false;
 				} else {
 					$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
