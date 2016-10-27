@@ -19,7 +19,10 @@
  * @author    yama-gs
  */
 
-include_once('adtechmedia-optionsmanager.php');
+/**
+ * Include Adtechmedia_OptionsManager
+ */
+include_once( 'adtechmedia-optionsmanager.php' );
 
 /**
  * Class Adtechmedia_InstallIndicator

@@ -1,24 +1,27 @@
 <?php
-/*
-    "WordPress Plugin Template" Copyright (C) 2016 Michael Simpson  (email : michael.d.simpson@gmail.com)
+/**
+ * "WordPress Plugin Template" Copyright (C) 2016 Michael Simpson  (email : michael.d.simpson@gmail.com)
+ * This file is part of WordPress Plugin Template for WordPress.
+ * WordPress Plugin Template is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * WordPress Plugin Template is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with Contact Form to Database Extension.
+ * If not, see http://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * @category File
+ * @package  Adtechmedia_LifeCycle
+ * @author    yama-gs
+ */
 
-    This file is part of WordPress Plugin Template for WordPress.
-
-    WordPress Plugin Template is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    WordPress Plugin Template is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Contact Form to Database Extension.
-    If not, see http://www.gnu.org/licenses/gpl-3.0.html
-*/
-
+/**
+ * Inclide Adtechmedia_InstallIndicator
+ */
 include_once('adtechmedia-installindicator.php');
 
 /**
@@ -75,23 +78,23 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$website = get_home_url();
 		$name = preg_replace( '/https?:\/\//', '', $website );
 		$admin_email = get_option( 'admin_email' );
-		$this->add_plugin_option( 'container', "#content-for-atm" );
-		$this->add_plugin_option( 'selector', "p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure" );
-		$this->add_plugin_option( 'price', "5" );
-		$this->add_plugin_option( 'author_name', "" );
-		$this->add_plugin_option( 'author_avatar', "" );
-		$this->add_plugin_option( 'ads_video', "" );
+		$this->add_plugin_option( 'container', '#content-for-atm' );
+		$this->add_plugin_option( 'selector', 'p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure' );
+		$this->add_plugin_option( 'price', '5' );
+		$this->add_plugin_option( 'author_name', '' );
+		$this->add_plugin_option( 'author_avatar', '' );
+		$this->add_plugin_option( 'ads_video', '' );
 		$this->add_plugin_option( 'website_domain_name', $name );
 		$this->add_plugin_option( 'website_url', $website );
 		$this->add_plugin_option( 'support_email', $admin_email );
-		$this->add_plugin_option( 'country', "United States" );
-		$this->add_plugin_option( "content_offset", '2' );
-		$this->add_plugin_option( "content_lock", 'blur+scramble' );
-		$this->add_plugin_option( "revenue_method", 'advertising+micropayments' );
-		$this->add_plugin_option( "payment_pledged", '2' );
-		$this->add_plugin_option( "price_currency", 'usd' );
-		$this->add_plugin_option( "content_paywall", 'transactions' );
-		$this->add_plugin_option( "content_offset_type", 'paragraphs' );
+		$this->add_plugin_option( 'country', 'United States' );
+		$this->add_plugin_option( 'content_offset', '2' );
+		$this->add_plugin_option( 'content_lock', 'blur+scramble' );
+		$this->add_plugin_option( 'revenue_method', 'advertising+micropayments' );
+		$this->add_plugin_option( 'payment_pledged', '2' );
+		$this->add_plugin_option( 'price_currency', 'usd' );
+		$this->add_plugin_option( 'content_paywall', 'transactions' );
+		$this->add_plugin_option( 'content_offset_type', 'paragraphs' );
 		$this->check_api_key_exists();
 		$this->check_prop();
 
@@ -291,7 +294,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	/**
 	 * Convenience function for creating AJAX URLs.
 	 *
-	 * @param string $actionName the name of the ajax action registered in a call like
+	 * @param string $action_name the name of the ajax action registered in a call like.
 	 * add_action('wp_ajax_actionName', array(&$this, 'functionName'));
 	 *     and/or
 	 * add_action('wp_ajax_nopriv_actionName', array(&$this, 'functionName'));
@@ -302,8 +305,8 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 *    $url = sprintf($this->getAjaxUrl('myaction&id=%s&var2=%s&var3=%s'), urlencode($id), urlencode($var2), urlencode($var3));
 	 * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
 	 */
-	public function get_ajax_url( $actionName ) {
-		return admin_url( 'admin-ajax.php' ) . '?action=' . $actionName;
+	public function get_ajax_url( $action_name ) {
+		return admin_url( 'admin-ajax.php' ) . '?action=' . $action_name;
 	}
 
 }
