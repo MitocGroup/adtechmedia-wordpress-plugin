@@ -209,14 +209,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		add_filter( 'the_content', array( &$this, 'hide_content' ), 99999 );// try do this after any other filter.
 
-		// Adding scripts & styles to all pages.
-		// Examples:.
-		
 		/*
-		* wp_enqueue_script('jquery');
-		* wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
-	    * wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
-		*/
+		 * Adding scripts & styles to all pages.
+		 * Examples:
+		 * wp_enqueue_script('jquery');
+		 * wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
+	     * wp_enqueue_script('my-script', plugins_url('/js/my-script.js', __FILE__));
+		 */
 
 		// Register short codes.
 		// http://plugin.michael-simpson.com/?page_id=39.
