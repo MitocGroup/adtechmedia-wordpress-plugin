@@ -1,24 +1,15 @@
 <?php
-/*
-    "WordPress Plugin Template" Copyright (C) 2016 Michael Simpson  (email : michael.d.simpson@gmail.com)
+/**
+ * Adtechmedia_ShortCodeScriptLoader
+ *
+ * @category File
+ * @package  Adtechmedia_Plugin
+ * @author    yama-gs
+ */
 
-    This file is part of WordPress Plugin Template for WordPress.
-
-    WordPress Plugin Template is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    WordPress Plugin Template is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Contact Form to Database Extension.
-    If not, see http://www.gnu.org/licenses/gpl-3.0.html
-*/
-
+/**
+ * include Adtechmedia_ShortCodeLoader
+ */
 include_once( 'adtechmedia-shortcodeloader.php' );
 
 /**
@@ -29,25 +20,40 @@ include_once( 'adtechmedia-shortcodeloader.php' );
  */
 abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLoader {
 
+	/**
+	 * @var boolean
+	 */
 	var $do_add_acript;
 
+	/**
+	 * Register shortcode
+	 *
+	 * @param mixed $shortcode_name  shortcode name.
+	 */
 	public function register( $shortcode_name ) {
 		$this->register_shortcode_to_function( $shortcode_name, 'handle_shortcode_wrapper' );
 
-		// It will be too late to enqueue the script in the header,
-		// but can add them to the footer
+		// It will be too late to enqueue the script in the header, but can add them to the footer.
 		add_action( 'wp_footer', array( $this, 'add_script_wrapper' ) );
 	}
 
+	/**
+	 * Handle shortcode wrapper
+	 *
+	 * @param mixed $atts
+	 * @return shortcode
+	 */
 	public function handle_shortcode_wrapper( $atts ) {
-		// Flag that we need to add the script
+		// Flag that we need to add the script.
 		$this->do_add_acript = true;
 		return $this->handle_shortcode( $atts );
 	}
 
-
+	/**
+	 * Add script wrapper
+	 */
 	public function add_script_wrapper() {
-		// Only add the script if the shortcode was actually called
+		// Only add the script if the shortcode was actually called.
 		if ( $this->do_add_acript ) {
 			$this->add_script();
 		}

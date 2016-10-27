@@ -44,8 +44,8 @@ abstract class Adtechmedia_ShortCodeLoader {
 	 * (as it would appear in a post, e.g. [shortcodeName])
 	 * or an array of such names in case you want to have more than one name
 	 * for the same shortcode.
-	 * @param string $function_name name of public function in this class to call as the.
-	 * shortcode handler
+	 * @param string $function_name name of public function in this class to call as the
+	 * shortcode handler.
 	 * @return void
 	 */
 	protected function register_shortcode_to_function( $shortcode_name, $function_name ) {
