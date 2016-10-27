@@ -8,7 +8,7 @@
  */
 
 /**
- * include Adtechmedia_ShortCodeLoader
+ * Include Adtechmedia_ShortCodeLoader
  */
 include_once( 'adtechmedia-shortcodeloader.php' );
 
@@ -21,6 +21,8 @@ include_once( 'adtechmedia-shortcodeloader.php' );
 abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLoader {
 
 	/**
+	 * Flag that we need to add the script
+	 * 
 	 * @var boolean
 	 */
 	var $do_add_acript;
@@ -40,7 +42,7 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 	/**
 	 * Handle shortcode wrapper
 	 *
-	 * @param mixed $atts
+	 * @param mixed $atts shortcode atts
 	 * @return shortcode
 	 */
 	public function handle_shortcode_wrapper( $atts ) {
@@ -60,6 +62,8 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 	}
 
 	/**
+	 * Add script
+	 * 
 	 * @abstract override this function with calls to insert scripts needed by your shortcode in the footer
 	 * Example:
 	 *   wp_register_script('my-script', plugins_url('js/my-script.js', __FILE__), array('jquery'), '1.0', true);

@@ -325,7 +325,6 @@ class Adtechmedia_Request {
 				],
 			],
 		];
-		
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/update-config',
 			'PATCH',
