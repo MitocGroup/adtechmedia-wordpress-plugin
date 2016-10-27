@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Adtechmedia_ContentManager
  *
@@ -10,7 +11,7 @@ class Adtechmedia_ContentManager {
 
 	/**
 	 * Get name of table with cache of articles
-	 * 
+	 *
 	 * @return string
 	 */
 	private static function get_cache_table_name() {
@@ -20,28 +21,31 @@ class Adtechmedia_ContentManager {
 
 	/**
 	 * Get content of article by id
-	 * 
+	 *
 	 * @param integer $id id of article.
 	 * @return null
 	 */
 	public static function get_content( $id ) {
 		global $wpdb;
-		$ret_val = null;
-		$table_name = self::get_cache_table_name();
-		$row = $wpdb->get_row(
-			$wpdb->prepare( "SELECT value FROM $table_name WHERE item_id = %s LIMIT 1", $id )
-		);
 
-		if ( is_object( $row ) ) {
-			$ret_val = $row->value;
+		$table_name = self::get_cache_table_name();
+		$ret_val = wp_cache_get( $id, 'adtechmedia_scrambled_contents' );
+		if ( ! $ret_val ) {
+			$row = $wpdb->get_row(
+				$wpdb->prepare( "SELECT value FROM {$table_name} WHERE item_id = %s LIMIT 1", $id )
+			);
+			if ( is_object( $row ) ) {
+				$ret_val = $row->value;
+			}
+			wp_cache_set( $id, $ret_val, 'adtechmedia_scrambled_contents', 30 );
 		}
 
 		return $ret_val;
 	}
 
 	/**
-	 * Set content of article 
-	 * 
+	 * Set content of article
+	 *
 	 * @param integer $id id of article.
 	 * @param $content
 	 */
@@ -60,7 +64,7 @@ class Adtechmedia_ContentManager {
 
 	/**
 	 * Clear cached content of article by id
-	 * 
+	 *
 	 * @param integer $id id of article.
 	 */
 	public static function clear_content( $id ) {

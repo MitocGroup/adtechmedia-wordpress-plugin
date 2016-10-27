@@ -29,7 +29,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 <main>
 	<section>
 		<form method="post" action="">
-			<?php settings_fields( $mainDataClass ); ?>
+			<?php settings_fields( $main_data_class ); ?>
 			<h1 class="heading">
 				<i class="custom-icon cog"></i>
 				General configuration
@@ -58,7 +58,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 								<?php $this->create_form_control(
 									'revenue_method',
 									$main_data['revenue_method'],
-									$this->getPluginOption( 'revenue_method' )
+									$this->get_plugin_option( 'revenue_method' )
 								); ?>
 							</div>
 							<div class="block-info">
@@ -74,7 +74,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 								<?php $this->create_form_control(
 									'support_email',
 									$main_data['support_email'],
-									$this->getPluginOption( 'support_email' ),
+									$this->get_plugin_option( 'support_email' ),
 									"e.g. john.smith@mail.com"
 								); ?>
 								<span class="bar"></span>
@@ -118,7 +118,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<?php $this->create_form_control(
 											'price',
 											$plugin_meta_data['price'],
-											$this->getPluginOption( 'price' ),
+											$this->get_plugin_option( 'price' ),
 											"e.g. 0.10"
 										); ?>
 										<span class="bar"></span>
@@ -128,7 +128,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 									<div class="form-select">
 										<select name="price_currency" id="price_currency">
 											<?php
-											$price_currency_value = $this->get_plugin_pption( 'price_currency' );
+											$price_currency_value = $this->get_plugin_option( 'price_currency' );
 											foreach ($currencies as $currency) {
 												echo "<option value='$currency' " .
 													(($currency == $price_currency_value) ? 'selected' : '')
@@ -158,7 +158,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<?php $this->create_form_control(
 											'payment_pledged',
 											$plugin_meta_data['payment_pledged'],
-											$this->get_plugin_pption( 'payment_pledged' ),
+											$this->get_plugin_option( 'payment_pledged' ),
 											"e.g. 5"
 										); ?>
 										<span class="bar"></span>
@@ -168,7 +168,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 									<div class="form-select">
 										<select name="content_paywall" id="content_paywall">
 											<?php
-											$content_paywall_value = $this->get_plugin_pption( 'content_paywall' );
+											$content_paywall_value = $this->get_plugin_option( 'content_paywall' );
 											foreach ($content_paywall as $content_paywall_one) {
 												echo "<option value='$content_paywall_one' " .
 													(($content_paywall_one == $content_paywall_value) ? 'selected' : '')
@@ -195,7 +195,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<?php $this->create_form_control(
 											'content_offset',
 											$plugin_meta_data['content_offset'],
-											$this->get_plugin_pption( 'content_offset' ),
+											$this->get_plugin_option( 'content_offset' ),
 											"e.g. 2"
 										); ?>
 										<span class="bar"></span>
@@ -205,7 +205,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 									<div class="form-select">
 										<select name="content_offset_type" id="content_offset_type">
 											<?php
-											$offset_type_value = $this->get_plugin_pption( 'content_offset_type' );
+											$offset_type_value = $this->get_plugin_option( 'content_offset_type' );
 											foreach ($content_offset_types as $content_offset_type) {
 												echo "<option value='$content_offset_type' " .
 													(($content_offset_type == $offset_type_value) ? 'selected' : '')
@@ -230,7 +230,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 								<?php $this->create_form_control(
 									'content_lock',
 									$plugin_meta_data['content_lock'],
-									$this->get_plugin_pption( 'content_lock' )
+									$this->get_plugin_option( 'content_lock' )
 								); ?>
 							</div>
 							<div class="block-info">
@@ -245,7 +245,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<?php $this->create_form_control(
 											'ads_video',
 											$plugin_meta_data['ads_video'],
-											$this->get_plugin_pption( 'ads_video' ),
+											$this->get_plugin_option( 'ads_video' ),
 											"e.g. https://youtu.be/DiBh8r3lPpM"
 										); ?>
 										<span class="bar"></span>
