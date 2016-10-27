@@ -32,7 +32,7 @@ class Adtechmedia_ContentManager {
 		$ret_val = wp_cache_get( $id, 'adtechmedia_scrambled_contents' );
 		if ( ! $ret_val ) {
 			$row = $wpdb->get_row(
-				$wpdb->prepare( "SELECT value FROM `%1%s` WHERE item_id = %s LIMIT 1", $table_name, $id )
+				$wpdb->prepare( 'SELECT value FROM `%1%s` WHERE item_id = %s LIMIT 1', $table_name, $id )
 			);
 			if ( is_object( $row ) ) {
 				$ret_val = $row->value;
@@ -47,7 +47,7 @@ class Adtechmedia_ContentManager {
 	 * Set content of article
 	 *
 	 * @param integer $id id of article.
-	 * @param $content
+	 * @param string $content content of article.
 	 */
 	public static function set_content( $id, $content ) {
 		global $wpdb;
@@ -55,7 +55,8 @@ class Adtechmedia_ContentManager {
 		$table_name = self::get_cache_table_name();
 		$wpdb->query(
 			$wpdb->prepare(
-				"INSERT INTO `$table_name` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)",
+				"INSERT INTO `%1%s` (`item_id`, `value`) VALUES (%s, %s) ON DUPLICATE KEY UPDATE `item_id` = VALUES(`item_id`), `value` = VALUES(`value`)",
+				$table_name,
 				$id,
 				$content
 			)
@@ -70,12 +71,7 @@ class Adtechmedia_ContentManager {
 	public static function clear_content( $id ) {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
-		$wpdb->query(
-			$wpdb->prepare(
-				"UPDATE `$table_name` SET  `value` = '' WHERE `item_id` = %s ",
-				$id
-			)
-		);
+		$wpdb->update( $table_name, [ 'value' => '' ], [ 'item_id' => $id ] );
 	}
 
 	/**
@@ -84,6 +80,7 @@ class Adtechmedia_ContentManager {
 	public static function clear_all_content() {
 		global $wpdb;
 		$table_name = self::get_cache_table_name();
-		$wpdb->query( "UPDATE `$table_name` SET  `value` = '' " );
+		$wpdb->query( $wpdb->prepare( "UPDATE `%1%s` SET  `value` = '' ", $table_name ) );
+
 	}
 }
