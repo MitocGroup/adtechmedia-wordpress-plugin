@@ -25,7 +25,7 @@ function adtechmedia_notice_php_version_wrong() {
 		'<br/>';
 	echo esc_html__( 'Minimal version of PHP required: ', 'adtechmedia' );
 	echo '<strong>';
-	echo esc_html($adtechmedia_minimal_required_php_version);
+	echo esc_html( $adtechmedia_minimal_required_php_version );
 	echo '</strong><br/>';
 	echo esc_html__( 'Your server\'s PHP version: ', 'adtechmedia' );
 	echo '<strong>' . esc_html( phpversion() );
