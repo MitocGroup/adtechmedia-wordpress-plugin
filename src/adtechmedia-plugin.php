@@ -211,6 +211,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Adding scripts & styles to all pages.
 		// Examples:.
+		
 		/*
 		* wp_enqueue_script('jquery');
 		* wp_enqueue_style('my-style', plugins_url('/css/my-style.css', __FILE__));
@@ -300,7 +301,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				Adtechmedia_ContentManager::set_content( $id, $new_content );
 				return $this->content_wrapper( $new_content );
 			}
-
 		}
 		return $content;
 	}
