@@ -42,7 +42,7 @@ abstract class Adtechmedia_ShortCodeScriptLoader extends Adtechmedia_ShortCodeLo
 	/**
 	 * Handle shortcode wrapper
 	 *
-	 * @param mixed $atts shortcode atts
+	 * @param mixed $atts shortcode atts.
 	 * @return shortcode
 	 */
 	public function handle_shortcode_wrapper( $atts ) {

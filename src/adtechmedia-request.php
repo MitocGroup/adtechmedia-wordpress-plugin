@@ -368,7 +368,6 @@ class Adtechmedia_Request {
 			[ 'BuildPath', 'Id' ]
 		);
 
-
 		if ( $response && isset( $response['BuildPath'] ) && isset( $response['Id'] ) ) {
 
 			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];

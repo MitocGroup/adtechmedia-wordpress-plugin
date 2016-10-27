@@ -4,15 +4,19 @@
  * User: yama_gs
  * Date: 20.10.2016
  * Time: 15:00
+ *
+ * @category Adtechmedia
+ * @package  Adtechmedia_Plugin
+ * @author    yama-gs
  */
 
 $countries_list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
-$currencies = [ ];
-$countries = [ ];
+$currencies = [];
+$countries = [];
 if ( is_array( $countries_list ) ) {
-	foreach ($countries_list as $countries_element) {
+	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueMethod'];
-		foreach ($countries_element['Currency'] as $currency) {
+		foreach ( $countries_element['Currency'] as $currency ) {
 			if ( ! in_array( $currency, $currencies ) ) {
 				$currencies[] = $currency;
 			}
@@ -76,7 +80,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 									'support_email',
 									$main_data['support_email'],
 									$this->get_plugin_option( 'support_email' ),
-									"e.g. john.smith@mail.com"
+									'e.g. john.smith@mail.com'
 								); ?>
 								<span class="bar"></span>
 								<label><i class="mdi mdi-email"></i> Email address</label>
@@ -120,7 +124,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											'price',
 											$plugin_meta_data['price'],
 											$this->get_plugin_option( 'price' ),
-											"e.g. 0.10"
+											'e.g. 0.10'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -130,13 +134,13 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<select name="price_currency" id="price_currency">
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
-											foreach ($currencies as $currency) {
+											foreach ( $currencies as $currency ) {
 												echo "<option value='$currency' " .
 													(($currency == $price_currency_value) ? 'selected' : '')
-													. " >" .
+													. ' >' .
 													strtoupper(
 														$currency
-													) . "</option>";
+													) . '</option>';
 											}
 											?>
 										</select>
@@ -170,10 +174,10 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<select name="content_paywall" id="content_paywall">
 											<?php
 											$content_paywall_value = $this->get_plugin_option( 'content_paywall' );
-											foreach ($content_paywall as $content_paywall_one) {
+											foreach ( $content_paywall as $content_paywall_one ) {
 												echo "<option value='$content_paywall_one' " .
 													(($content_paywall_one == $content_paywall_value) ? 'selected' : '')
-													. " >" . $content_paywall_one . "</option>";
+													. ' >' . $content_paywall_one . '</option>';
 											}
 											?>
 										</select>
@@ -207,10 +211,10 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										<select name="content_offset_type" id="content_offset_type">
 											<?php
 											$offset_type_value = $this->get_plugin_option( 'content_offset_type' );
-											foreach ($content_offset_types as $content_offset_type) {
+											foreach ( $content_offset_types as $content_offset_type ) {
 												echo "<option value='$content_offset_type' " .
 													(($content_offset_type == $offset_type_value) ? 'selected' : '')
-													. " >" . $content_offset_type . "</option>";
+													. ' >' . $content_offset_type . '</option>';
 											}
 											?>
 										</select>
@@ -247,7 +251,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											'ads_video',
 											$plugin_meta_data['ads_video'],
 											$this->get_plugin_option( 'ads_video' ),
-											"e.g. https://youtu.be/DiBh8r3lPpM"
+											'e.g. https://youtu.be/DiBh8r3lPpM'
 										); ?>
 										<span class="bar"></span>
 									</div>

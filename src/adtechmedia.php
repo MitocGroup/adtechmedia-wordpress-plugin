@@ -21,13 +21,13 @@ $adtechmedia_minimal_required_php_version = '5.0';
 function adtechmedia_notice_php_version_wrong() {
 	global $adtechmedia_minimal_required_php_version;
 	echo '<div class="updated fade">' .
-		__( 'Error: plugin "Adtechmedia" requires a newer version of PHP to be running.', 'adtechmedia' ) .
-		'<br/>' . esc_html__(
-			'Minimal version of PHP required: ',
-			'adtechmedia'
-		) . '<strong>' . esc_html( $adtechmedia_minimal_required_php_version ) . '</strong>' .
-		'<br/>' . esc_html__( 'Your server\'s PHP version: ', 'adtechmedia' ) . '<strong>' . esc_html( phpversion() ) . '</strong>' .
-		'</div>';
+		esc_html__( 'Error: plugin "Adtechmedia" requires a newer version of PHP to be running.', 'adtechmedia' ) .
+		'<br/>';
+	echo esc_html__( 'Minimal version of PHP required: ', 'adtechmedia' );
+	echo "<strong>$adtechmedia_minimal_required_php_version</strong><br/>";
+	echo esc_html__( 'Your server\'s PHP version: ', 'adtechmedia' );
+	echo '<strong>' . esc_html( phpversion() );
+	echo '</strong></div>';
 }
 
 /**
@@ -55,10 +55,9 @@ function adtechmedia_php_version_check() {
  * @return void
  */
 function adtechmedia_i18n_init() {
-	$pluginDir = dirname( plugin_basename( __FILE__ ) );
-	load_plugin_textdomain( 'adtechmedia', false, $pluginDir . '/languages/' );
+	$plugin_dir = dirname( plugin_basename( __FILE__ ) );
+	load_plugin_textdomain( 'adtechmedia', false, $plugin_dir . '/languages/' );
 }
-
 
 
 // Initialize i18n.
@@ -68,9 +67,9 @@ add_action( 'plugins_loadedi', 'adtechmedia_i18n_init' );
 // If it is successful, continue with initialization for this plugin.
 if ( adtechmedia_php_version_check() ) {
 
-	include_once( 'adtechmedia-init.php' );
-	include_once( 'adtechmedia-request.php' );
-	include_once( 'adtechmedia-config.php' );
-	include_once( 'adtechmedia-contentmanager.php' );
+	include_once('adtechmedia-init.php');
+	include_once('adtechmedia-request.php');
+	include_once('adtechmedia-config.php');
+	include_once('adtechmedia-contentmanager.php');
 	adtechmedia_init( __FILE__ );
 }
