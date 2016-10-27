@@ -32,7 +32,7 @@ class Adtechmedia_ContentManager {
 		$ret_val = wp_cache_get( $id, 'adtechmedia_scrambled_contents' );
 		if ( ! $ret_val ) {
 			$row = $wpdb->get_row(
-				$wpdb->prepare( "SELECT value FROM {$table_name} WHERE item_id = %s LIMIT 1", $id )
+				$wpdb->prepare( "SELECT value FROM `%1%s` WHERE item_id = %s LIMIT 1", $table_name, $id )
 			);
 			if ( is_object( $row ) ) {
 				$ret_val = $row->value;
