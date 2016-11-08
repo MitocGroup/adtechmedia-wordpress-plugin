@@ -1,7 +1,9 @@
-=== Adtechmedia ===
+=== AdTechMedia ===
+Plugin: AdTechMedia Plugin for WordPress
+Plugin URI: https://wordpress.org/plugins/adtechmedia
+Author: https://www.adtechmedia.io
 Contributors: Yama_GS, AlexanderC
-Donate link: https://www.adtechmedia.io
-Tags: adtechmedia, adtech, media, advertising, micropayments
+Tags: adtechmedia, adtech, media, ads, advertising, micropayments
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.5
