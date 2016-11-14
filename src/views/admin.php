@@ -112,7 +112,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 			</h1>
 
 			<div class="content">
-				<div class="flex-container">
+				<div class="flex-container content-config">
 					<div class="flex-item-6 configuration-fields">
 						<div class="custom-label mixed-fields">
 							<label><i class="mdi mdi-currency-usd"></i> Content pricing</label>
@@ -336,6 +336,2930 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 		</form>
 	</section>
 
+	<section>
+		<h1 class="heading">
+			<i class="custom-icon templates"></i>
+			Templates management
+		</h1>
+
+		<div class="content templating">
+			<div class="clearfix">
+				<div class="">
+					<section class="views-tabs">
+						<input id="pledge" name="main-tabs" checked="" type="radio">
+						<input id="refund" name="main-tabs" type="radio">
+						<input id="pay" name="main-tabs" type="radio">
+						<input id="other" name="main-tabs" type="radio">
+
+						<ul class="templates-menu">
+							<li class="custom-tooltip">
+								<label for="pledge" class="tab-name">
+									<i class="mdi mdi-library"></i>
+									<span>Pledge</span>
+								</label>
+								<div class="tooltip">
+									<div class="tooltip__background"></div>
+									<span class="tooltip__label">Pledge Template</span>
+								</div>
+							</li>
+							<li class="custom-tooltip">
+								<label for="pay" class="tab-name">
+									<i class="mdi mdi-credit-card"></i>
+									<span>Pay</span>
+								</label>
+								<div class="tooltip">
+									<div class="tooltip__background"></div>
+									<span class="tooltip__label">Pay Template</span>
+								</div>
+							</li>
+							<li class="custom-tooltip">
+								<label for="refund" class="tab-name">
+									<i class="mdi mdi-backup-restore"></i>
+									<span>Refund</span>
+								</label>
+								<div class="tooltip">
+									<div class="tooltip__background"></div>
+									<span class="tooltip__label">Refund Template</span>
+								</div>
+							</li>
+							<li class="custom-tooltip">
+								<label for="other" class="tab-name">
+									<i class="mdi mdi-note-plus"></i>
+									<span>Other</span>
+								</label>
+								<div class="tooltip">
+									<div class="tooltip__background"></div>
+									<span class="tooltip__label">Other Templates</span>
+								</div>
+							</li>
+						</ul>
+
+						<div class="templates-views pledge" data-template="pledge">
+							<div class="template-view">
+								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-base-modal">
+												<div class="atm-sidebar-left">
+													<div class="atm-avatar">
+														<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+													</div>
+													<div class="atm-user-info">Author</div>
+												</div>
+
+												<div class="atm-main">
+
+													<div class="notification-inner">
+														<p>
+															<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+															<span>{error message}</span>
+														</p>
+														<i aria-hidden="true" class="mdi mdi-close close-btn"></i>
+													</div>
+
+													<div class="flex-container">
+														<div class="flex-item-11">
+															<p>Dear reader,</p>
+														</div>
+														<div class="flex-item-1">
+															<i class="atm-open-modal fa fa-chevron-circle-up" aria-hidden="true"></i>
+														</div>
+													</div>
+													<div class="flex-container">
+														<div class="flex-item-10">
+															Please support quality journalism. Would you pledge to pay a small fee of
+															<span class="contrib-price">5¢</span> to continue reading?
+														</div>
+
+
+														<div class="flex-item-2 pledge-price-block">
+															<span class="pledge-price">5¢</span>
+														</div>
+													</div>
+													<div class="pledge-bottom clearfix">
+														<div class="connect-component">
+															<small>
+																Already used us before? <a>Connect here</a>
+															</small>
+														</div>
+													</div>
+												</div>
+												<div class="atm-footer">
+													<button class="atm-button">
+														<i aria-hidden="true" class="fa fa-check"></i> pledge 5¢
+													</button>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="pledge-ext-salutation" name="pledge-ext" checked="" type="radio">
+												<label for="pledge-ext-salutation" class="tab-name">
+													Salutation
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Salutation</label>
+														<div class="custom-input">
+															<input placeholder="Dear {user}," value="Dear {user}," required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-ext-message" value="card" name="pledge-ext" type="radio">
+												<label for="pledge-ext-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-ext-user" value="card" name="pledge-ext" type="radio">
+												<label for="pledge-ext-user" class="tab-name">
+													User
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Connect Message</label>
+														<div class="custom-input">
+															<input placeholder="Already used us before? {connect_url}" value="Already used us before? {connect_url}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="custom-label">
+														<label>Disconnect Message</label>
+														<div class="custom-input">
+															<input placeholder="Not {user}? {disconnect_url}" value="Not {user}? {disconnect_url}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-ext-button" value="card" name="pledge-ext" type="radio">
+												<label for="pledge-ext-button" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Micropayments Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="PLEDGE {price}" value="PLEDGE {price}" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Micropayments Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-check" value="fa-check" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-ext-arrow" value="card" name="pledge-ext" type="radio">
+												<label for="pledge-ext-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Closing Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-ext-styling" value="card" name="pledge-ext" type="radio">
+												<label for="pledge-ext-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+							<style>
+
+								.atm-targeted-modal {
+									width:auto;  }
+
+							</style>
+
+							<div class="template-view" data-template="collapsed">
+								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6" id="render-pledge">
+											<div class="atm-modal-heading" >
+												<div class="flex-container flex-align-center">
+													<div class="flex-item-1 avatar-sm">
+														<div class="atm-avatar-small">
+															<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+														</div>
+													</div>
+													<div class="atm-heading-info flex-item-10">
+														Please support quality journalism.
+														<button class="atm-button pledge-targeted">
+															<i aria-hidden="true" class="fa fa-check"></i> pledge 5¢
+														</button>
+													</div>
+													<div class="flex-item-1 align-right">
+														<i class="atm-open-modal fa fa-chevron-circle-down" aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="pledge-coll-message" name="pledge-coll" checked="" type="radio">
+												<label for="pledge-coll-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content" data-template="message">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input name="pledge-collapsed-message-message" placeholder="Please support quality journalism." value="Please support quality journalism." required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter" data-template="style">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter"  data-template="style">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" data-template-css="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" data-template-css="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" data-template-css="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-coll-button" name="pledge-coll" type="radio">
+												<label for="pledge-coll-button" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Micropayments Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="PLEDGE" value="PLEDGE" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Micropayments Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-check" value="fa-check" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-coll-arrow" name="pledge-coll" type="radio">
+												<label for="pledge-coll-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pledge-coll-styling" name="pledge-coll" type="radio">
+												<label for="pledge-coll-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="templates-views pay">
+							<div class="template-view">
+								<div class="header-view">pay template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-base-modal">
+												<div class="atm-sidebar-left">
+													<div class="atm-avatar">
+														<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+													</div>
+													<div class="atm-user-info">Author</div>
+												</div>
+
+												<div class="atm-main">
+													<div class="notification-inner">
+														<p>
+															<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+															<span>{error message}</span>
+														</p>
+														<i aria-hidden="true" class="mdi mdi-close close-btn"></i>
+													</div>
+
+													<div class="flex-container">
+														<div class="flex-item-11">
+															<p>Dear reader,</p>
+														</div>
+														<div class="flex-item-1">
+															<i class="atm-open-modal fa fa-chevron-circle-up" aria-hidden="true"></i>
+														</div>
+													</div>
+													<div class="flex-container">
+														<div class="flex-item-10">
+															Please support quality journalism. Would you pledge to pay a small fee of
+															<span class="contrib-price">5¢</span> to continue reading?
+														</div>
+
+														<div class="flex-item-2 pledge-price-block">
+															<span class="pledge-price">5¢</span>
+														</div>
+													</div>
+													<div class="pledge-bottom clearfix">
+														<div class="connect-component">
+															<small>
+																Already used us before? <a>Connect here</a>
+															</small>
+														</div>
+													</div>
+												</div>
+												<section class="pay-tabs">
+													<input id="pay-card" value="card" name="pay-type" checked="" type="radio">
+													<label for="pay-card" class="tab-name card-payment">
+														<i class="fa fa-credit-card" aria-hidden="true"></i> PAY WITH CARD
+													</label>
+
+													<div class="tab-content">
+														<div class="tab-info">
+															<p class="italic">
+																<span class="pay-help-text">Please provide your contact information below:</span>
+																<a class="pay-help-sm pull-right">
+																	<i class="fa fa-question-circle" aria-hidden="true"></i> help
+																</a>
+															</p>
+														</div>
+														<form name="payment-card-form">
+															<div class="flex-container payment-block">
+																<div class="flex-item-6 card-block">
+																	<div class="form-item card-nr">
+																		<label for="number" class="small-label">CARD NUMBER</label>
+																		<input name="number" placeholder="1234 5678 9012 3456" required="required" type="text">
+																	</div>
+																	<div class="flex-container">
+																		<div class="form-item flex-item-6 card-holder">
+																			<label for="owner" class="small-label">CARD HOLDER</label>
+																			<input name="owner" required="required" placeholder="John Smith" type="text">
+																		</div>
+																		<div class="form-item flex-item-4 card-valid">
+																			<label for="validThru" class="small-label">VALID THRU</label>
+																			<input name="validThru" placeholder="07/16" required="required" type="text">
+																		</div>
+																		<div class="card-type flex-item-2 card-type-null"></div>
+																	</div>
+																</div>
+																<div class="flex-item-6 user-block">
+																	<div class="form-item">
+																		<label for="name">YOUR NAME</label>
+																		<input name="name" required="required" placeholder="John Smith" type="text">
+																	</div>
+																	<div class="form-item">
+																		<label for="email">YOUR EMAIL</label>
+																		<input name="email" required="required" placeholder="john.smith@email.com" type="email">
+																	</div>
+																	<div class="flex-container user-items-last">
+																		<div class="form-item flex-item-3">
+																			<label for="cvc">CVC</label>
+																			<input name="cvc" placeholder="123" required="required" type="text">
+																		</div>
+																		<div class="form-item flex-item-5">
+																			<label for="zip">BILLING ZIPCODE</label>
+																			<input name="zip" required="required" placeholder="12345" type="text">
+																		</div>
+																		<div class="form-item form-button flex-item-4">
+																			<button type="submit" class="atm-button card">
+																				<i aria-hidden="true" class="fa fa-cog"></i> setup
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</section>
+												<div class="atm-footer">
+													<button class="atm-button">
+														<i aria-hidden="true" class="fa fa-check"></i> pay 5¢
+													</button>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="pay-ext-salutation" name="pay-ext" checked="" type="radio">
+												<label for="pay-ext-salutation" class="tab-name">
+													Salutation
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Salutation</label>
+														<div class="custom-input">
+															<input placeholder="Dear {user}," value="Dear {user}," required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-message" name="pay-ext" type="radio">
+												<label for="pay-ext-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-user" name="pay-ext" type="radio">
+												<label for="pay-ext-user" class="tab-name">
+													User
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Connect Message</label>
+														<div class="custom-input">
+															<input placeholder="Already used us before? {connect_url}" value="Already used us before? {connect_url}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="custom-label">
+														<label>Disconnect Message</label>
+														<div class="custom-input">
+															<input placeholder="Not {user}? {disconnect_url}" value="Not {user}? {disconnect_url}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-input" name="pay-ext" type="radio">
+												<label for="pay-ext-input" class="tab-name">
+													Input
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Box Shadow</label>
+																<div class="custom-input">
+																	<input placeholder="box-shadow" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-button" name="pay-ext" type="radio">
+												<label for="pay-ext-button" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Pay Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="PAY" value="PAY" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Pay Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-check" value="fa-check" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Setup Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="SETUP" value="SETUP" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Setup Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-cog" value="fa-cog" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-arrow" name="pay-ext" type="radio">
+												<label for="pay-ext-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Closing Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-ext-styling" name="pay-ext" type="radio">
+												<label for="pay-ext-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="template-view">
+								<div class="header-view">pay template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-modal-heading">
+												<div class="flex-container flex-align-center">
+													<div class="flex-item-1 avatar-sm">
+														<div class="atm-avatar-small">
+															<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+														</div>
+													</div>
+													<div class="atm-heading-info flex-item-10">
+														Support quality journalism.
+														<a>Get involved <span class="hide-sm">and setup payment method now.</span></a>
+													</div>
+													<div class="flex-item-1 align-right">
+														<i class="atm-open-modal fa fa-chevron-circle-down" aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="pay-coll-message" name="pay-coll" checked="" type="radio">
+												<label for="pay-coll-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Support quality journalism. {setupPayment_url}" value="Support quality journalism. {setupPayment_url}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-coll-arrow" name="pay-coll" type="radio">
+												<label for="pay-coll-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="pay-coll-styling" name="pay-coll" type="radio">
+												<label for="pay-coll-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="templates-views refund">
+							<div class="template-view">
+								<div class="header-view">refund template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-base-modal">
+												<div class="atm-sidebar-left">
+													<div class="atm-avatar">
+														<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+													</div>
+													<div class="atm-user-info">Author</div>
+												</div>
+
+												<div class="atm-main">
+													<div class="notification-inner">
+														<p>
+															<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+															<span>{error message}</span>
+														</p>
+														<i aria-hidden="true" class="mdi mdi-close close-btn"></i>
+													</div>
+
+													<div class="flex-container">
+														<div class="flex-item-11">
+															Thanks for contributing
+															<span class="contrib-price">5¢</span> and help us do the job we <i aria-hidden="true" class="fa fa-heart-o"></i>
+														</div>
+														<div class="flex-item-1">
+															<i class="atm-open-modal fa fa-chevron-circle-up" aria-hidden="true"></i>
+														</div>
+													</div>
+													<div class="flex-container survey-block">
+														<div class="flex-item-6 mood-block">
+															<div class="mood-block-inner">
+																<label class="mood-block-info">How do you feel now?</label>
+
+																<input id="smile" name="mood" checked="checked" type="radio">
+																<label for="smile" class="mood-label">
+																	<div class="smiley-green">
+																		<div class="left-eye"></div>
+																		<div class="right-eye"></div>
+																		<div class="smile"></div>
+																	</div>
+																	<span class="mood-name">Happy</span>
+																</label>
+
+																<input id="meh" name="mood" type="radio">
+																<label for="meh" class="mood-label">
+																	<div class="smiley-yellow">
+																		<div class="left-eye"></div>
+																		<div class="right-eye"></div>
+																		<div class="smile"></div>
+																	</div>
+																	<span class="mood-name">Ok</span>
+																</label>
+
+																<input id="frown" name="mood" type="radio">
+																<label for="frown" class="mood-label">
+																	<div class="smiley-red">
+																		<div class="left-eye"></div>
+																		<div class="right-eye"></div>
+																		<div class="smile"></div>
+																	</div>
+																	<span class="mood-name">Not happy</span>
+																</label>
+															</div>
+														</div>
+														<div class="flex-item-6 share-block">
+															<div class="share-block-inner"><p>Share your experience</p>
+																<ul class="sharetools-menu">
+																	<li class="sharetool facebook-sharetool">
+																		<a href="javascript:;">
+																			<i class="fa fa-facebook" aria-hidden="true"></i>
+																		</a>
+																	</li>
+																	<li class="sharetool twitter-sharetool">
+																		<a href="javascript:;">
+																			<i class="fa fa-twitter" aria-hidden="true"></i>
+																		</a>
+																	</li>
+																	<li class="sharetool email-sharetool">
+																		<a href="javascript:;">
+																			<i class="fa fa-envelope" aria-hidden="true"></i>
+																		</a>
+																	</li>
+																	<li class="sharetool show-all-sharetool">
+																		<a href="javascript:;">
+																			<i class="fa fa-share" aria-hidden="true"></i>
+																		</a>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="atm-footer">
+													<button class="atm-button">
+														<i aria-hidden="true" class="fa fa-money"></i> refund
+													</button>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="refund-ext-message" name="refund-ext" checked="" type="radio">
+												<label for="refund-ext-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}" value="Thanks for contributing {price} and help us do the job we {fa-heart-o}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-ext-mood" name="refund-ext" type="radio">
+												<label for="refund-ext-mood" class="tab-name">
+													Mood
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="How do you feel now?" value="How do you feel now?" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Happy Mood Text</label>
+																<div class="custom-input">
+																	<input placeholder="Happy" value="Happy" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Happy Mood Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Neutral Mood Text</label>
+																<div class="custom-input">
+																	<input placeholder="OK" value="Ok" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Neutral Mood Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Not happy Mood Text</label>
+																<div class="custom-input">
+																	<input placeholder="Not happy" value="Not happy" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Not happy Mood Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-ext-share" name="refund-ext" type="radio">
+												<label for="refund-ext-share" class="tab-name">
+													Share
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Share your experience" value="Share your experience" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool</label>
+																<div class="custom-input">
+																	<input placeholder="fa-facebook" value="fa-facebook" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool</label>
+																<div class="custom-input">
+																	<input placeholder="fa-twitter" value="fa-twitter" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool</label>
+																<div class="custom-input">
+																	<input placeholder="fa-email" value="fa-email" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool</label>
+																<div class="custom-input">
+																	<input placeholder="fa-share" value="fa-share" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Share Tool Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-ext-button" name="refund-ext" type="radio">
+												<label for="refund-ext-button" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Refund Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="REFUND" value="REFUND" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Refund Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-money" value="fa-money" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-ext-arrow" name="refund-ext" type="radio">
+												<label for="refund-ext-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Closing Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-ext-styling" name="refund-ext" type="radio">
+												<label for="refund-ext-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="template-view">
+								<div class="header-view">refund template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-modal-heading">
+												<div class="flex-container flex-align-center">
+													<div class="flex-item-1 avatar-sm">
+														<div class="atm-avatar-small">
+															<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+														</div>
+													</div>
+													<div class="atm-heading-info flex-item-10">
+														Premium content unlocked.
+														<span class="hide-sm"><a>Not satisfied?</a> Get immediate</span>
+														<button class="atm-button refund-targeted">
+															<i aria-hidden="true" class="fa fa-money"></i> refund
+														</button>
+													</div>
+													<div class="flex-item-1 align-right">
+														<i class="atm-open-modal fa fa-chevron-circle-down" aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="refund-coll-message" name="refund-coll" checked="" type="radio">
+												<label for="refund-coll-message" class="tab-name">
+													Message
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Message</label>
+														<div class="custom-input">
+															<input placeholder="Premium content unlocked. {notSatisfied_url} Get immediate" value="Premium content unlocked. {notSatisfied_url} Get immediate" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-coll-button" name="refund-coll" type="radio">
+												<label for="refund-coll-button" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Refund Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="REFUND" value="REFUND" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Refund Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-money" value="fa-money" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-coll-arrow" name="refund-coll" type="radio">
+												<label for="refund-coll-arrow" class="tab-name">
+													Arrow
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<input id="refund-coll-styling" name="refund-coll" type="radio">
+												<label for="refund-coll-styling" class="tab-name">
+													Overall Styling
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="templates-views other">
+							<div class="template-view">
+								<div class="header-view">other templates <i class="fa fa-angle-right" aria-hidden="true"></i> unlock view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-base-modal">
+												<div class="atm-main price-view">
+													<div class="unlock-cont">
+														<p class="blurred">
+															It is a long established fact that a reader will be distracted by
+															the readable content of a page when looking at its layout.
+															The point of using Lorem Ipsum is that it has a more-or-less normal
+															distribution of letters, as opposed to using 'Content here, content here',
+															making it look like readable English.
+															It is a long established fact that a reader will be distracted by
+															the readable content of a page when looking at its layout.
+															The point of using Lorem Ipsum is that it has a more-or-less normal
+															distribution of letters, as opposed to using 'Content here, content here',
+															making it look like readable English.
+														</p>
+														<button class="atm-button unlock-btn">
+															<i class="fa fa-unlock-alt" aria-hidden="true"></i> unlock content
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="other-unlock" name="unlock-content" checked="" type="radio">
+												<label for="other-unlock" class="tab-name">
+													Button
+												</label>
+												<div class="tab-content">
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Unlock Button Text</label>
+																<div class="custom-input">
+																	<input placeholder="UNLOCK CONTENT" value="UNLOCK CONTENT" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Unlock Button Icon</label>
+																<div class="custom-input">
+																	<input placeholder="fa-unlock-alt" value="fa-unlock-alt" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Size</label>
+																<div class="custom-input">
+																	<input placeholder="font-size" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Align</label>
+																<div class="custom-input">
+																	<input placeholder="text-align" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Text Transform</label>
+																<div class="custom-input">
+																	<input placeholder="text-transform" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="template-view">
+								<div class="header-view">other templates <i class="fa fa-angle-right" aria-hidden="true"></i> price view</div>
+								<div class="content-view">
+									<div class="flex-container">
+										<div class="flex-item-6">
+											<div class="atm-base-modal">
+												<div class="atm-main price-view">
+													<p class="blurred">Dear reader,</p>
+													<div>
+														<span class="blurred">Please support quality journalism</span>
+														<span class="contrib-price">5¢</span> <span class="blurred">to continue reading?</span>
+														<span class="show-sm blurred">lease support quality journalism lease support quality journalism lease support quality journalism</span>
+													</div>
+													<div class="pledge-bottom clearfix blurred">
+														<div class="connect-component">
+															<small>
+																Already used us before? <a>Connect here</a>
+															</small>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="flex-item-6">
+											<section class="config-tabs">
+												<input id="other-price" name="other-view-price" checked="" type="radio">
+												<label for="other-price" class="tab-name">
+													Price
+												</label>
+												<div class="tab-content">
+													<div class="custom-label">
+														<label>Price</label>
+														<div class="custom-input">
+															<input placeholder="{price}" value="{price}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border</label>
+																<div class="custom-input">
+																	<input placeholder="border" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Border Radius</label>
+																<div class="custom-input">
+																	<input placeholder="border-radius" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Style</label>
+																<div class="custom-input">
+																	<input placeholder="font-style" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-4">
+															<div class="custom-label">
+																<label>Font Weight</label>
+																<div class="custom-input">
+																	<input placeholder="font-weight" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</section>
 </main>
 
 
