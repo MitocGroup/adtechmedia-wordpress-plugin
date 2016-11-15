@@ -395,11 +395,11 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 						</ul>
 
 						<div class="templates-views pledge" data-template="pledge">
-							<div class="template-view">
+							<div class="template-view" data-template="expanded">
 								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
 								<div class="content-view">
 									<div class="flex-container">
-										<div class="flex-item-6">
+										<div class="flex-item-6" id="render-pledge-expanded">
 											<div class="atm-base-modal">
 												<div class="atm-sidebar-left">
 													<div class="atm-avatar">
@@ -458,21 +458,21 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="pledge-ext-salutation" class="tab-name">
 													Salutation
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="message">
+													<div class="custom-label" >
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input placeholder="Dear {user}," value="Dear {user}," required="" type="text">
+															<input placeholder="Dear {user}," name="welcome" value="Dear {user}," required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -481,7 +481,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" data-template-css="font-size" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -490,19 +490,19 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" data-template-css="font-style" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -511,7 +511,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" data-template-css="text-align" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -520,7 +520,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform"  data-template-css="text-transform" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -891,7 +891,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
 								<div class="content-view">
 									<div class="flex-container">
-										<div class="flex-item-6" id="render-pledge">
+										<div class="flex-item-6" id="render-pledge-collapsed">
 											<div class="atm-modal-heading" >
 												<div class="flex-container flex-align-center">
 													<div class="flex-item-1 avatar-sm">
@@ -921,7 +921,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Message</label>
 														<div class="custom-input">
-															<input name="pledge-collapsed-message-message" placeholder="Please support quality journalism." value="Please support quality journalism." required="" type="text">
+															<input name="message" placeholder="Please support quality journalism." value="Please support quality journalism. {pledge-button}" required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
