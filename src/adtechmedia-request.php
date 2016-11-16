@@ -117,7 +117,7 @@ class Adtechmedia_Request {
 			} else {
 				$list = false;
 			}
-			set_transient( 'adtechmedia-supported-countries', $list, 1 );
+			set_transient( 'adtechmedia-supported-countries', $list, 3600 );
 		}
 
 		return $list;

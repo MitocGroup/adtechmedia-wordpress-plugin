@@ -1,152 +1,151 @@
 /**
  * Created by yama_gs on 21.10.2016.
  */
-/*function getCSSFields(template,type, tab) {
-    var inputs=getStyleInputs(template,type, tab),
-        styles={};
 
-    jQuery.each(inputs,function (i,input) {
-        if(jQuery(input).val()!="") {
-            styles[jQuery(input).data('template-css')] = jQuery(input).val();
-        }
-    });
-    return styles;
-}*/
-function getCSSFields(selector) {
-    var inputs=jQuery(selector),
-        styles={};
+function getCSSFields(inputs) {
+    var styles = {};
 
-    jQuery.each(inputs,function (i,input) {
-        if(jQuery(input).val()!="") {
+    jQuery.each(inputs, function (i, input) {
+        if (jQuery(input).val() != "") {
             styles[jQuery(input).data('template-css')] = jQuery(input).val();
         }
     });
     return styles;
 }
-function getStyleInputs(template, type, tab) {
-    return jQuery("[data-template='"+template+"'] [data-template='"+type+"'] [data-template='"+tab+"'] [data-template='style'] input");
+function inputsToObject(inputs) {
+    var res = {};
+    jQuery.each(inputs, function (key, value) {
+        res[key] = value.input.val();
+    });
+    return res;
 }
-function getDatatemplate(value){
-    return "[data-template='"+value+"']";
+function styleInputsToObject(inputs) {
+    var res = {};
+    jQuery.each(inputs, function (key, value) {
+        res[key] = getCSSFields(value.inputs);
+    });
+    return res;
+}
+function getDatatemplate(value) {
+    return "[data-template='" + value + "']";
 }
 jQuery(document).ready(function () {
     var atmTemplating = atmTpl.default;
 
-    var templateName = 'pledge'; // unlockLine, pledge, pay, refund, refunded, adViewed
-    var componentName = 'pledgeComponent'; // @see atmTemplating.stories()
-    var optionName = 'heading-headline'; // @see atmTemplating.stories()
-    var optionName2 = 'body-welcome'; // @see atmTemplating.stories()
-    var optionNameTemplate = 'pledge-collapsed-message-message';
-    var optionNameTemplate2 = 'pledge-expanded-message-message';
-    var styling = {};
-    var renderPledgeExpandedId='#render-pledge-expanded';
-    var templates =[
+    var templates = [
         {
-            name:'pledge',
-            component:'pledgeComponent',
-            dataTab:'pledge',
-            options:[
+            name : 'pledge',
+            component : 'pledgeComponent',
+            dataTab : 'pledge',
+            sections : [
                 {
-                    name:'heading-headline',
-                    contentInputName:'message',
-                    dataSection:'collapsed',
-                    dataTab:'message',
-                    renderBlockId: '#render-pledge-collapsed'
+                    dataSection : 'collapsed',
+                    renderBlockId : '#render-pledge-collapsed',
+                    tabs : [{
+                        name : 'heading-headline',
+                        contentInputName : 'message',
+                        dataTab : 'message'
+                    }]
                 },
                 {
-                    name:'body-welcome',
-                    contentInputName:'welcome',
-                    dataSection:'expanded',
-                    dataTab:'message',
-                    renderBlockId: '#render-pledge-expanded'
+                    dataSection : 'expanded',
+                    renderBlockId : '#render-pledge-expanded',
+                    tabs : [{
+                        name : 'body-welcome',
+                        contentInputName : 'welcome',
+                        dataTab : 'salutation'
+                    }, {
+                        name : 'body-msg-mp-ad',
+                        contentInputName : 'message',
+                        dataTab : 'message'
+                    }]
                 }
             ]
         }
     ];
 
-    
     (function ($) {
         // read available template stories
         var stories = atmTemplating.stories();
         console.log(stories);
-        var views={};
-        jQuery.each(templates,function (i,template) {
+        var views = {};
+        var inputs = {};
+        var options = {};
+        var styling = {};
+        var styleInputs = {};
+        jQuery.each(templates, function (i, template) {
             var tab = jQuery(getDatatemplate(template.dataTab));
-            jQuery.each(template.options,function (j,option) {
-                var subTab = tab.find(getDatatemplate(option.dataSection)).find(getDatatemplate(option.dataTab));
-                var input = subTab.find('input[name="' + option.contentInputName + '"]');
-                var viewKey=template.dataTab+option.dataSection+option.dataTab;
-                views[viewKey]={
-                    view:atmTemplating.render(template.name, option.renderBlockId),
-                    input:input,
-                    optionName:option.name,
-                    componentName:template.component
+            options[template.component] = {};
+            styling[template.component] = {};
+            jQuery.each(template.sections, function (j, section) {
+                var sectionTab = tab.find(getDatatemplate(section.dataSection));
+                var viewKey = template.dataTab + section.dataSection;
+                jQuery.each(section.tabs, function (j, tab) {
+                    var subTab = sectionTab.find(getDatatemplate(tab.dataTab));
+                    inputs[viewKey + tab.dataTab] = {
+                        input : subTab.find('input[name="' + tab.contentInputName + '"]'),
+                        optionName : tab.name
+                    };
+                    styleInputs[viewKey + tab.dataTab + 'style'] = {
+                        inputs : subTab.find(getDatatemplate('style') + ' input ')
+                    }
+                });
+
+                views[viewKey] = {
+                    view : atmTemplating.render(template.name, section.renderBlockId),
+                    componentName : template.component
+                };
+                if (section.dataSection == 'expanded') {
+                    views[viewKey].view.small(false);
                 }
             });
         });
 
-        // render template view to the container
-        //console.log(document.querySelector('#render-pledge'));
-        //var vm = atmTemplating.render(templateName, '#render-pledge-collapsed');
-        //var vm2 = atmTemplating.render(templateName, renderPledgeExpandedId);
-
         $form = $('section');
-        $headingHeadlineInput = $form.find('input');
-        /*$bodyWelcomeInput = $form.find('input[name="' + optionNameTemplate2 + '"]');*/
+        $inputs = $form.find('input');
 
-        // setup default component value
-        //$headingHeadlineInput.val(stories[componentName][optionName].content);
-        //$bodyWelcomeInput.val(stories[componentName][optionName2].content);
+
         var throttledSync = jQuery.throttle(200, function (e) {
-            var viewKey='';
-            var styleSelector=" "+ getDatatemplate('style')+' input ';
-            jQuery.each(jQuery(this).parents('[data-template]'),function (i, block) {
-                var data=jQuery(block).data('template');
-                if(data!='style') {
-                    viewKey=jQuery(block).data('template')+viewKey;
-                    styleSelector = getDatatemplate(data) + " "+ styleSelector;
+            var viewKey = '';
+            var inputKey = '';
+            var parent = 0;
+            jQuery.each(jQuery(this).parents('[data-template]'), function (i, block) {
+                var data = jQuery(block).data('template');
+                if (data != 'style') {
+                    inputKey = jQuery(block).data('template') + inputKey;
+                    if (parent > 0) {
+                        viewKey = jQuery(block).data('template') + viewKey;
+                    }
+                    parent++;
                 }
-
             });
-            var options = {};
-            var styling = {};
 
-            console.log(viewKey);
-            options[views[viewKey].optionName] = views[viewKey].input.val();
-            styling[views[viewKey].optionName] = getCSSFields(styleSelector);
+            //console.log(JSON.stringify(inputsToObject(inputs)));
 
+            options[views[viewKey].componentName][inputs[inputKey].optionName] = inputs[inputKey].input.val();
+            styling[views[viewKey].componentName][inputs[inputKey].optionName] = getCSSFields(styleInputs[inputKey + 'style'].inputs);
 
             // update template
-            atmTemplating.updateTemplate(views[viewKey].componentName, options,styling);
+            atmTemplating.updateTemplate(views[viewKey].componentName, options[views[viewKey].componentName], styling[views[viewKey].componentName]);
 
             // redraw the view
             views[viewKey].view.redraw();
         });
-        /*var throttledSync2 = jQuery.throttle(200, function () {
-            var options = {};
-            options[optionName2] = $bodyWelcomeInput.val();
-            //styling[optionName] = getCSSFields('pledge','collapsed','message');
-            // update template
-            atmTemplating.updateTemplate(componentName, options,styling);
 
-            // redraw the view
-            vm2.redraw();
-        });*/
-        // bind changes
-        $headingHeadlineInput.bind('keyup', throttledSync);
-        //$bodyWelcomeInput.bind('keyup', throttledSync2);
-        //getStyleInputs('pledge','collapsed','message').bind('keyup', throttledSync);
-        $form.bind('submit', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        $inputs.bind('keyup', throttledSync);
 
-            var options = {};
-            options[optionName] = $headingHeadlineInput.val();
-            styling[optionName] = getCSSFields('pledge','collapsed','message');
-            // dump template content to the console
-            console.log(atmTemplating.templateRendition(componentName).render(options,styling));
+        jQuery('#save-templates').bind('click', function (e) {
+            //e.preventDefault();
+            //.stopPropagation();
+            console.log(inputsToObject(inputs));
+            console.log(styleInputsToObject(styleInputs));
+            /*var options = {};
+             options[optionName] = $headingHeadlineInput.val();
+             styling[optionName] = getCSSFields('pledge', 'collapsed', 'message');
+             // dump template content to the console
+             console.log(atmTemplating.templateRendition(componentName).render(options, styling));*/
 
-            return false;
+            //return false;
         });
     })(jQuery);
 });
