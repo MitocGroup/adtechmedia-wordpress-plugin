@@ -11,8 +11,8 @@
  */
 
 $countries_list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
-$currencies = [];
-$countries = [];
+$currencies = [ ];
+$countries = [ ];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueMethod'];
@@ -273,7 +273,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 					</div>
 					<div class="flex-item-6">
 						<div class="mockup">
-							<img class="logo-img" src="<?php echo esc_html( plugins_url( '../images/logo.svg', __FILE__ ) ) ?>"
+							<img class="logo-img"
+								 src="<?php echo esc_html( plugins_url( '../images/logo.svg', __FILE__ ) ) ?>"
 								 alt="AdTechMedia"/>
 
 							<div class="mockup-head">
@@ -298,7 +299,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 							</div>
 
 							<div class="mockup-cont">
-								<img src="<?php echo esc_html( plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ) ?>"/>
+								<img
+									src="<?php echo esc_html( plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ) ?>"/>
 
 								<p>It is a long established fact that a reader will be distracted by
 									the readable content of a page when looking at its layout.
@@ -396,23 +398,33 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 
 						<div class="templates-views pledge" data-template="pledge">
 							<div class="template-view" data-template="expanded">
-								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
-								<div class="content-view">
+								<div class="header-view">pledge template
+								</div>
+								<div class="content-view clearfix">
 									<div class="flex-container">
-										<div class="flex-item-6" id="render-pledge-expanded">
-
+										<div class="flex-item-6" >
+											<div class="template-name">
+												Expanded view
+											</div>
+											<div id="render-pledge-expanded"></div>
+											<div class="template-name">
+												Collapsed view
+											</div>
+											<div id="render-pledge-collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
-												<input id="pledge-ext-salutation" name="pledge-ext" checked="" type="radio">
+												<input id="pledge-ext-salutation" name="pledge-ext" checked=""
+													   type="radio">
 												<label for="pledge-ext-salutation" class="tab-name">
 													Salutation
 												</label>
 												<div class="tab-content" data-template="salutation">
-													<div class="custom-label" >
+													<div class="custom-label">
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input placeholder="Dear {user}," name="welcome" value="Dear {user}," required="" type="text">
+															<input placeholder="Dear {user}," name="welcome"
+																   value="Dear {user}," required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -422,7 +434,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -431,7 +444,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+																	<input placeholder="font-size"
+																		   data-template-css="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -440,7 +455,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+																	<input placeholder="font-weight"
+																		   data-template-css="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -452,7 +469,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" data-template-css="font-style" required="" type="text">
+																	<input placeholder="font-style"
+																		   data-template-css="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -461,7 +480,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" data-template-css="text-align" required="" type="text">
+																	<input placeholder="text-align"
+																		   data-template-css="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -470,7 +491,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform"  data-template-css="text-transform" required="" type="text">
+																	<input placeholder="text-transform"
+																		   data-template-css="text-transform"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -478,25 +501,36 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</div>
 												</div>
 
-												<input id="pledge-ext-message" value="card" name="pledge-ext" type="radio">
+												<input id="pledge-ext-message" value="card" name="pledge-ext"
+													   type="radio">
 												<label for="pledge-ext-message" class="tab-name">
 													Message
 												</label>
 												<div class="tab-content" data-template="message">
 													<div class="custom-label">
-														<label>Message</label>
+														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input name="message" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" type="text">
+															<input name="message"
+																   placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
+																   value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
+																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
-
+													<div class="custom-label">
+														<label>Message (Collapsed View)</label>
+														<div class="custom-input">
+															<input placeholder="Please support quality journalism." value="Please support quality journalism. {pledge-button}" required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
 													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -505,7 +539,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+																	<input placeholder="font-size"
+																		   data-template-css="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -514,7 +550,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+																	<input placeholder="font-weight"
+																		   data-template-css="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -526,7 +564,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" data-template-css="font-style" required="" type="text">
+																	<input placeholder="font-style"
+																		   data-template-css="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -535,7 +575,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align"  data-template-css="text-align" required="" type="text">
+																	<input placeholder="text-align"
+																		   data-template-css="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -544,7 +586,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" data-template-css="text-align" required="" type="text">
+																	<input placeholder="text-transform"
+																		   data-template-css="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -634,7 +678,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</div>
 												</div>
 
-												<input id="pledge-ext-button" value="card" name="pledge-ext" type="radio">
+												<input id="pledge-ext-button" value="card" name="pledge-ext"
+													   type="radio">
 												<label for="pledge-ext-button" class="tab-name">
 													Button
 												</label>
@@ -751,7 +796,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</div>
 												</div>
 
-												<input id="pledge-ext-arrow" value="card" name="pledge-ext" type="radio">
+												<input id="pledge-ext-arrow" value="card" name="pledge-ext"
+													   type="radio">
 												<label for="pledge-ext-arrow" class="tab-name">
 													Arrow
 												</label>
@@ -776,9 +822,31 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															</div>
 														</div>
 													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
 												</div>
 
-												<input id="pledge-ext-styling" value="card" name="pledge-ext" type="radio">
+												<input id="pledge-ext-styling" value="card" name="pledge-ext"
+													   type="radio">
 												<label for="pledge-ext-styling" class="tab-name">
 													Overall Styling
 												</label>
@@ -807,18 +875,39 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="flex-container flex-gutter">
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Font Style</label>
+																<label>Font Family</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-family" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Text Align</label>
+																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="box-shadow" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="footer background-color" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Border</label>
+																<div class="custom-input">
+																	<input placeholder="footer-border" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -827,306 +916,38 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												</div>
 											</section>
 										</div>
+									</div>
+									<div class="custom-input pull-right">
+										<button type="button" id="save-templates" class="btn"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
 							<style>
 
 								.atm-targeted-modal {
-									width:auto;  }
+									width: auto;
+								}
+								@media (max-width: 1649px) {
+									.atm-targeted-modal {
+										margin-left: 0px; } }
 
 							</style>
 
-							<div class="template-view" data-template="collapsed">
-								<div class="header-view">pledge template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
-								<div class="content-view">
-									<div class="flex-container">
-										<div class="flex-item-6" id="render-pledge-collapsed">
-										</div>
-										<div class="flex-item-6">
-											<section class="config-tabs">
-												<input id="pledge-coll-message" name="pledge-coll" checked="" type="radio">
-												<label for="pledge-coll-message" class="tab-name">
-													Message
-												</label>
-												<div class="tab-content" data-template="message">
-													<div class="custom-label">
-														<label>Message</label>
-														<div class="custom-input">
-															<input name="message" placeholder="Please support quality journalism." value="Please support quality journalism. {pledge-button}" required="" type="text">
-															<span class="bar"></span>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter" data-template="style">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Size</label>
-																<div class="custom-input">
-																	<input placeholder="font-size" data-template-css="font-size" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter"  data-template="style">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" data-template-css="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" data-template-css="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input placeholder="text-transform" data-template-css="text-transform" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="pledge-coll-button" name="pledge-coll" type="radio">
-												<label for="pledge-coll-button" class="tab-name">
-													Button
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Micropayments Button Text</label>
-																<div class="custom-input">
-																	<input placeholder="PLEDGE" value="PLEDGE" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Micropayments Button Icon</label>
-																<div class="custom-input">
-																	<input placeholder="fa-check" value="fa-check" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Size</label>
-																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Border Radius</label>
-																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="pledge-coll-arrow" name="pledge-coll" type="radio">
-												<label for="pledge-coll-arrow" class="tab-name">
-													Arrow
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Opening Arrow</label>
-																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="pledge-coll-styling" name="pledge-coll" type="radio">
-												<label for="pledge-coll-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-										</div>
-									</div>
-								</div>
-							</div>
 						</div>
 
 						<div class="templates-views pay">
 							<div class="template-view">
-								<div class="header-view">pay template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
-								<div class="content-view">
+								<div class="header-view">pay template</div>
+								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
+											<div class="template-name">
+												Expanded view
+											</div>
 											<div class="atm-base-modal">
 												<div class="atm-sidebar-left">
 													<div class="atm-avatar">
-														<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+														<img alt="Article Author" src="images/profile-pic.png">
 													</div>
 													<div class="atm-user-info">Author</div>
 												</div>
@@ -1145,12 +966,14 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<p>Dear reader,</p>
 														</div>
 														<div class="flex-item-1">
-															<i class="atm-open-modal fa fa-chevron-circle-up" aria-hidden="true"></i>
+															<i class="atm-open-modal fa fa-chevron-circle-up"
+															   aria-hidden="true"></i>
 														</div>
 													</div>
 													<div class="flex-container">
 														<div class="flex-item-10">
-															Please support quality journalism. Would you pledge to pay a small fee of
+															Please support quality journalism. Would you pledge to pay a
+															small fee of
 															<span class="contrib-price">5¢</span> to continue reading?
 														</div>
 
@@ -1167,7 +990,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</div>
 												</div>
 												<section class="pay-tabs">
-													<input id="pay-card" value="card" name="pay-type" checked="" type="radio">
+													<input id="pay-card" value="card" name="pay-type" checked=""
+														   type="radio">
 													<label for="pay-card" class="tab-name card-payment">
 														<i class="fa fa-credit-card" aria-hidden="true"></i> PAY WITH CARD
 													</label>
@@ -1177,7 +1001,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<p class="italic">
 																<span class="pay-help-text">Please provide your contact information below:</span>
 																<a class="pay-help-sm pull-right">
-																	<i class="fa fa-question-circle" aria-hidden="true"></i> help
+																	<i class="fa fa-question-circle" aria-hidden="true"></i>
+																	help
 																</a>
 															</p>
 														</div>
@@ -1185,42 +1010,56 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="flex-container payment-block">
 																<div class="flex-item-6 card-block">
 																	<div class="form-item card-nr">
-																		<label for="number" class="small-label">CARD NUMBER</label>
-																		<input name="number" placeholder="1234 5678 9012 3456" required="required" type="text">
+																		<label for="number" class="small-label">CARD
+																			NUMBER</label>
+																		<input name="number"
+																			   placeholder="1234 5678 9012 3456"
+																			   required="required" type="text">
 																	</div>
 																	<div class="flex-container">
 																		<div class="form-item flex-item-6 card-holder">
-																			<label for="owner" class="small-label">CARD HOLDER</label>
-																			<input name="owner" required="required" placeholder="John Smith" type="text">
+																			<label for="owner" class="small-label">CARD
+																				HOLDER</label>
+																			<input name="owner" required="required"
+																				   placeholder="John Smith" type="text">
 																		</div>
 																		<div class="form-item flex-item-4 card-valid">
-																			<label for="validThru" class="small-label">VALID THRU</label>
-																			<input name="validThru" placeholder="07/16" required="required" type="text">
+																			<label for="validThru" class="small-label">VALID
+																				THRU</label>
+																			<input name="validThru" placeholder="07/16"
+																				   required="required" type="text">
 																		</div>
-																		<div class="card-type flex-item-2 card-type-null"></div>
+																		<div
+																			class="card-type flex-item-2 card-type-null"></div>
 																	</div>
 																</div>
 																<div class="flex-item-6 user-block">
 																	<div class="form-item">
 																		<label for="name">YOUR NAME</label>
-																		<input name="name" required="required" placeholder="John Smith" type="text">
+																		<input name="name" required="required"
+																			   placeholder="John Smith" type="text">
 																	</div>
 																	<div class="form-item">
 																		<label for="email">YOUR EMAIL</label>
-																		<input name="email" required="required" placeholder="john.smith@email.com" type="email">
+																		<input name="email" required="required"
+																			   placeholder="john.smith@email.com"
+																			   type="email">
 																	</div>
 																	<div class="flex-container user-items-last">
 																		<div class="form-item flex-item-3">
 																			<label for="cvc">CVC</label>
-																			<input name="cvc" placeholder="123" required="required" type="text">
+																			<input name="cvc" placeholder="123"
+																				   required="required" type="text">
 																		</div>
 																		<div class="form-item flex-item-5">
 																			<label for="zip">BILLING ZIPCODE</label>
-																			<input name="zip" required="required" placeholder="12345" type="text">
+																			<input name="zip" required="required"
+																				   placeholder="12345" type="text">
 																		</div>
 																		<div class="form-item form-button flex-item-4">
 																			<button type="submit" class="atm-button card">
-																				<i aria-hidden="true" class="fa fa-cog"></i> setup
+																				<i aria-hidden="true" class="fa fa-cog"></i>
+																				setup
 																			</button>
 																		</div>
 																	</div>
@@ -1235,6 +1074,27 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</button>
 												</div>
 											</div>
+
+											<div class="template-name">
+												Collapsed view
+											</div>
+											<div class="atm-modal-heading">
+												<div class="flex-container flex-align-center">
+													<div class="flex-item-1 avatar-sm">
+														<div class="atm-avatar-small">
+															<img alt="Article Author" src="images/profile-pic.png">
+														</div>
+													</div>
+													<div class="atm-heading-info flex-item-10">
+														Support quality journalism.
+														<a>Get involved and setup payment method now.</a>
+													</div>
+													<div class="flex-item-1 align-right">
+														<i class="atm-open-modal fa fa-chevron-circle-down"
+														   aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -1246,7 +1106,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input placeholder="Dear {user}," value="Dear {user}," required="" type="text">
+															<input placeholder="Dear {user}," value="Dear {user},"
+																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1274,7 +1135,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1304,7 +1166,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1318,9 +1181,23 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												</label>
 												<div class="tab-content">
 													<div class="custom-label">
-														<label>Message</label>
+														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" type="text">
+															<input
+																placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
+																value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
+																required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="custom-label">
+														<label>Message (Collapsed View)</label>
+														<div class="custom-input">
+															<input
+																placeholder="Support quality journalism. {setupPayment_url}"
+																value="Support quality journalism. {setupPayment_url}"
+																required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1348,7 +1225,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1378,7 +1256,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1394,7 +1273,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input placeholder="Already used us before? {connect_url}" value="Already used us before? {connect_url}" required="" type="text">
+															<input placeholder="Already used us before? {connect_url}"
+																   value="Already used us before? {connect_url}" required=""
+																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1402,7 +1283,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input placeholder="Not {user}? {disconnect_url}" value="Not {user}? {disconnect_url}" required="" type="text">
+															<input placeholder="Not {user}? {disconnect_url}"
+																   value="Not {user}? {disconnect_url}" required=""
+																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1430,7 +1313,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1460,7 +1344,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1478,7 +1363,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1496,7 +1382,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1517,7 +1404,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1547,7 +1435,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1574,7 +1463,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Pay Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="PAY" value="PAY" required="" type="text">
+																	<input placeholder="PAY" value="PAY" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1583,7 +1473,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Pay Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-check" value="fa-check" required="" type="text">
+																	<input placeholder="fa-check" value="fa-check"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1595,7 +1486,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Setup Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="SETUP" value="SETUP" required="" type="text">
+																	<input placeholder="SETUP" value="SETUP" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1604,7 +1496,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Setup Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-cog" value="fa-cog" required="" type="text">
+																	<input placeholder="fa-cog" value="fa-cog" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1616,7 +1509,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1646,7 +1540,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1655,7 +1550,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1694,7 +1590,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1712,7 +1609,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<input placeholder="fa-chevron-circle-up"
+																		   value="fa-chevron-circle-up" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1721,7 +1620,32 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down"
+																		   value="fa-chevron-circle-down" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1739,7 +1663,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1758,18 +1683,42 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="flex-container flex-gutter">
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Font Style</label>
+																<label>Font Family</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-family" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Text Align</label>
+																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="box-shadow" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="footer background-color" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Border</label>
+																<div class="custom-input">
+																	<input placeholder="footer-border" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1779,183 +1728,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											</section>
 										</div>
 									</div>
-								</div>
-							</div>
-
-							<div class="template-view">
-								<div class="header-view">pay template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
-								<div class="content-view">
-									<div class="flex-container">
-										<div class="flex-item-6">
-											<div class="atm-modal-heading">
-												<div class="flex-container flex-align-center">
-													<div class="flex-item-1 avatar-sm">
-														<div class="atm-avatar-small">
-															<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
-														</div>
-													</div>
-													<div class="atm-heading-info flex-item-10">
-														Support quality journalism.
-														<a>Get involved <span class="hide-sm">and setup payment method now.</span></a>
-													</div>
-													<div class="flex-item-1 align-right">
-														<i class="atm-open-modal fa fa-chevron-circle-down" aria-hidden="true"></i>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="flex-item-6">
-											<section class="config-tabs">
-												<input id="pay-coll-message" name="pay-coll" checked="" type="radio">
-												<label for="pay-coll-message" class="tab-name">
-													Message
-												</label>
-												<div class="tab-content">
-													<div class="custom-label">
-														<label>Message</label>
-														<div class="custom-input">
-															<input placeholder="Support quality journalism. {setupPayment_url}" value="Support quality journalism. {setupPayment_url}" required="" type="text">
-															<span class="bar"></span>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Size</label>
-																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="pay-coll-arrow" name="pay-coll" type="radio">
-												<label for="pay-coll-arrow" class="tab-name">
-													Arrow
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Opening Arrow</label>
-																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="pay-coll-styling" name="pay-coll" type="radio">
-												<label for="pay-coll-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-										</div>
+									<div class="custom-input pull-right">
+										<button type="button" class="btn"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
@@ -1963,14 +1737,17 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 
 						<div class="templates-views refund">
 							<div class="template-view">
-								<div class="header-view">refund template <i class="fa fa-angle-right" aria-hidden="true"></i> expanded view</div>
-								<div class="content-view">
+								<div class="header-view">refund template</div>
+								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
+											<div class="template-name">
+												Expanded view
+											</div>
 											<div class="atm-base-modal">
 												<div class="atm-sidebar-left">
 													<div class="atm-avatar">
-														<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
+														<img alt="Article Author" src="images/profile-pic.png">
 													</div>
 													<div class="atm-user-info">Author</div>
 												</div>
@@ -1985,12 +1762,14 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</div>
 
 													<div class="flex-container">
-														<div class="flex-item-11">
+														<div class="refund-top-info flex-item-11">
 															Thanks for contributing
-															<span class="contrib-price">5¢</span> and help us do the job we <i aria-hidden="true" class="fa fa-heart-o"></i>
+															<span class="contrib-price">5¢</span> and help us do the job we
+															<i aria-hidden="true" class="fa fa-heart-o"></i>
 														</div>
 														<div class="flex-item-1">
-															<i class="atm-open-modal fa fa-chevron-circle-up" aria-hidden="true"></i>
+															<i class="atm-open-modal fa fa-chevron-circle-up"
+															   aria-hidden="true"></i>
 														</div>
 													</div>
 													<div class="flex-container survey-block">
@@ -1998,7 +1777,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="mood-block-inner">
 																<label class="mood-block-info">How do you feel now?</label>
 
-																<input id="smile" name="mood" checked="checked" type="radio">
+																<input id="smile" name="mood" checked="checked"
+																	   type="radio">
 																<label for="smile" class="mood-label">
 																	<div class="smiley-green">
 																		<div class="left-eye"></div>
@@ -2034,7 +1814,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																<ul class="sharetools-menu">
 																	<li class="sharetool facebook-sharetool">
 																		<a href="javascript:;">
-																			<i class="fa fa-facebook" aria-hidden="true"></i>
+																			<i class="fa fa-facebook"
+																			   aria-hidden="true"></i>
 																		</a>
 																	</li>
 																	<li class="sharetool twitter-sharetool">
@@ -2044,7 +1825,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																	</li>
 																	<li class="sharetool email-sharetool">
 																		<a href="javascript:;">
-																			<i class="fa fa-envelope" aria-hidden="true"></i>
+																			<i class="fa fa-envelope"
+																			   aria-hidden="true"></i>
 																		</a>
 																	</li>
 																	<li class="sharetool show-all-sharetool">
@@ -2063,6 +1845,30 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													</button>
 												</div>
 											</div>
+
+											<div class="template-name">
+												Collapsed view
+											</div>
+											<div class="atm-modal-heading">
+												<div class="flex-container flex-align-center">
+													<div class="flex-item-1 avatar-sm">
+														<div class="atm-avatar-small">
+															<img alt="Article Author" src="images/profile-pic.png">
+														</div>
+													</div>
+													<div class="atm-heading-info flex-item-10">
+														Premium content unlocked.
+														<a>Not satisfied?</a> Get immediate
+														<button class="atm-button refund-targeted">
+															<i aria-hidden="true" class="fa fa-money"></i> refund
+														</button>
+													</div>
+													<div class="flex-item-1 align-right">
+														<i class="atm-open-modal fa fa-chevron-circle-down"
+														   aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -2072,9 +1878,23 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												</label>
 												<div class="tab-content">
 													<div class="custom-label">
-														<label>Message</label>
+														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}" value="Thanks for contributing {price} and help us do the job we {fa-heart-o}" required="" type="text">
+															<input
+																placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
+																value="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
+																required="" type="text">
+															<span class="bar"></span>
+														</div>
+													</div>
+
+													<div class="custom-label">
+														<label>Message (Collapsed View)</label>
+														<div class="custom-input">
+															<input
+																placeholder="Premium content unlocked. {notSatisfied_url} Get immediate"
+																value="Premium content unlocked. {notSatisfied_url} Get immediate"
+																required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -2102,7 +1922,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2132,7 +1953,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2148,7 +1970,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Message</label>
 														<div class="custom-input">
-															<input placeholder="How do you feel now?" value="How do you feel now?" required="" type="text">
+															<input placeholder="How do you feel now?"
+																   value="How do you feel now?" required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -2176,7 +1999,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2206,7 +2030,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2218,7 +2043,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Happy Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="Happy" value="Happy" required="" type="text">
+																	<input placeholder="Happy" value="Happy" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2239,7 +2065,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Neutral Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="OK" value="Ok" required="" type="text">
+																	<input placeholder="OK" value="Ok" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2260,7 +2087,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Not happy Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="Not happy" value="Not happy" required="" type="text">
+																	<input placeholder="Not happy" value="Not happy"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2285,7 +2113,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Message</label>
 														<div class="custom-input">
-															<input placeholder="Share your experience" value="Share your experience" required="" type="text">
+															<input placeholder="Share your experience"
+																   value="Share your experience" required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -2313,7 +2142,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2343,7 +2173,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2355,7 +2186,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-facebook" value="fa-facebook" required="" type="text">
+																	<input placeholder="fa-facebook" value="fa-facebook"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2376,7 +2208,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-twitter" value="fa-twitter" required="" type="text">
+																	<input placeholder="fa-twitter" value="fa-twitter"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2397,7 +2230,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-email" value="fa-email" required="" type="text">
+																	<input placeholder="fa-email" value="fa-email"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2418,7 +2252,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-share" value="fa-share" required="" type="text">
+																	<input placeholder="fa-share" value="fa-share"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2445,7 +2280,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Refund Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="REFUND" value="REFUND" required="" type="text">
+																	<input placeholder="REFUND" value="REFUND" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2454,7 +2290,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Refund Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-money" value="fa-money" required="" type="text">
+																	<input placeholder="fa-money" value="fa-money"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2466,7 +2303,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2496,7 +2334,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2505,7 +2344,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2544,7 +2384,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2562,7 +2403,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<input placeholder="fa-chevron-circle-up"
+																		   value="fa-chevron-circle-up" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2571,7 +2414,32 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Opening Arrow</label>
+																<div class="custom-input">
+																	<input placeholder="fa-chevron-circle-down"
+																		   value="fa-chevron-circle-down" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Color</label>
+																<div class="custom-input">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2589,7 +2457,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2608,18 +2477,42 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="flex-container flex-gutter">
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Font Style</label>
+																<label>Font Family</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-family" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 														<div class="flex-item-6">
 															<div class="custom-label">
-																<label>Text Align</label>
+																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="box-shadow" required="" type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="flex-container flex-gutter">
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Background Color</label>
+																<div class="custom-input">
+																	<input placeholder="footer background-color" required=""
+																		   type="text">
+																	<span class="bar"></span>
+																</div>
+															</div>
+														</div>
+														<div class="flex-item-6">
+															<div class="custom-label">
+																<label>Footer Border</label>
+																<div class="custom-input">
+																	<input placeholder="footer-border" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2629,303 +2522,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											</section>
 										</div>
 									</div>
-								</div>
-							</div>
-
-							<div class="template-view">
-								<div class="header-view">refund template <i class="fa fa-angle-right" aria-hidden="true"></i> collapsed view</div>
-								<div class="content-view">
-									<div class="flex-container">
-										<div class="flex-item-6">
-											<div class="atm-modal-heading">
-												<div class="flex-container flex-align-center">
-													<div class="flex-item-1 avatar-sm">
-														<div class="atm-avatar-small">
-															<img alt="Article Author" src="<?php echo esc_html( plugins_url( '../images/profile-pic.png', __FILE__ ) ) ?>">
-														</div>
-													</div>
-													<div class="atm-heading-info flex-item-10">
-														Premium content unlocked.
-														<span class="hide-sm"><a>Not satisfied?</a> Get immediate</span>
-														<button class="atm-button refund-targeted">
-															<i aria-hidden="true" class="fa fa-money"></i> refund
-														</button>
-													</div>
-													<div class="flex-item-1 align-right">
-														<i class="atm-open-modal fa fa-chevron-circle-down" aria-hidden="true"></i>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="flex-item-6">
-											<section class="config-tabs">
-												<input id="refund-coll-message" name="refund-coll" checked="" type="radio">
-												<label for="refund-coll-message" class="tab-name">
-													Message
-												</label>
-												<div class="tab-content">
-													<div class="custom-label">
-														<label>Message</label>
-														<div class="custom-input">
-															<input placeholder="Premium content unlocked. {notSatisfied_url} Get immediate" value="Premium content unlocked. {notSatisfied_url} Get immediate" required="" type="text">
-															<span class="bar"></span>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Size</label>
-																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="refund-coll-button" name="refund-coll" type="radio">
-												<label for="refund-coll-button" class="tab-name">
-													Button
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Refund Button Text</label>
-																<div class="custom-input">
-																	<input placeholder="REFUND" value="REFUND" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Refund Button Icon</label>
-																<div class="custom-input">
-																	<input placeholder="fa-money" value="fa-money" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Size</label>
-																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Border Radius</label>
-																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-4">
-															<div class="custom-label">
-																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="refund-coll-arrow" name="refund-coll" type="radio">
-												<label for="refund-coll-arrow" class="tab-name">
-													Arrow
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Opening Arrow</label>
-																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Color</label>
-																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<input id="refund-coll-styling" name="refund-coll" type="radio">
-												<label for="refund-coll-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Style</label>
-																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Text Align</label>
-																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</section>
-										</div>
+									<div class="custom-input pull-right">
+										<button type="button" class="btn"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
@@ -2933,7 +2531,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 
 						<div class="templates-views other">
 							<div class="template-view">
-								<div class="header-view">other templates <i class="fa fa-angle-right" aria-hidden="true"></i> unlock view</div>
+								<div class="header-view">other templates <i class="fa fa-angle-right"
+																			aria-hidden="true"></i> unlock view
+								</div>
 								<div class="content-view">
 									<div class="flex-container">
 										<div class="flex-item-6">
@@ -2941,19 +2541,26 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<div class="atm-main price-view">
 													<div class="unlock-cont">
 														<p class="blurred">
-															It is a long established fact that a reader will be distracted by
+															It is a long established fact that a reader will be distracted
+															by
 															the readable content of a page when looking at its layout.
-															The point of using Lorem Ipsum is that it has a more-or-less normal
-															distribution of letters, as opposed to using 'Content here, content here',
+															The point of using Lorem Ipsum is that it has a more-or-less
+															normal
+															distribution of letters, as opposed to using 'Content here,
+															content here',
 															making it look like readable English.
-															It is a long established fact that a reader will be distracted by
+															It is a long established fact that a reader will be distracted
+															by
 															the readable content of a page when looking at its layout.
-															The point of using Lorem Ipsum is that it has a more-or-less normal
-															distribution of letters, as opposed to using 'Content here, content here',
+															The point of using Lorem Ipsum is that it has a more-or-less
+															normal
+															distribution of letters, as opposed to using 'Content here,
+															content here',
 															making it look like readable English.
 														</p>
 														<button class="atm-button unlock-btn">
-															<i class="fa fa-unlock-alt" aria-hidden="true"></i> unlock content
+															<i class="fa fa-unlock-alt" aria-hidden="true"></i> unlock
+															content
 														</button>
 													</div>
 												</div>
@@ -2971,7 +2578,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Unlock Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="UNLOCK CONTENT" value="UNLOCK CONTENT" required="" type="text">
+																	<input placeholder="UNLOCK CONTENT"
+																		   value="UNLOCK CONTENT" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2980,7 +2588,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Unlock Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-unlock-alt" value="fa-unlock-alt" required="" type="text">
+																	<input placeholder="fa-unlock-alt" value="fa-unlock-alt"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2992,7 +2601,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3022,7 +2632,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3031,7 +2642,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3070,7 +2682,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3084,7 +2697,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 							</div>
 
 							<div class="template-view">
-								<div class="header-view">other templates <i class="fa fa-angle-right" aria-hidden="true"></i> price view</div>
+								<div class="header-view">other templates <i class="fa fa-angle-right"
+																			aria-hidden="true"></i> price view
+								</div>
 								<div class="content-view">
 									<div class="flex-container">
 										<div class="flex-item-6">
@@ -3116,7 +2731,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Price</label>
 														<div class="custom-input">
-															<input placeholder="{price}" value="{price}" required="" type="text">
+															<input placeholder="{price}" value="{price}" required=""
+																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -3126,7 +2742,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3144,7 +2761,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3174,7 +2792,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -3188,7 +2807,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 							</div>
 						</div>
 					</section>
-					<button type="submit" id="save-templates" class="btn"><i class="mdi mdi-check"></i>Save</button>
+
 				</div>
 			</div>
 		</div>

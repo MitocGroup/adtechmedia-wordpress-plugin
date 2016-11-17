@@ -114,6 +114,7 @@ p {
 #wpbody  {
     font-family: "FuturaICG", sans-serif;
     font-size: 14px;
+    line-height: 1.42857;
     padding: 40px 0;
 }
 
@@ -737,8 +738,8 @@ select {
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
     font-size: 13px;
-    height: 40px;
-    line-height: 40px;
+    height: 32px;
+    line-height: 28px;
     padding: 0 12px;
     position: relative;
     text-align: center;
@@ -834,14 +835,19 @@ select {
     top: 10px;
 }
 
+.template-name {
+    color: rgba(0, 0, 0, 0.3);
+    font: 13px/30px "FuturaICG", sans-serif;
+    text-transform: uppercase;
+}
+
 .atm-modal-heading {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #d3d3d3;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     font-size: 13px;
-    height: 50px;
-    padding: 0 10px;
+    padding: 5px 10px;
 }
 
 .atm-modal-heading .flex-container {
@@ -880,7 +886,7 @@ select {
 }
 
 .atm-heading-info {
-    white-space: nowrap;
+    padding-right: 5px;
 }
 
 .atm-open-modal {
@@ -893,6 +899,7 @@ select {
     border: 1px solid #d3d3d3;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     font-size: 13px;
+    margin-bottom: 20px;
 }
 
 .atm-base-modal img {
@@ -1386,6 +1393,10 @@ select {
     top: 60%;
 }
 
+.refund-top-info {
+    padding-right: 10px;
+}
+
 .price-view.atm-main {
     float: none;
     padding: 13px;
@@ -1496,6 +1507,10 @@ select {
 }
 
 @media (max-width: 1024px) {
+    #wpbody {
+        padding-bottom: 20px;
+    }
+
     .template-view > .content-view > .flex-container {
         display: block;
     }
@@ -1505,7 +1520,7 @@ select {
     }
 
     .template-view > .content-view > .flex-container > [class*="flex-item-"]:not(:last-child) {
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
 
     .content.templating {
@@ -1675,6 +1690,10 @@ select {
 }
 
 @media (max-width: 640px) {
+    #wpbody {
+        padding-bottom: 0;
+    }
+
     .mockup {
         padding: 20px;
     }
@@ -1786,6 +1805,7 @@ select {
     }
 
     .form-button[class*="flex-item-"] .atm-button {
+        font-size: 11px;
         height: 30px;
         line-height: 30px;
     }
@@ -1803,8 +1823,8 @@ select {
         width: 30px;
     }
 
-    .flex-container .flex-item-10.atm-heading-info {
-        padding: 0 0 0 5px;
+    .atm-heading-info {
+        padding-left: 5px;
     }
 }
 
@@ -1822,8 +1842,8 @@ select {
 }
 
 @media (max-width: 479px) {
-    body {
-        padding: 20px 0;
+    #wpbody {
+        padding-top: 20px;
     }
 
     h1.heading {
@@ -1918,6 +1938,10 @@ select {
         max-width: 100%;
     }
 
+    .template-name {
+        font: 12px/26px "FuturaICG", sans-serif;
+    }
+
     .form-item label {
         display: block;
         overflow: hidden;
@@ -1928,5 +1952,9 @@ select {
 
     .content, .content.templating {
         padding: 13px;
+    }
+
+    .template-view .custom-input {
+        padding-top: 0;
     }
 }
