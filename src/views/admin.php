@@ -397,12 +397,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 						</ul>
 
 						<div class="templates-views pledge" data-template="pledge">
-							<div class="template-view" data-template="expanded">
+							<div class="template-view">
 								<div class="header-view">pledge template
 								</div>
 								<div class="content-view clearfix">
 									<div class="flex-container">
-										<div class="flex-item-6" >
+										<div class="flex-item-6">
 											<div class="template-name">
 												Expanded view
 											</div>
@@ -420,7 +420,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													Salutation
 												</label>
 												<div class="tab-content" data-template="salutation">
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Salutation</label>
 														<div class="custom-input">
 															<input placeholder="Dear {user}," name="welcome"
@@ -507,20 +507,23 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													Message
 												</label>
 												<div class="tab-content" data-template="message">
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input name="message"
+															<input name="message-expanded"
 																   placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
 																   value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
 																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
-													<div class="custom-label">
+													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
-															<input placeholder="Please support quality journalism." value="Please support quality journalism. {pledge-button}" required="" type="text">
+															<input name="message-collapsed"
+																   placeholder="Please support quality journalism."
+																   value="Please support quality journalism. {pledge-button}"
+																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -604,7 +607,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input placeholder="Already used us before? {connect_url}" value="Already used us before? {connect_url}" required="" type="text">
+															<input placeholder="Already used us before? {connect_url}"
+																   value="Already used us before? {connect_url}"
+																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -612,7 +617,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="custom-label">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input placeholder="Not {user}? {disconnect_url}" value="Not {user}? {disconnect_url}" required="" type="text">
+															<input placeholder="Not {user}? {disconnect_url}"
+																   value="Not {user}? {disconnect_url}" required=""
+																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -631,7 +638,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -640,7 +648,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -652,7 +661,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -661,7 +671,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -670,7 +681,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -689,7 +701,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Micropayments Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="PLEDGE {price}" value="PLEDGE {price}" required="" type="text">
+																	<input placeholder="PLEDGE {price}"
+																		   value="PLEDGE {price}" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -698,7 +712,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Micropayments Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-check" value="fa-check" required="" type="text">
+																	<input placeholder="fa-check" value="fa-check"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -710,7 +725,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -728,7 +744,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -740,7 +757,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required="" type="text">
+																	<input placeholder="font-weight" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -749,7 +767,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required="" type="text">
+																	<input placeholder="border-radius" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -770,7 +789,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -779,7 +799,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -788,7 +809,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required="" type="text">
+																	<input placeholder="text-transform" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -807,7 +829,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" type="text">
+																	<input placeholder="fa-chevron-circle-up"
+																		   value="fa-chevron-circle-up" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -816,7 +840,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -828,7 +853,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Opening Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" type="text">
+																	<input placeholder="fa-chevron-circle-down"
+																		   value="fa-chevron-circle-down" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -837,7 +864,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required="" type="text">
+																	<input placeholder="color" value="" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -856,7 +884,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required="" type="text">
+																	<input placeholder="background-color" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -877,7 +906,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Family</label>
 																<div class="custom-input">
-																	<input placeholder="font-family" required="" type="text">
+																	<input placeholder="font-family" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -886,7 +916,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="box-shadow" required="" type="text">
+																	<input placeholder="box-shadow" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -898,7 +929,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Footer Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="footer background-color" required="" type="text">
+																	<input placeholder="footer background-color"
+																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -907,7 +939,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Footer Border</label>
 																<div class="custom-input">
-																	<input placeholder="footer-border" required="" type="text">
+																	<input placeholder="footer-border" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -918,7 +951,9 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" id="save-templates" class="btn"><i class="mdi mdi-check"></i> Save</button>
+										<button type="button" id="save-templates" class="btn"><i
+												class="mdi mdi-check"></i> Save
+										</button>
 									</div>
 								</div>
 							</div>
@@ -927,9 +962,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 								.atm-targeted-modal {
 									width: auto;
 								}
+
 								@media (max-width: 1649px) {
 									.atm-targeted-modal {
-										margin-left: 0px; } }
+										margin-left: 0px;
+									}
+								}
 
 							</style>
 
@@ -993,7 +1031,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<input id="pay-card" value="card" name="pay-type" checked=""
 														   type="radio">
 													<label for="pay-card" class="tab-name card-payment">
-														<i class="fa fa-credit-card" aria-hidden="true"></i> PAY WITH CARD
+														<i class="fa fa-credit-card" aria-hidden="true"></i> PAY WITH
+														CARD
 													</label>
 
 													<div class="tab-content">
@@ -1001,7 +1040,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<p class="italic">
 																<span class="pay-help-text">Please provide your contact information below:</span>
 																<a class="pay-help-sm pull-right">
-																	<i class="fa fa-question-circle" aria-hidden="true"></i>
+																	<i class="fa fa-question-circle"
+																	   aria-hidden="true"></i>
 																	help
 																</a>
 															</p>
@@ -1057,8 +1097,10 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																				   placeholder="12345" type="text">
 																		</div>
 																		<div class="form-item form-button flex-item-4">
-																			<button type="submit" class="atm-button card">
-																				<i aria-hidden="true" class="fa fa-cog"></i>
+																			<button type="submit"
+																					class="atm-button card">
+																				<i aria-hidden="true"
+																				   class="fa fa-cog"></i>
 																				setup
 																			</button>
 																		</div>
@@ -1126,7 +1168,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1148,7 +1191,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1157,7 +1201,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1216,7 +1261,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1238,7 +1284,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1247,7 +1294,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1274,7 +1322,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														<label>Connect Message</label>
 														<div class="custom-input">
 															<input placeholder="Already used us before? {connect_url}"
-																   value="Already used us before? {connect_url}" required=""
+																   value="Already used us before? {connect_url}"
+																   required=""
 																   type="text">
 															<span class="bar"></span>
 														</div>
@@ -1304,7 +1353,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1326,7 +1376,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1335,7 +1386,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1395,7 +1447,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1426,7 +1479,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="box-shadow" required="" type="text">
+																	<input placeholder="box-shadow" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1445,7 +1499,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1496,7 +1551,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Setup Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-cog" value="fa-cog" required=""
+																	<input placeholder="fa-cog" value="fa-cog"
+																		   required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1528,7 +1584,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1572,7 +1629,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1581,7 +1639,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1695,7 +1754,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="box-shadow" required="" type="text">
+																	<input placeholder="box-shadow" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1707,7 +1767,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Footer Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="footer background-color" required=""
+																	<input placeholder="footer background-color"
+																		   required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1764,7 +1825,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="flex-container">
 														<div class="refund-top-info flex-item-11">
 															Thanks for contributing
-															<span class="contrib-price">5¢</span> and help us do the job we
+															<span class="contrib-price">5¢</span> and help us do the job
+															we
 															<i aria-hidden="true" class="fa fa-heart-o"></i>
 														</div>
 														<div class="flex-item-1">
@@ -1775,7 +1837,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 													<div class="flex-container survey-block">
 														<div class="flex-item-6 mood-block">
 															<div class="mood-block-inner">
-																<label class="mood-block-info">How do you feel now?</label>
+																<label class="mood-block-info">How do you feel
+																	now?</label>
 
 																<input id="smile" name="mood" checked="checked"
 																	   type="radio">
@@ -1820,7 +1883,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																	</li>
 																	<li class="sharetool twitter-sharetool">
 																		<a href="javascript:;">
-																			<i class="fa fa-twitter" aria-hidden="true"></i>
+																			<i class="fa fa-twitter"
+																			   aria-hidden="true"></i>
 																		</a>
 																	</li>
 																	<li class="sharetool email-sharetool">
@@ -1831,7 +1895,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																	</li>
 																	<li class="sharetool show-all-sharetool">
 																		<a href="javascript:;">
-																			<i class="fa fa-share" aria-hidden="true"></i>
+																			<i class="fa fa-share"
+																			   aria-hidden="true"></i>
 																		</a>
 																	</li>
 																</ul>
@@ -1872,7 +1937,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
-												<input id="refund-ext-message" name="refund-ext" checked="" type="radio">
+												<input id="refund-ext-message" name="refund-ext" checked=""
+													   type="radio">
 												<label for="refund-ext-message" class="tab-name">
 													Message
 												</label>
@@ -1913,7 +1979,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1935,7 +2002,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1944,7 +2012,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1990,7 +2059,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2012,7 +2082,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2021,7 +2092,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2114,7 +2186,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														<label>Message</label>
 														<div class="custom-input">
 															<input placeholder="Share your experience"
-																   value="Share your experience" required="" type="text">
+																   value="Share your experience" required=""
+																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -2133,7 +2206,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2155,7 +2229,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2164,7 +2239,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2280,7 +2356,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Refund Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="REFUND" value="REFUND" required=""
+																	<input placeholder="REFUND" value="REFUND"
+																		   required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2322,7 +2399,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2366,7 +2444,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2375,7 +2454,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2489,7 +2569,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="box-shadow" required="" type="text">
+																	<input placeholder="box-shadow" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2501,7 +2582,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Footer Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="footer background-color" required=""
+																	<input placeholder="footer background-color"
+																		   required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2541,7 +2623,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<div class="atm-main price-view">
 													<div class="unlock-cont">
 														<p class="blurred">
-															It is a long established fact that a reader will be distracted
+															It is a long established fact that a reader will be
+															distracted
 															by
 															the readable content of a page when looking at its layout.
 															The point of using Lorem Ipsum is that it has a more-or-less
@@ -2549,7 +2632,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															distribution of letters, as opposed to using 'Content here,
 															content here',
 															making it look like readable English.
-															It is a long established fact that a reader will be distracted
+															It is a long established fact that a reader will be
+															distracted
 															by
 															the readable content of a page when looking at its layout.
 															The point of using Lorem Ipsum is that it has a more-or-less
@@ -2579,7 +2663,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																<label>Unlock Button Text</label>
 																<div class="custom-input">
 																	<input placeholder="UNLOCK CONTENT"
-																		   value="UNLOCK CONTENT" required="" type="text">
+																		   value="UNLOCK CONTENT" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2588,7 +2673,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Unlock Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-unlock-alt" value="fa-unlock-alt"
+																	<input placeholder="fa-unlock-alt"
+																		   value="fa-unlock-alt"
 																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2620,7 +2706,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required="" type="text">
+																	<input placeholder="font-size" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2664,7 +2751,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2673,7 +2761,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required="" type="text">
+																	<input placeholder="text-align" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2783,7 +2872,8 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required="" type="text">
+																	<input placeholder="font-style" required=""
+																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
