@@ -11,8 +11,8 @@
  */
 
 $countries_list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
-$currencies = [ ];
-$countries = [ ];
+$currencies = [];
+$countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueMethod'];

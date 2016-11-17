@@ -239,8 +239,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_enqueue_style( 'adtechmedia-style-main', plugins_url( '/css/main.css', __FILE__ ) );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_script( 'adtechmedia-jquery-throttle-js', 'https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js',
-			[ 'jquery-ui-tabs' ] );
+		wp_enqueue_script(
+			'adtechmedia-jquery-throttle-js',
+			'https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js',
+			[ 'jquery-ui-tabs' ]
+		);
 		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://adm.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
@@ -248,7 +251,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			[ 'adtechmedia-atm-tpl-js' ]
 		);
 		wp_enqueue_script( 'adtechmedia-fontawesome-js', 'https://use.fontawesome.com/09d9c8deb0.js', [ 'adtechmedia-admin-js' ] );
-		
 	}
 
 	/**
