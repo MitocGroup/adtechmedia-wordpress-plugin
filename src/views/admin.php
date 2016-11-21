@@ -28,13 +28,18 @@ $content_paywall = [
 	'pledged currency',
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
+
+echo '<script>';
+// @codingStandardsIgnoreStart
+echo 'var templateInputs =JSON.parse("';
+echo empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' );
+echo '");';
+echo 'var templateStyleInputs =JSON.parse("';
+echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' );
+echo '");';
+// @codingStandardsIgnoreEnd
+echo '</script>';
 ?>
-<script>
-	// @codingStandardsIgnoreStart
-	var templateInputs =JSON.parse("<?php echo empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' ) ?>");
-	var templateStyleInputs =JSON.parse("<?php echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' ) ?>");
-	// @codingStandardsIgnoreEnd
-</script>
 <main>
 	<section>
 		<form method="post" action="">
