@@ -228,16 +228,23 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Save templates action
 	 */
 	public function ajax_save_template() {
-
-		$this->add_plugin_option( 'template_inputs', $_POST['inputs'] );
-		$this->add_plugin_option( 'template_style_inputs', $_POST['styleInputs'] );
-		$this->add_plugin_option( 'template_' . $_POST['component'], $_POST['template'] );
-		Adtechmedia_Request::property_update_config_by_array(
-			$this->get_plugin_option( 'id' ),
-			$this->get_plugin_option( 'key' ),
-			[ 'templates' => [ $_POST['component'] => base64_encode( stripslashes( $_POST['template'] ) ), ], ]
-		);
-		echo 'ok';
+		if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
+			// @codingStandardsIgnoreStart
+			$inputs = $_POST['inputs'];
+			$style_inputs = $_POST['styleInputs'];
+			$component = $_POST['component'];
+			$template = $_POST['template'];
+			$this->add_plugin_option( 'template_inputs', $inputs );
+			$this->add_plugin_option( 'template_style_inputs', $style_inputs );
+			$this->add_plugin_option( 'template_' . $component, $template );
+			Adtechmedia_Request::property_update_config_by_array(
+				$this->get_plugin_option( 'id' ),
+				$this->get_plugin_option( 'key' ),
+				[ 'templates' => [ $component => base64_encode( stripslashes( $template ) ), ], ]
+			);
+			// @codingStandardsIgnoreEnd
+			echo 'ok';
+		}
 		die();
 	}
 
@@ -269,6 +276,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_localize_script( 'adtechmedia-admin-js', 'save_template', array(
 			'ajax_url' => $this->get_ajax_url( 'save_template' ),
+			'nonce' => wp_create_nonce('adtechmedia-nonce'),
 		));
 		wp_enqueue_script( 'adtechmedia-fontawesome-js', 'https://use.fontawesome.com/09d9c8deb0.js', [ 'adtechmedia-admin-js' ] );
 	}

@@ -243,6 +243,7 @@ jQuery(document).ready(function () {
         type : 'post',
         data : {
           action : 'save_template',
+          nonce : save_template.nonce,
           inputs : JSON.stringify(inputsToObject(inputs)),
           styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
           component : views[viewKey].component,
@@ -252,6 +253,7 @@ jQuery(document).ready(function () {
           )
         },
         success : function (response) {
+          console.log(response);
           btn.removeClass('disabled');
         }
       });
