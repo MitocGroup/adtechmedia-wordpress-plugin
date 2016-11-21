@@ -210,6 +210,37 @@ class Adtechmedia_Request {
 	}
 
 	/**
+	 * Update property by data array
+	 *
+	 * @param string  $id property id.
+	 * @param string  $key API key.
+	 * @param array $data array to send as config defaults.
+	 * @return array|bool
+	 */
+	public static function property_update_config_by_array( $id, $key, $data ) {
+		if ( empty( $key ) ) {
+			return false;
+		}
+		$data = [
+			'Id' => $id,
+			'ConfigDefaults' => $data,
+		];
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/update-config',
+			'PATCH',
+			[ 'X-Api-Key' => $key ],
+			$data,
+			[ 'BuildPath', 'Id' ]
+		);
+		if ( $response && isset( $response['BuildPath'] ) && isset( $response['Id'] ) ) {
+
+			return [ 'BuildPath' => $response['BuildPath'], 'Id' => $response['Id'] ];
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Update property
 	 *
 	 * @param string  $id property id.

@@ -232,7 +232,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$this->add_plugin_option('template_inputs',$_POST['inputs']);
 		$this->add_plugin_option('template_style_inputs',$_POST['styleInputs']);
 		$this->add_plugin_option('template_' . $_POST['component'], $_POST['template']);
-		echo 'add';
+		Adtechmedia_Request::property_update_config_by_array(
+			$this->get_plugin_option( 'id' ),
+			$this->get_plugin_option( 'key' ),
+			['templates'=>[$_POST['component'] => base64_encode( stripslashes( $_POST['template'] ) )]]
+		);
+		echo 'ok';
 		die();
 	}
 	

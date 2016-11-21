@@ -230,8 +230,10 @@ jQuery(document).ready(function () {
     $inputs.bind('keyup', throttledSync);
 
     jQuery('.save-templates').bind('click', function (e) {
-      var viewKey = jQuery(jQuery(this).parents('[data-template]')[0]).data('template');
-
+      var btn=jQuery(this);
+      var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
+      btn.addClass('disabled');
+      console.log('click');
       jQuery.ajax({
         url : save_template.ajax_url,
         type : 'post',
@@ -243,7 +245,7 @@ jQuery(document).ready(function () {
           template : atmTemplating.templateRendition(views[viewKey].component).render(options[views[viewKey].component], styling[views[viewKey].component])
         },
         success : function (response) {
-          alert(response)
+          btn.removeClass('disabled');
         }
       });
     });
