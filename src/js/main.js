@@ -38,7 +38,12 @@ function getDatatemplate(value) {
   return '[data-template="' + value + '"]';
 }
 jQuery(document).ready(function () {
-  var atmTemplating = atmTpl.default;
+  if (typeof atmTpl !== 'undefined') {
+    var atmTemplating = atmTpl.default;
+  } else {
+    console.log('atmTpl is undefined');
+    return;
+  }
 
   var templates = [
     {
@@ -234,7 +239,7 @@ jQuery(document).ready(function () {
     $inputs.bind('keyup', throttledSync);
 
     jQuery('.save-templates').bind('click', function (e) {
-      var btn=jQuery(this);
+      var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
       btn.addClass('disabled');
       console.log('click');

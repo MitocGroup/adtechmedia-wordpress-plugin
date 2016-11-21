@@ -30,8 +30,10 @@ $content_paywall = [
 $content_offset_types = [ 'paragraphs', 'words' ];
 ?>
 <script>
-	var templateInputs =JSON.parse("<?php echo esc_html( empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' ) ) ?>");
-	var templateStyleInputs =JSON.parse("<?php echo esc_html( empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' ) ) ?>");
+	// @codingStandardsIgnoreStart
+	var templateInputs =JSON.parse("<?php echo empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' ) ?>");
+	var templateStyleInputs =JSON.parse("<?php echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' ) ?>");
+	// @codingStandardsIgnoreEnd
 </script>
 <main>
 	<section>
