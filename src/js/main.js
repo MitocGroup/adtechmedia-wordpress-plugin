@@ -201,8 +201,8 @@ jQuery(document).ready(function () {
       views[viewKey].collapsed.redraw();
     });
 
-    $form = $('section');
-    $inputs = $form.find('input');
+    var $form = $('section');
+    var $inputs = $form.find('input');
 
 
     var throttledSync = jQuery.throttle(200, function (e) {
@@ -214,13 +214,17 @@ jQuery(document).ready(function () {
         //console.log(type);
         if (inputs.hasOwnProperty(inputKey + type)) {
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
-          styling[views[viewKey].component][inputs[inputKey + type].optionName] = getCSSFields(styleInputs[inputKey + 'style'].inputs);
+          styling[views[viewKey].component][inputs[inputKey + type].optionName] =
+            getCSSFields(styleInputs[inputKey + 'style'].inputs);
         }
       });
       // update template
 
-      atmTemplating.updateTemplate(views[viewKey].component, options[views[viewKey].component], styling[views[viewKey].component]);
-
+      atmTemplating.updateTemplate(
+        views[viewKey].component,
+        options[views[viewKey].component],
+        styling[views[viewKey].component]
+      );
 
       // redraw the view
       views[viewKey].expanded.redraw();
@@ -242,7 +246,10 @@ jQuery(document).ready(function () {
           inputs : JSON.stringify(inputsToObject(inputs)),
           styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
           component : views[viewKey].component,
-          template : atmTemplating.templateRendition(views[viewKey].component).render(options[views[viewKey].component], styling[views[viewKey].component])
+          template : atmTemplating.templateRendition(views[viewKey].component).render(
+            options[views[viewKey].component],
+            styling[views[viewKey].component]
+          )
         },
         success : function (response) {
           btn.removeClass('disabled');

@@ -212,9 +212,9 @@ class Adtechmedia_Request {
 	/**
 	 * Update property by data array
 	 *
-	 * @param string  $id property id.
-	 * @param string  $key API key.
-	 * @param array $data array to send as config defaults.
+	 * @param string $id property id.
+	 * @param string $key API key.
+	 * @param array  $data array to send as config defaults.
 	 * @return array|bool
 	 */
 	public static function property_update_config_by_array( $id, $key, $data ) {

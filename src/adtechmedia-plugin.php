@@ -221,7 +221,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// http://plugin.michael-simpson.com/?page_id=39.
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
-		add_action('wp_ajax_save_template', array(&$this, 'ajax_save_template'));
+		add_action( 'wp_ajax_save_template', array( &$this, 'ajax_save_template' ) );
 	}
 
 	/**
@@ -229,18 +229,18 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function ajax_save_template() {
 
-		$this->add_plugin_option('template_inputs',$_POST['inputs']);
-		$this->add_plugin_option('template_style_inputs',$_POST['styleInputs']);
-		$this->add_plugin_option('template_' . $_POST['component'], $_POST['template']);
+		$this->add_plugin_option( 'template_inputs', $_POST['inputs'] );
+		$this->add_plugin_option( 'template_style_inputs', $_POST['styleInputs'] );
+		$this->add_plugin_option( 'template_' . $_POST['component'], $_POST['template'] );
 		Adtechmedia_Request::property_update_config_by_array(
 			$this->get_plugin_option( 'id' ),
 			$this->get_plugin_option( 'key' ),
-			['templates'=>[$_POST['component'] => base64_encode( stripslashes( $_POST['template'] ) )]]
+			[ 'templates' => [ $_POST['component'] => base64_encode( stripslashes( $_POST['template'] ) ), ], ]
 		);
 		echo 'ok';
 		die();
 	}
-	
+
 	/**
 	 * Register plugin scripts
 	 *
@@ -268,7 +268,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			[ 'adtechmedia-atm-tpl-js' ]
 		);
 		wp_localize_script( 'adtechmedia-admin-js', 'save_template', array(
-			'ajax_url' => $this->get_ajax_url('save_template')
+			'ajax_url' => $this->get_ajax_url( 'save_template' ),
 		));
 		wp_enqueue_script( 'adtechmedia-fontawesome-js', 'https://use.fontawesome.com/09d9c8deb0.js', [ 'adtechmedia-admin-js' ] );
 	}
