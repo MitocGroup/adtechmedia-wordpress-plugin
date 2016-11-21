@@ -38,12 +38,8 @@ function getDatatemplate(value) {
   return '[data-template="' + value + '"]';
 }
 jQuery(document).ready(function () {
-  if (typeof atmTpl !== 'undefined') {
-    var atmTemplating = atmTpl.default;
-  } else {
-    console.log('atmTpl is undefined');
-    return;
-  }
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template*/
+  var atmTemplating = atmTpl.default;
 
   var templates = [
     {
