@@ -228,7 +228,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Save templates action
 	 */
 	public function ajax_save_template() {
-		if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
 			$inputs = $_POST['inputs'];
 			$style_inputs = $_POST['styleInputs'];
@@ -276,7 +276,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_localize_script( 'adtechmedia-admin-js', 'save_template', array(
 			'ajax_url' => $this->get_ajax_url( 'save_template' ),
-			'nonce' => wp_create_nonce('adtechmedia-nonce'),
+			'nonce' => wp_create_nonce( 'adtechmedia-nonce' ),
 		));
 		wp_enqueue_script( 'adtechmedia-fontawesome-js', 'https://use.fontawesome.com/09d9c8deb0.js', [ 'adtechmedia-admin-js' ] );
 	}
