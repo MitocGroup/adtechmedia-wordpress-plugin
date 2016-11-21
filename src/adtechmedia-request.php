@@ -239,6 +239,7 @@ class Adtechmedia_Request {
 			return false;
 		}
 	}
+
 	/**
 	 * Update property
 	 *
