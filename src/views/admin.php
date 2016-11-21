@@ -29,7 +29,10 @@ $content_paywall = [
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
 ?>
-
+<script>
+	var templateInputs =JSON.parse("<?= $this->get_plugin_option( 'template_inputs' ) ?>");
+	var templateStyleInputs =JSON.parse("<?= $this->get_plugin_option( 'template_style_inputs' ) ?>");
+</script>
 <main>
 	<section>
 		<form method="post" action="">
@@ -590,7 +593,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																<label>Text Transform</label>
 																<div class="custom-input">
 																	<input placeholder="text-transform"
-																		   data-template-css="text-align" required=""
+																		   data-template-css="text-transform" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -951,7 +954,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" id="save-templates" class="btn"><i
+										<button type="button" class="btn save-templates"><i
 												class="mdi mdi-check"></i> Save
 										</button>
 									</div>
@@ -973,7 +976,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 
 						</div>
 
-						<div class="templates-views pay">
+						<div class="templates-views pay" data-template="pay">
 							<div class="template-view">
 								<div class="header-view">pay template</div>
 								<div class="content-view clearfix">
@@ -982,161 +985,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											<div class="template-name">
 												Expanded view
 											</div>
-											<div class="atm-base-modal">
-												<div class="atm-sidebar-left">
-													<div class="atm-avatar">
-														<img alt="Article Author" src="images/profile-pic.png">
-													</div>
-													<div class="atm-user-info">Author</div>
-												</div>
-
-												<div class="atm-main">
-													<div class="notification-inner">
-														<p>
-															<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-															<span>{error message}</span>
-														</p>
-														<i aria-hidden="true" class="mdi mdi-close close-btn"></i>
-													</div>
-
-													<div class="flex-container">
-														<div class="flex-item-11">
-															<p>Dear reader,</p>
-														</div>
-														<div class="flex-item-1">
-															<i class="atm-open-modal fa fa-chevron-circle-up"
-															   aria-hidden="true"></i>
-														</div>
-													</div>
-													<div class="flex-container">
-														<div class="flex-item-10">
-															Please support quality journalism. Would you pledge to pay a
-															small fee of
-															<span class="contrib-price">5¢</span> to continue reading?
-														</div>
-
-														<div class="flex-item-2 pledge-price-block">
-															<span class="pledge-price">5¢</span>
-														</div>
-													</div>
-													<div class="pledge-bottom clearfix">
-														<div class="connect-component">
-															<small>
-																Already used us before? <a>Connect here</a>
-															</small>
-														</div>
-													</div>
-												</div>
-												<section class="pay-tabs">
-													<input id="pay-card" value="card" name="pay-type" checked=""
-														   type="radio">
-													<label for="pay-card" class="tab-name card-payment">
-														<i class="fa fa-credit-card" aria-hidden="true"></i> PAY WITH
-														CARD
-													</label>
-
-													<div class="tab-content">
-														<div class="tab-info">
-															<p class="italic">
-																<span class="pay-help-text">Please provide your contact information below:</span>
-																<a class="pay-help-sm pull-right">
-																	<i class="fa fa-question-circle"
-																	   aria-hidden="true"></i>
-																	help
-																</a>
-															</p>
-														</div>
-														<form name="payment-card-form">
-															<div class="flex-container payment-block">
-																<div class="flex-item-6 card-block">
-																	<div class="form-item card-nr">
-																		<label for="number" class="small-label">CARD
-																			NUMBER</label>
-																		<input name="number"
-																			   placeholder="1234 5678 9012 3456"
-																			   required="required" type="text">
-																	</div>
-																	<div class="flex-container">
-																		<div class="form-item flex-item-6 card-holder">
-																			<label for="owner" class="small-label">CARD
-																				HOLDER</label>
-																			<input name="owner" required="required"
-																				   placeholder="John Smith" type="text">
-																		</div>
-																		<div class="form-item flex-item-4 card-valid">
-																			<label for="validThru" class="small-label">VALID
-																				THRU</label>
-																			<input name="validThru" placeholder="07/16"
-																				   required="required" type="text">
-																		</div>
-																		<div
-																			class="card-type flex-item-2 card-type-null"></div>
-																	</div>
-																</div>
-																<div class="flex-item-6 user-block">
-																	<div class="form-item">
-																		<label for="name">YOUR NAME</label>
-																		<input name="name" required="required"
-																			   placeholder="John Smith" type="text">
-																	</div>
-																	<div class="form-item">
-																		<label for="email">YOUR EMAIL</label>
-																		<input name="email" required="required"
-																			   placeholder="john.smith@email.com"
-																			   type="email">
-																	</div>
-																	<div class="flex-container user-items-last">
-																		<div class="form-item flex-item-3">
-																			<label for="cvc">CVC</label>
-																			<input name="cvc" placeholder="123"
-																				   required="required" type="text">
-																		</div>
-																		<div class="form-item flex-item-5">
-																			<label for="zip">BILLING ZIPCODE</label>
-																			<input name="zip" required="required"
-																				   placeholder="12345" type="text">
-																		</div>
-																		<div class="form-item form-button flex-item-4">
-																			<button type="submit"
-																					class="atm-button card">
-																				<i aria-hidden="true"
-																				   class="fa fa-cog"></i>
-																				setup
-																			</button>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</form>
-													</div>
-												</section>
-												<div class="atm-footer">
-													<button class="atm-button">
-														<i aria-hidden="true" class="fa fa-check"></i> pay 5¢
-													</button>
-												</div>
-											</div>
+											<div id="render-pay-expanded"></div>
 
 											<div class="template-name">
 												Collapsed view
 											</div>
-											<div class="atm-modal-heading">
-												<div class="flex-container flex-align-center">
-													<div class="flex-item-1 avatar-sm">
-														<div class="atm-avatar-small">
-															<img alt="Article Author" src="images/profile-pic.png">
-														</div>
-													</div>
-													<div class="atm-heading-info flex-item-10">
-														Support quality journalism.
-														<a>Get involved and setup payment method now.</a>
-													</div>
-													<div class="flex-item-1 align-right">
-														<i class="atm-open-modal fa fa-chevron-circle-down"
-														   aria-hidden="true"></i>
-													</div>
-												</div>
-											</div>
+											<div id="render-pay-collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -1144,22 +998,22 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="pay-ext-salutation" class="tab-name">
 													Salutation
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="salutation">
+													<div class="custom-label" data-template="expanded">
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input placeholder="Dear {user}," value="Dear {user},"
+															<input name="salutation" placeholder="Dear {user}," value="Dear {user},"
 																   required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1169,6 +1023,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 																<label>Font Size</label>
 																<div class="custom-input">
 																	<input placeholder="font-size" required=""
+																		   data-template-css="font-size"
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1178,7 +1033,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
+																	<input data-template-css="font-weight" placeholder="font-weight" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1186,7 +1041,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
@@ -1224,11 +1079,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="pay-ext-message" class="tab-name">
 													Message
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="message">
+													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
 															<input
+																name="message-expanded"
 																placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
 																value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
 																required="" type="text">
@@ -1236,10 +1092,11 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
 															<input
+																name="message-collapsed"
 																placeholder="Support quality journalism. {setupPayment_url}"
 																value="Support quality journalism. {setupPayment_url}"
 																required="" type="text">
@@ -1247,12 +1104,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input data-template-css="color" placeholder="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1261,7 +1118,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
+																	<input data-template-css="font-size" placeholder="font-size" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1271,7 +1128,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
+																	<input data-template-css="font-weight" placeholder="font-weight" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1279,12 +1136,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
+																	<input data-template-css="font-style" placeholder="font-style" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1294,7 +1151,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
+																	<input data-template-css="text-align" placeholder="text-align" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1304,7 +1161,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
+																	<input  data-template-css="text-transform" placeholder="text-transform" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1790,13 +1647,13 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn"><i class="mdi mdi-check"></i> Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<div class="templates-views refund">
+						<div class="templates-views refund" data-template="refund">
 							<div class="template-view">
 								<div class="header-view">refund template</div>
 								<div class="content-view clearfix">
@@ -1805,135 +1662,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 											<div class="template-name">
 												Expanded view
 											</div>
-											<div class="atm-base-modal">
-												<div class="atm-sidebar-left">
-													<div class="atm-avatar">
-														<img alt="Article Author" src="images/profile-pic.png">
-													</div>
-													<div class="atm-user-info">Author</div>
-												</div>
-
-												<div class="atm-main">
-													<div class="notification-inner">
-														<p>
-															<i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-															<span>{error message}</span>
-														</p>
-														<i aria-hidden="true" class="mdi mdi-close close-btn"></i>
-													</div>
-
-													<div class="flex-container">
-														<div class="refund-top-info flex-item-11">
-															Thanks for contributing
-															<span class="contrib-price">5¢</span> and help us do the job
-															we
-															<i aria-hidden="true" class="fa fa-heart-o"></i>
-														</div>
-														<div class="flex-item-1">
-															<i class="atm-open-modal fa fa-chevron-circle-up"
-															   aria-hidden="true"></i>
-														</div>
-													</div>
-													<div class="flex-container survey-block">
-														<div class="flex-item-6 mood-block">
-															<div class="mood-block-inner">
-																<label class="mood-block-info">How do you feel
-																	now?</label>
-
-																<input id="smile" name="mood" checked="checked"
-																	   type="radio">
-																<label for="smile" class="mood-label">
-																	<div class="smiley-green">
-																		<div class="left-eye"></div>
-																		<div class="right-eye"></div>
-																		<div class="smile"></div>
-																	</div>
-																	<span class="mood-name">Happy</span>
-																</label>
-
-																<input id="meh" name="mood" type="radio">
-																<label for="meh" class="mood-label">
-																	<div class="smiley-yellow">
-																		<div class="left-eye"></div>
-																		<div class="right-eye"></div>
-																		<div class="smile"></div>
-																	</div>
-																	<span class="mood-name">Ok</span>
-																</label>
-
-																<input id="frown" name="mood" type="radio">
-																<label for="frown" class="mood-label">
-																	<div class="smiley-red">
-																		<div class="left-eye"></div>
-																		<div class="right-eye"></div>
-																		<div class="smile"></div>
-																	</div>
-																	<span class="mood-name">Not happy</span>
-																</label>
-															</div>
-														</div>
-														<div class="flex-item-6 share-block">
-															<div class="share-block-inner"><p>Share your experience</p>
-																<ul class="sharetools-menu">
-																	<li class="sharetool facebook-sharetool">
-																		<a href="javascript:;">
-																			<i class="fa fa-facebook"
-																			   aria-hidden="true"></i>
-																		</a>
-																	</li>
-																	<li class="sharetool twitter-sharetool">
-																		<a href="javascript:;">
-																			<i class="fa fa-twitter"
-																			   aria-hidden="true"></i>
-																		</a>
-																	</li>
-																	<li class="sharetool email-sharetool">
-																		<a href="javascript:;">
-																			<i class="fa fa-envelope"
-																			   aria-hidden="true"></i>
-																		</a>
-																	</li>
-																	<li class="sharetool show-all-sharetool">
-																		<a href="javascript:;">
-																			<i class="fa fa-share"
-																			   aria-hidden="true"></i>
-																		</a>
-																	</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="atm-footer">
-													<button class="atm-button">
-														<i aria-hidden="true" class="fa fa-money"></i> refund
-													</button>
-												</div>
-											</div>
+											<div id="render-refund-expanded"></div>
 
 											<div class="template-name">
 												Collapsed view
 											</div>
-											<div class="atm-modal-heading">
-												<div class="flex-container flex-align-center">
-													<div class="flex-item-1 avatar-sm">
-														<div class="atm-avatar-small">
-															<img alt="Article Author" src="images/profile-pic.png">
-														</div>
-													</div>
-													<div class="atm-heading-info flex-item-10">
-														Premium content unlocked.
-														<a>Not satisfied?</a> Get immediate
-														<button class="atm-button refund-targeted">
-															<i aria-hidden="true" class="fa fa-money"></i> refund
-														</button>
-													</div>
-													<div class="flex-item-1 align-right">
-														<i class="atm-open-modal fa fa-chevron-circle-down"
-														   aria-hidden="true"></i>
-													</div>
-												</div>
-											</div>
+											<div id="render-refund-collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -1942,11 +1676,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="refund-ext-message" class="tab-name">
 													Message
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="message">
+													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
 															<input
+																name="message-expanded"
 																placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
 																value="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
 																required="" type="text">
@@ -1954,10 +1689,11 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
 															<input
+																name="message-collapsed"
 																placeholder="Premium content unlocked. {notSatisfied_url} Get immediate"
 																value="Premium content unlocked. {notSatisfied_url} Get immediate"
 																required="" type="text">
@@ -1965,12 +1701,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1979,7 +1715,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
+																	<input placeholder="font-size" data-template-css="font-size" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1989,7 +1725,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
+																	<input placeholder="font-weight" data-template-css="font-weight" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -1997,12 +1733,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
+																	<input placeholder="font-style" data-template-css="font-style" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2012,7 +1748,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
+																	<input placeholder="text-align" data-template-css="text-align" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2022,7 +1758,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
+																	<input placeholder="text-transform" data-template-css="text-transform"  required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2035,41 +1771,43 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="refund-ext-mood" class="tab-name">
 													Mood
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" >
+													<div class="custom-label" data-template="mood">
 														<label>Message</label>
-														<div class="custom-input">
-															<input placeholder="How do you feel now?"
+														<div class="custom-input" data-template="expanded">
+															<input
+																name="body-feeling"
+																placeholder="How do you feel now?"
 																   value="How do you feel now?" required="" type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
+													<div class="flex-container flex-gutter" data-template="mood">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color"  data-template-css="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-4">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
+																	<input placeholder="font-size"  data-template-css="font-size" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-4">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
+																	<input placeholder="font-weight" data-template-css="font-weight" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2077,32 +1815,32 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-4">
+													<div class="flex-container flex-gutter" data-template="mood">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
+																	<input placeholder="font-style" data-template-css="font-style" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-4">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
+																	<input placeholder="text-align" data-template-css="text-align" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-4">
+														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
+																	<input placeholder="text-transform" data-template-css="text-transform" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2110,66 +1848,72 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
+													<div class="flex-container flex-gutter"  data-template="mood-happy">
+														<div class="flex-item-6" data-template="expanded">
 															<div class="custom-label">
 																<label>Happy Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="Happy" value="Happy" required=""
+																	<input
+																		name="body-feeling-happy"
+																		placeholder="Happy" value="Happy" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-6">
+														<div class="flex-item-6" data-template="style">
 															<div class="custom-label">
 																<label>Happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
+													<div class="flex-container flex-gutter" data-template="mood-ok">
+														<div class="flex-item-6"  data-template="expanded">
 															<div class="custom-label">
 																<label>Neutral Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="OK" value="Ok" required=""
+																	<input
+																		name="body-feeling-ok"
+																		placeholder="OK" value="Ok" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-6">
+														<div class="flex-item-6" data-template="style">
 															<div class="custom-label">
 																<label>Neutral Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color"  required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
+													<div class="flex-container flex-gutter" data-template="mood-not-happy">
+														<div class="flex-item-6" data-template="expanded">
 															<div class="custom-label">
 																<label>Not happy Mood Text</label>
 																<div class="custom-input">
-																	<input placeholder="Not happy" value="Not happy"
+																	<input
+																		name="body-feeling-not-happy"
+																		placeholder="Not happy" value="Not happy"
 																		   required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
-														<div class="flex-item-6">
+														<div class="flex-item-6" data-template="style">
 															<div class="custom-label">
 																<label>Not happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color"  required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2181,23 +1925,25 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 												<label for="refund-ext-share" class="tab-name">
 													Share
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="share">
+													<div class="custom-label" data-template="expanded">
 														<label>Message</label>
 														<div class="custom-input">
-															<input placeholder="Share your experience"
+															<input
+																name="body-share-experience"
+																placeholder="Share your experience"
 																   value="Share your experience" required=""
 																   type="text">
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input  data-template-css="color" placeholder="color" required="" type="text">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2206,7 +1952,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
+																	<input  data-template-css="font-size" placeholder="font-size" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2216,7 +1962,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
+																	<input data-template-css="font-weight" placeholder="font-weight" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2224,12 +1970,12 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
+																	<input data-template-css="font-style" placeholder="font-style" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2239,7 +1985,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
+																	<input  data-template-css="text-align"  placeholder="text-align" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2249,7 +1995,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
+																	<input data-template-css="text-transform"  placeholder="text-transform" required=""
 																		   type="text">
 																	<span class="bar"></span>
 																</div>
@@ -2605,7 +2351,7 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn"><i class="mdi mdi-check"></i> Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
