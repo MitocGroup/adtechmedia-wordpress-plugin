@@ -6,8 +6,8 @@ Contributors: Yama_GS, AlexanderC
 Tags: adtechmedia, adtech, media, ads, advertising, micropayments
 License: MIT
 License URI: https://opensource.org/licenses/MIT
-Requires at least: 3.5
-Tested up to: 3.5
+Requires at least: 3.6
+Tested up to: 4.6.1
 Stable tag: 0.1
 
 
