@@ -39,7 +39,9 @@ function getDatatemplate(value) {
 }
 jQuery(document).ready(function () {
   /*global atmTpl, templateInputs, templateStyleInputs, save_template*/
+  //atmTpl.config({revenueMethod: 'advertising'});
   var atmTemplating = atmTpl.default;
+  //atmTpl.config({revenueMethod: 'advertising'});
 
   var templates = [
     {
@@ -59,7 +61,7 @@ jQuery(document).ready(function () {
         }, {
           dataTab : 'message',
           options : [{
-            name : 'body-msg-mp-ad',
+            name : 'body-msg-mp',
             inputName : 'message-expanded',
             type : 'expanded'
           }, {
@@ -87,7 +89,7 @@ jQuery(document).ready(function () {
         }, {
           dataTab : 'message',
           options : [{
-            name : 'body-msg-mp-ad',
+            name : 'body-msg-mp',
             inputName : 'message-expanded',
             type : 'expanded'
           }, {
@@ -197,14 +199,34 @@ jQuery(document).ready(function () {
       views[viewKey]['expanded'].small(false);
       views[viewKey]['component'] = template.component;
       views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
+      jQuery(template.expanded).attr('data-view-key',viewKey);
+      jQuery(template.collapsed).attr('data-view-key',viewKey);
       atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
       views[viewKey].expanded.redraw();
       views[viewKey].collapsed.redraw();
+      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
+      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
 
-    var $form = $('section');
-    var $inputs = $form.find('input');
+    function toggleTemplates(){
+      var sender=jQuery(jQuery(this.$el).parents('[data-view]')[0]),
+        viewKey=sender.attr('data-view-key'),
+        type=sender.attr('data-view'),
+        typeOther='expanded',
+        small=true;
+      if(type == 'expanded'){
+        typeOther='collapsed';
+        small=false;
+      }
 
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
+      delete views[viewKey][typeOther]._watchers['showModalBody'];
+      views[viewKey][typeOther].small(small);
+      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
+      var tmp=views[viewKey]['expanded'];
+      views[viewKey]['expanded']=views[viewKey]['collapsed'];
+      views[viewKey]['collapsed']=tmp;
+    }
 
     var throttledSync = jQuery.throttle(200, function (e) {
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
@@ -230,15 +252,25 @@ jQuery(document).ready(function () {
       // redraw the view
       views[viewKey].expanded.redraw();
       views[viewKey].collapsed.redraw();
+      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
+      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
 
+    var $form = $('section');
+    var $inputs = $form.find('input');
     $inputs.bind('keyup', throttledSync);
+
+    jQuery('[data-template="pledge"]').on('click','.atm-open-modal',function(){
+      console.log(this);
+    });
 
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
+      var icon = btn.find('i');
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
       btn.addClass('disabled');
-      console.log('click');
+      icon.removeClass('mdi mdi-check');
+      icon.addClass('fa fa-spinner fa-spin');
       jQuery.ajax({
         url : save_template.ajax_url,
         type : 'post',
@@ -256,6 +288,9 @@ jQuery(document).ready(function () {
         success : function (response) {
           console.log(response);
           btn.removeClass('disabled');
+          icon.removeClass('fa fa-spinner fa-spin');
+          icon.addClass('mdi mdi-check');
+
         }
       });
     });

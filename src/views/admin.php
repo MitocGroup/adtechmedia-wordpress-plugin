@@ -40,6 +40,22 @@ echo '");';
 // @codingStandardsIgnoreEnd
 echo '</script>';
 ?>
+<style>
+
+	.atm-targeted-modal {
+		width: auto;
+	}
+
+	@media (max-width: 1649px) {
+		.atm-targeted-modal {
+			margin-left: 0px;
+		}
+	}
+	.atm-targeted-container .share-block-inner .sharetool a,
+	.atm-targeted-container .share-block-inner .sharetool a:hover{
+		background: none!important;;
+	}
+</style>
 <main>
 	<section>
 		<form method="post" action="">
@@ -357,6 +373,64 @@ echo '</script>';
 		<div class="content templating">
 			<div class="clearfix">
 				<div class="">
+
+					<div class="flex-container flex-gutter" data-template="style">
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Color</label>
+								<div class="custom-input">
+									<input placeholder="color" data-template-css="color" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Font Size</label>
+								<div class="custom-input">
+									<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Font Weight</label>
+								<div class="custom-input">
+									<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Color</label>
+								<div class="custom-input">
+									<input placeholder="color" data-template-css="color" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Font Size</label>
+								<div class="custom-input">
+									<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+						<div class="flex-item-2">
+							<div class="custom-label">
+								<label>Font Weight</label>
+								<div class="custom-input">
+									<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+									<span class="bar"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<section class="views-tabs">
 						<input id="pledge" name="main-tabs" checked="" type="radio">
 						<input id="refund" name="main-tabs" type="radio">
@@ -413,14 +487,14 @@ echo '</script>';
 								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
-											<div class="template-name">
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-pledge-expanded"></div>
-											<div class="template-name">
+											<div id="render-pledge-expanded" data-view="expanded"></div>
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-pledge-collapsed"></div>
+											<div id="render-pledge-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -967,20 +1041,6 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
-							<style>
-
-								.atm-targeted-modal {
-									width: auto;
-								}
-
-								@media (max-width: 1649px) {
-									.atm-targeted-modal {
-										margin-left: 0px;
-									}
-								}
-
-							</style>
-
 						</div>
 
 						<div class="templates-views pay" data-template="pay">
@@ -989,15 +1049,15 @@ echo '</script>';
 								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
-											<div class="template-name">
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-pay-expanded"></div>
+											<div id="render-pay-expanded" data-view="expanded" ></div>
 
-											<div class="template-name">
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-pay-collapsed"></div>
+											<div id="render-pay-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
