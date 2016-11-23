@@ -12,7 +12,36 @@ function getCSSFields(inputs) {
   });
   return styles;
 }
+function getPositionFields() {
+  var styles = {},
+  inputs = jQuery('[data-template="position"] input');
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+      if(jQuery(input).is(':checkbox')){
+        styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
+      }else{
+        styles[jQuery(input).attr('name')] = jQuery(input).val();
+      }
 
+    }
+  });
+  return styles;
+}
+function fillPositionFields() {
+  /*global templatePositionInputs*/
+  var inputs = jQuery('[data-template="position"] input');
+  jQuery.each(inputs, function (i, input) {
+    var key=jQuery(input).attr('name');
+    if (templatePositionInputs.hasOwnProperty(key)) {
+      if (jQuery(input).is(':checkbox')) {
+        //styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
+        jQuery(input).prop('checked', templatePositionInputs[key]);
+      } else {
+        jQuery(input).val(templatePositionInputs[key])
+      }
+    }
+  });
+}
 function fillCSSFields(key, inputValues, inputFields) {
   if (inputValues.hasOwnProperty(key)) {
     jQuery.each(inputValues[key], function (name, value) {
@@ -42,7 +71,7 @@ jQuery(document).ready(function () {
   //atmTpl.config({revenueMethod: 'advertising'});
   var atmTemplating = atmTpl.default;
   //atmTpl.config({revenueMethod: 'advertising'});
-
+  fillPositionFields();
   var templates = [
     {
       name : 'pledge',
@@ -213,12 +242,16 @@ jQuery(document).ready(function () {
         viewKey=sender.attr('data-view-key'),
         type=sender.attr('data-view'),
         typeOther='expanded',
-        small=true;
+        small=true,
+        senderParent=sender.parent(),
+        senderParentExpaned=senderParent.find('[data-view-text="expanded"]'),
+        senderParentCollapsed=senderParent.find('[data-view-text="collapsed"]');
       if(type == 'expanded'){
         typeOther='collapsed';
         small=false;
       }
-
+      senderParent.find('[data-view="'+typeOther+'"]').attr('data-view',type);
+      sender.attr('data-view',typeOther);
       views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
       delete views[viewKey][typeOther]._watchers['showModalBody'];
       views[viewKey][typeOther].small(small);
@@ -226,6 +259,10 @@ jQuery(document).ready(function () {
       var tmp=views[viewKey]['expanded'];
       views[viewKey]['expanded']=views[viewKey]['collapsed'];
       views[viewKey]['collapsed']=tmp;
+
+      tmp=senderParentExpaned.html();
+      senderParentExpaned.html(senderParentCollapsed.html());
+      senderParentCollapsed.html(tmp);
     }
 
     var throttledSync = jQuery.throttle(200, function (e) {
@@ -256,13 +293,10 @@ jQuery(document).ready(function () {
       views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
 
-    var $form = $('section');
+    var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
     $inputs.bind('keyup', throttledSync);
 
-    jQuery('[data-template="pledge"]').on('click','.atm-open-modal',function(){
-      console.log(this);
-    });
 
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
@@ -279,6 +313,7 @@ jQuery(document).ready(function () {
           nonce : save_template.nonce,
           inputs : JSON.stringify(inputsToObject(inputs)),
           styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+          position : JSON.stringify(getPositionFields()),
           component : views[viewKey].component,
           template : atmTemplating.templateRendition(views[viewKey].component).render(
             options[views[viewKey].component],
@@ -295,4 +330,13 @@ jQuery(document).ready(function () {
       });
     });
   })(jQuery);
+
+  jQuery('#checkbox-sticky').on('change',function(){
+    if(jQuery(this).prop('checked')){
+      jQuery('.disable-if-sticky input').attr('disabled','disabled');
+    }else{
+      jQuery('.disable-if-sticky input').removeAttr('disabled');
+    }
+  }
+  )
 });

@@ -310,10 +310,27 @@ class Adtechmedia_Request {
 					'pledgedType' => self::get_pledged_type( $pledged_type ),
 				],
 				'targetModal' => [
+					'toggleCb' => "function(cb) {
+									
+									var adjustMarginTop = function (e) {
+									console.log('toggleCb in');
+                                      var modalOffset = document.body.scrollTop > 200;
+                                
+                                      if (modalOffset) {
+                                        cb(true);
+                                      } else {
+                                        cb(false);
+                                      }
+                                    };
+                               
+                                    document.addEventListener('scroll', adjustMarginTop);
+                             
+                                    adjustMarginTop(null);}",
 					'targetCb' => "function(modalNode, cb) {
+					console.log('targetCb');
                                     var mainModal=modalNode;
    
-                                    var paragraphSelector = 'p';
+                                    /*var paragraphSelector = 'p';
                                     var anParagraph = document.querySelector(paragraphSelector);
                                 
                                     if (!anParagraph) {
@@ -331,9 +348,16 @@ class Adtechmedia_Request {
                                     mainModal.rootNode.style.position = 'fixed';
                                     mainModal.rootNode.style.left = (siteContentBlock.offsetLeft+entryContentBlock.offsetLeft+contentAreaBlock.offsetLeft)+'px';
                                     mainModal.rootNode.style.top = (topBlock.offsetTop+htmlBlock.offsetTop)+'px';
-                                    mainModal.rootNode.style.width = (Math.max(entryContentBlock.offsetWidth,515))+'px';
-                                
-                                    var adjustMarginTop = function (e) {
+                                    mainModal.rootNode.style.width = (Math.max(entryContentBlock.offsetWidth,515))+'px';*/
+                                    
+                                    mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
+                                    mainModal.rootNode.classList.add('atm-targeted-container');
+                                    mainModal.rootNode.style.position = 'fixed';
+                                    //mainModal.rootNode.style.left = '50%';
+                                    //mainModal.rootNode.style.top = '50px';
+                                    mainModal.rootNode.style.width = '700px';
+                                    
+                                    /*var adjustMarginTop = function (e) {
                                       var modalOffset = document.body.scrollTop > 200;
                                 
                                       if (modalOffset) {
@@ -345,7 +369,7 @@ class Adtechmedia_Request {
                                
                                     document.addEventListener('scroll', adjustMarginTop);
                              
-                                    adjustMarginTop(null);
+                                    adjustMarginTop(null);*/
                                 
                                     cb();
                                     }",

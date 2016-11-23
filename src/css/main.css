@@ -2011,3 +2011,6 @@ select {
 .loader-spin {
     animation: 2s linear 0s normal none infinite running loader-spin;
 }
+.cbx.hidden {
+    display: none;
+}

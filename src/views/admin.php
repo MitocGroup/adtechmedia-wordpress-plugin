@@ -37,6 +37,9 @@ echo '");';
 echo 'var templateStyleInputs =JSON.parse("';
 echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' );
 echo '");';
+echo 'var templatePositionInputs =JSON.parse("';
+echo empty( $this->get_plugin_option( 'template_position' ) ) ? '{}' : $this->get_plugin_option( 'template_position' );
+echo '");';
 // @codingStandardsIgnoreEnd
 echo '</script>';
 ?>
@@ -374,61 +377,61 @@ echo '</script>';
 			<div class="clearfix">
 				<div class="">
 
-					<div class="flex-container flex-gutter" data-template="style">
+					<div class="content">
+					<div class="flex-container flex-gutter" data-template="position">
 						<div class="flex-item-2">
+							<span class="accent-color">Sticky</span>
+							<div class="">
+								<input type="checkbox" name="sticky" id="checkbox-sticky" class="cbx hidden"/>
+								<label for="checkbox-sticky" class="custom-checkbox"></label>
+							</div>
+						</div>
+						<div class="flex-item-2 disable-if-sticky">
 							<div class="custom-label">
-								<label>Color</label>
+								<label>Width</label>
 								<div class="custom-input">
-									<input placeholder="color" data-template-css="color" required="" type="text">
+									<input placeholder="width" name="width" type="text">
 									<span class="bar"></span>
 								</div>
 							</div>
 						</div>
-						<div class="flex-item-2">
+						<div class="flex-item-2 disable-if-sticky">
 							<div class="custom-label">
-								<label>Font Size</label>
+								<label>Offset top</label>
 								<div class="custom-input">
-									<input placeholder="font-size" data-template-css="font-size" required="" type="text">
+									<input placeholder="offset top" name="offset_top"  type="text">
 									<span class="bar"></span>
 								</div>
 							</div>
 						</div>
-						<div class="flex-item-2">
+						<div class="flex-item-2 disable-if-sticky">
+							<span class="accent-color">Centered</span>
+							<div class="">
+								<input type="checkbox" name="centered" id="checkbox-centered" class="cbx hidden"/>
+								<label for="checkbox-centered" class="custom-checkbox"></label>
+							</div>
+						</div>
+						<div class="flex-item-2 disable-if-sticky">
 							<div class="custom-label">
-								<label>Font Weight</label>
+								<label>Offset left</label>
 								<div class="custom-input">
-									<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
+									<input placeholder="offset left" name="offset_left"  type="text">
 									<span class="bar"></span>
 								</div>
 							</div>
 						</div>
-						<div class="flex-item-2">
+						<div class="flex-item-2 disable-if-sticky">
 							<div class="custom-label">
-								<label>Color</label>
+								<label>Scrolling offset top</label>
 								<div class="custom-input">
-									<input placeholder="color" data-template-css="color" required="" type="text">
+									<input placeholder="scrolling offset top" name="scrolling_offset_top"  type="text">
 									<span class="bar"></span>
 								</div>
 							</div>
 						</div>
-						<div class="flex-item-2">
-							<div class="custom-label">
-								<label>Font Size</label>
-								<div class="custom-input">
-									<input placeholder="font-size" data-template-css="font-size" required="" type="text">
-									<span class="bar"></span>
-								</div>
-							</div>
-						</div>
-						<div class="flex-item-2">
-							<div class="custom-label">
-								<label>Font Weight</label>
-								<div class="custom-input">
-									<input placeholder="font-weight" data-template-css="font-weight" required="" type="text">
-									<span class="bar"></span>
-								</div>
-							</div>
-						</div>
+
+
+					</div>
 					</div>
 
 					<section class="views-tabs">
@@ -1726,15 +1729,15 @@ echo '</script>';
 								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
-											<div class="template-name">
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-refund-expanded"></div>
+											<div id="render-refund-expanded"  data-view="expanded"></div>
 
-											<div class="template-name">
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-refund-collapsed"></div>
+											<div id="render-refund-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
