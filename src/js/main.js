@@ -239,7 +239,7 @@ jQuery(document).ready(function () {
 
   (function ($) {
     // read available template stories
-    //atmTpl.config({revenueMethod: 'advertising'});
+    //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
     console.log(stories);
     var views = {};
@@ -394,7 +394,7 @@ jQuery(document).ready(function () {
         }
       });
     });
-    
+
     jQuery('#save-revenue-model').bind('click', function (e) {
       var btn = jQuery(this);
       addLoader(btn);
@@ -415,7 +415,7 @@ jQuery(document).ready(function () {
 
 
   jQuery('#checkbox-sticky').on('change', function () {
-    if (jQuery(this).prop('checked')) {
+    if (!jQuery(this).prop('checked')) {
       jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
     } else {
       jQuery('.disable-if-sticky input').removeAttr('disabled');

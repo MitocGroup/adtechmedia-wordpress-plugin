@@ -283,8 +283,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function get_toggle_cb_js( $position ) {
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
+		if ( ! empty ( $position['scrolling_offset_top'] ) ) {
+			$position['scrolling_offset_top'] = (int) $position['scrolling_offset_top'];
+		}
 		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
-		if ( $sticky ) {
+		if ( ! $sticky ) {
 			$scrolling_offset_top = -10;
 		}
 		return "function(cb) {
@@ -313,7 +316,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
 		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
 		$content = '';
-		if ( ! $sticky ) {
+		if ( $sticky ) {
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
 			$content .= "mainModal.rootNode.style.width = '$width';\n";
@@ -433,10 +436,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function content_wrapper( $content ) {
 		$property_id = $this->get_plugin_option( 'id' );
 		$content_id = (string) get_the_ID();
+		$author_name = get_the_author();
+		$author_avatar = get_avatar_url( get_the_author_meta( 'user_email' ) );
 		$script = "<script>
                     window.ATM_PROPERTY_ID = '$property_id'; 
                     window.ATM_CONTENT_ID = '$content_id'; 
                     window.ATM_CONTENT_PRELOADED = true;
+                    window.WP_ATM_AUTHOR_NAME = '$author_name';
+                    window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
+                    
                     </script>";
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
 	}

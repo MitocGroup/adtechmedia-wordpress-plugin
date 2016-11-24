@@ -286,14 +286,11 @@ class Adtechmedia_Request {
 					'lock' => $content_lock,
 					'offsetType' => self::get_offset_type( $offset_type ),
 					'authorCb' => "function(onReady) {
-                    var name = document.querySelector('.entry-footer .author .url');
-                    var avatar = document.querySelector('.entry-footer .author img');
-					var fullName = name ? name.text : null;
-					var avatarUrl = avatar ? avatar.src : null;
-					var authorMetadata = {'avatar':avatarUrl};
+					var fullName = window.WP_ATM_AUTHOR_NAME;
+					var avatarUrl = window.WP_ATM_AUTHOR_AVATAR;
 					onReady({
 						fullName: fullName,
-						avatar: authorMetadata ? authorMetadata.avatar : 'https://avatars.io/twitter/nytimes',
+						avatar: avatarUrl,
 					});
 				}",
 				],
