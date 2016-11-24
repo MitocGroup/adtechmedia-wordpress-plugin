@@ -1181,12 +1181,26 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 								with AdTechMedia.io platform
 							</div>
 						</div>
+						<div class="flex-item-6">
+							<div class="block-info align-justify">
+								<b>IMPORTANT:</b> Registration step is not required to be able to use this plugin.
+								Once you generate some revenue and want to transfer it into your bank account,
+								then we encourage you to register here (using "Email address"). Follow the steps
+								to setup your account on AdTechMedia.io platform and enjoy the influx of revenue
+								into your bank account.
+							</div>
+						</div>
 					</div>
 					<div class="flex-container">
-						<div class="flex-item-6 flex-end">
+						<div class="flex-item-6 ">
 							<div class="custom-input">
 								<button type="submit" class="btn"><i class="mdi mdi-account-plus"></i> Register</button>
 							</div>
+						</div>
+						<div class="flex-item-6 flex-end">
+						<div class="custom-input">
+							<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i>Save</button>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -2109,80 +2123,6 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 													</div>
 												</div>
 
-												<input id="pledge-ext-styling" value="card" name="pledge-ext"
-													   type="radio">
-												<label for="pledge-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>
@@ -2788,80 +2728,6 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 													</div>
 												</div>
 
-												<input id="pay-ext-styling" name="pay-ext" type="radio">
-												<label for="pay-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>
@@ -3492,80 +3358,6 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 													</div>
 												</div>
 
-												<input id="refund-ext-styling" name="refund-ext" type="radio">
-												<label for="refund-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>

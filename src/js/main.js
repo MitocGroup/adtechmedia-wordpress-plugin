@@ -387,6 +387,28 @@ jQuery(document).ready(function () {
     });
   })(jQuery);
 
+  jQuery('#save-revenue-model').bind('click', function (e) {
+    var btn = jQuery(this);
+    var icon = btn.find('i');
+    btn.addClass('disabled');
+    icon.removeClass('mdi mdi-check');
+    icon.addClass('fa fa-spinner fa-spin');
+    jQuery.ajax({
+      url : save_template.ajax_url,
+      type : 'post',
+      data : {
+        action : 'save_template',
+        nonce : save_template.nonce,
+        revenueMethod : jQuery('select[name="revenue_method"]').val()
+      },
+      success : function (response) {
+        //console.log(response);
+        btn.removeClass('disabled');
+        icon.removeClass('fa fa-spinner fa-spin');
+        icon.addClass('mdi mdi-check');
+      }
+    });
+  });
   jQuery('#checkbox-sticky').on('change',function(){
     if(jQuery(this).prop('checked')){
       jQuery('.disable-if-sticky input').attr('disabled','disabled');

@@ -230,35 +230,46 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
-			$inputs = $_POST['inputs'];
-			$style_inputs = $_POST['styleInputs'];
-			$component = $_POST['component'];
-			$template = $_POST['template'];
-			$position = $_POST['position'];
-			$overall_styles = $_POST['overallStyles'];
-			$overall_styles_inputs = $_POST['overallStylesInputs'];
-			$this->add_plugin_option( 'template_inputs', $inputs );
-			$this->add_plugin_option( 'template_style_inputs', $style_inputs );
-			$this->add_plugin_option( 'template_' . $component, $template );
-			$this->add_plugin_option( 'template_position', $position );
-			$this->add_plugin_option( 'template_overall_styles', $overall_styles );
-			$this->add_plugin_option( 'template_overall_styles_inputs', $overall_styles_inputs );
-			Adtechmedia_Request::property_update_config_by_array(
-				$this->get_plugin_option( 'id' ),
-				$this->get_plugin_option( 'key' ),
-				[
-					'templates' => [ $component => base64_encode( stripslashes( $template ) ), ],
-					'targetModal' => [
-						'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $position ),true ) ),
-						'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $position ),true ) ),
-					],
-					'styles' => [
-						'main' => base64_encode( $overall_styles ),
-					],
-				]
-			);
-			// @codingStandardsIgnoreEnd
-
+			if( isset( $_POST['revenueMethod'] ) ){
+				$revenue_method = $_POST['revenueMethod'];
+				$this->add_plugin_option( 'revenue_method', $revenue_method );
+				Adtechmedia_Request::property_update_config_by_array(
+					$this->get_plugin_option( 'id' ),
+					$this->get_plugin_option( 'key' ),
+					[
+						'revenueMethod' => $revenue_method,
+					]
+				);
+			} else {
+				$inputs = $_POST['inputs'];
+				$style_inputs = $_POST['styleInputs'];
+				$component = $_POST['component'];
+				$template = $_POST['template'];
+				$position = $_POST['position'];
+				$overall_styles = $_POST['overallStyles'];
+				$overall_styles_inputs = $_POST['overallStylesInputs'];
+				$this->add_plugin_option( 'template_inputs', $inputs );
+				$this->add_plugin_option( 'template_style_inputs', $style_inputs );
+				$this->add_plugin_option( 'template_' . $component, $template );
+				$this->add_plugin_option( 'template_position', $position );
+				$this->add_plugin_option( 'template_overall_styles', $overall_styles );
+				$this->add_plugin_option( 'template_overall_styles_inputs', $overall_styles_inputs );
+				Adtechmedia_Request::property_update_config_by_array(
+					$this->get_plugin_option( 'id' ),
+					$this->get_plugin_option( 'key' ),
+					[
+						'templates' => [ $component => base64_encode( stripslashes( $template ) ), ],
+						'targetModal' => [
+							'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $position ), true ) ),
+							'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $position ), true ) ),
+						],
+						'styles' => [
+							'main' => base64_encode( $overall_styles ),
+						],
+					]
+				);
+				// @codingStandardsIgnoreEnd
+			}
 			echo 'ok';
 		}
 		die();
