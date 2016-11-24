@@ -42,7 +42,8 @@ function getOverallStyling() {
     stylesData = getOverallStylingFields();
   if (stylesData.hasOwnProperty('background-color')) {
     css += '.atm-base-modal {background-color: ' + stylesData['background-color'] + ';}' +
-      '.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: ' + stylesData['background-color'] + ';}';
+      '.atm-targeted-modal .atm-head-modal ' +
+      '.atm-modal-heading {background-color: ' + stylesData['background-color'] + ';}';
   }
   if (stylesData.hasOwnProperty('border')) {
     css += '.atm-targeted-modal{border: ' + stylesData['border'] + ';}';
@@ -411,12 +412,10 @@ jQuery(document).ready(function () {
     });
   });
   jQuery('#checkbox-sticky').on('change', function () {
-      if (jQuery(this).prop('checked')) {
-        jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
-      } else {
-        jQuery('.disable-if-sticky input').removeAttr('disabled');
-      }
+    if (jQuery(this).prop('checked')) {
+      jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
+    } else {
+      jQuery('.disable-if-sticky input').removeAttr('disabled');
     }
-  )
-
+  })
 });
