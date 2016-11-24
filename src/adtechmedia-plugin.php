@@ -281,7 +281,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @param array $position array of position properties.
 	 * @return string
 	 */
-	public function get_toggle_cb_js ( $position ) {
+	public function get_toggle_cb_js( $position ) {
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
 		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
 		if ( $sticky ) {
@@ -306,7 +306,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @param array $position array of position properties.
 	 * @return string
 	 */
-	public function get_target_cb_js ( $position ) {
+	public function get_target_cb_js( $position ) {
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
 		$centered = ! empty( $position['centered'] ) ? $position['centered'] : false;
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
