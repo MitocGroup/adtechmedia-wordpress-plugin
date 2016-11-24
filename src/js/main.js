@@ -14,12 +14,12 @@ function getCSSFields(inputs) {
 }
 function getPositionFields() {
   var styles = {},
-  inputs = jQuery('[data-template="position"] input');
+    inputs = jQuery('[data-template="position"] input');
   jQuery.each(inputs, function (i, input) {
     if (jQuery(input).val() !== '') {
-      if(jQuery(input).is(':checkbox')){
+      if (jQuery(input).is(':checkbox')) {
         styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
-      }else{
+      } else {
         styles[jQuery(input).attr('name')] = jQuery(input).val();
       }
 
@@ -32,46 +32,46 @@ function getOverallStylingFields() {
     inputs = jQuery('[data-template="overall-styling"] input');
   jQuery.each(inputs, function (i, input) {
     if (jQuery(input).val() !== '') {
-        styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
+      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
     }
   });
   return styles;
 }
-function getOverallStyling(){
-  var css='',
-    stylesData= getOverallStylingFields();
-  if(stylesData.hasOwnProperty('background-color')){
-    css += '.atm-base-modal {background-color: '+ stylesData['background-color']+ ';}' +
-      '.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: '+ stylesData['background-color']+ ';}' ;
+function getOverallStyling() {
+  var css = '',
+    stylesData = getOverallStylingFields();
+  if (stylesData.hasOwnProperty('background-color')) {
+    css += '.atm-base-modal {background-color: ' + stylesData['background-color'] + ';}' +
+      '.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: ' + stylesData['background-color'] + ';}';
   }
-  if(stylesData.hasOwnProperty('border')){
-    css += '.atm-targeted-modal{border: '+ stylesData['border']+ ';}';
+  if (stylesData.hasOwnProperty('border')) {
+    css += '.atm-targeted-modal{border: ' + stylesData['border'] + ';}';
   }
-  if(stylesData.hasOwnProperty('footer-background-color')){
-    css += '.atm-base-modal .atm-footer{background-color: '+ stylesData['footer-background-color']+ ';}';
+  if (stylesData.hasOwnProperty('footer-background-color')) {
+    css += '.atm-base-modal .atm-footer{background-color: ' + stylesData['footer-background-color'] + ';}';
   }
-  if(stylesData.hasOwnProperty('footer-border')){
-    css += '.atm-base-modal .atm-footer{border: '+ stylesData['footer-border']+ ';}';
+  if (stylesData.hasOwnProperty('footer-border')) {
+    css += '.atm-base-modal .atm-footer{border: ' + stylesData['footer-border'] + ';}';
   }
-  if(stylesData.hasOwnProperty('font-family')){
+  if (stylesData.hasOwnProperty('font-family')) {
     css += '.atm-targeted-container .mood-block-info,' +
       '.atm-targeted-modal,' +
       '.atm-targeted-modal .atm-head-modal .atm-modal-body p,' +
-      '.atm-unlock-line .unlock-btn {font-family: '+ stylesData['font-family']+ ';}';
+      '.atm-unlock-line .unlock-btn {font-family: ' + stylesData['font-family'] + ';}';
   }
   return css;
 }
-function applayOverallStyling(css){
-  var style=jQuery('#overall-template-styling');
+function applayOverallStyling(css) {
+  var style = jQuery('#overall-template-styling');
   style.html(css);
 }
 function fillOverallStylesFields() {
   /*global templateOverallStylesInputs*/
   var inputs = jQuery('[data-template="overall-styling"] input');
   jQuery.each(inputs, function (i, input) {
-    var key=jQuery(input).attr('data-template-css');
+    var key = jQuery(input).attr('data-template-css');
     if (templateOverallStylesInputs.hasOwnProperty(key)) {
-        jQuery(input).val(templateOverallStylesInputs[key])
+      jQuery(input).val(templateOverallStylesInputs[key])
     }
   });
 }
@@ -79,7 +79,7 @@ function fillPositionFields() {
   /*global templatePositionInputs*/
   var inputs = jQuery('[data-template="position"] input');
   jQuery.each(inputs, function (i, input) {
-    var key=jQuery(input).attr('name');
+    var key = jQuery(input).attr('name');
     if (templatePositionInputs.hasOwnProperty(key)) {
       if (jQuery(input).is(':checkbox')) {
         //styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
@@ -246,6 +246,35 @@ jQuery(document).ready(function () {
     var options = {};
     var styling = {};
     var styleInputs = {};
+
+    function toggleTemplates() {
+      var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
+        viewKey = sender.attr('data-view-key'),
+        type = sender.attr('data-view'),
+        typeOther = 'expanded',
+        small = true,
+        senderParent = sender.parent(),
+        senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
+        senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
+      if (type === 'expanded') {
+        typeOther = 'collapsed';
+        small = false;
+      }
+      senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
+      sender.attr('data-view', typeOther);
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
+      delete views[viewKey][typeOther]._watchers['showModalBody'];
+      views[viewKey][typeOther].small(small);
+      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
+      var tmp = views[viewKey]['expanded'];
+      views[viewKey]['expanded'] = views[viewKey]['collapsed'];
+      views[viewKey]['collapsed'] = tmp;
+
+      tmp = senderParentExpaned.html();
+      senderParentExpaned.html(senderParentCollapsed.html());
+      senderParentCollapsed.html(tmp);
+    }
+
     jQuery.each(templates, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
       options[template.component] = {};
@@ -278,42 +307,14 @@ jQuery(document).ready(function () {
       views[viewKey]['expanded'].small(false);
       views[viewKey]['component'] = template.component;
       views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
-      jQuery(template.expanded).attr('data-view-key',viewKey);
-      jQuery(template.collapsed).attr('data-view-key',viewKey);
+      jQuery(template.expanded).attr('data-view-key', viewKey);
+      jQuery(template.collapsed).attr('data-view-key', viewKey);
       atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
       views[viewKey].expanded.redraw();
       views[viewKey].collapsed.redraw();
       views[viewKey].expanded.watch('showModalBody', toggleTemplates);
       views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
-
-    function toggleTemplates(){
-      var sender=jQuery(jQuery(this.$el).parents('[data-view]')[0]),
-        viewKey=sender.attr('data-view-key'),
-        type=sender.attr('data-view'),
-        typeOther='expanded',
-        small=true,
-        senderParent=sender.parent(),
-        senderParentExpaned=senderParent.find('[data-view-text="expanded"]'),
-        senderParentCollapsed=senderParent.find('[data-view-text="collapsed"]');
-      if(type == 'expanded'){
-        typeOther='collapsed';
-        small=false;
-      }
-      senderParent.find('[data-view="'+typeOther+'"]').attr('data-view',type);
-      sender.attr('data-view',typeOther);
-      views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
-      delete views[viewKey][typeOther]._watchers['showModalBody'];
-      views[viewKey][typeOther].small(small);
-      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
-      var tmp=views[viewKey]['expanded'];
-      views[viewKey]['expanded']=views[viewKey]['collapsed'];
-      views[viewKey]['collapsed']=tmp;
-
-      tmp=senderParentExpaned.html();
-      senderParentExpaned.html(senderParentCollapsed.html());
-      senderParentCollapsed.html(tmp);
-    }
 
     var throttledSync = jQuery.throttle(200, function (e) {
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
@@ -409,13 +410,13 @@ jQuery(document).ready(function () {
       }
     });
   });
-  jQuery('#checkbox-sticky').on('change',function(){
-    if(jQuery(this).prop('checked')){
-      jQuery('.disable-if-sticky input').attr('disabled','disabled');
-    }else{
-      jQuery('.disable-if-sticky input').removeAttr('disabled');
+  jQuery('#checkbox-sticky').on('change', function () {
+      if (jQuery(this).prop('checked')) {
+        jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
+      } else {
+        jQuery('.disable-if-sticky input').removeAttr('disabled');
+      }
     }
-  }
   )
 
 });

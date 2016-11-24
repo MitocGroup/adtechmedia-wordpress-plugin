@@ -230,7 +230,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
-			if( isset( $_POST['revenueMethod'] ) ){
+			if( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
 				$this->add_plugin_option( 'revenue_method', $revenue_method );
 				Adtechmedia_Request::property_update_config_by_array(
@@ -281,10 +281,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @param array $position array of position properties.
 	 * @return string
 	 */
-	public function get_toggle_cb_js($position){
+	public function get_toggle_cb_js( $position ){
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
 		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
-		if($sticky){
+		if ( $sticky ) {
 			$scrolling_offset_top = -10;
 		}
 		return "function(cb) {
@@ -306,23 +306,23 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @param array $position array of position properties.
 	 * @return string
 	 */
-	public function get_target_cb_js($position){
+	public function get_target_cb_js( $position ){
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
 		$centered = ! empty( $position['centered'] ) ? $position['centered'] : false;
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
 		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
 		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
 		$content = '';
-		if(!$sticky){
+		if( ! $sticky ) {
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
 			$content .= "mainModal.rootNode.style.width = '$width';\n";
-		}else{
+		} else {
 			$content .= "mainModal.rootNode.style.width = '100%';\n";
 		}
-		if($centered){
+		if( $centered ) {
 			$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
-		}else{
+		} else {
 			$content .= "mainModal.rootNode.style.left = '$offset_left';\n";
 		}
 		return "function(modalNode, cb) {
