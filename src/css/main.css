@@ -2014,3 +2014,11 @@ select {
 .cbx.hidden {
     display: none;
 }
+.templates-views.templates-views-common{
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+.templates-views.templates-views-common .flex-gutter{
+    padding: 15px;
+}

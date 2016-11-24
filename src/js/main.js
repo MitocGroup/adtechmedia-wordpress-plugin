@@ -27,6 +27,54 @@ function getPositionFields() {
   });
   return styles;
 }
+function getOverallStylingFields() {
+  var styles = {},
+    inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+        styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
+    }
+  });
+  return styles;
+}
+function getOverallStyling(){
+  var css='',
+    stylesData= getOverallStylingFields();
+  if(stylesData.hasOwnProperty('background-color')){
+    css += '.atm-base-modal {background-color: '+ stylesData['background-color']+ ';}' +
+      '.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: '+ stylesData['background-color']+ ';}' ;
+  }
+  if(stylesData.hasOwnProperty('border')){
+    css += '.atm-targeted-modal{border: '+ stylesData['border']+ ';}';
+  }
+  if(stylesData.hasOwnProperty('footer-background-color')){
+    css += '.atm-base-modal .atm-footer{background-color: '+ stylesData['footer-background-color']+ ';}';
+  }
+  if(stylesData.hasOwnProperty('footer-border')){
+    css += '.atm-base-modal .atm-footer{border: '+ stylesData['footer-border']+ ';}';
+  }
+  if(stylesData.hasOwnProperty('font-family')){
+    css += '.atm-targeted-container .mood-block-info,' +
+      '.atm-targeted-modal,' +
+      '.atm-targeted-modal .atm-head-modal .atm-modal-body p,' +
+      '.atm-unlock-line .unlock-btn {font-family: '+ stylesData['font-family']+ ';}';
+  }
+  return css;
+}
+function applayOverallStyling(css){
+  var style=jQuery('#overall-template-styling');
+  style.html(css);
+}
+function fillOverallStylesFields() {
+  /*global templateOverallStylesInputs*/
+  var inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    var key=jQuery(input).attr('data-template-css');
+    if (templateOverallStylesInputs.hasOwnProperty(key)) {
+        jQuery(input).val(templateOverallStylesInputs[key])
+    }
+  });
+}
 function fillPositionFields() {
   /*global templatePositionInputs*/
   var inputs = jQuery('[data-template="position"] input');
@@ -72,6 +120,7 @@ jQuery(document).ready(function () {
   var atmTemplating = atmTpl.default;
   //atmTpl.config({revenueMethod: 'advertising'});
   fillPositionFields();
+  fillOverallStylesFields();
   var templates = [
     {
       name : 'pledge',
@@ -189,6 +238,7 @@ jQuery(document).ready(function () {
 
   (function ($) {
     // read available template stories
+    //atmTpl.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
     console.log(stories);
     var views = {};
@@ -297,6 +347,10 @@ jQuery(document).ready(function () {
     var $inputs = $form.find('input');
     $inputs.bind('keyup', throttledSync);
 
+    var overallSync = jQuery.throttle(200, function () {
+      applayOverallStyling(getOverallStyling());
+    });
+    jQuery('[data-template="overall-styling"] input').bind('keyup', overallSync);
 
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
@@ -314,6 +368,8 @@ jQuery(document).ready(function () {
           inputs : JSON.stringify(inputsToObject(inputs)),
           styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
           position : JSON.stringify(getPositionFields()),
+          overallStyles : getOverallStyling(),
+          overallStylesInputs : JSON.stringify(getOverallStylingFields()),
           component : views[viewKey].component,
           template : atmTemplating.templateRendition(views[viewKey].component).render(
             options[views[viewKey].component],
@@ -321,7 +377,7 @@ jQuery(document).ready(function () {
           )
         },
         success : function (response) {
-          console.log(response);
+          //console.log(response);
           btn.removeClass('disabled');
           icon.removeClass('fa fa-spinner fa-spin');
           icon.addClass('mdi mdi-check');
@@ -339,4 +395,5 @@ jQuery(document).ready(function () {
     }
   }
   )
+
 });

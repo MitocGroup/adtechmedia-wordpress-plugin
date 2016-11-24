@@ -235,16 +235,26 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$component = $_POST['component'];
 			$template = $_POST['template'];
 			$position = $_POST['position'];
+			$overall_styles = $_POST['overallStyles'];
+			$overall_styles_inputs = $_POST['overallStylesInputs'];
 			$this->add_plugin_option( 'template_inputs', $inputs );
 			$this->add_plugin_option( 'template_style_inputs', $style_inputs );
 			$this->add_plugin_option( 'template_' . $component, $template );
 			$this->add_plugin_option( 'template_position', $position );
+			$this->add_plugin_option( 'template_overall_styles', $overall_styles );
+			$this->add_plugin_option( 'template_overall_styles_inputs', $overall_styles_inputs );
 			Adtechmedia_Request::property_update_config_by_array(
 				$this->get_plugin_option( 'id' ),
 				$this->get_plugin_option( 'key' ),
 				[
 					'templates' => [ $component => base64_encode( stripslashes( $template ) ), ],
-					'targetModal' => [ 'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $position ),true ) ), ],
+					'targetModal' => [
+						'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $position ),true ) ),
+						'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $position ),true ) ),
+					],
+					'styles' => [
+						'main' => base64_encode( $overall_styles ),
+					],
 				]
 			);
 			// @codingStandardsIgnoreEnd
@@ -255,9 +265,35 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * Get JS to toggleCb function
+	 *
+	 * @param array $position array of position properties.
+	 * @return string
+	 */
+	public function get_toggle_cb_js($position){
+		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
+		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
+		if($sticky){
+			$scrolling_offset_top = -10;
+		}
+		return "function(cb) {
+				var adjustMarginTop = function (e) {
+                var modalOffset = document.body.scrollTop > $scrolling_offset_top;
+                if (modalOffset) {
+                  cb(true);
+                } else {
+                  cb(false);
+                }
+                };
+                document.addEventListener('scroll', adjustMarginTop);
+                adjustMarginTop(null);}";
+	}
+
+	/**
 	 * Get JS to targetCb function
 	 *
 	 * @param array $position array of position properties.
+	 * @return string
 	 */
 	public function get_target_cb_js($position){
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
@@ -265,14 +301,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
 		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
 		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
-		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
 		$content = '';
 		if(!$sticky){
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
 			$content .= "mainModal.rootNode.style.width = '$width';\n";
 		}else{
-			$scrolling_offset_top = -10;
 			$content .= "mainModal.rootNode.style.width = '100%';\n";
 		}
 		if($centered){
@@ -285,19 +319,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                 mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
                 mainModal.rootNode.classList.add('atm-targeted-container');
                 $content
-                var adjustMarginTop = function (e) {
-                                      var modalOffset = document.body.scrollTop > $scrolling_offset_top;
-                                
-                                      if (modalOffset) {
-                                        mainModal.rootNode.classList.add('modal-shown');
-                                      } else {
-                                        mainModal.rootNode.classList.remove('modal-shown');
-                                      }
-                                    };
-                               
-                                    document.addEventListener('scroll', adjustMarginTop);
-                             
-                                    adjustMarginTop(null);
                 cb();
                 }";
 	}
