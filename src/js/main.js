@@ -354,13 +354,24 @@ jQuery(document).ready(function () {
     });
     jQuery('[data-template="overall-styling"] input').bind('keyup', overallSync);
 
-    jQuery('.save-templates').bind('click', function (e) {
-      var btn = jQuery(this);
+    function addLoader(btn){
       var icon = btn.find('i');
-      var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
       btn.addClass('disabled');
       icon.removeClass('mdi mdi-check');
       icon.addClass('fa fa-spinner fa-spin');
+    }
+
+    function removeLoader(btn){
+      var icon = btn.find('i');
+      btn.removeClass('disabled');
+      icon.removeClass('fa fa-spinner fa-spin');
+      icon.addClass('mdi mdi-check');
+    }
+
+    jQuery('.save-templates').bind('click', function (e) {
+      var btn = jQuery(this);
+      var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
+      addLoader(btn);
       jQuery.ajax({
         url : save_template.ajax_url,
         type : 'post',
@@ -379,38 +390,30 @@ jQuery(document).ready(function () {
           )
         },
         success : function (response) {
-          //console.log(response);
-          btn.removeClass('disabled');
-          icon.removeClass('fa fa-spinner fa-spin');
-          icon.addClass('mdi mdi-check');
-
+          removeLoader(btn)
+        }
+      });
+    });
+    
+    jQuery('#save-revenue-model').bind('click', function (e) {
+      var btn = jQuery(this);
+      addLoader(btn);
+      jQuery.ajax({
+        url : save_template.ajax_url,
+        type : 'post',
+        data : {
+          action : 'save_template',
+          nonce : save_template.nonce,
+          revenueMethod : jQuery('select[name="revenue_method"]').val()
+        },
+        success : function (response) {
+          removeLoader(btn);
         }
       });
     });
   })(jQuery);
 
-  jQuery('#save-revenue-model').bind('click', function (e) {
-    var btn = jQuery(this);
-    var icon = btn.find('i');
-    btn.addClass('disabled');
-    icon.removeClass('mdi mdi-check');
-    icon.addClass('fa fa-spinner fa-spin');
-    jQuery.ajax({
-      url : save_template.ajax_url,
-      type : 'post',
-      data : {
-        action : 'save_template',
-        nonce : save_template.nonce,
-        revenueMethod : jQuery('select[name="revenue_method"]').val()
-      },
-      success : function (response) {
-        //console.log(response);
-        btn.removeClass('disabled');
-        icon.removeClass('fa fa-spinner fa-spin');
-        icon.addClass('mdi mdi-check');
-      }
-    });
-  });
+
   jQuery('#checkbox-sticky').on('change', function () {
     if (jQuery(this).prop('checked')) {
       jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
