@@ -401,6 +401,9 @@ class Adtechmedia_OptionsManager {
 	 * Update property
 	 */
 	public function update_prop() {
+		$plugin_dir = plugin_dir_path( __FILE__ );
+		$file = $plugin_dir . '/js/atm.min.js';
+		@unlink( $file );
 		Adtechmedia_Request::property_update_config(
 			$this->get_plugin_option( 'id' ),
 			$this->get_plugin_option( 'container' ),

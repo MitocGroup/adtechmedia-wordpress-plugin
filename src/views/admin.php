@@ -1452,16 +1452,10 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 		<div class="content templating">
 			<div class="templates-views templates-views-common">
 				<div class="template-view">
-					<div class="header-view">Common template configuration
+					<div class="header-view">Overall position and styling
 					</div>
-					<section class="config-tabs" >
-						<input id="common-ext-position" name="common-ext" checked=""
-							   type="radio">
-						<label for="common-ext-position" class="tab-name">
-							Position configuration
-						</label>
-						<div class="tab-content" data-template="position">
-							<div class="flex-container flex-gutter" data-template="style">
+					<section class="" >
+							<div class="flex-container flex-gutter flex-end" data-template="position">
 							<div class="flex-item-2">
 								<span class="accent-color">Sticky</span>
 								<div class="">
@@ -1488,15 +1482,8 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 								</div>
 							</div>
 							<div class="flex-item-2 disable-if-sticky">
-								<span class="accent-color">Centered</span>
-								<div class="">
-									<input type="checkbox" name="centered" id="checkbox-centered" class="cbx hidden"/>
-									<label for="checkbox-centered" class="custom-checkbox"></label>
-								</div>
-							</div>
-							<div class="flex-item-2 disable-if-sticky">
 								<div class="custom-label">
-									<label>Offset left</label>
+									<label>Offset from center</label>
 									<div class="custom-input">
 										<input placeholder="offset left" name="offset_left"  type="text">
 										<span class="bar"></span>
@@ -1513,15 +1500,9 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 								</div>
 							</div>
 							</div>
-							</div>
-						<input id="common-ext-stylin" name="common-ext"
-							   type="radio">
-						<label for="common-ext-stylin" class="tab-name">
-							Overall Styling
-						</label>
-						<div class="tab-content" data-template="overall-styling">
-							<div class="flex-container flex-gutter">
-								<div class="flex-item-6">
+
+							<div class="flex-container flex-gutter" data-template="overall-styling">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Background Color</label>
 										<div class="custom-input">
@@ -1531,7 +1512,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 										</div>
 									</div>
 								</div>
-								<div class="flex-item-6">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Border</label>
 										<div class="custom-input">
@@ -1540,10 +1521,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 										</div>
 									</div>
 								</div>
-							</div>
-
-							<div class="flex-container flex-gutter">
-								<div class="flex-item-6">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Font Family</label>
 										<div class="custom-input">
@@ -1553,7 +1531,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 										</div>
 									</div>
 								</div>
-								<div class="flex-item-6">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Box Shadow</label>
 										<div class="custom-input">
@@ -1563,10 +1541,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 										</div>
 									</div>
 								</div>
-							</div>
-
-							<div class="flex-container flex-gutter">
-								<div class="flex-item-6">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Footer Background Color</label>
 										<div class="custom-input">
@@ -1576,7 +1551,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 										</div>
 									</div>
 								</div>
-								<div class="flex-item-6">
+								<div class="flex-item-2">
 									<div class="custom-label">
 										<label>Footer Border</label>
 										<div class="custom-input">
@@ -1588,7 +1563,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 									</div>
 								</div>
 							</div>
-						</div>
+
 						</section>
 				</div>
 			</div>
@@ -1656,7 +1631,7 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-pledge-expanded" data-view="expanded"></div>
+											<div id="render-pledge-expanded" class="modal-shown no-transition" data-view="expanded"></div>
 											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
@@ -2767,8 +2742,8 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 														<div class="custom-input">
 															<input
 																name="message-expanded"
-																placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
-																value="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
+																placeholder="Thanks for contributing {price} and help us do the job we {heart}"
+																value="Thanks for contributing {price} and help us do the job we {heart}"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>

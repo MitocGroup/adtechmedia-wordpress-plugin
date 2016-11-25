@@ -48,6 +48,9 @@ function getOverallStyling() {
   if (stylesData.hasOwnProperty('border')) {
     css += '.atm-targeted-modal{border: ' + stylesData['border'] + ';}';
   }
+  if (stylesData.hasOwnProperty('box-shadow')) {
+    css += '.atm-targeted-modal{box-shadow: ' + stylesData['box-shadow'] + ';}';
+  }
   if (stylesData.hasOwnProperty('footer-background-color')) {
     css += '.atm-base-modal .atm-footer{background-color: ' + stylesData['footer-background-color'] + ';}';
   }
@@ -117,8 +120,9 @@ function getDatatemplate(value) {
 }
 jQuery(document).ready(function () {
   /*global atmTpl, templateInputs, templateStyleInputs, save_template*/
-  //atmTpl.config({revenueMethod: 'advertising'});
+  atmTpl.default.config({revenueMethod: 'micropayments'});
   var atmTemplating = atmTpl.default;
+
   //atmTpl.config({revenueMethod: 'advertising'});
   fillPositionFields();
   fillOverallStylesFields();

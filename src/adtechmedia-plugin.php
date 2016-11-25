@@ -180,6 +180,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
+		//add_action('init',  array( &$this, 'redirect_to_register' ) );
+		//add_action('init',  array( &$this, 'add_my_rule' ) );
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
@@ -224,12 +226,33 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		add_action( 'wp_ajax_save_template', array( &$this, 'ajax_save_template' ) );
 	}
 
+	/*function redirect_to_register(){
+		$var = get_query_var('atm_load_js');
+		if( ! empty ( $var ) ) {
+			echo 'lol';
+			exit;
+		}
+	}
+
+	function add_my_rule()
+	{
+		add_rewrite_rule('test','index2.php?atm_load_js=load','top');
+
+		add_filter( 'query_vars', function( $vars ){
+			$vars[] = 'atm_load_js';
+			return $vars;
+		} );
+	}*/
+
 	/**
 	 * Save templates action
 	 */
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
+			$plugin_dir = plugin_dir_path( __FILE__ );
+			$file = $plugin_dir . '/js/atm.min.js';
+			@unlink( $file );
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
 				$this->add_plugin_option( 'revenue_method', $revenue_method );
@@ -311,7 +334,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function get_target_cb_js( $position ) {
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
-		$centered = ! empty( $position['centered'] ) ? $position['centered'] : false;
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
 		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
 		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
@@ -323,11 +345,16 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		} else {
 			$content .= "mainModal.rootNode.style.width = '100%';\n";
 		}
-		if ( $centered ) {
+
+		$offset_left = trim( $offset_left );
+		if( $offset_left[0] == '-' ) {
+			$offset_left[0] = ' ';
 			$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
 		} else {
-			$content .= "mainModal.rootNode.style.left = '$offset_left';\n";
+			$content .= "mainModal.rootNode.style.left = 'calc(50% + $offset_left)';\n";
 		}
+		$content .= "mainModal.rootNode.style.transform = 'translateX(-50%)';\n";
+
 		return "function(modalNode, cb) {
                 var mainModal=modalNode;
                 mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
@@ -375,7 +402,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function add_adtechmedia_scripts() {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
-			wp_enqueue_script( 'Adtechmedia', $script, null, null, true );
+			$path = plugins_url( '/js/atm.min.js', __FILE__ );
+			$plugin_dir = plugin_dir_path( __FILE__ );
+			$file = $plugin_dir . '/js/atm.min.js';
+			if( ! file_exists ( $file ) || ( time() - filemtime($file) ) > 60  ) {
+				file_put_contents( $file, gzdecode( file_get_contents( $script ) ) );
+			}
+			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime($file), null, null, true );
+			//wp_enqueue_script( 'Adtechmedia-test', home_url('test') , null, null, true );
 		}
 	}
 
@@ -444,7 +478,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     window.ATM_CONTENT_PRELOADED = true;
                     window.WP_ATM_AUTHOR_NAME = '$author_name';
                     window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
-                    
+                    window.ATM_SERVICE_WORKER = '/sw.min.js';
                     </script>";
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
 	}
