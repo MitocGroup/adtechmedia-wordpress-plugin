@@ -43,9 +43,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'country' => array( __( 'country', 'adtechmedia-plugin' ) ),
 			'revenue_method' => array(
 				__( 'revenueMethod', 'adtechmedia-plugin' ),
+				'micropayments',
 				'advertising+micropayments',
 				'advertising',
-				'micropayments',
 			),
 		);
 	}
@@ -180,7 +180,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
-		Mozilla\WP_SW_Manager::get_manager()->sw()->add_content( array( $this, 'write_sw' ) );
+		// Mozilla\WP_SW_Manager::get_manager()->sw()->add_content( array( $this, 'write_sw' ) );.
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
@@ -247,6 +247,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
 				$this->add_plugin_option( 'revenue_method', $revenue_method );
+				Adtechmedia_Request::property_update_config_by_array(
+					$this->get_plugin_option( 'id' ),
+					$this->get_plugin_option( 'key' ),
+					[
+						'revenueMethod' => $revenue_method,
+					]
+				);
 			} else if ( isset( $_POST['contentConfig'] ) ) {
 				$content_config = json_decode( stripslashes( $_POST['contentConfig'] ), true );
 				foreach ( $content_config as $a_option_key => $a_option_meta ) {
@@ -334,18 +341,17 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
 			$content .= "mainModal.rootNode.style.width = '$width';\n";
+			$offset_left = trim( $offset_left );
+			if ( '-' == $offset_left[0] ) {
+				$offset_left[0] = ' ';
+				$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
+			} else {
+				$content .= "mainModal.rootNode.style.left = 'calc(50% + $offset_left)';\n";
+			}
+			$content .= "mainModal.rootNode.style.transform = 'translateX(-50%)';\n";
 		} else {
 			$content .= "mainModal.rootNode.style.width = '100%';\n";
 		}
-
-		$offset_left = trim( $offset_left );
-		if ( '-' == $offset_left[0] ) {
-			$offset_left[0] = ' ';
-			$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
-		} else {
-			$content .= "mainModal.rootNode.style.left = 'calc(50% + $offset_left)';\n";
-		}
-		$content .= "mainModal.rootNode.style.transform = 'translateX(-50%)';\n";
 
 		return "function(modalNode, cb) {
                 var mainModal=modalNode;

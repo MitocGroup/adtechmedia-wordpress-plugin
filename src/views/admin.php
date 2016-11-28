@@ -32,16 +32,20 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 echo '<script>';
 // @codingStandardsIgnoreStart
 echo 'var templateInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' );
+$template_inputs = $this->get_plugin_option( 'template_inputs' );
+echo empty( $template_inputs ) ? '{}' : $template_inputs;
 echo '");';
 echo 'var templateStyleInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' );
+$template_style_inputs = $this->get_plugin_option( 'template_style_inputs' );
+echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
 echo '");';
 echo 'var templatePositionInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_position' ) ) ? '{}' : $this->get_plugin_option( 'template_position' );
+$template_position = $this->get_plugin_option( 'template_position' );
+echo empty( $template_position ) ? '{}' : $template_position;
 echo '");';
 echo 'var templateOverallStylesInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_overall_styles_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_overall_styles_inputs' );
+$template_overall_styles_inputs = $this->get_plugin_option( 'template_overall_styles_inputs' );
+echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
 echo '");';
 // @codingStandardsIgnoreEnd
 echo '</script>';
@@ -84,8 +88,9 @@ echo '</script>';
 <style id="overall-template-styling">
 	<?php
 	// @codingStandardsIgnoreStart
-echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this->get_plugin_option( 'template_overall_styles' );
-// @codingStandardsIgnoreEnd
+	$template_overall_styles = $this->get_plugin_option( 'template_overall_styles' );
+	echo empty( $template_overall_styles ) ? '' : $template_overall_styles;
+	// @codingStandardsIgnoreEnd
 	?>
 </style>
 <main>
@@ -1198,8 +1203,8 @@ echo empty( $this->get_plugin_option( 'template_overall_styles' ) ) ? '' : $this
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Support quality journalism. {setupPayment_url}"
-																value="Support quality journalism. {setupPayment_url}"
+																placeholder="Support quality journalism. setupPayment_url"
+																value="Support quality journalism. setupPayment_url"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
