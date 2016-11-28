@@ -385,7 +385,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_enqueue_style( 'adtechmedia-style-main', plugins_url( '/css/main.css', __FILE__ ) );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		//;
 		wp_enqueue_script(
 			'adtechmedia-jquery-noty-js',
 			plugins_url( '/js/jquery.noty.packaged.min.js', __FILE__ ),

@@ -131,7 +131,7 @@ function getDatatemplate(value) {
   return '[data-template="' + value + '"]';
 }
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template*/
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty*/
   atmTpl.default.config({revenueMethod: 'micropayments'});
   var atmTemplating = atmTpl.default;
 
@@ -383,7 +383,20 @@ jQuery(document).ready(function () {
       icon.removeClass('fa fa-spinner fa-spin');
       icon.addClass('mdi mdi-check');
     }
-
+    function showSuccess(){
+      noty({
+        type: 'success',
+        text: 'AdTechMedia parameters have been saved successfully',
+        timeout: 2000
+      });
+    }
+    function showError(){
+      noty({
+        type: 'error',
+        text: 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.',
+        timeout: 2000
+      });
+    }
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
@@ -461,20 +474,7 @@ jQuery(document).ready(function () {
       });
  
     });
-    function showSuccess(){
-      noty({
-        type: 'success',
-        text: 'Success',
-        timeout: 2000
-      });
-    }
-    function showError(){
-      noty({
-        type: 'error',
-        text: 'Error',
-        timeout: 2000
-      });
-    }
+
   })(jQuery);
 
 

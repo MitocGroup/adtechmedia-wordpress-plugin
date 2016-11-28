@@ -54,7 +54,11 @@ function adtechmedia_init( $file ) {
 	register_uninstall_hook( $file, 'adtechmedia_uninstall_hook' );
 }
 
-function adtechmedia_uninstall_hook(){
+
+/**
+ *   Plugin uninstall function
+ */
+function adtechmedia_uninstall_hook() {
 
 	require_once( 'adtechmedia-plugin.php' );
 
