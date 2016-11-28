@@ -32,14 +32,67 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 echo '<script>';
 // @codingStandardsIgnoreStart
 echo 'var templateInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_inputs' );
+$template_inputs = $this->get_plugin_option( 'template_inputs' );
+echo empty( $template_inputs ) ? '{}' : $template_inputs;
 echo '");';
 echo 'var templateStyleInputs =JSON.parse("';
-echo empty( $this->get_plugin_option( 'template_style_inputs' ) ) ? '{}' : $this->get_plugin_option( 'template_style_inputs' );
+$template_style_inputs = $this->get_plugin_option( 'template_style_inputs' );
+echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
+echo '");';
+echo 'var templatePositionInputs =JSON.parse("';
+$template_position = $this->get_plugin_option( 'template_position' );
+echo empty( $template_position ) ? '{}' : $template_position;
+echo '");';
+echo 'var templateOverallStylesInputs =JSON.parse("';
+$template_overall_styles_inputs = $this->get_plugin_option( 'template_overall_styles_inputs' );
+echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
 echo '");';
 // @codingStandardsIgnoreEnd
 echo '</script>';
 ?>
+<style>
+
+	.atm-targeted-modal {
+		width: auto;
+	}
+
+	@media (max-width: 1649px) {
+		.atm-targeted-modal {
+			margin-left: 0px;
+		}
+	}
+	.atm-targeted-container .share-block-inner .sharetool a,
+	.atm-targeted-container .share-block-inner .sharetool a:hover{
+		background: none!important;;
+	}
+
+	/**/
+	/*.atm-base-modal {
+		background-color: #ffb7a7;
+	}
+	.atm-targeted-modal .atm-head-modal .atm-modal-heading {
+		background-color: #ffb7a7;
+	}
+	.atm-targeted-modal{
+		border: 3px solid rgba(131, 214, 255, 1);
+	}
+	.atm-base-modal .atm-footer{
+		background-color: #49ff96;
+		border: 3px solid rgb(255, 193, 22);
+	}
+	.atm-targeted-modal {
+		font-family: "FuturaICG", sans-serif;
+	}*/
+</style>
+
+<style id="overall-template-styling">
+	<?php
+	// @codingStandardsIgnoreStart
+	$template_overall_styles = $this->get_plugin_option( 'template_overall_styles' );
+	echo empty( $template_overall_styles ) ? '' : $template_overall_styles;
+	// @codingStandardsIgnoreEnd
+	?>
+</style>
 <main>
 	<section>
 		<form method="post" action="">
@@ -100,12 +153,26 @@ echo '</script>';
 								with AdTechMedia.io platform
 							</div>
 						</div>
+						<div class="flex-item-6">
+							<div class="block-info align-justify">
+								<b>IMPORTANT:</b> Registration step is not required to be able to use this plugin.
+								Once you generate some revenue and want to transfer it into your bank account,
+								then we encourage you to register here (using "Email address"). Follow the steps
+								to setup your account on AdTechMedia.io platform and enjoy the influx of revenue
+								into your bank account.
+							</div>
+						</div>
 					</div>
 					<div class="flex-container">
-						<div class="flex-item-6 flex-end">
+						<div class="flex-item-6 ">
 							<div class="custom-input">
 								<button type="submit" class="btn"><i class="mdi mdi-account-plus"></i> Register</button>
 							</div>
+						</div>
+						<div class="flex-item-6 flex-end">
+						<div class="custom-input">
+							<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i>Save</button>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -114,7 +181,7 @@ echo '</script>';
 	</section>
 
 	<section>
-		<form method="post" action="">
+		<form method="post" action="" id="content-config">
 			<?php settings_fields( $plugin_meta_data_class ); ?>
 			<h1 class="heading">
 				<i class="custom-icon edit"></i>
@@ -278,7 +345,7 @@ echo '</script>';
 						</div>
 
 						<div class="custom-input">
-							<button type="submit" class="btn"><i class="mdi mdi-check"></i>Save</button>
+							<button type="button" class="btn"><i class="mdi mdi-check"></i>Save</button>
 						</div>
 					</div>
 					<div class="flex-item-6">
@@ -355,8 +422,128 @@ echo '</script>';
 		</h1>
 
 		<div class="content templating">
+			<div class="templates-views templates-views-common">
+				<div class="template-view">
+					<div class="header-view">Overall position and styling
+					</div>
+					<section class="" >
+							<div class="flex-container flex-gutter flex-end" data-template="position">
+							<div class="flex-item-2">
+								<span class="accent-color">Sticky</span>
+								<div class="">
+									<input type="checkbox" name="sticky" id="checkbox-sticky" class="cbx hidden"/>
+									<label for="checkbox-sticky" class="custom-checkbox"></label>
+								</div>
+							</div>
+							<div class="flex-item-2 disable-if-sticky">
+								<div class="custom-label">
+									<label>Width</label>
+									<div class="custom-input">
+										<input placeholder="width" name="width" type="text">
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2 disable-if-sticky">
+								<div class="custom-label">
+									<label>Offset top</label>
+									<div class="custom-input">
+										<input placeholder="offset top" name="offset_top"  type="text">
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2 disable-if-sticky">
+								<div class="custom-label">
+									<label>Offset from center</label>
+									<div class="custom-input">
+										<input placeholder="offset left" name="offset_left"  type="text">
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2 disable-if-sticky">
+								<div class="custom-label">
+									<label>Scrolling offset top</label>
+									<div class="custom-input">
+										<input placeholder="scrolling offset top" name="scrolling_offset_top"  type="text">
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							</div>
+
+							<div class="flex-container flex-gutter" data-template="overall-styling">
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Background Color</label>
+										<div class="custom-input">
+											<input placeholder="background-color" data-template-css="background-color" required=""
+												   type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Border</label>
+										<div class="custom-input">
+											<input placeholder="border" data-template-css="border" required="" type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Font Family</label>
+										<div class="custom-input">
+											<input placeholder="font-family" data-template-css="font-family" required=""
+												   type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Box Shadow</label>
+										<div class="custom-input">
+											<input placeholder="box-shadow" data-template-css="box-shadow" required=""
+												   type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Footer Background Color</label>
+										<div class="custom-input">
+											<input placeholder="footer background-color" data-template-css="footer-background-color"
+												   required="" type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+								<div class="flex-item-2">
+									<div class="custom-label">
+										<label>Footer Border</label>
+										<div class="custom-input">
+											<input placeholder="footer-border" required=""
+												   data-template-css="footer-border"
+												   type="text">
+											<span class="bar"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</section>
+				</div>
+			</div>
 			<div class="clearfix">
 				<div class="">
+
+
+
 					<section class="views-tabs">
 						<input id="pledge" name="main-tabs" checked="" type="radio">
 						<input id="refund" name="main-tabs" type="radio">
@@ -412,15 +599,15 @@ echo '</script>';
 								</div>
 								<div class="content-view clearfix">
 									<div class="flex-container">
-										<div class="flex-item-6">
-											<div class="template-name">
+										<div class="flex-item-6 modal-shown no-transition" >
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-pledge-expanded"></div>
-											<div class="template-name">
+											<div id="render-pledge-expanded" class="modal-shown no-transition" data-view="expanded"></div>
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-pledge-collapsed"></div>
+											<div id="render-pledge-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -883,80 +1070,6 @@ echo '</script>';
 													</div>
 												</div>
 
-												<input id="pledge-ext-styling" value="card" name="pledge-ext"
-													   type="radio">
-												<label for="pledge-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>
@@ -967,20 +1080,6 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
-							<style>
-
-								.atm-targeted-modal {
-									width: auto;
-								}
-
-								@media (max-width: 1649px) {
-									.atm-targeted-modal {
-										margin-left: 0px;
-									}
-								}
-
-							</style>
-
 						</div>
 
 						<div class="templates-views pay" data-template="pay">
@@ -989,15 +1088,15 @@ echo '</script>';
 								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
-											<div class="template-name">
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-pay-expanded"></div>
+											<div id="render-pay-expanded" data-view="expanded" ></div>
 
-											<div class="template-name">
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-pay-collapsed"></div>
+											<div id="render-pay-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -1104,8 +1203,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Support quality journalism. {setupPayment_url}"
-																value="Support quality journalism. {setupPayment_url}"
+																placeholder="Support quality journalism. setupPayment_url"
+																value="Support quality journalism. setupPayment_url"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
@@ -1576,80 +1675,6 @@ echo '</script>';
 													</div>
 												</div>
 
-												<input id="pay-ext-styling" name="pay-ext" type="radio">
-												<label for="pay-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>
@@ -1666,15 +1691,15 @@ echo '</script>';
 								<div class="content-view clearfix">
 									<div class="flex-container">
 										<div class="flex-item-6">
-											<div class="template-name">
+											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
-											<div id="render-refund-expanded"></div>
+											<div id="render-refund-expanded"  data-view="expanded"></div>
 
-											<div class="template-name">
+											<div class="template-name" data-view-text="collapsed">
 												Collapsed view
 											</div>
-											<div id="render-refund-collapsed"></div>
+											<div id="render-refund-collapsed" data-view="collapsed"></div>
 										</div>
 										<div class="flex-item-6">
 											<section class="config-tabs">
@@ -1689,8 +1714,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-expanded"
-																placeholder="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
-																value="Thanks for contributing {price} and help us do the job we {fa-heart-o}"
+																placeholder="Thanks for contributing {price} and help us do the job we {heart}"
+																value="Thanks for contributing {price} and help us do the job we {heart}"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
@@ -1701,8 +1726,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Premium content unlocked. {notSatisfied_url} Get immediate"
-																value="Premium content unlocked. {notSatisfied_url} Get immediate"
+																placeholder="Premium content unlocked. notSatisfied_url Get immediate"
+																value="Premium content unlocked. notSatisfied_url Get immediate"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
@@ -2280,80 +2305,6 @@ echo '</script>';
 													</div>
 												</div>
 
-												<input id="refund-ext-styling" name="refund-ext" type="radio">
-												<label for="refund-ext-styling" class="tab-name">
-													Overall Styling
-												</label>
-												<div class="tab-content">
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Border</label>
-																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Font Family</label>
-																<div class="custom-input">
-																	<input placeholder="font-family" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Box Shadow</label>
-																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div class="flex-container flex-gutter">
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Background Color</label>
-																<div class="custom-input">
-																	<input placeholder="footer background-color"
-																		   required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-														<div class="flex-item-6">
-															<div class="custom-label">
-																<label>Footer Border</label>
-																<div class="custom-input">
-																	<input placeholder="footer-border" required=""
-																		   type="text">
-																	<span class="bar"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
 											</section>
 										</div>
 									</div>

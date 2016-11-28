@@ -123,7 +123,7 @@ p {
 }
 
 #wpbody main {
-    width: 1100px;
+    width: 98%;
 }
 
 .custom-icon {
@@ -1964,4 +1964,79 @@ select {
     color: #9f9f9f !important;
     cursor: default;
     pointer-events: none;
+}
+
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.rotating {
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    -ms-animation: rotating 2s linear infinite;
+    -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+}
+
+
+.loader-spin {
+    animation: 2s linear 0s normal none infinite running loader-spin;
+}
+.cbx.hidden {
+    display: none;
+}
+.templates-views.templates-views-common{
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+.templates-views.templates-views-common .flex-gutter{
+    padding: 15px;
+}
+
+input:disabled{
+    background-color: #f9f9f9;
+    color: #e1e1e1;
+}
+
+input:disabled::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #e1e1e1;
+}
+input:disabled:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #e1e1e1;
+}
+input:disabled::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #e1e1e1;
+}
+input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #e1e1e1;
 }

@@ -51,4 +51,17 @@ function adtechmedia_init( $file ) {
 
 	// Register the Plugin Deactivation Hook.
 	register_deactivation_hook( $file, array( &$adtechmedia_plugin, 'deactivate' ) );
+	register_uninstall_hook( $file, 'adtechmedia_uninstall_hook' );
+}
+
+
+/**
+ *   Plugin uninstall function
+ */
+function adtechmedia_uninstall_hook() {
+
+	require_once( 'adtechmedia-plugin.php' );
+
+	$adtechmedia_plugin = new Adtechmedia_Plugin();
+	$adtechmedia_plugin->uninstall();
 }

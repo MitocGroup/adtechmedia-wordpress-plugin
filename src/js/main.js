@@ -13,6 +13,99 @@ function getCSSFields(inputs) {
   return styles;
 }
 
+function getInputsData(inputs){
+  var styles = {};
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+      if (jQuery(input).is(':checkbox')) {
+        styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
+      } else {
+        styles[jQuery(input).attr('name')] = jQuery(input).val();
+      }
+
+    }
+  });
+  return styles;
+}
+
+function getPositionFields() {
+  var inputs = jQuery('[data-template="position"] input');
+
+  return getInputsData(inputs);
+}
+
+function getOverallStylingFields() {
+  var styles = {},
+    inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
+    }
+  });
+  return styles;
+}
+
+function getOverallStyling() {
+  var css = '',
+    stylesData = getOverallStylingFields();
+  if (stylesData.hasOwnProperty('background-color')) {
+    css += '.atm-base-modal {background-color: ' + stylesData['background-color'] + ';}' +
+      '.atm-targeted-modal .atm-head-modal ' +
+      '.atm-modal-heading {background-color: ' + stylesData['background-color'] + ';}';
+  }
+  jQuery.each(['border', 'box-shadow'], function (i, key) {
+    if (stylesData.hasOwnProperty(key)) {
+      css += '.atm-targeted-modal{'+key+': ' + stylesData[key] + ';}';
+    }
+  });
+  if (stylesData.hasOwnProperty('footer-background-color')) {
+    css += '.atm-base-modal .atm-footer{background-color: ' + stylesData['footer-background-color'] + ';}';
+  }
+  if (stylesData.hasOwnProperty('footer-border')) {
+    css += '.atm-base-modal .atm-footer{border: ' + stylesData['footer-border'] + ';}';
+  }
+  if (stylesData.hasOwnProperty('font-family')) {
+    css += '.atm-targeted-container .mood-block-info,' +
+      '.atm-targeted-modal,' +
+      '.atm-targeted-modal .atm-head-modal .atm-modal-body p,' +
+      '.atm-unlock-line .unlock-btn {font-family: ' + stylesData['font-family'] + ';}';
+  }
+  return css;
+}
+function applayOverallStyling(css) {
+  var style = jQuery('#overall-template-styling');
+  style.html(css);
+}
+function fillOverallStylesFields() {
+  /*global templateOverallStylesInputs*/
+  var inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    var key = jQuery(input).attr('data-template-css');
+    if (templateOverallStylesInputs.hasOwnProperty(key)) {
+      jQuery(input).val(templateOverallStylesInputs[key])
+    }
+  });
+}
+function fillPositionFields() {
+  /*global templatePositionInputs*/
+  var inputs = jQuery('[data-template="position"] input');
+  jQuery.each(inputs, function (i, input) {
+    var key = jQuery(input).attr('name');
+    if (templatePositionInputs.hasOwnProperty(key)) {
+      if (jQuery(input).is(':checkbox')) {
+        //styles[jQuery(input).attr('name')] = jQuery(input).prop('checked');
+        jQuery(input).prop('checked', templatePositionInputs[key]);
+      } else {
+        jQuery(input).val(templatePositionInputs[key])
+      }
+    }
+  });
+  if (!jQuery(this).prop('checked')) {
+    jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
+  } else {
+    jQuery('.disable-if-sticky input').removeAttr('disabled');
+  }
+}
 function fillCSSFields(key, inputValues, inputFields) {
   if (inputValues.hasOwnProperty(key)) {
     jQuery.each(inputValues[key], function (name, value) {
@@ -38,9 +131,13 @@ function getDatatemplate(value) {
   return '[data-template="' + value + '"]';
 }
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template*/
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty*/
+  atmTpl.default.config({revenueMethod: 'micropayments'});
   var atmTemplating = atmTpl.default;
 
+  //atmTpl.config({revenueMethod: 'advertising'});
+  fillPositionFields();
+  fillOverallStylesFields();
   var templates = [
     {
       name : 'pledge',
@@ -59,7 +156,7 @@ jQuery(document).ready(function () {
         }, {
           dataTab : 'message',
           options : [{
-            name : 'body-msg-mp-ad',
+            name : 'body-msg-mp',
             inputName : 'message-expanded',
             type : 'expanded'
           }, {
@@ -87,7 +184,7 @@ jQuery(document).ready(function () {
         }, {
           dataTab : 'message',
           options : [{
-            name : 'body-msg-mp-ad',
+            name : 'body-msg-mp',
             inputName : 'message-expanded',
             type : 'expanded'
           }, {
@@ -158,6 +255,7 @@ jQuery(document).ready(function () {
 
   (function ($) {
     // read available template stories
+    //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
     console.log(stories);
     var views = {};
@@ -165,6 +263,35 @@ jQuery(document).ready(function () {
     var options = {};
     var styling = {};
     var styleInputs = {};
+
+    function toggleTemplates() {
+      var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
+        viewKey = sender.attr('data-view-key'),
+        type = sender.attr('data-view'),
+        typeOther = 'expanded',
+        small = true,
+        senderParent = sender.parent(),
+        senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
+        senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
+      if (type === 'expanded') {
+        typeOther = 'collapsed';
+        small = false;
+      }
+      senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
+      sender.attr('data-view', typeOther);
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
+      delete views[viewKey][typeOther]._watchers['showModalBody'];
+      views[viewKey][typeOther].small(small);
+      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
+      var tmp = views[viewKey]['expanded'];
+      views[viewKey]['expanded'] = views[viewKey]['collapsed'];
+      views[viewKey]['collapsed'] = tmp;
+
+      tmp = senderParentExpaned.html();
+      senderParentExpaned.html(senderParentCollapsed.html());
+      senderParentCollapsed.html(tmp);
+    }
+
     jQuery.each(templates, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
       options[template.component] = {};
@@ -197,14 +324,14 @@ jQuery(document).ready(function () {
       views[viewKey]['expanded'].small(false);
       views[viewKey]['component'] = template.component;
       views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
+      jQuery(template.expanded).attr('data-view-key', viewKey);
+      jQuery(template.collapsed).attr('data-view-key', viewKey);
       atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
       views[viewKey].expanded.redraw();
       views[viewKey].collapsed.redraw();
+      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
+      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
-
-    var $form = $('section');
-    var $inputs = $form.find('input');
-
 
     var throttledSync = jQuery.throttle(200, function (e) {
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
@@ -230,15 +357,50 @@ jQuery(document).ready(function () {
       // redraw the view
       views[viewKey].expanded.redraw();
       views[viewKey].collapsed.redraw();
+      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
+      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
 
+    var $form = $('section.views-tabs');
+    var $inputs = $form.find('input');
     $inputs.bind('keyup', throttledSync);
 
+    var overallSync = jQuery.throttle(200, function () {
+      applayOverallStyling(getOverallStyling());
+    });
+    jQuery('[data-template="overall-styling"] input').bind('keyup', overallSync);
+
+    function addLoader(btn){
+      var icon = btn.find('i');
+      btn.addClass('disabled');
+      icon.removeClass('mdi mdi-check');
+      icon.addClass('fa fa-spinner fa-spin');
+    }
+
+    function removeLoader(btn){
+      var icon = btn.find('i');
+      btn.removeClass('disabled');
+      icon.removeClass('fa fa-spinner fa-spin');
+      icon.addClass('mdi mdi-check');
+    }
+    function showSuccess(){
+      noty({
+        type: 'success',
+        text: 'AdTechMedia parameters have been saved successfully',
+        timeout: 2000
+      });
+    }
+    function showError(){
+      noty({
+        type: 'error',
+        text: 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.',
+        timeout: 2000
+      });
+    }
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
-      btn.addClass('disabled');
-      console.log('click');
+      addLoader(btn);
       jQuery.ajax({
         url : save_template.ajax_url,
         type : 'post',
@@ -247,6 +409,9 @@ jQuery(document).ready(function () {
           nonce : save_template.nonce,
           inputs : JSON.stringify(inputsToObject(inputs)),
           styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+          position : JSON.stringify(getPositionFields()),
+          overallStyles : getOverallStyling(),
+          overallStylesInputs : JSON.stringify(getOverallStylingFields()),
           component : views[viewKey].component,
           template : atmTemplating.templateRendition(views[viewKey].component).render(
             options[views[viewKey].component],
@@ -254,10 +419,70 @@ jQuery(document).ready(function () {
           )
         },
         success : function (response) {
-          console.log(response);
-          btn.removeClass('disabled');
+          removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
         }
       });
     });
+
+    jQuery('#save-revenue-model').bind('click', function (e) {
+      var btn = jQuery(this);
+      addLoader(btn);
+      jQuery.ajax({
+        url : save_template.ajax_url,
+        type : 'post',
+        data : {
+          action : 'save_template',
+          nonce : save_template.nonce,
+          revenueMethod : jQuery('select[name="revenue_method"]').val()
+        },
+        success : function (response) {
+          removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
+        }
+      });
+    });
+    jQuery('#content-config button').bind('click', function (e) {
+      var btn = jQuery(this);
+      addLoader(btn);
+      jQuery.ajax({
+        url : save_template.ajax_url,
+        type : 'post',
+        data : {
+          action : 'save_template',
+          nonce : save_template.nonce,
+          contentConfig : JSON.stringify(getInputsData(
+            jQuery('#content-config .content input,#content-config .content select')
+          ))
+        },
+        success : function (response) {
+          removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
+        }
+      });
+ 
+    });
+
   })(jQuery);
+
+
+  jQuery('#checkbox-sticky').on('change', function () {
+    if (!jQuery(this).prop('checked')) {
+      jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
+    } else {
+      jQuery('.disable-if-sticky input').removeAttr('disabled');
+    }
+  })
 });

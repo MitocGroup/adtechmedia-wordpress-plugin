@@ -1,0 +1,78 @@
+[
+    {
+        "name": "marco-c/wp_serve_file",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/marco-c/WP_Serve_File.git",
+            "reference": "4b1c0d812375e609d31342118cb886e12a235b9f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/marco-c/WP_Serve_File/zipball/4b1c0d812375e609d31342118cb886e12a235b9f",
+            "reference": "4b1c0d812375e609d31342118cb886e12a235b9f",
+            "shasum": ""
+        },
+        "time": "2016-04-04 19:09:54",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Mozilla\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPLv2"
+        ],
+        "authors": [
+            {
+                "name": "Marco Castelluccio",
+                "email": "mcastelluccio@mozilla.com"
+            }
+        ],
+        "description": "Class to serve dynamic files in WordPress with performance in mind."
+    },
+    {
+        "name": "mozilla/wp-sw-manager",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mozilla/wp-sw-manager.git",
+            "reference": "e6618e47bc21cb1a4daea6aca92ddd5d9e8d9c64"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mozilla/wp-sw-manager/zipball/e6618e47bc21cb1a4daea6aca92ddd5d9e8d9c64",
+            "reference": "e6618e47bc21cb1a4daea6aca92ddd5d9e8d9c64",
+            "shasum": ""
+        },
+        "require": {
+            "marco-c/wp_serve_file": "dev-master"
+        },
+        "time": "2016-04-15 17:39:45",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Mozilla\\": ""
+            }
+        },
+        "license": [
+            "GPLv2"
+        ],
+        "authors": [
+            {
+                "name": "Salvador de la Puente",
+                "email": "salva@mozilla.com"
+            }
+        ],
+        "description": "Service Worker infrastructure for WordPress plugins.",
+        "support": {
+            "source": "https://github.com/mozilla/wp-sw-manager/tree/0.5.0",
+            "issues": "https://github.com/mozilla/wp-sw-manager/issues"
+        }
+    }
+]

@@ -1,0 +1,19 @@
+{
+    "name": "mozilla/wp-sw-manager",
+    "description": "Service Worker infrastructure for WordPress plugins.",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Salvador de la Puente",
+            "email": "salva@mozilla.com"
+        }
+    ],
+    "require": {
+        "marco-c/wp_serve_file": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mozilla\\": ""
+        }
+    }
+}
