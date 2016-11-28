@@ -13,8 +13,23 @@ function getCSSFields(inputs) {
   return styles;
 }
 function getPositionFields() {
+  var inputs = jQuery('[data-template="position"] input');
+
+  return getInputsData(inputs);
+}
+function getOverallStylingFields() {
   var styles = {},
-    inputs = jQuery('[data-template="position"] input');
+    inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
+    }
+  });
+  return styles;
+}
+
+function getInputsData(inputs){
+  var styles = {};
   jQuery.each(inputs, function (i, input) {
     if (jQuery(input).val() !== '') {
       if (jQuery(input).is(':checkbox')) {
@@ -23,16 +38,6 @@ function getPositionFields() {
         styles[jQuery(input).attr('name')] = jQuery(input).val();
       }
 
-    }
-  });
-  return styles;
-}
-function getOverallStylingFields() {
-  var styles = {},
-    inputs = jQuery('[data-template="overall-styling"] input');
-  jQuery.each(inputs, function (i, input) {
-    if (jQuery(input).val() !== '') {
-      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
     }
   });
   return styles;
@@ -414,6 +419,23 @@ jQuery(document).ready(function () {
           removeLoader(btn);
         }
       });
+    });
+    jQuery('#content-config button').bind('click', function (e) {
+      var btn = jQuery(this);
+      addLoader(btn);
+      jQuery.ajax({
+        url : save_template.ajax_url,
+        type : 'post',
+        data : {
+          action : 'save_template',
+          nonce : save_template.nonce,
+          contentConfig : JSON.stringify(getInputsData(jQuery('#content-config .content input,#content-config .content select')))
+        },
+        success : function (response) {
+          removeLoader(btn);
+        }
+      });
+ 
     });
   })(jQuery);
 

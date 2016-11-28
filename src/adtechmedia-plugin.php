@@ -180,8 +180,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
-		//add_action('init',  array( &$this, 'redirect_to_register' ) );
-		//add_action('init',  array( &$this, 'add_my_rule' ) );
+		// Mozilla\WP_SW_Manager::get_manager()->sw()->add_content(array($this, 'write_sw'));
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
@@ -226,24 +225,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		add_action( 'wp_ajax_save_template', array( &$this, 'ajax_save_template' ) );
 	}
 
-	/*function redirect_to_register(){
-		$var = get_query_var('atm_load_js');
-		if( ! empty ( $var ) ) {
-			echo 'lol';
-			exit;
-		}
-	}
-
-	function add_my_rule()
-	{
-		add_rewrite_rule('test','index2.php?atm_load_js=load','top');
-
-		add_filter( 'query_vars', function( $vars ){
-			$vars[] = 'atm_load_js';
-			return $vars;
-		} );
-	}*/
-
 	/**
 	 * Save templates action
 	 */
@@ -256,13 +237,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
 				$this->add_plugin_option( 'revenue_method', $revenue_method );
-				Adtechmedia_Request::property_update_config_by_array(
-					$this->get_plugin_option( 'id' ),
-					$this->get_plugin_option( 'key' ),
-					[
-						'revenueMethod' => $revenue_method,
-					]
-				);
+			} else if ( isset( $_POST['contentConfig'] ) ) {
+				$content_config = json_decode( stripslashes( $_POST['contentConfig'] ), true );
+				foreach ( $content_config as $a_option_key => $a_option_meta ) {
+					if ( ! empty( $content_config[ $a_option_key ] ) ) {
+						$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );
+					}
+				}
+				$this->update_prop();
 			} else {
 				$inputs = $_POST['inputs'];
 				$style_inputs = $_POST['styleInputs'];
@@ -306,7 +288,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function get_toggle_cb_js( $position ) {
 		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
-		if ( ! empty ( $position['scrolling_offset_top'] ) ) {
+		if ( ! empty( $position['scrolling_offset_top'] ) ) {
 			$position['scrolling_offset_top'] = (int) $position['scrolling_offset_top'];
 		}
 		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
@@ -347,7 +329,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 
 		$offset_left = trim( $offset_left );
-		if( $offset_left[0] == '-' ) {
+		if ( '-' == $offset_left[0] ) {
 			$offset_left[0] = ' ';
 			$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
 		} else {
@@ -405,11 +387,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
-			if( ! file_exists ( $file ) || ( time() - filemtime($file) ) > 60  ) {
+			if ( ! file_exists( $file ) || ( time() - filemtime( $file ) ) > 60  ) {
+				// @codingStandardsIgnoreStart
 				file_put_contents( $file, gzdecode( file_get_contents( $script ) ) );
+				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime($file), null, null, true );
-			//wp_enqueue_script( 'Adtechmedia-test', home_url('test') , null, null, true );
+			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
 		}
 	}
 
@@ -478,7 +461,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     window.ATM_CONTENT_PRELOADED = true;
                     window.WP_ATM_AUTHOR_NAME = '$author_name';
                     window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
-                    window.ATM_SERVICE_WORKER = '/sw.min.js';
                     </script>";
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
 	}
