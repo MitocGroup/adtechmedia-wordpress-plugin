@@ -2022,3 +2022,21 @@ select {
 .templates-views.templates-views-common .flex-gutter{
     padding: 15px;
 }
+
+input:disabled{
+    background-color: #f9f9f9;
+    color: #e1e1e1;
+}
+
+input:disabled::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #e1e1e1;
+}
+input:disabled:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #e1e1e1;
+}
+input:disabled::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #e1e1e1;
+}
+input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #e1e1e1;
+}

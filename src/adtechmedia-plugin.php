@@ -156,11 +156,19 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return void
 	 */
 	protected function un_install_database_tables() {
-		/*
-		 * global $wpdb;
-		 * $tableName = $this->prefixTableName('mytable');
-		 * $wpdb->query("DROP TABLE IF EXISTS `$tableName`");
-		 */
+		global $wpdb;
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"DROP TABLE IF EXISTS `$table_name`"
+		);
+		// @codingStandardsIgnoreEnd
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"DROP TABLE IF EXISTS `$table_name`"
+		);
+		// @codingStandardsIgnoreEnd
 	}
 
 
@@ -377,10 +385,16 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_enqueue_style( 'adtechmedia-style-main', plugins_url( '/css/main.css', __FILE__ ) );
 		wp_enqueue_script( 'jquery-ui-tabs' );
+		//;
+		wp_enqueue_script(
+			'adtechmedia-jquery-noty-js',
+			plugins_url( '/js/jquery.noty.packaged.min.js', __FILE__ ),
+			[ 'jquery-ui-tabs' ]
+		);
 		wp_enqueue_script(
 			'adtechmedia-jquery-throttle-js',
 			'https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js',
-			[ 'jquery-ui-tabs' ]
+			[ 'adtechmedia-jquery-noty-js' ]
 		);
 		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://adm.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
 		wp_enqueue_script(
@@ -403,7 +417,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
-			if ( ! file_exists( $file ) || ( time() - filemtime( $file ) ) > 60  ) {
+			if ( ! file_exists( $file ) || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
 				file_put_contents( $file, gzdecode( file_get_contents( $script ) ) );
 				// @codingStandardsIgnoreEnd

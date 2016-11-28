@@ -599,7 +599,7 @@ echo '</script>';
 								</div>
 								<div class="content-view clearfix">
 									<div class="flex-container">
-										<div class="flex-item-6">
+										<div class="flex-item-6 modal-shown no-transition" >
 											<div class="template-name" data-view-text="expanded">
 												Expanded view
 											</div>
@@ -1726,8 +1726,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Premium content unlocked. {notSatisfied_url} Get immediate"
-																value="Premium content unlocked. {notSatisfied_url} Get immediate"
+																placeholder="Premium content unlocked. notSatisfied_url Get immediate"
+																value="Premium content unlocked. notSatisfied_url Get immediate"
 																required="" type="text">
 															<span class="bar"></span>
 														</div>

@@ -100,6 +100,11 @@ function fillPositionFields() {
       }
     }
   });
+  if (!jQuery(this).prop('checked')) {
+    jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
+  } else {
+    jQuery('.disable-if-sticky input').removeAttr('disabled');
+  }
 }
 function fillCSSFields(key, inputValues, inputFields) {
   if (inputValues.hasOwnProperty(key)) {
@@ -401,7 +406,12 @@ jQuery(document).ready(function () {
           )
         },
         success : function (response) {
-          removeLoader(btn)
+          removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
         }
       });
     });
@@ -419,6 +429,11 @@ jQuery(document).ready(function () {
         },
         success : function (response) {
           removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
         }
       });
     });
@@ -437,10 +452,29 @@ jQuery(document).ready(function () {
         },
         success : function (response) {
           removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
         }
       });
  
     });
+    function showSuccess(){
+      noty({
+        type: 'success',
+        text: 'Success',
+        timeout: 2000
+      });
+    }
+    function showError(){
+      noty({
+        type: 'error',
+        text: 'Error',
+        timeout: 2000
+      });
+    }
   })(jQuery);
 
 

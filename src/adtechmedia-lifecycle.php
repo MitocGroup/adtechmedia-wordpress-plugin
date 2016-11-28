@@ -212,7 +212,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 *
 	 * @return void
 	 */
-	protected function other_uninstall() {
+	protected static function other_uninstall() {
 	}
 
 	/**
@@ -285,7 +285,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * The plugin prefix is lower-cases as a best practice that all DB table names are lower case to
 	 * avoid issues on some platforms
 	 */
-	protected function prefix_table_name( $name ) {
+	public function prefix_table_name( $name ) {
 		global $wpdb;
 		return $wpdb->prefix . $name;
 	}

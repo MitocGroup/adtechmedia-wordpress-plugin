@@ -24,6 +24,7 @@ class Adtechmedia_Config {
 		'maxTries' => 7,
 		'minDelay' => 150000,
 		'factor' => 1.7,
+		'atm_js_cache_time' => 86400,
 	];
 
 	/**
