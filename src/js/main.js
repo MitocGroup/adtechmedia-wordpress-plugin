@@ -12,21 +12,6 @@ function getCSSFields(inputs) {
   });
   return styles;
 }
-function getPositionFields() {
-  var inputs = jQuery('[data-template="position"] input');
-
-  return getInputsData(inputs);
-}
-function getOverallStylingFields() {
-  var styles = {},
-    inputs = jQuery('[data-template="overall-styling"] input');
-  jQuery.each(inputs, function (i, input) {
-    if (jQuery(input).val() !== '') {
-      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
-    }
-  });
-  return styles;
-}
 
 function getInputsData(inputs){
   var styles = {};
@@ -42,6 +27,24 @@ function getInputsData(inputs){
   });
   return styles;
 }
+
+function getPositionFields() {
+  var inputs = jQuery('[data-template="position"] input');
+
+  return getInputsData(inputs);
+}
+
+function getOverallStylingFields() {
+  var styles = {},
+    inputs = jQuery('[data-template="overall-styling"] input');
+  jQuery.each(inputs, function (i, input) {
+    if (jQuery(input).val() !== '') {
+      styles[jQuery(input).attr('data-template-css')] = jQuery(input).val();
+    }
+  });
+  return styles;
+}
+
 function getOverallStyling() {
   var css = '',
     stylesData = getOverallStylingFields();
@@ -50,12 +53,11 @@ function getOverallStyling() {
       '.atm-targeted-modal .atm-head-modal ' +
       '.atm-modal-heading {background-color: ' + stylesData['background-color'] + ';}';
   }
-  if (stylesData.hasOwnProperty('border')) {
-    css += '.atm-targeted-modal{border: ' + stylesData['border'] + ';}';
-  }
-  if (stylesData.hasOwnProperty('box-shadow')) {
-    css += '.atm-targeted-modal{box-shadow: ' + stylesData['box-shadow'] + ';}';
-  }
+  jQuery.each(['border', 'box-shadow'], function (i, key) {
+    if (stylesData.hasOwnProperty(key)) {
+      css += '.atm-targeted-modal{'+key+': ' + stylesData[key] + ';}';
+    }
+  });
   if (stylesData.hasOwnProperty('footer-background-color')) {
     css += '.atm-base-modal .atm-footer{background-color: ' + stylesData['footer-background-color'] + ';}';
   }
@@ -429,7 +431,9 @@ jQuery(document).ready(function () {
         data : {
           action : 'save_template',
           nonce : save_template.nonce,
-          contentConfig : JSON.stringify(getInputsData(jQuery('#content-config .content input,#content-config .content select')))
+          contentConfig : JSON.stringify(getInputsData(
+            jQuery('#content-config .content input,#content-config .content select')
+          ))
         },
         success : function (response) {
           removeLoader(btn);
