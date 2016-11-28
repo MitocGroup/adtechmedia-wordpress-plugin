@@ -180,7 +180,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
-		// Mozilla\WP_SW_Manager::get_manager()->sw()->add_content(array($this, 'write_sw'));.
+		Mozilla\WP_SW_Manager::get_manager()->sw()->add_content(array($this, 'write_sw'));
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
@@ -223,6 +223,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
 		add_action( 'wp_ajax_save_template', array( &$this, 'ajax_save_template' ) );
+	}
+
+	/**
+	 * Get sw.min.js content.
+	 */
+	function write_sw() {
+		$path = plugins_url( '/js/sw.min.js', __FILE__ );
+		echo file_get_contents($path);
 	}
 
 	/**
@@ -461,6 +469,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     window.ATM_CONTENT_PRELOADED = true;
                     window.WP_ATM_AUTHOR_NAME = '$author_name';
                     window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
+                    window.ATM_SERVICE_WORKER = '/sw.min.js';
                     </script>";
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
 	}

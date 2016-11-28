@@ -73,6 +73,6 @@ if ( adtechmedia_php_version_check() ) {
 	include_once( 'adtechmedia-request.php' );
 	include_once( 'adtechmedia-config.php' );
 	include_once( 'adtechmedia-contentmanager.php' );
-	// include_once( 'vendor/autoload.php');.
+	include_once( 'lib/autoload.php');
 	adtechmedia_init( __FILE__ );
 }
