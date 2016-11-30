@@ -188,7 +188,7 @@ jQuery(document).ready(function () {
             inputName : 'message-expanded',
             type : 'expanded'
           }, {
-            name : 'heading-headline',
+            name : 'heading-headline-setup',
             inputName : 'message-collapsed',
             type : 'collapsed'
           }]

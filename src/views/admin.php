@@ -1203,8 +1203,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Support quality journalism. setupPayment_url"
-																value="Support quality journalism. setupPayment_url"
+																placeholder="Support quality journalism. {pay-button} "
+																value="Support quality journalism. {pay-button} "
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
