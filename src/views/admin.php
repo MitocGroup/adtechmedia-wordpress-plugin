@@ -31,22 +31,22 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 
 echo '<script>';
 // @codingStandardsIgnoreStart
-echo 'var templateInputs =JSON.parse("';
+echo 'var templateInputs =JSON.parse(\'';
 $template_inputs = $this->get_plugin_option( 'template_inputs' );
 echo empty( $template_inputs ) ? '{}' : $template_inputs;
-echo '");';
-echo 'var templateStyleInputs =JSON.parse("';
+echo '\');';
+echo 'var templateStyleInputs =JSON.parse(\'';
 $template_style_inputs = $this->get_plugin_option( 'template_style_inputs' );
 echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
-echo '");';
-echo 'var templatePositionInputs =JSON.parse("';
+echo '\');';
+echo 'var templatePositionInputs =JSON.parse(\'';
 $template_position = $this->get_plugin_option( 'template_position' );
 echo empty( $template_position ) ? '{}' : $template_position;
-echo '");';
-echo 'var templateOverallStylesInputs =JSON.parse("';
+echo '\');';
+echo 'var templateOverallStylesInputs =JSON.parse(\'';
 $template_overall_styles_inputs = $this->get_plugin_option( 'template_overall_styles_inputs' );
 echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
-echo '");';
+echo '\');';
 // @codingStandardsIgnoreEnd
 echo '</script>';
 ?>
@@ -479,7 +479,7 @@ echo '</script>';
 										<label>Background Color</label>
 										<div class="custom-input">
 											<input placeholder="background-color" data-template-css="background-color" required=""
-												   type="text">
+												   type="color">
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -518,7 +518,7 @@ echo '</script>';
 										<label>Footer Background Color</label>
 										<div class="custom-input">
 											<input placeholder="footer background-color" data-template-css="footer-background-color"
-												   required="" type="text">
+												   required="" type="color" >
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -632,7 +632,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" data-template-css="color"
-																		   required="" type="text">
+																		   required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -730,7 +730,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" data-template-css="color"
-																		   required="" type="text">
+																		   required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -826,7 +826,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -923,7 +923,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -974,7 +974,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1038,7 +1038,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1062,7 +1062,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1075,7 +1075,7 @@ echo '</script>';
 									</div>
 									<div class="custom-input pull-right">
 										<button type="button" class="btn save-templates"><i
-												class="mdi mdi-check"></i> Save
+												class="mdi mdi-check"></i>Save
 										</button>
 									</div>
 								</div>
@@ -1119,7 +1119,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1203,8 +1203,8 @@ echo '</script>';
 														<div class="custom-input">
 															<input
 																name="message-collapsed"
-																placeholder="Support quality journalism. setupPayment_url"
-																value="Support quality journalism. setupPayment_url"
+																placeholder="Support quality journalism. {pay-button} "
+																value="Support quality journalism. {pay-button} "
 																required="" type="text">
 															<span class="bar"></span>
 														</div>
@@ -1215,7 +1215,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input data-template-css="color" placeholder="color" required="" type="text">
+																	<input data-template-css="color" placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1307,7 +1307,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1379,7 +1379,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1430,7 +1430,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1529,7 +1529,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1580,7 +1580,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1643,7 +1643,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1667,7 +1667,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1679,7 +1679,7 @@ echo '</script>';
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i>Save</button>
 									</div>
 								</div>
 							</div>
@@ -1738,7 +1738,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1820,7 +1820,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color"  data-template-css="color" required="" type="text">
+																	<input placeholder="color"  data-template-css="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1897,7 +1897,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="text">
+																	<input placeholder="color" data-template-css="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1921,7 +1921,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Neutral Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"  required="" type="text">
+																	<input placeholder="color" data-template-css="color"  required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1945,7 +1945,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Not happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"  required="" type="text">
+																	<input placeholder="color" data-template-css="color"  required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1975,7 +1975,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input  data-template-css="color" placeholder="color" required="" type="text">
+																	<input  data-template-css="color" placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2050,7 +2050,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2072,7 +2072,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2094,7 +2094,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2116,7 +2116,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2159,7 +2159,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2210,7 +2210,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2273,7 +2273,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2297,7 +2297,7 @@ echo '</script>';
 																<label>Color</label>
 																<div class="custom-input">
 																	<input placeholder="color" value="" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2309,7 +2309,7 @@ echo '</script>';
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i>Save</button>
 									</div>
 								</div>
 							</div>
@@ -2392,7 +2392,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2443,7 +2443,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2536,7 +2536,7 @@ echo '</script>';
 																<label>Background Color</label>
 																<div class="custom-input">
 																	<input placeholder="background-color" required=""
-																		   type="text">
+																		   type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2567,7 +2567,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="text">
+																	<input placeholder="color" required="" type="color">
 																	<span class="bar"></span>
 																</div>
 															</div>

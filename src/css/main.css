@@ -2040,3 +2040,6 @@ input:disabled::-moz-placeholder { /* Mozilla Firefox 19+ */
 input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    #e1e1e1;
 }
+.template-name[data-view-text="collapsed"]{
+    padding-top: 16px;
+}
