@@ -100,7 +100,7 @@ function fillPositionFields() {
       }
     }
   });
-  if (!jQuery(this).prop('checked')) {
+  if (!jQuery('#checkbox-sticky').prop('checked')) {
     jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
   } else {
     jQuery('.disable-if-sticky input').removeAttr('disabled');
@@ -363,12 +363,15 @@ jQuery(document).ready(function () {
 
     var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
+    var $colorInputs = $form.find('input[type="color"]');
     $inputs.bind('keyup', throttledSync);
+    $colorInputs.bind('change', throttledSync);
 
     var overallSync = jQuery.throttle(200, function () {
       applayOverallStyling(getOverallStyling());
     });
     jQuery('[data-template="overall-styling"] input').bind('keyup', overallSync);
+    jQuery('[data-template="overall-styling"] input[type="color"]').bind('change', overallSync);
 
     function addLoader(btn){
       var icon = btn.find('i');
