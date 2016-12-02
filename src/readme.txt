@@ -32,9 +32,9 @@ To be updated later. Contact hello@adtechmedia.io for any questions and concerns
 
 
 == Screenshots ==
-1. The screenshot description corresponds to screenshot-step1-pledge-no-widget.png
-2. The screenshot description corresponds to screenshot-step2-pledge-collapsed.png
-3. The screenshot description corresponds to screenshot-step3-pledge-extended.png
+1. Initially [AdTechMedia Modal](screenshot-1.png) is not displayed
+2. When user scrolls down to read the article, [AdTechMedia Modal](screenshot-2.png) appears in collapsed mode
+3. When clicking on either the modal or the unlock button, [AdTechMedia Modal](screenshot-3.png) expands, providing choices to pay for content consumption
 
 
 == Changelog ==
