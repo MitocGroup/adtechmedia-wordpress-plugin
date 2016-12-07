@@ -272,7 +272,7 @@ class Adtechmedia_Request {
 		$payment_pledged,
 		$offset_type,
 		$currency,
-		$pledged_type, 
+		$pledged_type,
 		$get_target_cb_js
 	) {
 		if ( empty( $key ) ) {
