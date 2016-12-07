@@ -419,9 +419,47 @@ class Adtechmedia_OptionsManager {
 			$this->get_plugin_option( 'payment_pledged' ),
 			$this->get_plugin_option( 'content_offset_type' ),
 			$this->get_plugin_option( 'price_currency' ),
-			$this->get_plugin_option( 'content_paywall' )
+			$this->get_plugin_option( 'content_paywall' ),
+			$this->get_target_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) )
 		);
 		Adtechmedia_ContentManager::clear_all_content();
+	}
+
+	/**
+	 * Get JS to targetCb function
+	 *
+	 * @param array $position array of position properties.
+	 * @return string
+	 */
+	public function get_target_cb_js( $position ) {
+		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
+		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
+		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
+		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
+		$content = '';
+		if ( $sticky ) {
+			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
+			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
+			$content .= "mainModal.rootNode.style.width = '$width';\n";
+			$offset_left = trim( $offset_left );
+			if ( '-' == $offset_left[0] ) {
+				$offset_left[0] = ' ';
+				$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
+			} else {
+				$content .= "mainModal.rootNode.style.left = 'calc(50% + $offset_left)';\n";
+			}
+			$content .= "mainModal.rootNode.style.transform = 'translateX(-50%)';\n";
+		} else {
+			$content .= "mainModal.rootNode.style.width = '100%';\n";
+		}
+
+		return "function(modalNode, cb) {
+                var mainModal=modalNode;
+                mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
+                mainModal.rootNode.classList.add('atm-targeted-container');
+                $content
+                cb();
+                }";
 	}
 
 	/**
