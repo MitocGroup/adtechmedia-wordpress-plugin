@@ -426,7 +426,7 @@ echo '</script>';
 				<div class="template-view">
 					<div class="header-view">Overall position and styling
 					</div>
-					<section class="" >
+					<section class="content-view" >
 							<div class="flex-container flex-gutter flex-end" data-template="position">
 							<div class="flex-item-2">
 								<span class="accent-color">Sticky</span>
