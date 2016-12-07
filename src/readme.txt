@@ -2,14 +2,14 @@
 Plugin: AdTechMedia Plugin for WordPress
 Plugin URI: https://wordpress.org/plugins/adtechmedia
 Author: AdTechMedia.io
-Contributors: Yama_GS, AlexanderC
+Contributors: yamagleb, alexanderc89
 Donate link: https://www.adtechmedia.io
 Tags: adtechmedia, adtech, media, ads, advertising, micropayments
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
-Tested up to: 4.6.1
-Stable tag: 0.2
+Tested up to: 4.7
+Stable tag: 0.3
 
 
 == Description ==
@@ -37,6 +37,9 @@ Meanwhile, frequently asked questions will be compiled and published as we evolv
 
 
 == Changelog ==
+
+= 0.3 =
+- Fine tuning configs
 
 = 0.2 =
 - Improve FAQ section

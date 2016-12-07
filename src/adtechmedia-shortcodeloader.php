@@ -16,7 +16,7 @@
  *
  * @category File
  * @package  Adtechmedia_Plugin
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Adtechmedia
+ * Plugin Name: AdTechMedia
  * Plugin URI: http://wordpress.org/extend/plugins/adtechmedia/
- * Version: 0.01
+ * Version: 0.3
  * Author:
  * Description:
  * Text Domain: adtechmedia
@@ -10,7 +10,7 @@
  *
  * @category Adtechmedia
  * @package  Adtechmedia_Plugin
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 $adtechmedia_minimal_required_php_version = '5.0';

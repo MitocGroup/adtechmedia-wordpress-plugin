@@ -16,7 +16,7 @@
  *
  * @category File
  * @package  Adtechmedia_LifeCycle
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**
