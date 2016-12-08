@@ -319,7 +319,6 @@ class Adtechmedia_Request {
 				],
 			],
 		];
-		// file_put_contents(plugin_dir_path( __FILE__ ). '/test.txt',json_encode( $data ));
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/update-config',
 			'PATCH',

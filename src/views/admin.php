@@ -111,12 +111,13 @@ echo '</script>';
 									<i class="mdi mdi-map-marker"></i> Country
 								</label>
 								<select name="country" id="country">
-									<?php foreach ( $countries as $name => $methods ){
+									<?php
+									foreach ( $countries as $name => $methods ) {
 										$selected = ($this->get_plugin_option( 'country' ) == $name) ? 'selected' : '';
-										echo "<option value='" . esc_html ( $name ) . "' data-methods='"
-											. json_encode($methods) . "' " . esc_html ( $selected ) . ">" . esc_html ( $name ) . '</option>';
-									} ?>
-
+										echo "<option value='" . esc_html( $name ) . "' data-methods='"
+											. json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
+									}
+									?>
 								</select>
 
 							</div>
@@ -131,7 +132,7 @@ echo '</script>';
 								</label>
 								<?php $this->create_form_control(
 									'revenue_method',
-									array_merge( [ "" ] ,$countries[ $this->get_plugin_option( 'country' ) ] ),
+									array_merge( [ '' ] ,$countries[ $this->get_plugin_option( 'country' ) ] ),
 									$this->get_plugin_option( 'revenue_method' )
 								); ?>
 							</div>
