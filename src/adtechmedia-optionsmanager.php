@@ -16,7 +16,7 @@
  *
  * @category File
  * @package  Adtechmedia_OptionsManager
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**
