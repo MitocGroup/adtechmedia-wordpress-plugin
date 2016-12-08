@@ -90,7 +90,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'country', 'United States' );
 		$this->add_plugin_option( 'content_offset', '2' );
 		$this->add_plugin_option( 'content_lock', 'blur+scramble' );
-		$this->add_plugin_option( 'revenue_method', 'advertising+micropayments' );
+		$this->add_plugin_option( 'revenue_method', 'micropayments' );
 		$this->add_plugin_option( 'payment_pledged', '2' );
 		$this->add_plugin_option( 'price_currency', 'usd' );
 		$this->add_plugin_option( 'content_paywall', 'transactions' );
