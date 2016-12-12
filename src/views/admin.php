@@ -384,7 +384,7 @@ echo '</script>';
 
 							<div class="mockup-cont">
 								<img
-									src="<?php echo esc_html( plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ) ?>"/>
+									src="<?php echo esc_html( plugins_url( '../images/collaborative-team.jpg', __FILE__ ) ) ?>"/>
 
 								<p>It is a long established fact that a reader will be distracted by
 									the readable content of a page when looking at its layout.
