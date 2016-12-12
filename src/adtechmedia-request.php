@@ -102,7 +102,7 @@ class Adtechmedia_Request {
 		if ( empty( $key ) ) {
 			return false;
 		}
-		$list = get_transient( 'adtechmedia-supported-countries' );
+		$list = get_transient( 'adtechmedia-supported-countries-new' );
 		if ( false === $list ) {
 			$response = self::make(
 				Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/supported-countries',
@@ -117,7 +117,7 @@ class Adtechmedia_Request {
 			} else {
 				$list = false;
 			}
-			set_transient( 'adtechmedia-supported-countries', $list, 3600 * 2 );
+			set_transient( 'adtechmedia-supported-countries-new', $list, 3600 * 2 );
 		}
 
 		return $list;
