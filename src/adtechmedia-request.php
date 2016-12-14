@@ -4,7 +4,7 @@
  *
  * @category File
  * @package  Adtechmedia_Plugin
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**
@@ -102,7 +102,7 @@ class Adtechmedia_Request {
 		if ( empty( $key ) ) {
 			return false;
 		}
-		$list = get_transient( 'adtechmedia-supported-countries' );
+		$list = get_transient( 'adtechmedia-supported-countries-new' );
 		if ( false === $list ) {
 			$response = self::make(
 				Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/supported-countries',
@@ -117,7 +117,7 @@ class Adtechmedia_Request {
 			} else {
 				$list = false;
 			}
-			set_transient( 'adtechmedia-supported-countries', $list, 3600 * 2 );
+			set_transient( 'adtechmedia-supported-countries-new', $list, 3600 * 2 );
 		}
 
 		return $list;
@@ -256,6 +256,7 @@ class Adtechmedia_Request {
 	 * @param string  $offset_type offset type.
 	 * @param string  $currency currency.
 	 * @param string  $pledged_type pledged type.
+	 * @param string  $get_target_cb_js target cb js.
 	 * @return array|bool
 	 */
 	public static function property_update_config(
@@ -271,7 +272,8 @@ class Adtechmedia_Request {
 		$payment_pledged,
 		$offset_type,
 		$currency,
-		$pledged_type
+		$pledged_type,
+		$get_target_cb_js
 	) {
 		if ( empty( $key ) ) {
 			return false;
@@ -311,20 +313,10 @@ class Adtechmedia_Request {
 					'currency' => $currency,
 					'pledgedType' => self::get_pledged_type( $pledged_type ),
 				],
-
-				/*
 				'targetModal' => [
-					'toggleCb' => 'function(cb) {cb(true);}',
-					'targetCb' => "function(modalNode, cb) {
-                                    var mainModal=modalNode;
-                                    mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
-                                    mainModal.rootNode.classList.add('atm-targeted-container');
-                                    mainModal.rootNode.style.width = '100%';
-                                    cb();
-                                    }",
+					// 'toggleCb' => 'function(cb) {cb(true);}',
+					'targetCb' => $get_target_cb_js,
 				],
-				*/
-
 			],
 		];
 		$response = self::make(

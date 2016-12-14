@@ -453,6 +453,15 @@ jQuery(document).ready(function () {
         }
       });
     });
+    jQuery('#country').bind('change', function (e) {
+      var country = jQuery(this),
+        method = jQuery('#revenue_method');
+      method.empty();
+      $.each(country.find(':selected').data('methods'), function(key,value) {
+        method.append($('<option></option>')
+          .attr('value', value).text(value));
+      });
+    });
     jQuery('#content-config button').bind('click', function (e) {
       var btn = jQuery(this);
       addLoader(btn);

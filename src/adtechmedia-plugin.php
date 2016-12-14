@@ -4,7 +4,7 @@
  *
  * @category File
  * @package  Adtechmedia_Plugin
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**
@@ -340,43 +340,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 * Get JS to targetCb function
-	 *
-	 * @param array $position array of position properties.
-	 * @return string
-	 */
-	public function get_target_cb_js( $position ) {
-		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
-		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
-		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
-		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
-		$content = '';
-		if ( $sticky ) {
-			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
-			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
-			$content .= "mainModal.rootNode.style.width = '$width';\n";
-			$offset_left = trim( $offset_left );
-			if ( '-' == $offset_left[0] ) {
-				$offset_left[0] = ' ';
-				$content .= "mainModal.rootNode.style.left = 'calc(50% - $offset_left)';\n";
-			} else {
-				$content .= "mainModal.rootNode.style.left = 'calc(50% + $offset_left)';\n";
-			}
-			$content .= "mainModal.rootNode.style.transform = 'translateX(-50%)';\n";
-		} else {
-			$content .= "mainModal.rootNode.style.width = '100%';\n";
-		}
-
-		return "function(modalNode, cb) {
-                var mainModal=modalNode;
-                mainModal.mount(document.querySelector('#content-for-atm-modal'), mainModal.constructor.MOUNT_APPEND);
-                mainModal.rootNode.classList.add('atm-targeted-container');
-                $content
-                cb();
-                }";
-	}
-
-	/**
 	 * Register plugin scripts
 	 *
 	 * @param string $hook wp hook.
@@ -422,9 +385,20 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
-			if ( ! file_exists( $file ) || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
+			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
+			$is_old = empty( $is_old ) ? '0' : '1';
+			if ( ! file_exists( $file ) || '1' == $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
+				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
-				file_put_contents( $file, gzdecode( file_get_contents( $script ) ) );
+				$data = gzdecode( file_get_contents( $script . "?v=" . time() ) );
+				$new_hash = md5( $data );
+				if ( empty( $hash ) || ( $hash != $new_hash ) ) {
+					$this->add_plugin_option( 'atm-js-hash', $new_hash );
+					$this->add_plugin_option( 'atm-js-is-old', '0' );
+				} else {
+					$this->add_plugin_option( 'atm-js-is-old', '1' );
+				}
+				file_put_contents( $file, $data );
 				// @codingStandardsIgnoreEnd
 			}
 			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );

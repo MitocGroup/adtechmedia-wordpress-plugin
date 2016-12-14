@@ -16,7 +16,7 @@
  *
  * @category File
  * @package  Adtechmedia_InstallIndicator
- * @author    yama-gs
+ * @author   yamagleb
  */
 
 /**

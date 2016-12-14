@@ -15,7 +15,7 @@ $currencies = [];
 $countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
-		$countries[ $countries_element['Name'] ] = $countries_element['RevenueMethod'];
+		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
 		foreach ( $countries_element['Currency'] as $currency ) {
 			if ( ! in_array( $currency, $currencies ) ) {
 				$currencies[] = $currency;
@@ -111,8 +111,15 @@ echo '</script>';
 									<i class="mdi mdi-map-marker"></i> Country
 								</label>
 								<select name="country" id="country">
-									<option value="United States">United States</option>
+									<?php
+									foreach ( $countries as $name => $methods ) {
+										$selected = ($this->get_plugin_option( 'country' ) == $name) ? 'selected' : '';
+										echo "<option value='" . esc_html( $name ) . "' data-methods='"
+											. json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
+									}
+									?>
 								</select>
+
 							</div>
 							<div class="block-info">
 								Choose the country of origin where revenue will be collected
@@ -125,7 +132,7 @@ echo '</script>';
 								</label>
 								<?php $this->create_form_control(
 									'revenue_method',
-									$main_data['revenue_method'],
+									array_merge( [ '' ] ,$countries[ $this->get_plugin_option( 'country' ) ] ),
 									$this->get_plugin_option( 'revenue_method' )
 								); ?>
 							</div>
@@ -377,7 +384,7 @@ echo '</script>';
 
 							<div class="mockup-cont">
 								<img
-									src="<?php echo esc_html( plugins_url( '../images/Collaborative-team.jpg', __FILE__ ) ) ?>"/>
+									src="<?php echo esc_html( plugins_url( '../images/collaborative-team.jpg', __FILE__ ) ) ?>"/>
 
 								<p>It is a long established fact that a reader will be distracted by
 									the readable content of a page when looking at its layout.
@@ -426,7 +433,7 @@ echo '</script>';
 				<div class="template-view">
 					<div class="header-view">Overall position and styling
 					</div>
-					<section class="" >
+					<section class="content-view" >
 							<div class="flex-container flex-gutter flex-end" data-template="position">
 							<div class="flex-item-2">
 								<span class="accent-color">Sticky</span>

@@ -21,3 +21,4 @@ This repository is being sponsored by:
 
 This code can be used under MIT license:
 > See [LICENSE](https://github.com/AdTechMedia/wordpress-plugin/blob/master/LICENSE) for more details.
+
