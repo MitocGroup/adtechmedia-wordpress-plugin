@@ -178,7 +178,7 @@ echo '</script>';
 						</div>
 						<div class="flex-item-6 flex-end">
 						<div class="custom-input">
-							<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i>Save</button>
+							<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
 						</div>
 						</div>
 					</div>
@@ -352,7 +352,7 @@ echo '</script>';
 						</div>
 
 						<div class="custom-input">
-							<button type="button" class="btn"><i class="mdi mdi-check"></i>Save</button>
+							<button type="button" class="btn"><i class="mdi mdi-check"></i> Save</button>
 						</div>
 					</div>
 					<div class="flex-item-6">
@@ -1082,7 +1082,7 @@ echo '</script>';
 									</div>
 									<div class="custom-input pull-right">
 										<button type="button" class="btn save-templates"><i
-												class="mdi mdi-check"></i>Save
+												class="mdi mdi-check"></i> Save
 										</button>
 									</div>
 								</div>
@@ -1686,7 +1686,7 @@ echo '</script>';
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i>Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
@@ -2316,7 +2316,7 @@ echo '</script>';
 										</div>
 									</div>
 									<div class="custom-input pull-right">
-										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i>Save</button>
+										<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
 									</div>
 								</div>
 							</div>
