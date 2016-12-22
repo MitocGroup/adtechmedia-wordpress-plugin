@@ -328,7 +328,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		return "function(cb) {
 				var adjustMarginTop = function (e) {
-                var modalOffset = document.body.scrollTop > $scrolling_offset_top;
+                var modalOffset = (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0) >= $scrolling_offset_top;
                 if (modalOffset) {
                   cb(true);
                 } else {

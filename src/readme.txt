@@ -9,7 +9,7 @@ License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
 Tested up to: 4.7
-Stable tag: 0.3
+Stable tag: 0.4
 
 
 == Description ==
@@ -37,6 +37,9 @@ Meanwhile, frequently asked questions will be compiled and published as we evolv
 
 
 == Changelog ==
+
+= 0.4 =
+- Fix Firefox bugs
 
 = 0.3 =
 - Fine tuning configs
