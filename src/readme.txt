@@ -4,7 +4,7 @@ Plugin URI: https://wordpress.org/plugins/adtechmedia
 Author: AdTechMedia.io
 Contributors: yamagleb, alexanderc89
 Donate link: https://www.adtechmedia.io
-Tags: adtechmedia, adtech, media, ads, advertising, micropayments
+Tags: adtech, advertising, micropayments, media, revenue
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6

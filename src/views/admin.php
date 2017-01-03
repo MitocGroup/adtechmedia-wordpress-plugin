@@ -347,7 +347,7 @@ echo '</script>';
 							</div>
 
 							<div class="block-info">
-								Speficy the link to video ad that will be used for demo purposes
+								Specify the link to video ad that will be used for demo purposes
 							</div>
 						</div>
 
@@ -446,7 +446,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Width</label>
 									<div class="custom-input">
-										<input placeholder="width" name="width" type="text">
+										<input type="text" name="width" value="600px" placeholder="600px" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -455,7 +455,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Offset top</label>
 									<div class="custom-input">
-										<input placeholder="offset top" name="offset_top"  type="text">
+										<input type="text" name="offset_top" value="20px" placeholder="20px" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -464,7 +464,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Offset from center</label>
 									<div class="custom-input">
-										<input placeholder="offset left" name="offset_left"  type="text">
+										<input type="text" name="offset_left" value="-60px" placeholder="-60px" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -473,7 +473,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Scrolling offset top</label>
 									<div class="custom-input">
-										<input placeholder="scrolling offset top" name="scrolling_offset_top"  type="text">
+										<input type="text" name="scrolling_offset_top" value="100px" placeholder="100px" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -485,8 +485,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Background Color</label>
 										<div class="custom-input">
-											<input placeholder="background-color" data-template-css="background-color" required=""
-												   type="color">
+											<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -495,7 +494,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Border</label>
 										<div class="custom-input">
-											<input placeholder="border" data-template-css="border" required="" type="text">
+											<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -504,8 +503,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Font Family</label>
 										<div class="custom-input">
-											<input placeholder="font-family" data-template-css="font-family" required=""
-												   type="text">
+											<input type="text" data-template-css="font-family" value="'Helvetica Neue', sans-serif" placeholder="'Helvetica Neue', sans-serif" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -514,8 +512,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Box Shadow</label>
 										<div class="custom-input">
-											<input placeholder="box-shadow" data-template-css="box-shadow" required=""
-												   type="text">
+											<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -524,8 +521,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Footer Background Color</label>
 										<div class="custom-input">
-											<input placeholder="footer background-color" data-template-css="footer-background-color"
-												   required="" type="color" >
+											<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -534,9 +530,7 @@ echo '</script>';
 									<div class="custom-label">
 										<label>Footer Border</label>
 										<div class="custom-input">
-											<input placeholder="footer-border" required=""
-												   data-template-css="footer-border"
-												   type="text">
+											<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
 											<span class="bar"></span>
 										</div>
 									</div>
@@ -627,8 +621,7 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input placeholder="Dear {user}," name="welcome"
-																   value="Dear {user}," required="" type="text">
+															<input type="text" name="welcome" value="Dear {user}," placeholder="Dear {user}," required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -638,8 +631,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"
-																		   required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -648,9 +640,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size"
-																		   data-template-css="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -659,9 +649,22 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight"
-																		   data-template-css="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																	<!--<select>
+								                                        <option selected>normal</option>
+								                                        <option>bold</option>
+								                                        <option>bolder</option>
+								                                        <option>lighter</option>
+								                                        <option>100</option>
+								                                        <option>200</option>
+								                                        <option>300</option>
+								                                        <option>400</option>
+								                                        <option>500</option>
+								                                        <option>600</option>
+								                                        <option>700</option>
+								                                        <option>800</option>
+								                                        <option>900</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -673,9 +676,12 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style"
-																		   data-template-css="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																	<!--<select>
+								                                        <option selected>normal</option>
+								                                        <option>italic</option>
+								                                        <option>oblique</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -684,9 +690,13 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align"
-																		   data-template-css="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
+																	<!--<select>
+								                                        <option selected>left</option>
+								                                        <option>right</option>
+								                                        <option>center</option>
+								                                        <option>justify</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -695,9 +705,13 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform"
-																		   data-template-css="text-transform"
-																		   required="" type="text">
+																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
+																    <select>
+								                                        <option selected>none</option>
+								                                        <option>capitalize</option>
+								                                        <option>uppercase</option>
+								                                        <option>lowercase</option>
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -714,20 +728,14 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input name="message-expanded"
-																   placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
-																   value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
-																   required="" type="text">
+															<input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
-															<input name="message-collapsed"
-																   placeholder="Please support quality journalism."
-																   value="Please support quality journalism. {pledge-button}"
-																   required="" type="text">
+															<input type="text" name="message-collapsed" value="Please support quality journalism. {pledge-button}" placeholder="Please support quality journalism." required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -736,8 +744,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"
-																		   required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -746,9 +753,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size"
-																		   data-template-css="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -757,9 +762,22 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight"
-																		   data-template-css="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																	<!--<select>
+								                                        <option selected>normal</option>
+								                                        <option>bold</option>
+								                                        <option>bolder</option>
+								                                        <option>lighter</option>
+								                                        <option>100</option>
+								                                        <option>200</option>
+								                                        <option>300</option>
+								                                        <option>400</option>
+								                                        <option>500</option>
+								                                        <option>600</option>
+								                                        <option>700</option>
+								                                        <option>800</option>
+								                                        <option>900</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -771,9 +789,12 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style"
-																		   data-template-css="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																	<!--<select>
+								                                        <option selected>normal</option>
+								                                        <option>italic</option>
+								                                        <option>oblique</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -782,9 +803,13 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align"
-																		   data-template-css="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
+																	<!--<select>
+								                                        <option selected>left</option>
+								                                        <option>right</option>
+								                                        <option>center</option>
+								                                        <option>justify</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -793,9 +818,13 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform"
-																		   data-template-css="text-transform" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
+																	<!--<select>
+								                                        <option selected>none</option>
+								                                        <option>capitalize</option>
+								                                        <option>uppercase</option>
+								                                        <option>lowercase</option>
+								                                    </select>-->
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -811,9 +840,7 @@ echo '</script>';
 													<div class="custom-label">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input placeholder="Already used us before? {connect_url}"
-																   value="Already used us before? {connect_url}"
-																   required="" type="text">
+															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -821,9 +848,7 @@ echo '</script>';
 													<div class="custom-label">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input placeholder="Not {user}? {disconnect_url}"
-																   value="Not {user}? {disconnect_url}" required=""
-																   type="text">
+															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -833,7 +858,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -842,8 +867,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -852,8 +876,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -865,8 +888,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -875,8 +897,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -885,8 +906,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -905,9 +925,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Micropayments Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="PLEDGE {price}"
-																		   value="PLEDGE {price}" required=""
-																		   type="text">
+																	<input type="text" value="PLEDGE {price}" placeholder="PLEDGE {price}" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -916,8 +934,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Micropayments Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-check" value="fa-check"
-																		   required="" type="text">
+																	<input type="text" placeholder="fa-check" value="fa-check" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -929,8 +946,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -939,7 +955,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -948,8 +964,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="11px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -961,8 +976,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -971,8 +985,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -981,7 +994,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="color" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -993,8 +1006,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1003,8 +1015,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1013,8 +1024,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1033,9 +1043,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up"
-																		   value="fa-chevron-circle-up" required=""
-																		   type="text">
+																	<input type="text" placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1044,8 +1052,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1057,9 +1064,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Opening Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down"
-																		   value="fa-chevron-circle-down" required=""
-																		   type="text">
+																	<input type="text" placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1068,8 +1073,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1115,8 +1119,7 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Salutation</label>
 														<div class="custom-input">
-															<input name="salutation" placeholder="Dear {user}," value="Dear {user},"
-																   required="" type="text">
+															<input type="text" name="salutation" value="Dear {user}," placeholder="Dear {user}," required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1126,7 +1129,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1135,9 +1138,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   data-template-css="font-size"
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1146,8 +1147,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input data-template-css="font-weight" placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1159,8 +1159,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1169,8 +1168,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1179,8 +1177,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1196,11 +1193,7 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input
-																name="message-expanded"
-																placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
-																value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?"
-																required="" type="text">
+															<input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1208,11 +1201,7 @@ echo '</script>';
 													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
-															<input
-																name="message-collapsed"
-																placeholder="Support quality journalism. {pay-button} "
-																value="Support quality journalism. {pay-button} "
-																required="" type="text">
+															<input type="text" name="message-collapsed" value="Support quality journalism. {pay-button} " placeholder="Support quality journalism. {pay-button} " required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1222,7 +1211,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input data-template-css="color" placeholder="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1231,8 +1220,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input data-template-css="font-size" placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1241,8 +1229,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input data-template-css="font-weight" placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1254,8 +1241,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input data-template-css="font-style" placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1264,8 +1250,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input data-template-css="text-align" placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1274,8 +1259,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input  data-template-css="text-transform" placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1291,10 +1275,7 @@ echo '</script>';
 													<div class="custom-label">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input placeholder="Already used us before? {connect_url}"
-																   value="Already used us before? {connect_url}"
-																   required=""
-																   type="text">
+															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1302,9 +1283,7 @@ echo '</script>';
 													<div class="custom-label">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input placeholder="Not {user}? {disconnect_url}"
-																   value="Not {user}? {disconnect_url}" required=""
-																   type="text">
+															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1314,7 +1293,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1323,8 +1302,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1333,8 +1311,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1346,8 +1323,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1356,8 +1332,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1366,8 +1341,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1385,8 +1359,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1395,7 +1368,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1404,8 +1377,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1417,8 +1389,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1427,8 +1398,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1437,7 +1407,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1449,8 +1419,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Box Shadow</label>
 																<div class="custom-input">
-																	<input placeholder="box-shadow" required=""
-																		   type="text">
+																	<input type="text" placeholder="inset 2px 3px 3px rgba(0, 0, 0, 0.07)" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1459,8 +1428,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1469,8 +1437,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1488,8 +1455,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Pay Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="PAY" value="PAY" required=""
-																		   type="text">
+																	<input type="text" value="PAY" placeholder="PAY" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1498,8 +1464,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Pay Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-check" value="fa-check"
-																		   required="" type="text">
+																	<input type="text" value="fa-check" placeholder="fa-check" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1511,8 +1476,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Setup Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="SETUP" value="SETUP" required=""
-																		   type="text">
+																	<input type="text" value="SETUP" placeholder="SETUP" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1521,9 +1485,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Setup Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-cog" value="fa-cog"
-																		   required=""
-																		   type="text">
+																	<input type="text" value="fa-cog" placeholder="fa-cog" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1535,8 +1497,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1545,7 +1506,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1554,8 +1515,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1567,8 +1527,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1577,8 +1536,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1587,7 +1545,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1599,8 +1557,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1609,8 +1566,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1619,8 +1575,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1638,9 +1593,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up"
-																		   value="fa-chevron-circle-up" required=""
-																		   type="text">
+																	<input type="text" value="fa-chevron-circle-up" placeholder="fa-chevron-circle-up" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1649,8 +1602,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1662,9 +1614,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Opening Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down"
-																		   value="fa-chevron-circle-down" required=""
-																		   type="text">
+																	<input type="text" value="fa-chevron-circle-down" placeholder="fa-chevron-circle-down" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1673,8 +1623,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1719,11 +1668,7 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Message (Expanded View)</label>
 														<div class="custom-input">
-															<input
-																name="message-expanded"
-																placeholder="Thanks for contributing {price} and help us do the job we {heart}"
-																value="Thanks for contributing {price} and help us do the job we {heart}"
-																required="" type="text">
+															<input type="text" name="message-expanded" value="Thanks for contributing {price} and help us do the job we {heart}" placeholder="Thanks for contributing {price} and help us do the job we {heart}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1731,11 +1676,7 @@ echo '</script>';
 													<div class="custom-label" data-template="collapsed">
 														<label>Message (Collapsed View)</label>
 														<div class="custom-input">
-															<input
-																name="message-collapsed"
-																placeholder="Premium content unlocked. notSatisfied_url Get immediate"
-																value="Premium content unlocked. notSatisfied_url Get immediate"
-																required="" type="text">
+															<input type="text" name="message-collapsed" value="Premium content unlocked. notSatisfied_url Get immediate" placeholder="Premium content unlocked. notSatisfied_url Get immediate" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1745,7 +1686,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1754,8 +1695,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" data-template-css="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1764,8 +1704,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" data-template-css="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1777,8 +1716,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" data-template-css="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1787,8 +1725,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" data-template-css="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1797,8 +1734,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" data-template-css="text-transform"  required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1814,10 +1750,7 @@ echo '</script>';
 													<div class="custom-label" data-template="mood">
 														<label>Message</label>
 														<div class="custom-input" data-template="expanded">
-															<input
-																name="body-feeling"
-																placeholder="How do you feel now?"
-																   value="How do you feel now?" required="" type="text">
+															<input type="text" name="body-feeling" value="How do you feel now?" placeholder="How do you feel now?" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1827,7 +1760,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color"  data-template-css="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1836,8 +1769,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size"  data-template-css="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1846,8 +1778,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" data-template-css="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1859,8 +1790,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" data-template-css="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1869,8 +1799,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" data-template-css="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1879,8 +1808,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" data-template-css="text-transform" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1892,10 +1820,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Happy Mood Text</label>
 																<div class="custom-input">
-																	<input
-																		name="body-feeling-happy"
-																		placeholder="Happy" value="Happy" required=""
-																		   type="text">
+																	<input type="text" name="body-feeling-happy" value="Happy" placeholder="Happy" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1904,7 +1829,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#92c563" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1916,10 +1841,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Neutral Mood Text</label>
 																<div class="custom-input">
-																	<input
-																		name="body-feeling-ok"
-																		placeholder="OK" value="Ok" required=""
-																		   type="text">
+																	<input type="text" name="body-feeling-ok" value="OK" placeholder="Ok" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1928,7 +1850,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Neutral Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"  required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#eed16a" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1940,10 +1862,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Not happy Mood Text</label>
 																<div class="custom-input">
-																	<input
-																		name="body-feeling-not-happy"
-																		placeholder="Not happy" value="Not happy"
-																		   required="" type="text">
+																	<input type="text" name="body-feeling-not-happy" value="Not happy" placeholder="Not happy" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1952,7 +1871,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Not happy Mood Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" data-template-css="color"  required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#e27378" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1968,11 +1887,7 @@ echo '</script>';
 													<div class="custom-label" data-template="expanded">
 														<label>Message</label>
 														<div class="custom-input">
-															<input
-																name="body-share-experience"
-																placeholder="Share your experience"
-																   value="Share your experience" required=""
-																   type="text">
+															<input type="text" name="body-share-experience" value="Share your experience" placeholder="Share your experience" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -1982,7 +1897,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input  data-template-css="color" placeholder="color" required="" type="color">
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1991,8 +1906,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input  data-template-css="font-size" placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-size" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2001,8 +1915,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input data-template-css="font-weight" placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2014,8 +1927,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input data-template-css="font-style" placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2024,8 +1936,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input  data-template-css="text-align"  placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-align"  placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2034,8 +1945,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input data-template-css="text-transform"  placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" data-template-css="text-transform"  placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2047,8 +1957,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-facebook" value="fa-facebook"
-																		   required="" type="text">
+																	<input type="text" value="fa-facebook" placeholder="fa-facebook" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2057,7 +1966,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#3B579D" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2069,8 +1978,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-twitter" value="fa-twitter"
-																		   required="" type="text">
+																	<input type="text" value="fa-twitter" placeholder="fa-twitter" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2079,7 +1987,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#4AC7F9" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2091,8 +1999,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-email" value="fa-email"
-																		   required="" type="text">
+																	<input type="text" value="fa-email" placeholder="fa-email" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2101,7 +2008,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#ff0000" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2113,8 +2020,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool</label>
 																<div class="custom-input">
-																	<input placeholder="fa-share" value="fa-share"
-																		   required="" type="text">
+																	<input type="text" value="fa-share" placeholder="fa-share" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2123,7 +2029,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Share Tool Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#000000" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2141,9 +2047,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Refund Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="REFUND" value="REFUND"
-																		   required=""
-																		   type="text">
+																	<input type="text" value="REFUND" placeholder="REFUND" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2152,8 +2056,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Refund Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-money" value="fa-money"
-																		   required="" type="text">
+																	<input type="text" value="fa-money" placeholder="fa-money" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2165,8 +2068,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2175,7 +2077,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2184,8 +2086,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2197,8 +2098,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2207,8 +2107,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="border-radius" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2217,7 +2116,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2229,8 +2128,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2239,8 +2137,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2249,8 +2146,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2268,9 +2164,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Closing Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-up"
-																		   value="fa-chevron-circle-up" required=""
-																		   type="text">
+																	<input type="text" value="fa-chevron-circle-up" placeholder="fa-chevron-circle-up" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2279,8 +2173,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2292,9 +2185,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Opening Arrow</label>
 																<div class="custom-input">
-																	<input placeholder="fa-chevron-circle-down"
-																		   value="fa-chevron-circle-down" required=""
-																		   type="text">
+																	<input type="text" value="fa-chevron-circle-down" placeholder="fa-chevron-circle-down" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2303,8 +2194,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" value="" required=""
-																		   type="color">
+																	<input type="color" value="#404040" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2373,9 +2263,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Unlock Button Text</label>
 																<div class="custom-input">
-																	<input placeholder="UNLOCK CONTENT"
-																		   value="UNLOCK CONTENT" required=""
-																		   type="text">
+																	<input type="text" value="UNLOCK CONTENT" placeholder="UNLOCK CONTENT" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2384,9 +2272,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Unlock Button Icon</label>
 																<div class="custom-input">
-																	<input placeholder="fa-unlock-alt"
-																		   value="fa-unlock-alt"
-																		   required="" type="text">
+																	<input type="text" value="fa-unlock-alt" placeholder="fa-unlock-alt" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2398,8 +2284,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2408,7 +2293,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2417,8 +2302,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input placeholder="font-size" required=""
-																		   type="text">
+																	<input type="text" placeholder="font-size" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2430,8 +2314,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2440,8 +2323,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2450,7 +2332,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2462,8 +2344,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2472,8 +2353,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Align</label>
 																<div class="custom-input">
-																	<input placeholder="text-align" required=""
-																		   type="text">
+																	<input type="text" placeholder="left" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2482,8 +2362,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Text Transform</label>
 																<div class="custom-input">
-																	<input placeholder="text-transform" required=""
-																		   type="text">
+																	<input type="text" placeholder="none" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2531,8 +2410,7 @@ echo '</script>';
 													<div class="custom-label">
 														<label>Price</label>
 														<div class="custom-input">
-															<input placeholder="{price}" value="{price}" required=""
-																   type="text">
+															<input type="text" value="{price}" placeholder="{price}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
@@ -2542,8 +2420,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input placeholder="background-color" required=""
-																		   type="color">
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2552,7 +2429,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input placeholder="border" required="" type="text">
+																	<input type="text" placeholder="1px solid #1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2561,8 +2438,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input placeholder="border-radius" required=""
-																		   type="text">
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2574,7 +2450,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input placeholder="color" required="" type="color">
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2583,8 +2459,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Style</label>
 																<div class="custom-input">
-																	<input placeholder="font-style" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2593,8 +2468,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="custom-input">
-																	<input placeholder="font-weight" required=""
-																		   type="text">
+																	<input type="text" placeholder="normal" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
