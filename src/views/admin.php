@@ -2480,6 +2480,9 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
+							<div class="custom-input pull-right">
+								<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
+							</div>
 						</div>
 					</section>
 
