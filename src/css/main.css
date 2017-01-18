@@ -593,6 +593,9 @@ select {
     z-index: 2;
     -webkit-appearance: none;
     -moz-appearance: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
 }
 
 .block-info {
@@ -1658,4 +1661,8 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .template-name[data-view-text="collapsed"] {
     padding-top: 16px;
+}
+
+.form-select select {
+    height: 31px;
 }

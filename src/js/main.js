@@ -302,7 +302,7 @@ jQuery(document).ready(function () {
         var sectionTab = tab.find(getDatatemplate(section.dataTab));
         var styleInputsKey = viewKey + section.dataTab + 'style';
         styleInputs[styleInputsKey] = {
-          inputs : sectionTab.find(getDatatemplate('style') + ' input ')
+          inputs : sectionTab.find(getDatatemplate('style') + ' input, ' + getDatatemplate('style') + ' select')
         };
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
@@ -363,9 +363,11 @@ jQuery(document).ready(function () {
 
     var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
+    var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
     $inputs.bind('keyup', throttledSync);
     $colorInputs.bind('change', throttledSync);
+    $selects.bind('change', throttledSync);
 
     var overallSync = jQuery.throttle(200, function () {
       applayOverallStyling(getOverallStyling());
