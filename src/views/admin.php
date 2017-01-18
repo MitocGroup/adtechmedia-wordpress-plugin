@@ -431,10 +431,67 @@ echo '</script>';
 		<div class="content templating">
 			<div class="templates-views templates-views-common">
 				<div class="template-view">
-					<div class="header-view">Overall position and styling
+					<div class="header-view">Overall styling and position
 					</div>
 					<section class="content-view" >
-							<div class="flex-container flex-gutter flex-end" data-template="position">
+						<div class="flex-container flex-gutter" data-template="overall-styling">
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Background Color</label>
+									<div class="custom-input">
+										<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Border</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Font Family</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="font-family" value="'Helvetica Neue', sans-serif" placeholder="'Helvetica Neue', sans-serif" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Box Shadow</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Footer Background Color</label>
+									<div class="custom-input">
+										<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Footer Border</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="flex-container flex-gutter flex-end" data-template="position">
 							<div class="flex-item-2">
 								<span class="accent-color">Sticky</span>
 								<div class="">
@@ -478,72 +535,18 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
+							<div class="flex-item-2">
+								<button type="button" class="btn save-templates"><i
+										class="mdi mdi-check"></i> Save
+								</button>
 							</div>
+						</div>
 
-							<div class="flex-container flex-gutter" data-template="overall-styling">
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Background Color</label>
-										<div class="custom-input">
-											<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Border</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Font Family</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="font-family" value="'Helvetica Neue', sans-serif" placeholder="'Helvetica Neue', sans-serif" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Box Shadow</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Footer Background Color</label>
-										<div class="custom-input">
-											<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Footer Border</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</section>
+					</section>
 				</div>
 			</div>
 			<div class="clearfix">
 				<div class="">
-
-
 
 					<section class="views-tabs">
 						<input id="pledge" name="main-tabs" checked="" type="radio">
@@ -2833,5 +2836,3 @@ echo '</script>';
 		</div>
 	</section>
 </main>
-
-
