@@ -420,7 +420,8 @@ class Adtechmedia_OptionsManager {
 			$this->get_plugin_option( 'content_offset_type' ),
 			$this->get_plugin_option( 'price_currency' ),
 			$this->get_plugin_option( 'content_paywall' ),
-			$this->get_target_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) )
+			$this->get_target_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) ),
+			$this->get_toggle_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) )
 		);
 		Adtechmedia_ContentManager::clear_all_content();
 	}
@@ -460,6 +461,34 @@ class Adtechmedia_OptionsManager {
                 $content
                 cb();
                 }";
+	}
+
+	/**
+	 * Get JS to toggleCb function
+	 *
+	 * @param array $position array of position properties.
+	 * @return string
+	 */
+	public function get_toggle_cb_js( $position ) {
+		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
+		if ( ! empty( $position['scrolling_offset_top'] ) ) {
+			$position['scrolling_offset_top'] = (int) $position['scrolling_offset_top'];
+		}
+		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
+		if ( ! $sticky ) {
+			$scrolling_offset_top = -10;
+		}
+		return "function(cb) {
+				var adjustMarginTop = function (e) {
+                var modalOffset = (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0) >= $scrolling_offset_top;
+                if (modalOffset) {
+                  cb(true);
+                } else {
+                  cb(false);
+                }
+                };
+                document.addEventListener('scroll', adjustMarginTop);
+                adjustMarginTop(null);}";
 	}
 
 	/**
