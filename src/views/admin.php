@@ -536,9 +536,11 @@ echo '</script>';
 								</div>
 							</div>
 							<div class="flex-item-2">
-								<button type="button" class="btn save-templates"><i
-										class="mdi mdi-check"></i> Save
-								</button>
+								<div class="custom-input pull-right">
+									<button type="button" class="btn save-templates"><i
+											class="mdi mdi-check"></i> Save
+									</button>
+								</div>
 							</div>
 						</div>
 

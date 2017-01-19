@@ -405,6 +405,10 @@ jQuery(document).ready(function () {
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
+      console.log(viewKey);
+      if (viewKey === 'position') {
+        viewKey = 'pledge';
+      }
       addLoader(btn);
       jQuery.ajax({
         url : save_template.ajax_url,
