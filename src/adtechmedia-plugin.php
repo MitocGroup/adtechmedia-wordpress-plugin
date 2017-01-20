@@ -374,6 +374,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// @codingStandardsIgnoreEnd
 			}
 			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
+			wp_enqueue_script( 'Adtechmedia-frontend-js', plugins_url( '/js/frontend.js', __FILE__ ) );
 		}
 	}
 
