@@ -457,7 +457,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Font Family</label>
 									<div class="custom-input">
-										<input type="text" data-template-css="font-family" value="'Helvetica Neue', sans-serif" placeholder="'Helvetica Neue', sans-serif" required="" />
+										<input type="text" data-template-css="font-family" value="'Merriweather', sans-serif" placeholder="'Merriweather', sans-serif" required="" />
 										<span class="bar"></span>
 									</div>
 								</div>
