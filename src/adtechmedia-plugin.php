@@ -358,11 +358,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function add_adtechmedia_scripts() {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
+			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
+			$is_old = empty( $is_old ) ? '0' : '1';
+			if($is_old) {
+				$this->update_prop();
+			}
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
-			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
-			$is_old = empty( $is_old ) ? '0' : '1';
 			if ( ! file_exists( $file ) || '1' == $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
