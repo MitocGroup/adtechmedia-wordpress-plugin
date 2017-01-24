@@ -199,6 +199,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'add_adtechmedia_admin_scripts' ) );
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
+
+		// Update properties event
+		add_action( 'adtechmedia_update_event', array( &$this, 'update_prop' ) );
+
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}

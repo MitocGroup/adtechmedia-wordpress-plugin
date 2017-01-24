@@ -103,6 +103,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->check_api_key_exists();
 		$this->check_prop();
 
+		// Add schedule event update properties
+		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
+		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
 	}
 
 	/**
@@ -164,6 +167,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return void
 	 */
 	public function deactivate() {
+		wp_clear_scheduled_hook('adtechmedia_update_event');
 	}
 
 	/**
