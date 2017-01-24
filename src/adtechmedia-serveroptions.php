@@ -74,9 +74,10 @@ class Adtechmedia_ServerOptions {
 				}
 				$content .= $buffer;
 			}
-			@fclose( $handle );
+			fclose( $handle );
+
+			file_put_contents( $path, $content );
 		}
-		file_put_contents( $path, $content );
 	}
 
 	/**
