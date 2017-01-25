@@ -45,8 +45,7 @@ class Adtechmedia_ServerOptions {
 			return true;
 		}
 
-		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ),
-			'Apache' ) !== false;
+		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ), 'Apache' ) !== false;
 	}
 
 	/**
@@ -55,8 +54,7 @@ class Adtechmedia_ServerOptions {
 	 * @return boolean
 	 */
 	static public function is_nginx() {
-		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( $_SERVER['SERVER_SOFTWARE'],
-			'nginx' ) ) !== false;
+		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ), 'nginx' ) ) !== false;
 	}
 
 	/**
@@ -93,9 +91,7 @@ class Adtechmedia_ServerOptions {
 		if ( $handle ) {
 			while ( ( $buffer = fgets( $handle, 4096 ) ) !== false ) {
 
-				if ( ! stristr( $buffer,
-					'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' )
-				) {
+				if ( ! stristr( $buffer, 'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' ) ) {
 					$content .= $buffer;
 				}
 			}
