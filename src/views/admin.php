@@ -173,7 +173,7 @@ echo '</script>';
 					<div class="flex-container">
 						<div class="flex-item-6 ">
 							<div class="custom-input">
-								<button type="submit" class="btn"><i class="mdi mdi-account-plus"></i> Register</button>
+								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" class="btn"><i class="mdi mdi-account-plus"></i> Register</a>
 							</div>
 						</div>
 						<div class="flex-item-6 flex-end">
