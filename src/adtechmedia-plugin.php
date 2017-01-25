@@ -200,7 +200,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
 
-		// Update properties event
+		// Update properties event.
 		add_action( 'adtechmedia_update_event', array( &$this, 'update_prop' ) );
 
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
@@ -360,7 +360,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			$is_old = empty( $is_old ) ? '0' : '1';
-			if($is_old) {
+			if ( $is_old ) {
 				$this->update_prop();
 			}
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );

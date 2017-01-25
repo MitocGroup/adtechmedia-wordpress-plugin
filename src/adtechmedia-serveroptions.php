@@ -40,12 +40,13 @@ class Adtechmedia_ServerOptions {
 	 * @return boolean
 	 */
 	static public function is_apache() {
-		// assume apache when unknown, since most common
+		// Assume apache when unknown, since most common.
 		if ( empty( $_SERVER['SERVER_SOFTWARE'] ) ) {
 			return true;
 		}
 
-		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'Apache' ) !== false;
+		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ),
+			'Apache' ) !== false;
 	}
 
 	/**
@@ -54,7 +55,8 @@ class Adtechmedia_ServerOptions {
 	 * @return boolean
 	 */
 	static public function is_nginx() {
-		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( $_SERVER['SERVER_SOFTWARE'], 'nginx' ) !== false;
+		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( $_SERVER['SERVER_SOFTWARE'],
+			'nginx' ) ) !== false;
 	}
 
 	/**
@@ -62,7 +64,7 @@ class Adtechmedia_ServerOptions {
 	 */
 	static public function set_apache_config() {
 		$path     = explode( 'wp-content', dirname( __FILE__ ) )[0] . '/.htaccess';
-		$handle   = @fopen( $path, "r" );
+		$handle   = @fopen( $path, 'r' );
 		$content  = '';
 		$inserted = false;
 		if ( $handle ) {
@@ -75,8 +77,9 @@ class Adtechmedia_ServerOptions {
 				$content .= $buffer;
 			}
 			fclose( $handle );
-
+			// @codingStandardsIgnoreStart
 			file_put_contents( $path, $content );
+			// @codingStandardsIgnoreEnd
 		}
 	}
 
@@ -84,19 +87,23 @@ class Adtechmedia_ServerOptions {
 	 * Delete config for Apache
 	 */
 	static public function delete_apache_config() {
-		$path     = explode( 'wp-content', dirname( __FILE__ ) )[0] . '/.htaccess';
-		$handle   = @fopen( $path, "r" );
-		$content  = '';
+		$path    = explode( 'wp-content', dirname( __FILE__ ) )[0] . '/.htaccess';
+		$handle  = @fopen( $path, 'r' );
+		$content = '';
 		if ( $handle ) {
 			while ( ( $buffer = fgets( $handle, 4096 ) ) !== false ) {
 
-				if ( !stristr( $buffer, 'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' ) ) {
+				if ( ! stristr( $buffer,
+					'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' )
+				) {
 					$content .= $buffer;
 				}
 			}
 			fclose( $handle );
 		}
+		// @codingStandardsIgnoreStart
 		file_put_contents( $path, $content );
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**

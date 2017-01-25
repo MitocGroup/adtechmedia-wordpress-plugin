@@ -2,5 +2,5 @@
  * Register sw.js
  */
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.min.js', {scope: './'});
+  navigator.serviceWorker.register('/sw.min.js', {scope: './'});
 }
