@@ -173,7 +173,7 @@ echo '</script>';
 					<div class="flex-container">
 						<div class="flex-item-6">
 							<input type="checkbox" id="terms" name="terms">
-							<label for="terms"><a  id="terms-btn">I agree to Terms of Use</a></label>
+							<label><a  id="terms-btn">I agree to Terms of Use</a></label>
 						</div>
 					</div>
 					<div class="flex-container">
