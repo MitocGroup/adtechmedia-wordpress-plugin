@@ -359,7 +359,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function add_adtechmedia_scripts() {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
-			$is_old = empty( $is_old ) ? '0' : '1';
+			$is_old = empty( $is_old );
 			if ( $is_old ) {
 				$this->update_prop();
 			}

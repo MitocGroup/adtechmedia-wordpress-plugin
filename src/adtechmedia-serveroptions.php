@@ -12,14 +12,14 @@
  */
 class Adtechmedia_ServerOptions {
 
+	const SW_REWRITE_RULE = 'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]';
+
 	/**
 	 * Set server options
 	 */
 	static public function set_options() {
 		if ( self::is_apache() ) {
 			self::set_apache_config();
-		} elseif ( self::is_nginx() ) {
-			self::set_nginx_config();
 		}
 	}
 
@@ -29,8 +29,6 @@ class Adtechmedia_ServerOptions {
 	static public function delete_options() {
 		if ( self::is_apache() ) {
 			self::delete_apache_config();
-		} elseif ( self::is_nginx() ) {
-			self::delete_nginx_config();
 		}
 	}
 
@@ -49,19 +47,10 @@ class Adtechmedia_ServerOptions {
 	}
 
 	/**
-	 * Returns true if server is nginx
-	 *
-	 * @return boolean
-	 */
-	static public function is_nginx() {
-		return isset( $_SERVER['SERVER_SOFTWARE'] ) && stristr( sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ), 'nginx' ) ) !== false;
-	}
-
-	/**
 	 * Set config for Apache
 	 */
 	static public function set_apache_config() {
-		$path     = explode( 'wp-content', dirname( __FILE__ ) )[0] . '/.htaccess';
+		$path     = self::get_root_dir_path() . '/.htaccess';
 		$handle   = @fopen( $path, 'r' );
 		$content  = '';
 		$inserted = false;
@@ -69,7 +58,7 @@ class Adtechmedia_ServerOptions {
 			while ( ( $buffer = fgets( $handle, 4096 ) ) !== false ) {
 
 				if ( ! $inserted && stristr( $buffer, 'RewriteRule' ) ) {
-					$content .= 'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' . PHP_EOL;
+					$content .= self::SW_REWRITE_RULE . PHP_EOL;
 					$inserted = true;
 				}
 				$content .= $buffer;
@@ -103,16 +92,11 @@ class Adtechmedia_ServerOptions {
 	}
 
 	/**
-	 * Set config for nginx
+	 * Returns path to project root directory
+	 *
+	 * @return mixed
 	 */
-	static public function set_nginx_config() {
-
-	}
-
-	/**
-	 * Delete config for nginx
-	 */
-	static public function delete_nginx_config() {
-
+	static public function get_root_dir_path() {
+		return explode( 'wp-content', dirname( __FILE__ ) )[0];
 	}
 }

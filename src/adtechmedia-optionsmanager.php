@@ -433,12 +433,11 @@ class Adtechmedia_OptionsManager {
 	 * @return string
 	 */
 	public function get_target_cb_js( $position ) {
-		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
 		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
 		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
 		$content = '';
-		if ( $sticky ) {
+		if ( ! empty( $position['sticky'] ) ) {
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
 			$content .= "mainModal.rootNode.style.width = '$width';\n";
@@ -470,14 +469,11 @@ class Adtechmedia_OptionsManager {
 	 * @return string
 	 */
 	public function get_toggle_cb_js( $position ) {
-		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
-		if ( ! empty( $position['scrolling_offset_top'] ) ) {
-			$position['scrolling_offset_top'] = (int) $position['scrolling_offset_top'];
-		}
-		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
-		if ( ! $sticky ) {
+		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? (int) $position['scrolling_offset_top'] : 0;
+		if ( empty( $position['sticky'] ) ) {
 			$scrolling_offset_top = -10;
 		}
+
 		return "function(cb) {
 				var adjustMarginTop = function (e) {
                 var modalOffset = (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0) >= $scrolling_offset_top;
