@@ -171,9 +171,15 @@ echo '</script>';
 						</div>
 					</div>
 					<div class="flex-container">
+						<div class="flex-item-6">
+							<input type="checkbox" id="terms" name="terms">
+							<label for="terms"><a  id="terms-btn">I agree to Terms of Use</a></label>
+						</div>
+					</div>
+					<div class="flex-container">
 						<div class="flex-item-6 ">
 							<div class="custom-input">
-								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" class="btn"><i class="mdi mdi-account-plus"></i> Register</a>
+								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" id="btn-register" class="btn" disabled><i class="mdi mdi-account-plus"></i> Register</a>
 							</div>
 						</div>
 						<div class="flex-item-6 flex-end">
@@ -2837,4 +2843,11 @@ echo '</script>';
 			</div>
 		</div>
 	</section>
+
+	<div id="terms-modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<iframe src="https://www.adtechmedia.io/terms/dialog.html" frameborder="0"></iframe>
+		</div>
+	</div>
 </main>
