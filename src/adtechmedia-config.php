@@ -26,7 +26,7 @@ class Adtechmedia_Config {
 		'factor' => 1.7,
 		'atm_js_cache_time' => 86400,
 		'template_position' => '{"sticky":true,"width":"600px","offset_top":"20px","offset_left":"-60px","scrolling_offset_top":"100px"}',
-		'template_overall_styles' => '.atm-base-modal {background-color: #ffffff;}.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: #ffffff;}.atm-targeted-modal{border: 1px solid #d3d3d3;}.atm-targeted-modal{box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);}.atm-base-modal .atm-footer{background-color: #fafafa;}.atm-base-modal .atm-footer{border: 1px solid #e3e3e3;}.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal .atm-modal-body p,.atm-unlock-line .unlock-btn {font-family: \'Merriweather\', sans-serif;}'
+		'template_overall_styles' => '.atm-base-modal {background-color: #ffffff;}.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: #ffffff;}.atm-targeted-modal{border: 1px solid #d3d3d3;}.atm-targeted-modal{box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);}.atm-base-modal .atm-footer{background-color: #fafafa;}.atm-base-modal .atm-footer{border: 1px solid #e3e3e3;}.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal .atm-modal-body p,.atm-unlock-line .unlock-btn {font-family: \'Merriweather\', sans-serif;}',
 	];
 
 	/**
