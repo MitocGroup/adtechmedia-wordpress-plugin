@@ -329,6 +329,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			plugins_url( '/css/materialdesignicons.css', __FILE__ )
 		);
 		wp_enqueue_style( 'adtechmedia-style-main', plugins_url( '/css/main.css', __FILE__ ) );
+		wp_enqueue_style( 'adtechmedia-google-fonts', 'https://fonts.googleapis.com/css?family=Merriweather' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
 		wp_enqueue_script(
 			'adtechmedia-jquery-noty-js',
