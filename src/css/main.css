@@ -1708,5 +1708,11 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
 
 .modal iframe {
     width: 100%;
-    height: calc(100% - 60px);
+    height: calc(100% - 100px);
+}
+
+.modal-header {
+    margin-left: 8px;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
 }

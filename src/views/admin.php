@@ -2847,7 +2847,9 @@ echo '</script>';
 	<div id="terms-modal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
+			<h1 class="modal-header">Terms of Use</h1>
 			<iframe src="https://www.adtechmedia.io/terms/dialog.html" frameborder="0"></iframe>
 		</div>
 	</div>
+	
 </main>
