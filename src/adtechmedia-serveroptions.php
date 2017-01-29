@@ -74,13 +74,13 @@ class Adtechmedia_ServerOptions {
 	 * Delete config for Apache
 	 */
 	static public function delete_apache_config() {
-		$path    = explode( 'wp-content', dirname( __FILE__ ) )[0] . '/.htaccess';
+		$path    = self::get_root_dir_path() . '/.htaccess';
 		$handle  = @fopen( $path, 'r' );
 		$content = '';
 		if ( $handle ) {
 			while ( ( $buffer = fgets( $handle, 4096 ) ) !== false ) {
 
-				if ( ! stristr( $buffer, 'RewriteRule ^sw\.min\.js$ /wp-content/plugins/adtechmedia/js/sw.min.js [L]' ) ) {
+				if ( ! stristr( $buffer, self::SW_REWRITE_RULE ) ) {
 					$content .= $buffer;
 				}
 			}
