@@ -1716,3 +1716,9 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     font-family: 'Times New Roman', serif;
     font-weight: bold;
 }
+
+@media (min-width: 961px) {
+    .modal {
+        padding-left: 160px;
+    }
+}
