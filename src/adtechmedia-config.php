@@ -38,4 +38,29 @@ class Adtechmedia_Config {
 	public static function get( $name ) {
 		return self::$conf[ $name ];
 	}
+
+	/**
+	 * Set API end point for localhost
+	 */
+	public static function set_api_end_point () {
+		if ( self::is_localhost() ) {
+			self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/dev/';
+		}
+	}
+
+	/**
+	 * Returns true if server IP is 127.0.0.1
+	 *
+	 * @return bool
+	 */
+	public static function is_localhost() {
+		$whitelist = [
+			'127.0.0.1',
+			'::1'
+		];
+
+		return in_array( $_SERVER['REMOTE_ADDR'], $whitelist );
+	}
 }
+
+Adtechmedia_Config::set_api_end_point();
