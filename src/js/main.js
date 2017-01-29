@@ -543,4 +543,6 @@ jQuery(document).ready(function () {
   });
 
   initModal();
+
+  jQuery('#modal-content').load('https://crossorigin.me/https://www.adtechmedia.io/terms/dialog.html');
 });

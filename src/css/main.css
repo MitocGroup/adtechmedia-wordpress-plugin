@@ -1706,15 +1706,9 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     cursor: pointer;
 }
 
-.modal iframe {
-    width: 100%;
-    height: calc(100% - 100px);
-}
-
-.modal-header {
-    margin-left: 8px;
-    font-family: 'Times New Roman', serif;
-    font-weight: bold;
+#modal-content {
+    overflow: auto;
+    max-height: calc(100% - 100px);
 }
 
 @media (min-width: 961px) {
