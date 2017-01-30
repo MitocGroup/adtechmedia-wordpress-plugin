@@ -544,5 +544,9 @@ jQuery(document).ready(function () {
 
   initModal();
 
-  jQuery('#modal-content').load('https://crossorigin.me/https://www.adtechmedia.io/terms/dialog.html');
+  jQuery.get("https://www.adtechmedia.io/terms/dialog.html").done(function (data) {
+    jQuery('#modal-content').append(data);
+  }).fail(function () {
+    jQuery('#modal-content').append('<a href="https://www.adtechmedia.io/terms/dialog.html" target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>');
+  });
 });
