@@ -308,7 +308,7 @@ jQuery(document).ready(function () {
       }
       senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
       sender.attr('data-view', typeOther);
-      views[viewKey][typeOther]._watchers['showModalBody'].forEach(unwatch => unwatch());
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(function(unwatch) {return unwatch()});
       delete views[viewKey][typeOther]._watchers['showModalBody'];
       views[viewKey][typeOther].small(small);
       views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
