@@ -352,6 +352,10 @@ h1.heading .custom-icon {
     right: 0;
 }
 
+.custom-input .invalid ~ .bar:before {
+    border-bottom: 1px solid red;
+}
+
 .custom-input .bar:after {
     background-color: #1b93f2;
     bottom: -1px;
@@ -564,6 +568,10 @@ h1.heading .custom-icon {
 .custom-label {
     padding-top: 20px;
     position: relative;
+}
+
+.custom-label label.invalid {
+    color:red;
 }
 
 .custom-label label {

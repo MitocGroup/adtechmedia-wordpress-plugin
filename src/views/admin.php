@@ -440,6 +440,7 @@ echo '</script>';
 					<div class="header-view">Overall styling and position
 					</div>
 					<section class="content-view" >
+						<form id="overall-styling-and-position">
 						<div class="flex-container flex-gutter" data-template="overall-styling">
 							<div class="flex-item-2">
 								<div class="custom-label">
@@ -549,7 +550,7 @@ echo '</script>';
 								</div>
 							</div>
 						</div>
-
+						</form>
 					</section>
 				</div>
 			</div>

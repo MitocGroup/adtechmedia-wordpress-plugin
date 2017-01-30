@@ -341,6 +341,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js',
 			[ 'adtechmedia-jquery-noty-js' ]
 		);
+		wp_enqueue_script( 'jquery-validate', plugins_url( '/js/jquery.validate.min.js', __FILE__));
 		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://adm.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
