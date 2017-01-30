@@ -768,20 +768,21 @@ jQuery(document).ready(function () {
 
   initModal();
 
-  jQuery('#modal-content').load('https://crossorigin.me/https://www.adtechmedia.io/terms/dialog.html');
+  jQuery('#modal-content').load('https://www.adtechmedia.io/terms/dialog.html');
 
   function firstSynch(){
     jQuery('[data-template="user"] input[name]').trigger('keyup');
     jQuery('[data-template="user"] input[data-template-css]').trigger('keyup');
     jQuery('[data-template="user"] select[data-template-css]').trigger('change');
     jQuery('[data-template="user"] input[type="color"][data-template-css]').trigger('change');
-  };
+  }
   firstSynch();
 
   jQuery.get('https://www.adtechmedia.io/terms/dialog.html').done(function (data) {
     jQuery('#modal-content').append(data);
   }).fail(function () {
-    var str = '<a href="https://www.adtechmedia.io/terms/dialog.html" target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
+    var str = '<a href="https://www.adtechmedia.io/terms/dialog.html"'
+      +' target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
     jQuery('#modal-content').append(str);
   });
 

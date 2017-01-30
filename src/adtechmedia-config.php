@@ -59,7 +59,7 @@ class Adtechmedia_Config {
 			'::1',
 		];
 
-		return in_array( $_SERVER['REMOTE_ADDR'], $whitelist );
+		return in_array( wp_unslash($_SERVER['REMOTE_ADDR']), $whitelist );
 	}
 }
 
