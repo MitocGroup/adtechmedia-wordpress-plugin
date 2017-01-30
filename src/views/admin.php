@@ -605,7 +605,7 @@ echo '</script>';
 							</li>
 						</ul>
 
-						<div class="templates-views pledge" data-template="pledge">
+						<div class="templates-views pledge" data-template="pledge" data-template2="auth">
 							<div class="template-view">
 								<div class="header-view">pledge template
 								</div>
@@ -839,29 +839,29 @@ echo '</script>';
 												<label for="pledge-ext-user" class="tab-name">
 													User
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="user">
+													<div class="custom-label" data-template="expanded">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
+															<input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
+															<input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#404040" required="" />
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -870,7 +870,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="12px" required="" />
+																	<input type="text" data-template-css="font-size" value="12px" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -879,7 +879,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="form-select">
-																	<select data-template-css="font-weight">
+																	<select data-template-css="font-weight" >
 																		<option selected>normal</option>
 																		<option>bold</option>
 																		<option>bolder</option>
@@ -900,7 +900,7 @@ echo '</script>';
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
@@ -1386,29 +1386,29 @@ echo '</script>';
 												<label for="pay-ext-user" class="tab-name">
 													User
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="user-pay">
+													<div class="custom-label" data-template="expanded">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
+															<input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
+															<input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#404040" required="" />
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1417,7 +1417,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="12px" required="" />
+																	<input type="text" data-template-css="font-size" value="12px" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1426,7 +1426,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Weight</label>
 																<div class="form-select">
-																	<select data-template-css="font-weight">
+																	<select data-template-css="font-weight" >
 																		<option selected>normal</option>
 																		<option>bold</option>
 																		<option>bolder</option>
@@ -1447,7 +1447,7 @@ echo '</script>';
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>

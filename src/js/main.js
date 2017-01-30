@@ -128,6 +128,9 @@ function styleInputsToObject(inputs) {
   return res;
 }
 function getDatatemplate(value) {
+  if ('auth' == value){
+    value = 'pledge';
+  }
   return '[data-template="' + value + '"]';
 }
 
@@ -192,6 +195,28 @@ jQuery(document).ready(function () {
             name : 'heading-headline',
             inputName : 'message-collapsed',
             type : 'collapsed'
+          }]
+        }
+      ]
+    },
+    {
+      name : 'auth',
+      component : 'authComponent',
+      dataTab : 'auth',
+      collapsed : '#render-pledge-collapsed',
+      expanded : '#render-pledge-expanded',
+      sections : [
+        {
+          dataTab : 'user',
+          otherComponent: 'authComponent',
+          options : [{
+            name : 'logged-headline',
+            inputName : 'user-logged',
+            type : 'collapsed'
+          }, {
+            name : 'used-headline',
+            inputName : 'user-used',
+            type : 'expanded'
           }]
         }
       ]
@@ -349,34 +374,47 @@ jQuery(document).ready(function () {
         });
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
       });
-      views[viewKey]['expanded'] = atmTemplating.render(template.name, template.expanded);
-      views[viewKey]['expanded'].small(false);
       views[viewKey]['component'] = template.component;
-      views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
-      jQuery(template.expanded).attr('data-view-key', viewKey);
-      jQuery(template.collapsed).attr('data-view-key', viewKey);
-      atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
-      views[viewKey].expanded.redraw();
-      views[viewKey].collapsed.redraw();
-      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
-      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
+      if ('auth' == viewKey){
+        viewKey = 'pledge';
+        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
+        views[viewKey].expanded.redraw();
+        views[viewKey].collapsed.redraw();
+      } else {
+        views[viewKey]['expanded'] = atmTemplating.render(template.name, template.expanded);
+        views[viewKey]['expanded'].small(false);
+        views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
+        jQuery(template.expanded).attr('data-view-key', viewKey);
+        jQuery(template.collapsed).attr('data-view-key', viewKey);
+        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
+        views[viewKey].expanded.redraw();
+        views[viewKey].collapsed.redraw();
+        views[viewKey].expanded.watch('showModalBody', toggleTemplates);
+        views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
+      }
     });
 
     var throttledSync = jQuery.throttle(200, function (e) {
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
+      var redrawViewKey = viewKey;
+      var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
+      if ('user' == tabKey) {
+        viewKey = 'auth';
+      }
+      var inputKey = viewKey + tabKey;
 
-      var inputKey = viewKey + jQuery(jQuery(this).parents('[data-template]')[1]).data('template')
 
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
         //console.log(type);
+
         if (inputs.hasOwnProperty(inputKey + type)) {
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
           styling[views[viewKey].component][inputs[inputKey + type].optionName] =
             getCSSFields(styleInputs[inputKey + 'style'].inputs);
+
         }
       });
       // update template
-
       atmTemplating.updateTemplate(
         views[viewKey].component,
         options[views[viewKey].component],
@@ -384,16 +422,43 @@ jQuery(document).ready(function () {
       );
 
       // redraw the view
-      views[viewKey].expanded.redraw();
-      views[viewKey].collapsed.redraw();
-      views[viewKey].expanded.watch('showModalBody', toggleTemplates);
-      views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
+      views[redrawViewKey].expanded.redraw();
+      views[redrawViewKey].collapsed.redraw();
+      views[redrawViewKey].expanded.watch('showModalBody', toggleTemplates);
+      views[redrawViewKey].collapsed.watch('showModalBody', toggleTemplates);
     });
 
     var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
     var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
+    var triggered=false;
+    function synch(field,dataType,additionalType,eventName){
+      synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
+      synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
+    }
+
+
+    function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
+      jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
+
+        var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this).attr(dataType)+'"]')[0]);
+        input.val(jQuery(this).val());
+          triggered=true;
+        if (trigger) {
+          input.trigger(eventName);
+        }else{
+          setTimeout(function(){
+          views['pay'].expanded.redraw();
+          views['pay'].collapsed.redraw();
+          },100);
+        }
+      });
+    }
+    synch('input','name','','keyup');
+    synch('input','data-template-css','','keyup');
+    synch('select','data-template-css','','change');
+    synch('input','data-template-css','[type="color"]','change');
     $inputs.bind('keyup', throttledSync);
     $colorInputs.bind('change', throttledSync);
     $selects.bind('change', throttledSync);
@@ -439,6 +504,34 @@ jQuery(document).ready(function () {
         viewKey = 'pledge';
       }
       addLoader(btn);
+      jQuery.ajax({
+        url : save_template.ajax_url,
+        type : 'post',
+        data : {
+          action : 'save_template',
+          nonce : save_template.nonce,
+          inputs : JSON.stringify(inputsToObject(inputs)),
+          styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+          position : JSON.stringify(getPositionFields()),
+          overallStyles : getOverallStyling(),
+          overallStylesInputs : JSON.stringify(getOverallStylingFields()),
+          component : views[viewKey].component,
+          template : atmTemplating.templateRendition(views[viewKey].component).render(
+            options[views[viewKey].component],
+            styling[views[viewKey].component]
+          )
+        },
+        success : function (response) {
+          removeLoader(btn);
+          showSuccess();
+        },
+        error : function (response) {
+          removeLoader(btn);
+          showError();
+        }
+      });
+      addLoader(btn);
+      viewKey = 'auth';
       jQuery.ajax({
         url : save_template.ajax_url,
         type : 'post',
@@ -525,6 +618,7 @@ jQuery(document).ready(function () {
   })(jQuery);
 
 
+
   jQuery('#checkbox-sticky').on('change', function () {
     if (!jQuery(this).prop('checked')) {
       jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
@@ -545,4 +639,12 @@ jQuery(document).ready(function () {
   initModal();
 
   jQuery('#modal-content').load('https://crossorigin.me/https://www.adtechmedia.io/terms/dialog.html');
+
+  function firstSynch(){
+    jQuery('[data-template="user"] input[name]').trigger('keyup');
+    jQuery('[data-template="user"] input[data-template-css]').trigger('keyup');
+    jQuery('[data-template="user"] select[data-template-css]').trigger('change');
+    jQuery('[data-template="user"] input[type="color"][data-template-css]').trigger('change');
+  };
+  firstSynch();
 });
