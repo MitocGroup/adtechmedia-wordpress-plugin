@@ -500,7 +500,7 @@ jQuery(document).ready(function () {
 
       return form.validate({
         rules: rules,
-        errorClass: "invalid",
+        errorClass: 'invalid',
         onclick: false,
         onkeyup: false,
         onfocusout: false,
@@ -517,7 +517,7 @@ jQuery(document).ready(function () {
           jQuery.each(errorMap, function(i, item) {
             errorsMeassge += '<br>' + item;
           });
-          if(errorsMeassge != '') {
+          if(errorsMeassge !== '') {
             return noty({
               type: 'error',
               text: errorsMeassge,
@@ -581,62 +581,62 @@ jQuery(document).ready(function () {
       if(valid.form()) {
         addLoader(btn);
         jQuery.ajax({
-          url : save_template.ajax_url,
-          type : 'post',
-          data : {
-            action : 'save_template',
-            nonce : save_template.nonce,
-            inputs : JSON.stringify(inputsToObject(inputs)),
-            styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
-            position : JSON.stringify(getPositionFields()),
-            overallStyles : getOverallStyling(),
-            overallStylesInputs : JSON.stringify(getOverallStylingFields()),
-            component : views[viewKey].component,
-            template : atmTemplating.templateRendition(views[viewKey].component).render(
+          url: save_template.ajax_url,
+          type: 'post',
+          data: {
+            action: 'save_template',
+            nonce: save_template.nonce,
+            inputs: JSON.stringify(inputsToObject(inputs)),
+            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
+            position: JSON.stringify(getPositionFields()),
+            overallStyles: getOverallStyling(),
+            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
+            component: views[viewKey].component,
+            template: atmTemplating.templateRendition(views[viewKey].component).render(
                 options[views[viewKey].component],
                 styling[views[viewKey].component]
             )
           },
-          success : function (response) {
+          success: function (response) {
             removeLoader(btn);
             showSuccess();
           },
-          error : function (response) {
+          error: function (response) {
+            removeLoader(btn);
+            showError();
+          }
+        });
+
+
+        addLoader(btn);
+        viewKey = 'auth';
+        jQuery.ajax({
+          url: save_template.ajax_url,
+          type: 'post',
+          data: {
+            action: 'save_template',
+            nonce: save_template.nonce,
+            inputs: JSON.stringify(inputsToObject(inputs)),
+            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
+            position: JSON.stringify(getPositionFields()),
+            overallStyles: getOverallStyling(),
+            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
+            component: views[viewKey].component,
+            template: atmTemplating.templateRendition(views[viewKey].component).render(
+                options[views[viewKey].component],
+                styling[views[viewKey].component]
+            )
+          },
+          success: function (response) {
+            removeLoader(btn);
+            showSuccess();
+          },
+          error: function (response) {
             removeLoader(btn);
             showError();
           }
         });
       }
-
-      addLoader(btn);
-      viewKey = 'auth';
-      jQuery.ajax({
-        url : save_template.ajax_url,
-        type : 'post',
-        data : {
-          action : 'save_template',
-          nonce : save_template.nonce,
-          inputs : JSON.stringify(inputsToObject(inputs)),
-          styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
-          position : JSON.stringify(getPositionFields()),
-          overallStyles : getOverallStyling(),
-          overallStylesInputs : JSON.stringify(getOverallStylingFields()),
-          component : views[viewKey].component,
-          template : atmTemplating.templateRendition(views[viewKey].component).render(
-            options[views[viewKey].component],
-            styling[views[viewKey].component]
-          )
-        },
-        success : function (response) {
-          removeLoader(btn);
-          showSuccess();
-        },
-        error : function (response) {
-          removeLoader(btn);
-          showError();
-        }
-      });
-
     });
 
     jQuery('#save-revenue-model').bind('click', function (e) {
@@ -649,8 +649,8 @@ jQuery(document).ready(function () {
         }
       }, {
         email: {
-          required: "The field 'Email address' is required.",
-          email: "Your email address must be in the format of name@domain.com."
+          required: 'The field \'Email address\' is required.',
+          email: 'Your email address must be in the format of name@domain.com.'
         }
       });
       if(valid.form()) {
@@ -705,20 +705,20 @@ jQuery(document).ready(function () {
         }
       }, {
         price: {
-          required: "The field 'Content pricing' is required.",
-          digits: "The field 'Content pricing' must by a number."
+          required: 'The field \'Content pricing\' is required.',
+          digits: 'The field \'Content pricing\' must by a number.'
         },
         payment_pledged: {
-          required: "The field 'Content paywall' is required.",
-          digits: "The field 'Content paywall' must by a number."
+          required: 'The field \'Content paywall\' is required.',
+          digits: 'The field \'Content paywall\' must by a number.'
         },
         content_offset: {
-          required: "The field 'Content preview' is required.",
-          digits: "The field 'Content preview' must by a number."
+          required: 'The field \'Content preview\' is required.',
+          digits: 'The field \'Content preview\' must by a number.'
         },
         ads_video: {
           required: false,
-          url: "The field 'Content preview' must by a valid url."
+          url: 'The field \'Content preview\' must by a valid url.'
         }
       });
       if(valid.form()) {
@@ -743,11 +743,8 @@ jQuery(document).ready(function () {
           }
         });
       }
- 
     });
-
   })(jQuery);
-
 
 
 
@@ -781,10 +778,11 @@ jQuery(document).ready(function () {
   };
   firstSynch();
 
-  jQuery.get("https://www.adtechmedia.io/terms/dialog.html").done(function (data) {
+  jQuery.get('https://www.adtechmedia.io/terms/dialog.html').done(function (data) {
     jQuery('#modal-content').append(data);
   }).fail(function () {
-    jQuery('#modal-content').append('<a href="https://www.adtechmedia.io/terms/dialog.html" target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>');
+    var str = '<a href="https://www.adtechmedia.io/terms/dialog.html" target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
+    jQuery('#modal-content').append(str);
   });
 
   jQuery.validator.methods.cssSize = function( value, element ) {
