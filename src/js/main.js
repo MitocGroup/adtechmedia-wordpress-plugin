@@ -128,7 +128,7 @@ function styleInputsToObject(inputs) {
   return res;
 }
 function getDatatemplate(value) {
-  if ('auth' == value){
+  if ('auth' === value){
     value = 'pledge';
   }
   return '[data-template="' + value + '"]';
@@ -375,7 +375,7 @@ jQuery(document).ready(function () {
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
       });
       views[viewKey]['component'] = template.component;
-      if ('auth' == viewKey){
+      if ('auth' === viewKey){
         viewKey = 'pledge';
         atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
         views[viewKey].expanded.redraw();
@@ -398,7 +398,7 @@ jQuery(document).ready(function () {
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
       var redrawViewKey = viewKey;
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
-      if ('user' == tabKey) {
+      if ('user' === tabKey) {
         viewKey = 'auth';
       }
       var inputKey = viewKey + tabKey;
@@ -432,28 +432,24 @@ jQuery(document).ready(function () {
     var $inputs = $form.find('input');
     var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
-    var triggered=false;
-    function synch(field,dataType,additionalType,eventName){
-      synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
-      synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
-    }
-
-
     function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
       jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
-
-        var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this).attr(dataType)+'"]')[0]);
+        var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this)
+            .attr(dataType)+'"]')[0]);
         input.val(jQuery(this).val());
-          triggered=true;
         if (trigger) {
           input.trigger(eventName);
         }else{
           setTimeout(function(){
-          views['pay'].expanded.redraw();
-          views['pay'].collapsed.redraw();
+            views['pay'].expanded.redraw();
+            views['pay'].collapsed.redraw();
           },100);
         }
       });
+    }
+    function synch(field,dataType,additionalType,eventName){
+      synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
+      synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
     }
     synch('input','name','','keyup');
     synch('input','data-template-css','','keyup');
@@ -489,6 +485,49 @@ jQuery(document).ready(function () {
         timeout: 2000
       });
     }
+    function addValidate(form, rules, messages) {
+      jQuery.each(rules, function(name, item) {
+        jQuery('input[name="'+name+'"]').on('click', function() {
+          var item = jQuery('input[name="'+name+'"]');
+
+          if(jQuery(item).hasClass('invalid')) {
+            jQuery(item).removeClass('invalid');
+            var label = jQuery(item).parents('.custom-label').find('label');
+            label.removeClass('invalid');
+          }
+        });
+      });
+
+      return form.validate({
+        rules: rules,
+        errorClass: "invalid",
+        onclick: false,
+        onkeyup: false,
+        onfocusout: false,
+        showErrors: function(errorMap, errorList) {
+          jQuery.each(errorList, function(i, item) {
+            if(!jQuery(item.element).hasClass('invalid')) {
+              jQuery(item.element).addClass('invalid');
+              var label = jQuery(item.element).parents('.custom-label').find('label');
+              label.addClass('invalid');
+            }
+          });
+
+          var errorsMeassge = '';
+          jQuery.each(errorMap, function(i, item) {
+            errorsMeassge += '<br>' + item;
+          });
+          if(errorsMeassge != '') {
+            return noty({
+              type: 'error',
+              text: errorsMeassge,
+              timeout: 5000
+            });
+          }
+        },
+        messages: messages
+      });
+    }
     function showError(){
       noty({
         type: 'error',
@@ -522,20 +561,20 @@ jQuery(document).ready(function () {
         }
       }, {
         width: {
-          required: "The field 'Width' is required.",
-          cssSize: "The field ''Width' must be valid CSS size."
+          required: 'The field \'Width\' is required.',
+          cssSize: 'The field \'Width\' must be valid CSS size.'
         },
         offset_top: {
-          required: "The field 'Offset top' is required.",
-          cssSize: "The field ''Offset top' must be valid CSS size."
+          required: 'The field \'Offset top\' is required.',
+          cssSize: 'The field \'Offset top\' must be valid CSS size.'
         },
         offset_left: {
-          required: "The field 'Offset from center' is required.",
-          cssSize: "The field ''Offset from center' must be valid CSS size."
+          required: 'The field \'Offset from center\' is required.',
+          cssSize: 'The field \'Offset from center\' must be valid CSS size.'
         },
         scrolling_offset_top: {
-          required: "The field 'Scrolling offset top' is required.",
-          cssSize: "The field ''Scrolling offset top' must be valid CSS size."
+          required: 'The field \'Scrolling offset top\' is required.',
+          cssSize: 'The field \'Scrolling offset top\' must be valid CSS size.'
         },
       });
 
@@ -709,49 +748,7 @@ jQuery(document).ready(function () {
 
   })(jQuery);
 
-  function addValidate(form, rules, messages) {
-    jQuery.each(rules, function(name, item) {
-      jQuery('input[name="'+name+'"]').on('click', function() {
-        var item = jQuery('input[name="'+name+'"]');
 
-        if(jQuery(item).hasClass('invalid')) {
-          jQuery(item).removeClass('invalid');
-          var label = jQuery(item).parents('.custom-label').find('label');
-          label.removeClass('invalid');
-        }
-      });
-    });
-
-    return form.validate({
-      rules: rules,
-      errorClass: "invalid",
-      onclick: false,
-      onkeyup: false,
-      onfocusout: false,
-      showErrors: function(errorMap, errorList) {
-        jQuery.each(errorList, function(i, item) {
-          if(!jQuery(item.element).hasClass('invalid')) {
-            jQuery(item.element).addClass('invalid');
-            var label = jQuery(item.element).parents('.custom-label').find('label');
-            label.addClass('invalid');
-          }
-        });
-
-        var errorsMeassge = '';
-        jQuery.each(errorMap, function(i, item) {
-          errorsMeassge += '<br>' + item;
-        });
-        if(errorsMeassge != '') {
-          return noty({
-            type: 'error',
-            text: errorsMeassge,
-            timeout: 5000
-          });
-        }
-      },
-      messages: messages
-    });
-  }
 
 
 
