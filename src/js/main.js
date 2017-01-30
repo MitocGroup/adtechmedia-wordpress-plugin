@@ -438,55 +438,107 @@ jQuery(document).ready(function () {
       if (viewKey === 'position') {
         viewKey = 'pledge';
       }
-      addLoader(btn);
-      jQuery.ajax({
-        url : save_template.ajax_url,
-        type : 'post',
-        data : {
-          action : 'save_template',
-          nonce : save_template.nonce,
-          inputs : JSON.stringify(inputsToObject(inputs)),
-          styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
-          position : JSON.stringify(getPositionFields()),
-          overallStyles : getOverallStyling(),
-          overallStylesInputs : JSON.stringify(getOverallStylingFields()),
-          component : views[viewKey].component,
-          template : atmTemplating.templateRendition(views[viewKey].component).render(
-            options[views[viewKey].component],
-            styling[views[viewKey].component]
-          )
+      var valid = addValidate(jQuery('#overall-styling-and-position'), {
+        width: {
+          required: true,
+          cssSize: true
         },
-        success : function (response) {
-          removeLoader(btn);
-          showSuccess();
+        offset_top: {
+          required: true,
+          cssSize: true
         },
-        error : function (response) {
-          removeLoader(btn);
-          showError();
+        offset_left: {
+          required: true,
+          cssSize: true
+        },
+        scrolling_offset_top: {
+          required: true,
+          cssSize: true
         }
+      }, {
+        width: {
+          required: "The field 'Width' is required.",
+          cssSize: "The field ''Width' must be valid CSS size."
+        },
+        offset_top: {
+          required: "The field 'Offset top' is required.",
+          cssSize: "The field ''Offset top' must be valid CSS size."
+        },
+        offset_left: {
+          required: "The field 'Offset from center' is required.",
+          cssSize: "The field ''Offset from center' must be valid CSS size."
+        },
+        scrolling_offset_top: {
+          required: "The field 'Scrolling offset top' is required.",
+          cssSize: "The field ''Scrolling offset top' must be valid CSS size."
+        },
       });
+
+      if(valid.form()) {
+        addLoader(btn);
+        jQuery.ajax({
+          url : save_template.ajax_url,
+          type : 'post',
+          data : {
+            action : 'save_template',
+            nonce : save_template.nonce,
+            inputs : JSON.stringify(inputsToObject(inputs)),
+            styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+            position : JSON.stringify(getPositionFields()),
+            overallStyles : getOverallStyling(),
+            overallStylesInputs : JSON.stringify(getOverallStylingFields()),
+            component : views[viewKey].component,
+            template : atmTemplating.templateRendition(views[viewKey].component).render(
+                options[views[viewKey].component],
+                styling[views[viewKey].component]
+            )
+          },
+          success : function (response) {
+            removeLoader(btn);
+            showSuccess();
+          },
+          error : function (response) {
+            removeLoader(btn);
+            showError();
+          }
+        });
+      }
     });
 
     jQuery('#save-revenue-model').bind('click', function (e) {
       var btn = jQuery(this);
-      addLoader(btn);
-      jQuery.ajax({
-        url : save_template.ajax_url,
-        type : 'post',
-        data : {
-          action : 'save_template',
-          nonce : save_template.nonce,
-          revenueMethod : jQuery('select[name="revenue_method"]').val()
-        },
-        success : function (response) {
-          removeLoader(btn);
-          showSuccess();
-        },
-        error : function (response) {
-          removeLoader(btn);
-          showError();
+      var form = jQuery('#save-revenue-model').parents('form');
+      var valid = addValidate(jQuery(form), {
+        email: {
+          required: true,
+          email: true
+        }
+      }, {
+        email: {
+          required: "The field 'Email address' is required.",
+          email: "Your email address must be in the format of name@domain.com."
         }
       });
+      if(valid.form()) {
+        addLoader(btn);
+        jQuery.ajax({
+          url: save_template.ajax_url,
+          type: 'post',
+          data: {
+            action: 'save_template',
+            nonce: save_template.nonce,
+            revenueMethod: jQuery('select[name="revenue_method"]').val()
+          },
+          success: function (response) {
+            removeLoader(btn);
+            showSuccess();
+          },
+          error: function (response) {
+            removeLoader(btn);
+            showError();
+          }
+        });
+      }
     });
     jQuery('#country').bind('change', function (e) {
       var country = jQuery(this),
@@ -499,30 +551,112 @@ jQuery(document).ready(function () {
     });
     jQuery('#content-config button').bind('click', function (e) {
       var btn = jQuery(this);
-      addLoader(btn);
-      jQuery.ajax({
-        url : save_template.ajax_url,
-        type : 'post',
-        data : {
-          action : 'save_template',
-          nonce : save_template.nonce,
-          contentConfig : JSON.stringify(getInputsData(
-            jQuery('#content-config .content input,#content-config .content select')
-          ))
+
+      var valid = addValidate(jQuery('#content-config'), {
+        price: {
+          required: true,
+          number: true
         },
-        success : function (response) {
-          removeLoader(btn);
-          showSuccess();
+        payment_pledged: {
+          required: true,
+          number: true
         },
-        error : function (response) {
-          removeLoader(btn);
-          showError();
+        content_offset: {
+          required: true,
+          number: true
+        },
+        ads_video: {
+          required: false,
+          url: true
+        }
+      }, {
+        price: {
+          required: "The field 'Content pricing' is required.",
+          number: "The field 'Content pricing' must by a number."
+        },
+        payment_pledged: {
+          required: "The field 'Content paywall' is required.",
+          number: "The field 'Content paywall' must by a number."
+        },
+        content_offset: {
+          required: "The field 'Content preview' is required.",
+          number: "The field 'Content preview' must by a number."
+        },
+        ads_video: {
+          required: false,
+          url: "The field 'Content preview' must by a valid url."
         }
       });
+      if(valid.form()) {
+        addLoader(btn);
+        jQuery.ajax({
+          url : save_template.ajax_url,
+          type : 'post',
+          data : {
+            action : 'save_template',
+            nonce : save_template.nonce,
+            contentConfig : JSON.stringify(getInputsData(
+                jQuery('#content-config .content input,#content-config .content select')
+            ))
+          },
+          success : function (response) {
+            removeLoader(btn);
+            showSuccess();
+          },
+          error : function (response) {
+            removeLoader(btn);
+            showError();
+          }
+        });
+      }
  
     });
 
   })(jQuery);
+
+  function addValidate(form, rules, messages) {
+    jQuery.each(rules, function(name, item) {
+      jQuery('input[name="'+name+'"]').on('click', function() {
+        var item = jQuery('input[name="'+name+'"]');
+
+        if(jQuery(item).hasClass('invalid')) {
+          jQuery(item).removeClass('invalid');
+          var label = jQuery(item).parents('.custom-label').find('label');
+          label.removeClass('invalid');
+        }
+      });
+    });
+
+    return form.validate({
+      rules: rules,
+      errorClass: "invalid",
+      onclick: false,
+      onkeyup: false,
+      onfocusout: false,
+      showErrors: function(errorMap, errorList) {
+        jQuery.each(errorList, function(i, item) {
+          if(!jQuery(item.element).hasClass('invalid')) {
+            jQuery(item.element).addClass('invalid');
+            var label = jQuery(item.element).parents('.custom-label').find('label');
+            label.addClass('invalid');
+          }
+        });
+
+        var errorsMeassge = '';
+        jQuery.each(errorMap, function(i, item) {
+          errorsMeassge += '<br>' + item;
+        });
+        if(errorsMeassge != '') {
+          return noty({
+            type: 'error',
+            text: errorsMeassge,
+            timeout: 5000
+          });
+        }
+      },
+      messages: messages
+    });
+  }
 
 
   jQuery('#checkbox-sticky').on('change', function () {
@@ -549,4 +683,9 @@ jQuery(document).ready(function () {
   }).fail(function () {
     jQuery('#modal-content').append('<a href="https://www.adtechmedia.io/terms/dialog.html" target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>');
   });
+
+  jQuery.validator.methods.cssSize = function( value, element ) {
+    return this.optional( element ) || /(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)/.test( value );
+  }
+
 });
