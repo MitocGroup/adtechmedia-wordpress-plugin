@@ -774,8 +774,6 @@ jQuery(document).ready(function () {
 
   initModal();
 
-  jQuery('#modal-content').load('https://crossorigin.me/https://www.adtechmedia.io/terms/dialog.html');
-
   function firstSynch(){
     jQuery('[data-template="user"] input[name]').trigger('keyup');
     jQuery('[data-template="user"] input[data-template-css]').trigger('keyup');
