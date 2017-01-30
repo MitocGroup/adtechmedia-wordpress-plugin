@@ -689,15 +689,15 @@ jQuery(document).ready(function () {
       var valid = addValidate(jQuery('#content-config'), {
         price: {
           required: true,
-          number: true
+          digits: true
         },
         payment_pledged: {
           required: true,
-          number: true
+          digits: true
         },
         content_offset: {
           required: true,
-          number: true
+          digits: true
         },
         ads_video: {
           required: false,
@@ -706,15 +706,15 @@ jQuery(document).ready(function () {
       }, {
         price: {
           required: "The field 'Content pricing' is required.",
-          number: "The field 'Content pricing' must by a number."
+          digits: "The field 'Content pricing' must by a number."
         },
         payment_pledged: {
           required: "The field 'Content paywall' is required.",
-          number: "The field 'Content paywall' must by a number."
+          digits: "The field 'Content paywall' must by a number."
         },
         content_offset: {
           required: "The field 'Content preview' is required.",
-          number: "The field 'Content preview' must by a number."
+          digits: "The field 'Content preview' must by a number."
         },
         ads_video: {
           required: false,
