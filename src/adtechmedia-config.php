@@ -18,7 +18,7 @@ class Adtechmedia_Config {
 	 * @var array
 	 */
 	private static $conf = [
-		'api_end_point' => 'https://api.adtechmedia.io/prod/',
+		'api_end_point' => 'https://api.adtechmedia.io/v1/',
 		'plugin_table_name' => 'adtechmedia',
 		'plugin_cache_table_name' => 'adtechmedia_cache',
 		'maxTries' => 7,
