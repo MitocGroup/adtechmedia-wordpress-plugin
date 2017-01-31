@@ -455,7 +455,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Border</label>
 									<div class="custom-input">
-										<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
+										<input type="text" data-template-css="border" name="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -464,7 +464,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Font Family</label>
 									<div class="custom-input">
-										<input type="text" data-template-css="font-family" value="'Merriweather', sans-serif" placeholder="'Merriweather', sans-serif" required="" />
+										<input type="text" data-template-css="font-family" name="font_family" value="'Merriweather', sans-serif" placeholder="'Merriweather', sans-serif" required="" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -473,7 +473,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Box Shadow</label>
 									<div class="custom-input">
-										<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
+										<input type="text" data-template-css="box-shadow" name="box_shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
 										<span class="bar"></span>
 									</div>
 								</div>
@@ -491,7 +491,7 @@ echo '</script>';
 								<div class="custom-label">
 									<label>Footer Border</label>
 									<div class="custom-input">
-										<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
+										<input type="text" data-template-css="footer-border" name="footer_border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
 										<span class="bar"></span>
 									</div>
 								</div>

@@ -558,6 +558,18 @@ jQuery(document).ready(function () {
         scrolling_offset_top: {
           required: true,
           cssSize: true
+        },
+        border:{
+          required: true,
+        },
+        font_family:{
+          required: true,
+        },
+        box_shadow:{
+          required: true,
+        },
+        footer_border:{
+          required: true,
         }
       }, {
         width: {
@@ -576,6 +588,18 @@ jQuery(document).ready(function () {
           required: 'The field \'Scrolling offset top\' is required.',
           cssSize: 'The field \'Scrolling offset top\' must be valid CSS size.'
         },
+        border:{
+          required: 'The field \'Border\' is required.',
+        },
+        font_family:{
+          required: 'The field \'Font Family\' is required.',
+        },
+        box_shadow:{
+          required: 'The field \'Box Shadow\' is required.',
+        },
+        footer_border:{
+          required: 'The field \'Footer Border\' is required.',
+        }
       });
 
       if(valid.form()) {
@@ -706,15 +730,15 @@ jQuery(document).ready(function () {
       }, {
         price: {
           required: 'The field \'Content pricing\' is required.',
-          digits: 'The field \'Content pricing\' must by a number.'
+          digits: 'The field \'Content pricing\' must by a digits.'
         },
         payment_pledged: {
           required: 'The field \'Content paywall\' is required.',
-          digits: 'The field \'Content paywall\' must by a number.'
+          digits: 'The field \'Content paywall\' must by a digits.'
         },
         content_offset: {
           required: 'The field \'Content preview\' is required.',
-          digits: 'The field \'Content preview\' must by a number.'
+          digits: 'The field \'Content preview\' must by a digits.'
         },
         ads_video: {
           required: false,
