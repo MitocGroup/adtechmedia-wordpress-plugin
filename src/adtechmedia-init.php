@@ -61,8 +61,7 @@ function adtechmedia_init( $file ) {
 function adtechmedia_uninstall_hook() {
 
 	require_once( 'adtechmedia-plugin.php' );
-
-	Adtechmedia_ServerOptions::delete_options();
+	
 	$adtechmedia_plugin = new Adtechmedia_Plugin();
 	$adtechmedia_plugin->uninstall();
 }
