@@ -199,6 +199,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			add_action( 'admin_enqueue_scripts', array( &$this, 'add_adtechmedia_admin_scripts' ) );
 		}
 		add_action( 'save_post', array( &$this, 'clear_cache_on_update' ) );
+
+		// Update properties event.
+		add_action( 'adtechmedia_update_event', array( &$this, 'update_prop' ) );
+
 		if ( ! is_admin() && (empty( $key ) || empty( $property_id )) ) {
 			return;
 		}
@@ -312,34 +316,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 * Get JS to toggleCb function
-	 *
-	 * @param array $position array of position properties.
-	 * @return string
-	 */
-	public function get_toggle_cb_js( $position ) {
-		$sticky = ! empty( $position['sticky'] ) ? $position['sticky'] : false;
-		if ( ! empty( $position['scrolling_offset_top'] ) ) {
-			$position['scrolling_offset_top'] = (int) $position['scrolling_offset_top'];
-		}
-		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? $position['scrolling_offset_top'] : 0;
-		if ( ! $sticky ) {
-			$scrolling_offset_top = -10;
-		}
-		return "function(cb) {
-				var adjustMarginTop = function (e) {
-                var modalOffset = (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0) >= $scrolling_offset_top;
-                if (modalOffset) {
-                  cb(true);
-                } else {
-                  cb(false);
-                }
-                };
-                document.addEventListener('scroll', adjustMarginTop);
-                adjustMarginTop(null);}";
-	}
-
-	/**
 	 * Register plugin scripts
 	 *
 	 * @param string $hook wp hook.
@@ -353,6 +329,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			plugins_url( '/css/materialdesignicons.css', __FILE__ )
 		);
 		wp_enqueue_style( 'adtechmedia-style-main', plugins_url( '/css/main.css', __FILE__ ) );
+		wp_enqueue_style( 'adtechmedia-google-fonts', 'https://fonts.googleapis.com/css?family=Merriweather' );
 		wp_enqueue_script( 'jquery-ui-tabs' );
 		wp_enqueue_script(
 			'adtechmedia-jquery-noty-js',
@@ -364,6 +341,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js',
 			[ 'adtechmedia-jquery-noty-js' ]
 		);
+		wp_enqueue_script( 'jquery-validate', plugins_url( '/js/jquery.validate.min.js', __FILE__ ) );
 		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://adm.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
@@ -382,12 +360,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function add_adtechmedia_scripts() {
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
+			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
+			$is_old = empty( $is_old );
+			if ( $is_old ) {
+				$this->update_prop();
+			}
 			$path = plugins_url( '/js/atm.min.js', __FILE__ );
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
-			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
-			$is_old = empty( $is_old ) ? '0' : '1';
-			if ( ! file_exists( $file ) || '1' == $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
+			if ( ! file_exists( $file ) || $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
 				$data = gzdecode( file_get_contents( $script . "?v=" . time() ) );
@@ -402,6 +383,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// @codingStandardsIgnoreEnd
 			}
 			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
+			if ( Adtechmedia_ServerOptions::is_apache() ) {
+				wp_enqueue_script( 'Adtechmedia-frontend-js', plugins_url( '/js/frontend.js', __FILE__ ) );
+			}
 		}
 	}
 

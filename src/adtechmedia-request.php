@@ -257,6 +257,7 @@ class Adtechmedia_Request {
 	 * @param string  $currency currency.
 	 * @param string  $pledged_type pledged type.
 	 * @param string  $get_target_cb_js target cb js.
+	 * @param string  $get_toggle_cb_js toggle cb js.
 	 * @return array|bool
 	 */
 	public static function property_update_config(
@@ -273,7 +274,8 @@ class Adtechmedia_Request {
 		$offset_type,
 		$currency,
 		$pledged_type,
-		$get_target_cb_js
+		$get_target_cb_js,
+		$get_toggle_cb_js
 	) {
 		if ( empty( $key ) ) {
 			return false;
@@ -314,7 +316,7 @@ class Adtechmedia_Request {
 					'pledgedType' => self::get_pledged_type( $pledged_type ),
 				],
 				'targetModal' => [
-					// 'toggleCb' => 'function(cb) {cb(true);}',
+					'toggleCb' => $get_toggle_cb_js,
 					'targetCb' => $get_target_cb_js,
 				],
 			],

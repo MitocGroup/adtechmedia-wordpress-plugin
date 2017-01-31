@@ -48,6 +48,9 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
 		// To avoid running install() more then once.
 		$this->mark_as_installed();
+
+		// Set server options for Service Worker.
+		Adtechmedia_ServerOptions::set_options();
 	}
 
 	/**
@@ -95,9 +98,14 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'price_currency', 'usd' );
 		$this->add_plugin_option( 'content_paywall', 'transactions' );
 		$this->add_plugin_option( 'content_offset_type', 'paragraphs' );
+		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
+		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
 		$this->check_api_key_exists();
 		$this->check_prop();
 
+		// Add schedule event update properties.
+		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
+		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
 	}
 
 	/**
@@ -159,6 +167,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return void
 	 */
 	public function deactivate() {
+		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 	}
 
 	/**

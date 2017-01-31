@@ -32,19 +32,19 @@ $content_offset_types = [ 'paragraphs', 'words' ];
 echo '<script>';
 // @codingStandardsIgnoreStart
 echo 'var templateInputs =JSON.parse(\'';
-$template_inputs = $this->get_plugin_option( 'template_inputs' );
+$template_inputs = addslashes( $this->get_plugin_option( 'template_inputs' ) );
 echo empty( $template_inputs ) ? '{}' : $template_inputs;
 echo '\');';
 echo 'var templateStyleInputs =JSON.parse(\'';
-$template_style_inputs = $this->get_plugin_option( 'template_style_inputs' );
+$template_style_inputs = addslashes( $this->get_plugin_option( 'template_style_inputs' ) );
 echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
 echo '\');';
 echo 'var templatePositionInputs =JSON.parse(\'';
-$template_position = $this->get_plugin_option( 'template_position' );
+$template_position = addslashes( $this->get_plugin_option( 'template_position' ) );
 echo empty( $template_position ) ? '{}' : $template_position;
 echo '\');';
 echo 'var templateOverallStylesInputs =JSON.parse(\'';
-$template_overall_styles_inputs = $this->get_plugin_option( 'template_overall_styles_inputs' );
+$template_overall_styles_inputs = addslashes( $this->get_plugin_option( 'template_overall_styles_inputs' ) );
 echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
 echo '\');';
 // @codingStandardsIgnoreEnd
@@ -171,9 +171,15 @@ echo '</script>';
 						</div>
 					</div>
 					<div class="flex-container">
+						<div class="flex-item-6">
+							<input type="checkbox" id="terms" name="terms">
+							<label><a  id="terms-btn">I agree to Terms of Use</a></label>
+						</div>
+					</div>
+					<div class="flex-container">
 						<div class="flex-item-6 ">
 							<div class="custom-input">
-								<button type="submit" class="btn"><i class="mdi mdi-account-plus"></i> Register</button>
+								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" id="btn-register" class="btn" disabled><i class="mdi mdi-account-plus"></i> Register</a>
 							</div>
 						</div>
 						<div class="flex-item-6 flex-end">
@@ -431,14 +437,72 @@ echo '</script>';
 		<div class="content templating">
 			<div class="templates-views templates-views-common">
 				<div class="template-view">
-					<div class="header-view">Overall position and styling
+					<div class="header-view">Overall styling and position
 					</div>
 					<section class="content-view" >
-							<div class="flex-container flex-gutter flex-end" data-template="position">
+						<form id="overall-styling-and-position">
+						<div class="flex-container flex-gutter" data-template="overall-styling">
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Background Color</label>
+									<div class="custom-input">
+										<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Border</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Font Family</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="font-family" value="'Merriweather', sans-serif" placeholder="'Merriweather', sans-serif" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Box Shadow</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Footer Background Color</label>
+									<div class="custom-input">
+										<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+							<div class="flex-item-2">
+								<div class="custom-label">
+									<label>Footer Border</label>
+									<div class="custom-input">
+										<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
+										<span class="bar"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="flex-container flex-gutter flex-end" data-template="position">
 							<div class="flex-item-2">
 								<span class="accent-color">Sticky</span>
 								<div class="">
-									<input type="checkbox" name="sticky" id="checkbox-sticky" class="cbx hidden"/>
+									<input type="checkbox" name="sticky" id="checkbox-sticky" class="cbx hidden" checked />
 									<label for="checkbox-sticky" class="custom-checkbox"></label>
 								</div>
 							</div>
@@ -478,72 +542,20 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
-							</div>
-
-							<div class="flex-container flex-gutter" data-template="overall-styling">
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Background Color</label>
-										<div class="custom-input">
-											<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Border</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Font Family</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="font-family" value="'Helvetica Neue', sans-serif" placeholder="'Helvetica Neue', sans-serif" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Box Shadow</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="box-shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Footer Background Color</label>
-										<div class="custom-input">
-											<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
-								</div>
-								<div class="flex-item-2">
-									<div class="custom-label">
-										<label>Footer Border</label>
-										<div class="custom-input">
-											<input type="text" data-template-css="footer-border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
-											<span class="bar"></span>
-										</div>
-									</div>
+							<div class="flex-item-2">
+								<div class="custom-input pull-right">
+									<button type="button" class="btn save-templates"><i
+											class="mdi mdi-check"></i> Save
+									</button>
 								</div>
 							</div>
-
-						</section>
+						</div>
+						</form>
+					</section>
 				</div>
 			</div>
 			<div class="clearfix">
 				<div class="">
-
-
 
 					<section class="views-tabs">
 						<input id="pledge" name="main-tabs" checked="" type="radio">
@@ -594,7 +606,7 @@ echo '</script>';
 							</li>
 						</ul>
 
-						<div class="templates-views pledge" data-template="pledge">
+						<div class="templates-views pledge" data-template="pledge" data-template2="auth">
 							<div class="template-view">
 								<div class="header-view">pledge template
 								</div>
@@ -648,9 +660,8 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="font-weight">
 								                                        <option selected>normal</option>
 								                                        <option>bold</option>
 								                                        <option>bolder</option>
@@ -664,7 +675,7 @@ echo '</script>';
 								                                        <option>700</option>
 								                                        <option>800</option>
 								                                        <option>900</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -675,13 +686,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="font-style">
 								                                        <option selected>normal</option>
 								                                        <option>italic</option>
 								                                        <option>oblique</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -689,14 +699,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="text-align">
 								                                        <option selected>left</option>
 								                                        <option>right</option>
 								                                        <option>center</option>
 								                                        <option>justify</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -704,9 +713,8 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
-																    <select>
+																<div class="form-select">
+																    <select data-template-css="text-transform">
 								                                        <option selected>none</option>
 								                                        <option>capitalize</option>
 								                                        <option>uppercase</option>
@@ -761,9 +769,8 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="font-weight">
 								                                        <option selected>normal</option>
 								                                        <option>bold</option>
 								                                        <option>bolder</option>
@@ -777,7 +784,7 @@ echo '</script>';
 								                                        <option>700</option>
 								                                        <option>800</option>
 								                                        <option>900</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -788,13 +795,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="font-style">
 								                                        <option selected>normal</option>
 								                                        <option>italic</option>
 								                                        <option>oblique</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -802,14 +808,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="text-align">
 								                                        <option selected>left</option>
 								                                        <option>right</option>
 								                                        <option>center</option>
 								                                        <option>justify</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -817,14 +822,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
-																	<!--<select>
+																<div class="form-select">
+																	<select data-template-css="text-transform">
 								                                        <option selected>none</option>
 								                                        <option>capitalize</option>
 								                                        <option>uppercase</option>
 								                                        <option>lowercase</option>
-								                                    </select>-->
+								                                    </select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -836,29 +840,29 @@ echo '</script>';
 												<label for="pledge-ext-user" class="tab-name">
 													User
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="user">
+													<div class="custom-label" data-template="expanded">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
+															<input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
+															<input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#404040" required="" />
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -867,7 +871,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="12px" required="" />
+																	<input type="text" data-template-css="font-size" value="12px" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -875,20 +879,38 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight" >
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -896,8 +918,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -905,8 +932,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -975,8 +1007,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -994,7 +1040,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="color" required="" />
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1005,8 +1051,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1014,8 +1064,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1023,8 +1078,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1146,8 +1206,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1158,8 +1232,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1167,8 +1245,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1176,8 +1259,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1228,8 +1316,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1240,8 +1342,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1249,8 +1355,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1258,8 +1369,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1271,29 +1387,29 @@ echo '</script>';
 												<label for="pay-ext-user" class="tab-name">
 													User
 												</label>
-												<div class="tab-content">
-													<div class="custom-label">
+												<div class="tab-content" data-template="user-pay">
+													<div class="custom-label" data-template="expanded">
 														<label>Connect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Already used us before? {connect_url}" placeholder="Already used us before? {connect_url}" required="" />
+															<input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="custom-label">
+													<div class="custom-label" data-template="expanded">
 														<label>Disconnect Message</label>
 														<div class="custom-input">
-															<input type="text" value="Not {user}? {disconnect_url}" placeholder="Not {user}? {disconnect_url}" required="" />
+															<input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
 															<span class="bar"></span>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#404040" required="" />
+																	<input type="color" data-template-css="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1302,7 +1418,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="12px" required="" />
+																	<input type="text" data-template-css="font-size" value="12px" placeholder="12px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1310,20 +1426,38 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight" >
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 
-													<div class="flex-container flex-gutter">
+													<div class="flex-container flex-gutter" data-template="style">
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1331,8 +1465,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1340,8 +1479,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1359,7 +1503,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#1b93f2" required="" />
+																	<input type="color" placeholder="#ffffff" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1368,7 +1512,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="1px solid #1b93f2" required="" />
+																	<input type="text" placeholder="1px solid #e2e2e2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1377,7 +1521,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="2px" required="" />
+																	<input type="text" placeholder="3px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1389,7 +1533,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="font-size" required="" />
+																	<input type="text" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1397,8 +1541,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1427,8 +1585,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1436,8 +1599,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1497,7 +1665,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#ffffff" required="" />
+																	<input type="color" placeholder="#1b93f2" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1515,7 +1683,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="font-size" required="" />
+																	<input type="text" placeholder="11px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1526,8 +1694,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1556,8 +1738,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1565,8 +1751,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1574,8 +1765,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1703,8 +1899,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1715,8 +1925,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1724,8 +1938,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1733,8 +1952,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1769,7 +1993,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" data-template-css="font-size" placeholder="font-size" required="" />
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1777,8 +2001,22 @@ echo '</script>';
 														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1789,8 +2027,12 @@ echo '</script>';
 														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1798,8 +2040,13 @@ echo '</script>';
 														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1807,8 +2054,13 @@ echo '</script>';
 														<div class="flex-item-4" data-template="style">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1906,7 +2158,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" data-template-css="font-size" placeholder="font-size" required="" />
+																	<input type="text" data-template-css="font-size" placeholder="13px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1914,8 +2166,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-weight" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1926,8 +2192,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="font-style" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1935,8 +2205,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-align"  placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -1944,8 +2219,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" data-template-css="text-transform"  placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2086,7 +2366,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="font-size" required="" />
+																	<input type="text" placeholder="11px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2097,8 +2377,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2107,7 +2401,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="border-radius" required="" />
+																	<input type="text" placeholder="2px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2127,8 +2421,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2136,8 +2434,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2145,8 +2448,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2302,7 +2610,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Font Size</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="font-size" required="" />
+																	<input type="text" placeholder="11px" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2313,8 +2621,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2343,8 +2665,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2352,8 +2678,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Align</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="left" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-align">
+																		<option selected>left</option>
+																		<option>right</option>
+																		<option>center</option>
+																		<option>justify</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2361,8 +2692,13 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Text Transform</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="none" required="" />
+																<div class="form-select">
+																	<select data-template-css="text-transform">
+																		<option selected>none</option>
+																		<option>capitalize</option>
+																		<option>uppercase</option>
+																		<option>lowercase</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2420,7 +2756,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Background Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#1b93f2" required="" />
+																	<input type="color" placeholder="#f3f3f3" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2429,7 +2765,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="1px solid #1b93f2" required="" />
+																	<input type="text" placeholder="1px solid #d3d3d3" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2438,7 +2774,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Border Radius</label>
 																<div class="custom-input">
-																	<input type="text" placeholder="2px" required="" />
+																	<input type="text" placeholder="50%" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2450,7 +2786,7 @@ echo '</script>';
 															<div class="custom-label">
 																<label>Color</label>
 																<div class="custom-input">
-																	<input type="color" placeholder="#ffffff" required="" />
+																	<input type="color" placeholder="#404040" required="" />
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2458,8 +2794,12 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Style</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-style">
+																		<option selected>normal</option>
+																		<option>italic</option>
+																		<option>oblique</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2467,8 +2807,22 @@ echo '</script>';
 														<div class="flex-item-4">
 															<div class="custom-label">
 																<label>Font Weight</label>
-																<div class="custom-input">
-																	<input type="text" placeholder="normal" required="" />
+																<div class="form-select">
+																	<select data-template-css="font-weight">
+																		<option selected>normal</option>
+																		<option>bold</option>
+																		<option>bolder</option>
+																		<option>lighter</option>
+																		<option>100</option>
+																		<option>200</option>
+																		<option>300</option>
+																		<option>400</option>
+																		<option>500</option>
+																		<option>600</option>
+																		<option>700</option>
+																		<option>800</option>
+																		<option>900</option>
+																	</select>
 																	<span class="bar"></span>
 																</div>
 															</div>
@@ -2480,6 +2834,9 @@ echo '</script>';
 									</div>
 								</div>
 							</div>
+							<div class="custom-input pull-right">
+								<button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
+							</div>
 						</div>
 					</section>
 
@@ -2487,6 +2844,13 @@ echo '</script>';
 			</div>
 		</div>
 	</section>
+
+	<div id="terms-modal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h1 class="modal-header">Terms of Use</h1>
+			<div id="modal-content"></div>
+		</div>
+	</div>
+	
 </main>
-
-
