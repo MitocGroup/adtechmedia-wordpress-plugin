@@ -188,7 +188,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
-		// Mozilla\WP_SW_Manager::get_manager()->sw()->add_content( array( $this, 'write_sw' ) );.
+		Mozilla\WP_SW_Manager::get_manager()->sw()->add_content( array( $this, 'write_sw' ) );
 		add_action( 'admin_menu', array( &$this, 'add_settings_sub_menu_page' ) );
 		$property_id = $this->get_plugin_option( 'id' );
 		$key = $this->get_plugin_option( 'key' );
@@ -383,9 +383,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// @codingStandardsIgnoreEnd
 			}
 			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
-			if ( Adtechmedia_ServerOptions::is_apache() ) {
-				wp_enqueue_script( 'Adtechmedia-frontend-js', plugins_url( '/js/frontend.js', __FILE__ ) );
-			}
 		}
 	}
 

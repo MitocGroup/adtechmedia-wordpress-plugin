@@ -48,9 +48,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
 		// To avoid running install() more then once.
 		$this->mark_as_installed();
-
-		// Set server options for Service Worker.
-		Adtechmedia_ServerOptions::set_options();
 	}
 
 	/**
