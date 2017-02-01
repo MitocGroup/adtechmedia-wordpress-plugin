@@ -388,13 +388,13 @@ jQuery(document).ready(function () {
 
     function toggleTemplates() {
       var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
-         viewKey = sender.attr('data-view-key'),
-         type = sender.attr('data-view'),
-         typeOther = 'expanded',
-         small = true,
-         senderParent = sender.parent(),
-         senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
-         senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
+        viewKey = sender.attr('data-view-key'),
+        type = sender.attr('data-view'),
+        typeOther = 'expanded',
+        small = true,
+        senderParent = sender.parent(),
+        senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
+        senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
       if (type === 'expanded') {
         typeOther = 'collapsed';
         small = false;
@@ -537,11 +537,8 @@ jQuery(document).ready(function () {
         views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
         views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
 
-        });
+      });
     });
-
-
-
 
     var throttledSync = jQuery.throttle(200, function (e) {
       var thisValue = $(this).val();
@@ -591,8 +588,7 @@ jQuery(document).ready(function () {
                 getCSSFields(styleInputs[inputKey + 'style'].inputs);
           }
           }
-
-      });
+    });
 
       var needToRedraw = [];
       if(tabViews.hasOwnProperty(tabKey)) {
