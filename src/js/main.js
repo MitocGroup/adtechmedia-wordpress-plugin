@@ -307,52 +307,271 @@ jQuery(document).ready(function () {
     }
   ];
 
+  var tabs = [
+    {
+      id: 'pledge-salutation',
+      dataTab: 'salutation',
+      options: [
+        {
+          name: 'body-welcome',
+          inputName: 'welcome',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'pledge-message',
+      dataTab: 'message',
+      options: [
+        {
+          name: 'body-msg-mp',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
+        }
+      ]
+    },
+    {
+      id: 'auth-user',
+      dataTab: 'user',
+      component : 'authComponent',
+      view:['pledge','pay'],
+      options: [
+        {
+          name: 'logged-headline',
+          inputName: 'user-logged',
+          type: 'collapsed'
+        },
+        {
+          name: 'used-headline',
+          inputName: 'user-used',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'pay-salutation',
+      dataTab: 'salutation',
+      options: [
+        {
+          name: 'body-salutation',
+          inputName: 'salutation',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'pay-message',
+      dataTab: 'message',
+      options: [
+        {
+          name: 'body-msg-mp',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline-setup',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood-ok',
+      dataTab: 'mood-ok',
+      options: [
+        {
+          name: 'body-feeling-ok',
+          inputName: 'body-feeling-ok',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood',
+      dataTab: 'mood',
+      options: [
+        {
+          name: 'body-feeling',
+          inputName: 'body-feeling',
+          type: 'expanded'
+        }
+      ]
+    }, {
+      id: 'refund-mood-happy',
+      dataTab: 'mood-happy',
+      options: [
+        {
+          name: 'body-feeling-happy',
+          inputName: 'body-feeling-happy',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood-not-happy',
+      dataTab: 'mood-not-happy',
+      options: [
+        {
+          name: 'body-feeling-not-happy',
+          inputName: 'body-feeling-not-happy',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-message',
+      dataTab: 'message',
+      options: [
+        {
+          name: 'body-msg',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
+        }
+      ]
+    },
+    {
+      id: 'refund-share',
+      dataTab: 'share',
+      options: [
+        {
+          name: 'body-share-experience',
+          inputName: 'body-share-experience',
+          type: 'expanded'
+        }
+      ]
+    }
+
+  ];
+
+  var componentsViews = [
+    {
+      name:'pledge',
+      collapsed:'#render-pledge-collapsed',
+      expanded:'#render-pledge-expanded'
+    },
+    {
+      name:'pay',
+      collapsed:'#render-pay-collapsed',
+      expanded:'#render-pay-expanded'
+    },
+    {
+      name:'refund',
+      collapsed:'#render-refund-collapsed',
+      expanded:'#render-refund-expanded'
+    },
+  ]
+
+  var components =[
+    {
+      name : 'pledge',
+      component : 'pledgeComponent',
+      dataTab : 'pledge',
+      view:'pledge',
+      sections : [
+          'pledge-salutation',
+          'pledge-message',
+          'auth-user'
+      ]
+    },
+    {
+      name : 'pay',
+      component : 'payComponent',
+      dataTab : 'pay',
+      view:'pay',
+      sections : [
+          'pay-salutation',
+          'pay-message',
+          'auth-user'
+      ]
+    },
+    {
+      name : 'refund',
+      component : 'refundComponent',
+      dataTab : 'refund',
+      view:'refund',
+      sections : [
+          'refund-mood-ok',
+          'refund-mood',
+          'refund-mood-happy',
+          'refund-mood-not-happy',
+          'refund-message',
+          'refund-share'
+      ]
+    }
+  ];
+
   (function ($) {
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
     console.log(stories);
     var views = {};
+    var tabViews = {};
     var inputs = {};
     var options = {};
     var styling = {};
     var styleInputs = {};
 
-    function toggleTemplates() {
-      var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
-        viewKey = sender.attr('data-view-key'),
-        type = sender.attr('data-view'),
-        typeOther = 'expanded',
-        small = true,
-        senderParent = sender.parent(),
-        senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
-        senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
-      if (type === 'expanded') {
-        typeOther = 'collapsed';
-        small = false;
-      }
-      senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
-      sender.attr('data-view', typeOther);
-      views[viewKey][typeOther]._watchers['showModalBody'].forEach(function(unwatch) {return unwatch()});
-      delete views[viewKey][typeOther]._watchers['showModalBody'];
-      views[viewKey][typeOther].small(small);
-      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
-      var tmp = views[viewKey]['expanded'];
-      views[viewKey]['expanded'] = views[viewKey]['collapsed'];
-      views[viewKey]['collapsed'] = tmp;
-
-      tmp = senderParentExpaned.html();
-      senderParentExpaned.html(senderParentCollapsed.html());
-      senderParentCollapsed.html(tmp);
-    }
-
-    jQuery.each(templates, function (i, template) {
+    jQuery.each(components, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
       options[template.component] = {};
       styling[template.component] = {};
       var viewKey = template.dataTab;
       views[viewKey] = {};
-      jQuery.each(template.sections, function (j, section) {
+
+      var viewKeys = [];
+      var noViewKeys = [];
+
+      viewKeys.push(viewKey);
+
+      var tamplateView = componentsViews.filter(function(view) {
+        return view.name == template.view;
+      }.bind(template));
+
+      if(tamplateView.length == 1) {
+        tamplateView = tamplateView[0];
+      } else {
+        return false;
+      }
+
+
+        jQuery.each(template.sections, function (j, section) {
+        var viewTab = tabs.filter(function(tab) {
+          return tab.id == section;
+        }.bind(section));
+
+        if(viewTab.length == 1) {
+          section = viewTab[0];
+        } else {
+          return false;
+        }
+
+        var componentName = template.component;
+        if(section.hasOwnProperty('component')) {
+          componentName = section.component;
+          viewKey = section.dataTab;
+          views[viewKey] = {};
+          noViewKeys.push(viewKey);
+
+        } else {
+          viewKey = template.dataTab;
+        }
+        views[viewKey]['component'] = componentName;
+        tabViews[viewKey] = tamplateView.name;
+        if(section.hasOwnProperty('view')) {
+          tabViews[viewKey] = section.view;
+        }
+
         var sectionTab = tab.find(getDatatemplate(section.dataTab));
         var styleInputsKey = viewKey + section.dataTab + 'style';
         styleInputs[styleInputsKey] = {
@@ -363,98 +582,167 @@ jQuery(document).ready(function () {
           inputs[inputsKey] = {
             input : sectionTab.find('input[name="' + option.inputName + '"]'),
             optionName : option.name,
-            type : option.type
+            type : option.type,
+            tabSelector:'[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]',
+            componentSelector:'[data-template="'+template.dataTab+'"] [data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]'
           };
+
           if (templateInputs.hasOwnProperty(inputsKey)) {
             inputs[inputsKey].input.val(templateInputs[inputsKey]);
-            options[template.component][option.name] = templateInputs[inputsKey];
-            styling[template.component][option.name] = templateStyleInputs[styleInputsKey];
+            inputs[inputsKey].input.attr('placeholder', templateInputs[inputsKey]);
+            options[componentName][option.name] = templateInputs[inputsKey];
+            styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
+          } else {
+            if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
+              var val = stories[componentName][option.name].content;
+              inputs[inputsKey].input.val(val);
+              inputs[inputsKey].input.attr('placeholder', val);
+
+              options[componentName] = {};
+              options[componentName][option.name] = val;
+            }
           }
 
         });
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
+
+
+
       });
-      views[viewKey]['component'] = template.component;
-      if ('auth' === viewKey){
-        viewKey = 'pledge';
-        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
-        views[viewKey].expanded.redraw();
-        views[viewKey].collapsed.redraw();
-      } else {
-        views[viewKey]['expanded'] = atmTemplating.render(template.name, template.expanded);
-        views[viewKey]['expanded'].small(false);
-        views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
-        jQuery(template.expanded).attr('data-view-key', viewKey);
-        jQuery(template.collapsed).attr('data-view-key', viewKey);
-        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
-        views[viewKey].expanded.redraw();
-        views[viewKey].collapsed.redraw();
-        views[viewKey].expanded.watch('showModalBody', toggleTemplates);
-        views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
-      }
+
+
+      jQuery.each(viewKeys, function (j, viewKeyItem) {
+        if(!views[viewKeyItem].hasOwnProperty('component')) {
+          views[viewKeyItem]['component'] = template.component;
+        }
+
+        views[viewKeyItem]['expanded'] = atmTemplating.render(template.name, tamplateView.expanded);
+        views[viewKeyItem]['expanded'].small(false);
+        views[viewKeyItem]['collapsed'] = atmTemplating.render(template.name, tamplateView.collapsed);
+        jQuery(tamplateView.expanded).attr('data-view-key', viewKeyItem);
+        jQuery(tamplateView.collapsed).attr('data-view-key', viewKeyItem);
+        atmTemplating.updateTemplate(views[viewKeyItem]['component'], options[views[viewKeyItem]['component']], styling[views[viewKeyItem]['component']]);
+        views[viewKeyItem].expanded.redraw();
+        views[viewKeyItem].collapsed.redraw();
+
+        // views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
+        // views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
+
+      });
     });
 
+
+
+
     var throttledSync = jQuery.throttle(200, function (e) {
+      console.log('___', this);
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
       var redrawViewKey = viewKey;
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
-      if ('user' === tabKey) {
-        viewKey = 'auth';
-      }
       var inputKey = viewKey + tabKey;
-
-
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
-        //console.log(type);
+        // console.log('inputs___', inputs);
+        var inputKey = viewKey + tabKey;
 
         if (inputs.hasOwnProperty(inputKey + type)) {
+          // console.log('options321',inputKey,viewKey,tabKey,inputKey + type);
+          // console.log('inputKey312',inputs[inputKey + type]);
+          console.log(inputKey,inputs[inputKey + type]);
+
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
           styling[views[viewKey].component][inputs[inputKey + type].optionName] =
             getCSSFields(styleInputs[inputKey + 'style'].inputs);
 
         }
-      });
-      // update template
-      atmTemplating.updateTemplate(
-        views[viewKey].component,
-        options[views[viewKey].component],
-        styling[views[viewKey].component]
-      );
+        else {
+          inputKey = tabKey + tabKey;
+          if (inputs.hasOwnProperty(inputKey + type)) {
+            var inputSelector = inputs[inputKey + type].tabSelector;
 
-      // redraw the view
-      views[redrawViewKey].expanded.redraw();
-      views[redrawViewKey].collapsed.redraw();
-      views[redrawViewKey].expanded.watch('showModalBody', toggleTemplates);
-      views[redrawViewKey].collapsed.watch('showModalBody', toggleTemplates);
+            var oldValue =   options[views[tabKey].component][inputs[inputKey + type].optionName];
+            var newValue =   inputs[inputKey + type].input.val();
+
+            jQuery.each(jQuery(inputSelector), function(i,item) {
+              if($(item).val() !== oldValue) {
+                newValue = $(item).val();
+              }
+            });
+
+            jQuery.each(jQuery(inputSelector), function(i,item) {
+              if($(item).val() !== newValue) {
+                $(item).val(newValue);
+              }
+            });
+
+            options[views[tabKey].component][inputs[inputKey + type].optionName] = newValue;
+            styling[views[tabKey].component] = {};
+            styling[views[tabKey].component][inputs[inputKey + type].optionName] =
+                getCSSFields(styleInputs[inputKey + 'style'].inputs);
+          }
+
+          }
+      });
+
+      var needToRedraw = [];
+      if(tabViews.hasOwnProperty(tabKey)) {
+        needToRedraw = tabViews[tabKey];
+        atmTemplating.updateTemplate(
+            views[tabKey].component,
+            options[views[tabKey].component],
+            styling[views[tabKey].component]
+        );
+      } else {
+        needToRedraw = tabViews[viewKey];
+
+      }
+
+      if(!Array.isArray(needToRedraw)) {
+        needToRedraw = [needToRedraw];
+      }
+      jQuery.each(needToRedraw, function (i, type) {
+//        update template
+          atmTemplating.updateTemplate(
+              views[type].component,
+              options[views[type].component],
+              styling[views[type].component]
+          );
+          // redraw the view
+          views[type].expanded.redraw();
+          views[type].collapsed.redraw();
+          // views[redrawViewKey].expanded.watch('showModalBody', toggleTemplates);
+          // views[redrawViewKey].collapsed.watch('showModalBody', toggleTemplates);
+
+      });
+
     });
 
     var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
     var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
-    function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
-      jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
-        var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this)
-            .attr(dataType)+'"]')[0]);
-        input.val(jQuery(this).val());
-        if (trigger) {
-          input.trigger(eventName);
-        }else{
-          setTimeout(function(){
-            views['pay'].expanded.redraw();
-            views['pay'].collapsed.redraw();
-          },100);
-        }
-      });
-    }
-    function synch(field,dataType,additionalType,eventName){
-      synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
-      synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
-    }
-    synch('input','name','','keyup');
-    synch('input','data-template-css','','keyup');
-    synch('select','data-template-css','','change');
-    synch('input','data-template-css','[type="color"]','change');
+    // function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
+    //   jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
+    //     var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this)
+    //         .attr(dataType)+'"]')[0]);
+    //     input.val(jQuery(this).val());
+    //     if (trigger) {
+    //       input.trigger(eventName);
+    //     }else{
+    //       setTimeout(function(){
+    //         views['pay'].expanded.redraw();
+    //         views['pay'].collapsed.redraw();
+    //       },100);
+    //     }
+    //   });
+    // }
+    // function synch(field,dataType,additionalType,eventName){
+    //   synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
+    //   synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
+    // }
+    // synch('input','name','','keyup');
+    // synch('input','data-template-css','','keyup');
+    // synch('select','data-template-css','','change');
+    // synch('input','data-template-css','[type="color"]','change');
     $inputs.bind('keyup', throttledSync);
     $colorInputs.bind('change', throttledSync);
     $selects.bind('change', throttledSync);
