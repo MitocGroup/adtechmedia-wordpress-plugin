@@ -1,15 +1,13 @@
 language: php
 sudo: required
 node_js:
-  - '4.3'
-  - '6.9'
+  - 7
 cache:
   edge: true
   directories:
     - $HOME/.composer/cache
     - $(npm root -g)
     - node_modules
-    - deep_modules
     - $(npm config get prefix)/bin
 branches:
   only:
@@ -29,9 +27,8 @@ after_script:
 dist: trusty
 group: edge
 php:
-  - 5.5
   - 5.6
-  - 7
+  - 7.1
 install:
   - composer install
   - npm install
@@ -40,9 +37,8 @@ script:
   - npm test
 env:
   global:
-    - NODE_RELEASE=4.x
+    - NODE_RELEASE=7.x
     - 'MAJOR_VERSIONS=master,stage'
-    - DEEP_NO_INTERACTION=1
     - E2E_TESTING=none
     - secure: 
         DTJvolhdOVZgGUr5eO7+GNVqVJsNJZPThFL4hGIUdSTegrQ9tfTRc/c600Udz7ydd9DDNVv90XSaKrFPXVfMJEwPtPz6ZLJyg1RQFArkielAVx2oeAomHnIua9wgw98JFFd9aHbbmWfHHbWyWlvsW/HFNXCmmTIftlQUzk1iZuB9M9TfZRUeuQ+kBdTENtvyI+uTaLsAOY/0ADMotTRtw0ACftPbdRlTB7A8uD77zUK7vYw/g8fIhMugpbWy8aBfS+zQDhnwKnqJqJgqeAHvEAej2AQ9RE1pe4Bb1SmE8v81b8oqx5FXXx0kJ2pr2PyreRaFikT253VIAFhxTkQOocbYvGVjxKUjNVrQLWklcvwN8m7HTY6ch0q4YZzNW1bpVBXGV8XwAtQFM9EA81hJ5PrMRDNDLzFhKtbhSSlTrdiVTp20UFZX5FMU+GnLbeGzXWFmw9J0v8YTdUOhXt9wXwPlhrdJe/XzJPHPNQYL+gf4r5/GX4CPd7lphrlHLOXo+suPofkKtX9jpGxas5612/VH5fzp1UMSNPPann1JtmsiQAVgS8pzaSv1QDu1FPDfdCYwICVA5o85Fm3lDaVsdzZIOF+DzwrNopy+0Amky3MML6psUwPCY/2kCfPQtZb1TopCOajue8KSHP7EC/rxLmQ7wLN55UwKCO34+4MJDP0=
