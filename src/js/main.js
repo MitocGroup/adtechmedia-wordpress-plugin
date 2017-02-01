@@ -905,19 +905,19 @@ jQuery(document).ready(function () {
       }, {
         price: {
           required: 'The field \'Content pricing\' is required.',
-          digits: 'The field \'Content pricing\' must by a digits.'
+          digits: 'The field \'Content pricing\' must be a digits.'
         },
         payment_pledged: {
           required: 'The field \'Content paywall\' is required.',
-          digits: 'The field \'Content paywall\' must by a digits.'
+          digits: 'The field \'Content paywall\' must be a digits.'
         },
         content_offset: {
           required: 'The field \'Content preview\' is required.',
-          digits: 'The field \'Content preview\' must by a digits.'
+          digits: 'The field \'Content preview\' must be a digits.'
         },
         ads_video: {
           required: false,
-          url: 'The field \'Content preview\' must by a valid url.'
+          url: 'The field \'Content preview\' must be a valid url.'
         }
       });
       if(valid.form()) {
