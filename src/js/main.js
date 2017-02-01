@@ -522,6 +522,34 @@ jQuery(document).ready(function () {
     var styling = {};
     var styleInputs = {};
 
+    function toggleTemplates() {
+      var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
+          viewKey = sender.attr('data-view-key'),
+          type = sender.attr('data-view'),
+          typeOther = 'expanded',
+          small = true,
+          senderParent = sender.parent(),
+          senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
+          senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
+      if (type === 'expanded') {
+        typeOther = 'collapsed';
+        small = false;
+      }
+      senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
+      sender.attr('data-view', typeOther);
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(function(unwatch) {return unwatch()});
+      delete views[viewKey][typeOther]._watchers['showModalBody'];
+      views[viewKey][typeOther].small(small);
+      views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
+      var tmp = views[viewKey]['expanded'];
+      views[viewKey]['expanded'] = views[viewKey]['collapsed'];
+      views[viewKey]['collapsed'] = tmp;
+      tmp = senderParentExpaned.html();
+      senderParentExpaned.html(senderParentCollapsed.html());
+      senderParentCollapsed.html(tmp);
+    }
+
+
     jQuery.each(components, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
       options[template.component] = {};
@@ -590,6 +618,12 @@ jQuery(document).ready(function () {
           if (templateInputs.hasOwnProperty(inputsKey)) {
             inputs[inputsKey].input.val(templateInputs[inputsKey]);
             inputs[inputsKey].input.attr('placeholder', templateInputs[inputsKey]);
+            if(!options.hasOwnProperty(componentName)) {
+              options[componentName] = {};
+            }
+            if(!styling.hasOwnProperty(componentName)) {
+              styling[componentName] = {};
+            }
             options[componentName][option.name] = templateInputs[inputsKey];
             styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
           } else {
@@ -600,6 +634,10 @@ jQuery(document).ready(function () {
 
               options[componentName] = {};
               options[componentName][option.name] = val;
+              // if (templateStyleInputs.hasOwnProperty(styleInputsKey)) {
+              //   styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
+              // }
+
             }
           }
 
@@ -625,8 +663,8 @@ jQuery(document).ready(function () {
         views[viewKeyItem].expanded.redraw();
         views[viewKeyItem].collapsed.redraw();
 
-        // views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
-        // views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
+        views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
+        views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
 
       });
     });
@@ -635,20 +673,16 @@ jQuery(document).ready(function () {
 
 
     var throttledSync = jQuery.throttle(200, function (e) {
-      console.log('___', this);
+      var thisValue = $(this).val();
+      var dataTemplateCss = $(this).attr('data-template-css');
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
       var redrawViewKey = viewKey;
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
       var inputKey = viewKey + tabKey;
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
-        // console.log('inputs___', inputs);
         var inputKey = viewKey + tabKey;
 
         if (inputs.hasOwnProperty(inputKey + type)) {
-          // console.log('options321',inputKey,viewKey,tabKey,inputKey + type);
-          // console.log('inputKey312',inputs[inputKey + type]);
-          console.log(inputKey,inputs[inputKey + type]);
-
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
           styling[views[viewKey].component][inputs[inputKey + type].optionName] =
             getCSSFields(styleInputs[inputKey + 'style'].inputs);
@@ -661,7 +695,9 @@ jQuery(document).ready(function () {
 
             var oldValue =   options[views[tabKey].component][inputs[inputKey + type].optionName];
             var newValue =   inputs[inputKey + type].input.val();
-
+            if(!styling.hasOwnProperty(views[tabKey].component)) {
+              styling[views[tabKey].component] = {};
+            }
             jQuery.each(jQuery(inputSelector), function(i,item) {
               if($(item).val() !== oldValue) {
                 newValue = $(item).val();
@@ -674,18 +710,25 @@ jQuery(document).ready(function () {
               }
             });
 
+            var styleSelector = '[data-template="'+tabKey+'"] [data-template-css="'+dataTemplateCss+'"]';
+            var newStyle =   thisValue;
+            jQuery.each(jQuery(styleSelector), function(i,item) {
+              if(jQuery(item).val() !== newStyle) {
+                jQuery(item).val(newStyle);
+              }
+            });
             options[views[tabKey].component][inputs[inputKey + type].optionName] = newValue;
-            styling[views[tabKey].component] = {};
             styling[views[tabKey].component][inputs[inputKey + type].optionName] =
                 getCSSFields(styleInputs[inputKey + 'style'].inputs);
           }
-
           }
+
       });
 
       var needToRedraw = [];
       if(tabViews.hasOwnProperty(tabKey)) {
         needToRedraw = tabViews[tabKey];
+
         atmTemplating.updateTemplate(
             views[tabKey].component,
             options[views[tabKey].component],
@@ -701,6 +744,7 @@ jQuery(document).ready(function () {
       }
       jQuery.each(needToRedraw, function (i, type) {
 //        update template
+
           atmTemplating.updateTemplate(
               views[type].component,
               options[views[type].component],
@@ -709,8 +753,8 @@ jQuery(document).ready(function () {
           // redraw the view
           views[type].expanded.redraw();
           views[type].collapsed.redraw();
-          // views[redrawViewKey].expanded.watch('showModalBody', toggleTemplates);
-          // views[redrawViewKey].collapsed.watch('showModalBody', toggleTemplates);
+          views[type].expanded.watch('showModalBody', toggleTemplates);
+          views[type].collapsed.watch('showModalBody', toggleTemplates);
 
       });
 
@@ -720,29 +764,7 @@ jQuery(document).ready(function () {
     var $inputs = $form.find('input');
     var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
-    // function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
-    //   jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
-    //     var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this)
-    //         .attr(dataType)+'"]')[0]);
-    //     input.val(jQuery(this).val());
-    //     if (trigger) {
-    //       input.trigger(eventName);
-    //     }else{
-    //       setTimeout(function(){
-    //         views['pay'].expanded.redraw();
-    //         views['pay'].collapsed.redraw();
-    //       },100);
-    //     }
-    //   });
-    // }
-    // function synch(field,dataType,additionalType,eventName){
-    //   synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
-    //   synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
-    // }
-    // synch('input','name','','keyup');
-    // synch('input','data-template-css','','keyup');
-    // synch('select','data-template-css','','change');
-    // synch('input','data-template-css','[type="color"]','change');
+
     $inputs.bind('keyup', throttledSync);
     $colorInputs.bind('change', throttledSync);
     $selects.bind('change', throttledSync);
@@ -826,10 +848,43 @@ jQuery(document).ready(function () {
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
-      //console.log(viewKey);
-      if (viewKey === 'position') {
-        viewKey = 'pledge';
-      }
+
+      //get compnents in this view
+      var viewComponents = {};
+      jQuery.each(components, function(i,template) {
+        if(template.hasOwnProperty('view')) {
+          var templateView = template.view;
+          if(!Array.isArray(templateView)) {
+            templateView = [templateView] ;
+          }
+          jQuery.each(templateView,function(i,view) {
+            if(view === viewKey) {
+              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                  options[template.component],
+                  styling[template.component]
+              );
+            }
+          });
+        }
+      });
+
+      jQuery.each(tabs, function(i,template) {
+        if(template.hasOwnProperty('view')) {
+          var templateView = template.view;
+          if(!Array.isArray(templateView)) {
+            templateView = [templateView] ;
+          }
+          jQuery.each(templateView,function(i,view) {
+            if(view === viewKey) {
+              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                  options[template.component],
+                  styling[template.component]
+              );
+            }
+          });
+        }
+      });
+
       var valid = addValidate(jQuery('#overall-styling-and-position'), {
         width: {
           required: true,
@@ -903,41 +958,8 @@ jQuery(document).ready(function () {
             position: JSON.stringify(getPositionFields()),
             overallStyles: getOverallStyling(),
             overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            component: views[viewKey].component,
-            template: atmTemplating.templateRendition(views[viewKey].component).render(
-                options[views[viewKey].component],
-                styling[views[viewKey].component]
-            )
-          },
-          success: function (response) {
-            removeLoader(btn);
-            showSuccess();
-          },
-          error: function (response) {
-            removeLoader(btn);
-            showError();
-          }
-        });
-
-
-        addLoader(btn);
-        viewKey = 'auth';
-        jQuery.ajax({
-          url: save_template.ajax_url,
-          type: 'post',
-          data: {
-            action: 'save_template',
-            nonce: save_template.nonce,
-            inputs: JSON.stringify(inputsToObject(inputs)),
-            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
-            position: JSON.stringify(getPositionFields()),
-            overallStyles: getOverallStyling(),
-            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            component: views[viewKey].component,
-            template: atmTemplating.templateRendition(views[viewKey].component).render(
-                options[views[viewKey].component],
-                styling[views[viewKey].component]
-            )
+            components: Object.keys(viewComponents),
+            templates: viewComponents
           },
           success: function (response) {
             removeLoader(btn);
