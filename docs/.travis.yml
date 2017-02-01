@@ -5,9 +5,8 @@ group: edge
 language: php
 
 php:
-  - 5.5
   - 5.6
-  - 7.0
+  - 7.1
 
 cache:
   edge: true
@@ -15,7 +14,6 @@ cache:
     - $HOME/.composer/cache
     - $(npm root -g)
     - node_modules
-    - deep_modules
     - $(npm config get prefix)/bin
 
 before_install:
@@ -35,11 +33,9 @@ script:
 env:
   global:
   # Node version
-  - NODE_RELEASE=4.x
+  - NODE_RELEASE=7.x
   # To enable run full CI build for specified branches
   - MAJOR_VERSIONS=master,stage
-  # Disable interactive user mode ###
-  - DEEP_NO_INTERACTION=1
   # Set type of E2E tests. Public, private or none
   - E2E_TESTING=none
   # S3_BUCKET_NAME=[secured]
@@ -56,6 +52,7 @@ env:
   - secure: z0Z1gILGzNo0tbVLgNsPTd+acO+WhKqKb6sLLHlJrDxsJzSTZNidX6QvdlUadOPMg774FgSflFVs0Vy/dH6SUBt/6Um4iGDoIXOBCfPKgq+lk1LET1/kgi9bdA8drJD9sAcRo980OYQGfnmHu7bkwYO3iW2hwF2b0nDX/2yY8ocotpkhwj9fFrmL1gMNjwnn+42GD+GIcwMWJQFgWZTmT6gBtTTdJPnC06VunkLO5eFN2H+I/mf8R1Y+n3ts1hTK0v2S9YqWBmqHaiemj5ibFn0YU27qUF3ouB8Ze02vrnHK9cy8OiAyhc9yWlfwM7Gw6awLdN2RF6nUmmih/QyB9hBe0exMeOSMhMoiPJd0yhKtFV4rEqtSsqn7ec5qDIKgRk5qSzZrWgDw4GrgU8tmhPFFXWV/oKV83yknTgUcCJrj1RCxl4JhU8vcpFDRtXNvmvuYF30oAQPOVemZ5L5VTVYdkXwyNLMc/qS4gpiK4zVA0Xwh/n4tYNQxdyzJ2jrDLjQxuovmczYy6t2XsHMYs/yBwO/s5mcbeT4PpKwy45oOlQ9ilEj7FDa4q1DMENYAtSidFJnNi0Py+RieIul8AL8BGYYDDUJixzljy0evM9ErPlFHCEtFdczO5lLxiIjPqlub3glEsrWp/Xy/StmfVs7q8orL0+urZp7Wpi5OVkA=
   # CODECLIMATE_REPO_TOKEN_DEV=[secured]
   - secure: wlGFwfhCdjLn7pc4t/4Pvhh/U8gDE+tJgztdDy9qnZ/ScBTAFCMLTYGNA4z3nYhsYrLlPOz1fPcHkpWLCb6CW8KeXj6GVwbMkTh/eXQ0CWKrtLLD7hqvKZp2mkvNXTi/dxwiqyoCMAL3gu3bUUeErmyEv2SWJ8UIxxt2u4AGWmDAES8sneUvgz7oF7R85Wx1R/wb6SoSz7A7dkHtSpW/7OmUy9o2gGwTZkCdOGqvoADIT2uGYvhLwF3UGn/yTwQ0qfB1YWajGaCtLo7sjdEqsHbbIVhk7Q+I75zz/0/pnIXszc8Al1dfXrSpha2yrEdTPdMZ0rXGXyStV8za6kCj/xgOzU1FsYUMdVMUaDC69wizwk4B0e7dyR7SK6yS5MCgri6LcpFkxzQh73lgzuMWDAbb5wZFPUTZpm//yYErZ93AMlzanhOAi0KLdH/VdDzeC4N69WG7jX3f+NSHDWtyGKDbIHDZ08/25Q3+CSeD3HFZa4lhUYiT4qdQKVVi4BFh1FtDNDofzdO/O7OpcCjBnu9IRcgSg/7kLIKXKocrC9doaRaZgRP4yjhpyi8QDwKcVTmsUB8mMxrNlC3DrZerQnGk36LC3KVZdDKyi2FoXrBTQrB+3t6mRyF1Kk5HhAYtl1UmePg6j+tieXvSy2ER2kTB5n3ONJRZQ//KzlCTJEA=
+
 notifications:
   # Send notifications to Slack
   slack:
