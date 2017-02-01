@@ -558,7 +558,7 @@ echo '</script>';
 				<div class="">
 
 				<?php
-				include 'template_old.php';
+				include 'template.php';
 				?>
 				</div>
 			</div>
