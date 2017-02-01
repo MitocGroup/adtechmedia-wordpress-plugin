@@ -587,8 +587,8 @@ jQuery(document).ready(function () {
             styling[views[tabKey].component][inputs[inputKey + type].optionName] =
                 getCSSFields(styleInputs[inputKey + 'style'].inputs);
           }
-          }
-    });
+        }
+      });
 
       var needToRedraw = [];
       if(tabViews.hasOwnProperty(tabKey)) {
