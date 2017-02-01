@@ -170,142 +170,6 @@ jQuery(document).ready(function () {
   //atmTpl.config({revenueMethod: 'advertising'});
   fillPositionFields();
   fillOverallStylesFields();
-  var templates = [
-    {
-      name : 'pledge',
-      component : 'pledgeComponent',
-      dataTab : 'pledge',
-      collapsed : '#render-pledge-collapsed',
-      expanded : '#render-pledge-expanded',
-      sections : [
-        {
-          dataTab : 'salutation',
-          options : [{
-            name : 'body-welcome',
-            inputName : 'welcome',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg-mp',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
-        }
-      ]
-    },
-    {
-      name : 'auth',
-      component : 'authComponent',
-      dataTab : 'auth',
-      collapsed : '#render-pledge-collapsed',
-      expanded : '#render-pledge-expanded',
-      sections : [
-        {
-          dataTab : 'user',
-          otherComponent: 'authComponent',
-          options : [{
-            name : 'logged-headline',
-            inputName : 'user-logged',
-            type : 'collapsed'
-          }, {
-            name : 'used-headline',
-            inputName : 'user-used',
-            type : 'expanded'
-          }]
-        }
-      ]
-    },
-    {
-      name : 'pay',
-      component : 'payComponent',
-      dataTab : 'pay',
-      collapsed : '#render-pay-collapsed',
-      expanded : '#render-pay-expanded',
-      sections : [
-        {
-          dataTab : 'salutation',
-          options : [{
-            name : 'body-salutation',
-            inputName : 'salutation',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg-mp',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline-setup',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
-        }
-      ]
-    },
-    {
-      name : 'refund',
-      component : 'refundComponent',
-      dataTab : 'refund',
-      collapsed : '#render-refund-collapsed',
-      expanded : '#render-refund-expanded',
-      sections : [
-        {
-          dataTab : 'mood-ok',
-          options : [{
-            name : 'body-feeling-ok',
-            inputName : 'body-feeling-ok',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood',
-          options : [{
-            name : 'body-feeling',
-            inputName : 'body-feeling',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood-happy',
-          options : [{
-            name : 'body-feeling-happy',
-            inputName : 'body-feeling-happy',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood-not-happy',
-          options : [{
-            name : 'body-feeling-not-happy',
-            inputName : 'body-feeling-not-happy',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
-        }, {
-          dataTab : 'share',
-          options : [{
-            name : 'body-share-experience',
-            inputName : 'body-share-experience',
-            type : 'expanded'
-          }]
-        }
-      ]
-    }
-  ];
 
   var tabs = [
     {
@@ -478,9 +342,9 @@ jQuery(document).ready(function () {
       dataTab : 'pledge',
       view:'pledge',
       sections : [
-          'pledge-salutation',
-          'pledge-message',
-          'auth-user'
+        'pledge-salutation',
+        'pledge-message',
+        'auth-user'
       ]
     },
     {
@@ -489,9 +353,9 @@ jQuery(document).ready(function () {
       dataTab : 'pay',
       view:'pay',
       sections : [
-          'pay-salutation',
-          'pay-message',
-          'auth-user'
+        'pay-salutation',
+        'pay-message',
+        'auth-user'
       ]
     },
     {
@@ -500,12 +364,12 @@ jQuery(document).ready(function () {
       dataTab : 'refund',
       view:'refund',
       sections : [
-          'refund-mood-ok',
-          'refund-mood',
-          'refund-mood-happy',
-          'refund-mood-not-happy',
-          'refund-message',
-          'refund-share'
+        'refund-mood-ok',
+        'refund-mood',
+        'refund-mood-happy',
+        'refund-mood-not-happy',
+        'refund-message',
+        'refund-share'
       ]
     }
   ];
@@ -524,13 +388,13 @@ jQuery(document).ready(function () {
 
     function toggleTemplates() {
       var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
-          viewKey = sender.attr('data-view-key'),
-          type = sender.attr('data-view'),
-          typeOther = 'expanded',
-          small = true,
-          senderParent = sender.parent(),
-          senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
-          senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
+         viewKey = sender.attr('data-view-key'),
+         type = sender.attr('data-view'),
+         typeOther = 'expanded',
+         small = true,
+         senderParent = sender.parent(),
+         senderParentExpaned = senderParent.find('[data-view-text="expanded"]'),
+         senderParentCollapsed = senderParent.find('[data-view-text="collapsed"]');
       if (type === 'expanded') {
         typeOther = 'collapsed';
         small = false;
@@ -563,22 +427,22 @@ jQuery(document).ready(function () {
       viewKeys.push(viewKey);
 
       var tamplateView = componentsViews.filter(function(view) {
-        return view.name == template.view;
-      }.bind(template));
+        return view.name === template.view;
+      });
 
-      if(tamplateView.length == 1) {
+      if(tamplateView.length === 1) {
         tamplateView = tamplateView[0];
       } else {
         return false;
       }
 
 
-        jQuery.each(template.sections, function (j, section) {
-        var viewTab = tabs.filter(function(tab) {
-          return tab.id == section;
-        }.bind(section));
+      jQuery.each(template.sections, function (j, section) {
+        var viewTab = tabs.filter(function (tab) {
+          return tab.id === section;
+        });
 
-        if(viewTab.length == 1) {
+        if (viewTab.length === 1) {
           section = viewTab[0];
         } else {
           return false;
@@ -607,12 +471,15 @@ jQuery(document).ready(function () {
         };
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
+          var componentSelector = '[data-template="'+template.dataTab+'"]'
+          + '[data-template="'+section.dataTab+'"]'
+          + 'input[name="' + option.inputName + '"]';
           inputs[inputsKey] = {
             input : sectionTab.find('input[name="' + option.inputName + '"]'),
             optionName : option.name,
             type : option.type,
             tabSelector:'[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]',
-            componentSelector:'[data-template="'+template.dataTab+'"] [data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]'
+            componentSelector:componentSelector
           };
 
           if (templateInputs.hasOwnProperty(inputsKey)) {
@@ -659,14 +526,18 @@ jQuery(document).ready(function () {
         views[viewKeyItem]['collapsed'] = atmTemplating.render(template.name, tamplateView.collapsed);
         jQuery(tamplateView.expanded).attr('data-view-key', viewKeyItem);
         jQuery(tamplateView.collapsed).attr('data-view-key', viewKeyItem);
-        atmTemplating.updateTemplate(views[viewKeyItem]['component'], options[views[viewKeyItem]['component']], styling[views[viewKeyItem]['component']]);
+        atmTemplating.updateTemplate(
+            views[viewKeyItem]['component'],
+            options[views[viewKeyItem]['component']],
+            styling[views[viewKeyItem]['component']]
+        );
         views[viewKeyItem].expanded.redraw();
         views[viewKeyItem].collapsed.redraw();
 
         views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
         views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
 
-      });
+        });
     });
 
 
@@ -676,9 +547,7 @@ jQuery(document).ready(function () {
       var thisValue = $(this).val();
       var dataTemplateCss = $(this).attr('data-template-css');
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
-      var redrawViewKey = viewKey;
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
-      var inputKey = viewKey + tabKey;
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
         var inputKey = viewKey + tabKey;
 
@@ -745,16 +614,16 @@ jQuery(document).ready(function () {
       jQuery.each(needToRedraw, function (i, type) {
 //        update template
 
-          atmTemplating.updateTemplate(
-              views[type].component,
-              options[views[type].component],
-              styling[views[type].component]
-          );
-          // redraw the view
-          views[type].expanded.redraw();
-          views[type].collapsed.redraw();
-          views[type].expanded.watch('showModalBody', toggleTemplates);
-          views[type].collapsed.watch('showModalBody', toggleTemplates);
+        atmTemplating.updateTemplate(
+            views[type].component,
+            options[views[type].component],
+            styling[views[type].component]
+        );
+        // redraw the view
+        views[type].expanded.redraw();
+        views[type].collapsed.redraw();
+        views[type].expanded.watch('showModalBody', toggleTemplates);
+        views[type].collapsed.watch('showModalBody', toggleTemplates);
 
       });
 
