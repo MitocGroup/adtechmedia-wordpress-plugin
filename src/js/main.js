@@ -888,7 +888,8 @@ jQuery(document).ready(function () {
       var valid = addValidate(jQuery('#content-config'), {
         price: {
           required: true,
-          digits: true
+          digits: true,
+          min:1
         },
         payment_pledged: {
           required: true,
@@ -896,7 +897,8 @@ jQuery(document).ready(function () {
         },
         content_offset: {
           required: true,
-          digits: true
+          digits: true,
+          min:1
         },
         ads_video: {
           required: false,
