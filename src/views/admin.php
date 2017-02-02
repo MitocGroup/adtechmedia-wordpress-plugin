@@ -214,7 +214,7 @@ echo '</script>';
 											'price',
 											$plugin_meta_data['price'],
 											$this->get_plugin_option( 'price' ),
-											'e.g. 0.10'
+											'e.g. 5'
 										); ?>
 										<span class="bar"></span>
 									</div>
