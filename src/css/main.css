@@ -374,7 +374,7 @@ h1.heading .custom-icon {
     -webkit-transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.btn {
+.btn, .btn:active {
     background: #1b93f2;
     border: 0;
     color: #fff;
@@ -389,7 +389,7 @@ h1.heading .custom-icon {
     text-decoration: none;
 }
 
-.btn:hover {
+.btn:hover, .btn:focus {
     background: #0c78ce;
     cursor: pointer;
     color: #fff;
