@@ -781,14 +781,20 @@ jQuery(document).ready(function () {
     }
   });
 
-  jQuery('#terms').on('change', function () {
+  var terms = jQuery('#terms');
+  terms.on('change', function () {
+    checkBtnRegister(this);
+  });
+  checkBtnRegister(terms);
+
+  function checkBtnRegister(checkbox) {
     var button = jQuery('#btn-register');
-    if (jQuery(this).prop('checked')) {
+    if (jQuery(checkbox).prop('checked')) {
       jQuery(button).removeAttr('disabled');
     } else {
       jQuery(button).attr('disabled', 'true');
     }
-  });
+  }
 
   initModal();
 
