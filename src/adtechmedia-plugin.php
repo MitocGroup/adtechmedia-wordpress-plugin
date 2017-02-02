@@ -291,14 +291,28 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$data[ $db_key ] = $value;
 					$this->add_plugin_option( $db_key, $value );
 				}
-				$component = sanitize_text_field( wp_unslash( $_POST['component'] ) );
-				$template = $_POST['template'];
-				$this->add_plugin_option( 'template_' . $component, $template );
+
+				$componentsTemplates = [];
+				$components = $_POST['components'];
+				$templates = $_POST['templates'];
+				if(!is_array($components)) {
+					$components = [$components];
+				}
+				if(!is_array($templates)) {
+					$templates = [$templates];
+				}
+				foreach ($components as $key => $component) {
+					$components[$key] = sanitize_text_field( wp_unslash( $component));
+					$this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
+					$componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
+				}
+
+
 				Adtechmedia_Request::property_update_config_by_array(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
 					[
-						'templates' => [ $component => base64_encode( stripslashes( $template ) ), ],
+						'templates' => $componentsTemplates,
 						'targetModal' => [
 							'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
 							'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
@@ -308,6 +322,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						],
 					]
 				);
+
 				// @codingStandardsIgnoreEnd
 			}
 			echo 'ok';

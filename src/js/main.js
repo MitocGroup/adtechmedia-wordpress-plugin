@@ -170,139 +170,206 @@ jQuery(document).ready(function () {
   //atmTpl.config({revenueMethod: 'advertising'});
   fillPositionFields();
   fillOverallStylesFields();
-  var templates = [
+
+  var tabs = [
     {
-      name : 'pledge',
-      component : 'pledgeComponent',
-      dataTab : 'pledge',
-      collapsed : '#render-pledge-collapsed',
-      expanded : '#render-pledge-expanded',
-      sections : [
+      id: 'pledge-salutation',
+      dataTab: 'salutation',
+      options: [
         {
-          dataTab : 'salutation',
-          options : [{
-            name : 'body-welcome',
-            inputName : 'welcome',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg-mp',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
+          name: 'body-welcome',
+          inputName: 'welcome',
+          type: 'expanded'
         }
       ]
     },
     {
-      name : 'auth',
-      component : 'authComponent',
-      dataTab : 'auth',
-      collapsed : '#render-pledge-collapsed',
-      expanded : '#render-pledge-expanded',
-      sections : [
+      id: 'pledge-message',
+      dataTab: 'message',
+      options: [
         {
-          dataTab : 'user',
-          otherComponent: 'authComponent',
-          options : [{
-            name : 'logged-headline',
-            inputName : 'user-logged',
-            type : 'collapsed'
-          }, {
-            name : 'used-headline',
-            inputName : 'user-used',
-            type : 'expanded'
-          }]
+          name: 'body-msg-mp',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
         }
+      ]
+    },
+    {
+      id: 'auth-user',
+      dataTab: 'user',
+      component : 'authComponent',
+      view:['pledge','pay'],
+      options: [
+        {
+          name: 'logged-headline',
+          inputName: 'user-logged',
+          type: 'collapsed'
+        },
+        {
+          name: 'used-headline',
+          inputName: 'user-used',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'pay-salutation',
+      dataTab: 'salutation',
+      options: [
+        {
+          name: 'body-salutation',
+          inputName: 'salutation',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'pay-message',
+      dataTab: 'message',
+      options: [
+        {
+          name: 'body-msg-mp',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline-setup',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood-ok',
+      dataTab: 'mood-ok',
+      options: [
+        {
+          name: 'body-feeling-ok',
+          inputName: 'body-feeling-ok',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood',
+      dataTab: 'mood',
+      options: [
+        {
+          name: 'body-feeling',
+          inputName: 'body-feeling',
+          type: 'expanded'
+        }
+      ]
+    }, {
+      id: 'refund-mood-happy',
+      dataTab: 'mood-happy',
+      options: [
+        {
+          name: 'body-feeling-happy',
+          inputName: 'body-feeling-happy',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-mood-not-happy',
+      dataTab: 'mood-not-happy',
+      options: [
+        {
+          name: 'body-feeling-not-happy',
+          inputName: 'body-feeling-not-happy',
+          type: 'expanded'
+        }
+      ]
+    },
+    {
+      id: 'refund-message',
+      dataTab: 'message',
+      options: [
+        {
+          name: 'body-msg',
+          inputName: 'message-expanded',
+          type: 'expanded'
+        },
+        {
+          name: 'heading-headline',
+          inputName: 'message-collapsed',
+          type: 'collapsed'
+        }
+      ]
+    },
+    {
+      id: 'refund-share',
+      dataTab: 'share',
+      options: [
+        {
+          name: 'body-share-experience',
+          inputName: 'body-share-experience',
+          type: 'expanded'
+        }
+      ]
+    }
+
+  ];
+
+  var componentsViews = [
+    {
+      name:'pledge',
+      collapsed:'#render-pledge-collapsed',
+      expanded:'#render-pledge-expanded'
+    },
+    {
+      name:'pay',
+      collapsed:'#render-pay-collapsed',
+      expanded:'#render-pay-expanded'
+    },
+    {
+      name:'refund',
+      collapsed:'#render-refund-collapsed',
+      expanded:'#render-refund-expanded'
+    },
+  ]
+
+  var components =[
+    {
+      name : 'pledge',
+      component : 'pledgeComponent',
+      dataTab : 'pledge',
+      view:'pledge',
+      sections : [
+        'pledge-salutation',
+        'pledge-message',
+        'auth-user'
       ]
     },
     {
       name : 'pay',
       component : 'payComponent',
       dataTab : 'pay',
-      collapsed : '#render-pay-collapsed',
-      expanded : '#render-pay-expanded',
+      view:'pay',
       sections : [
-        {
-          dataTab : 'salutation',
-          options : [{
-            name : 'body-salutation',
-            inputName : 'salutation',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg-mp',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline-setup',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
-        }
+        'pay-salutation',
+        'pay-message',
+        'auth-user'
       ]
     },
     {
       name : 'refund',
       component : 'refundComponent',
       dataTab : 'refund',
-      collapsed : '#render-refund-collapsed',
-      expanded : '#render-refund-expanded',
+      view:'refund',
       sections : [
-        {
-          dataTab : 'mood-ok',
-          options : [{
-            name : 'body-feeling-ok',
-            inputName : 'body-feeling-ok',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood',
-          options : [{
-            name : 'body-feeling',
-            inputName : 'body-feeling',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood-happy',
-          options : [{
-            name : 'body-feeling-happy',
-            inputName : 'body-feeling-happy',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'mood-not-happy',
-          options : [{
-            name : 'body-feeling-not-happy',
-            inputName : 'body-feeling-not-happy',
-            type : 'expanded'
-          }]
-        }, {
-          dataTab : 'message',
-          options : [{
-            name : 'body-msg',
-            inputName : 'message-expanded',
-            type : 'expanded'
-          }, {
-            name : 'heading-headline',
-            inputName : 'message-collapsed',
-            type : 'collapsed'
-          }]
-        }, {
-          dataTab : 'share',
-          options : [{
-            name : 'body-share-experience',
-            inputName : 'body-share-experience',
-            type : 'expanded'
-          }]
-        }
+        'refund-mood-ok',
+        'refund-mood',
+        'refund-mood-happy',
+        'refund-mood-not-happy',
+        'refund-message',
+        'refund-share'
       ]
     }
   ];
@@ -313,6 +380,7 @@ jQuery(document).ready(function () {
     var stories = atmTemplating.stories();
     console.log(stories);
     var views = {};
+    var tabViews = {};
     var inputs = {};
     var options = {};
     var styling = {};
@@ -340,19 +408,62 @@ jQuery(document).ready(function () {
       var tmp = views[viewKey]['expanded'];
       views[viewKey]['expanded'] = views[viewKey]['collapsed'];
       views[viewKey]['collapsed'] = tmp;
-
       tmp = senderParentExpaned.html();
       senderParentExpaned.html(senderParentCollapsed.html());
       senderParentCollapsed.html(tmp);
     }
 
-    jQuery.each(templates, function (i, template) {
+
+    jQuery.each(components, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
       options[template.component] = {};
       styling[template.component] = {};
       var viewKey = template.dataTab;
       views[viewKey] = {};
+
+      var viewKeys = [];
+      var noViewKeys = [];
+
+      viewKeys.push(viewKey);
+
+      var tamplateView = componentsViews.filter(function(view) {
+        return view.name === template.view;
+      });
+
+      if(tamplateView.length === 1) {
+        tamplateView = tamplateView[0];
+      } else {
+        return false;
+      }
+
+
       jQuery.each(template.sections, function (j, section) {
+        var viewTab = tabs.filter(function (tab) {
+          return tab.id === section;
+        });
+
+        if (viewTab.length === 1) {
+          section = viewTab[0];
+        } else {
+          return false;
+        }
+
+        var componentName = template.component;
+        if(section.hasOwnProperty('component')) {
+          componentName = section.component;
+          viewKey = section.dataTab;
+          views[viewKey] = {};
+          noViewKeys.push(viewKey);
+
+        } else {
+          viewKey = template.dataTab;
+        }
+        views[viewKey]['component'] = componentName;
+        tabViews[viewKey] = tamplateView.name;
+        if(section.hasOwnProperty('view')) {
+          tabViews[viewKey] = section.view;
+        }
+
         var sectionTab = tab.find(getDatatemplate(section.dataTab));
         var styleInputsKey = viewKey + section.dataTab + 'style';
         styleInputs[styleInputsKey] = {
@@ -360,52 +471,82 @@ jQuery(document).ready(function () {
         };
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
+          var componentSelector = '[data-template="'+template.dataTab+'"]'
+          + '[data-template="'+section.dataTab+'"]'
+          + 'input[name="' + option.inputName + '"]';
           inputs[inputsKey] = {
             input : sectionTab.find('input[name="' + option.inputName + '"]'),
             optionName : option.name,
-            type : option.type
+            type : option.type,
+            tabSelector:'[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]',
+            componentSelector:componentSelector
           };
+
           if (templateInputs.hasOwnProperty(inputsKey)) {
             inputs[inputsKey].input.val(templateInputs[inputsKey]);
-            options[template.component][option.name] = templateInputs[inputsKey];
-            styling[template.component][option.name] = templateStyleInputs[styleInputsKey];
+            inputs[inputsKey].input.attr('placeholder', templateInputs[inputsKey]);
+            if(!options.hasOwnProperty(componentName)) {
+              options[componentName] = {};
+            }
+            if(!styling.hasOwnProperty(componentName)) {
+              styling[componentName] = {};
+            }
+            options[componentName][option.name] = templateInputs[inputsKey];
+            styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
+          } else {
+            if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
+              var val = stories[componentName][option.name].content;
+              inputs[inputsKey].input.val(val);
+              inputs[inputsKey].input.attr('placeholder', val);
+
+              options[componentName] = {};
+              options[componentName][option.name] = val;
+              // if (templateStyleInputs.hasOwnProperty(styleInputsKey)) {
+              //   styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
+              // }
+
+            }
           }
 
         });
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
+
+
+
       });
-      views[viewKey]['component'] = template.component;
-      if ('auth' === viewKey){
-        viewKey = 'pledge';
-        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
-        views[viewKey].expanded.redraw();
-        views[viewKey].collapsed.redraw();
-      } else {
-        views[viewKey]['expanded'] = atmTemplating.render(template.name, template.expanded);
-        views[viewKey]['expanded'].small(false);
-        views[viewKey]['collapsed'] = atmTemplating.render(template.name, template.collapsed);
-        jQuery(template.expanded).attr('data-view-key', viewKey);
-        jQuery(template.collapsed).attr('data-view-key', viewKey);
-        atmTemplating.updateTemplate(template.component, options[template.component], styling[template.component]);
-        views[viewKey].expanded.redraw();
-        views[viewKey].collapsed.redraw();
-        views[viewKey].expanded.watch('showModalBody', toggleTemplates);
-        views[viewKey].collapsed.watch('showModalBody', toggleTemplates);
-      }
+
+
+      jQuery.each(viewKeys, function (j, viewKeyItem) {
+        if(!views[viewKeyItem].hasOwnProperty('component')) {
+          views[viewKeyItem]['component'] = template.component;
+        }
+
+        views[viewKeyItem]['expanded'] = atmTemplating.render(template.name, tamplateView.expanded);
+        views[viewKeyItem]['expanded'].small(false);
+        views[viewKeyItem]['collapsed'] = atmTemplating.render(template.name, tamplateView.collapsed);
+        jQuery(tamplateView.expanded).attr('data-view-key', viewKeyItem);
+        jQuery(tamplateView.collapsed).attr('data-view-key', viewKeyItem);
+        atmTemplating.updateTemplate(
+            views[viewKeyItem]['component'],
+            options[views[viewKeyItem]['component']],
+            styling[views[viewKeyItem]['component']]
+        );
+        views[viewKeyItem].expanded.redraw();
+        views[viewKeyItem].collapsed.redraw();
+
+        views[viewKeyItem].expanded.watch('showModalBody', toggleTemplates);
+        views[viewKeyItem].collapsed.watch('showModalBody', toggleTemplates);
+
+      });
     });
 
     var throttledSync = jQuery.throttle(200, function (e) {
+      var thisValue = $(this).val();
+      var dataTemplateCss = $(this).attr('data-template-css');
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
-      var redrawViewKey = viewKey;
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
-      if ('user' === tabKey) {
-        viewKey = 'auth';
-      }
-      var inputKey = viewKey + tabKey;
-
-
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
-        //console.log(type);
+        var inputKey = viewKey + tabKey;
 
         if (inputs.hasOwnProperty(inputKey + type)) {
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
@@ -413,48 +554,82 @@ jQuery(document).ready(function () {
             getCSSFields(styleInputs[inputKey + 'style'].inputs);
 
         }
-      });
-      // update template
-      atmTemplating.updateTemplate(
-        views[viewKey].component,
-        options[views[viewKey].component],
-        styling[views[viewKey].component]
-      );
+        else {
+          inputKey = tabKey + tabKey;
+          if (inputs.hasOwnProperty(inputKey + type)) {
+            var inputSelector = inputs[inputKey + type].tabSelector;
 
-      // redraw the view
-      views[redrawViewKey].expanded.redraw();
-      views[redrawViewKey].collapsed.redraw();
-      views[redrawViewKey].expanded.watch('showModalBody', toggleTemplates);
-      views[redrawViewKey].collapsed.watch('showModalBody', toggleTemplates);
+            var oldValue =   options[views[tabKey].component][inputs[inputKey + type].optionName];
+            var newValue =   inputs[inputKey + type].input.val();
+            if(!styling.hasOwnProperty(views[tabKey].component)) {
+              styling[views[tabKey].component] = {};
+            }
+            jQuery.each(jQuery(inputSelector), function(i,item) {
+              if($(item).val() !== oldValue) {
+                newValue = $(item).val();
+              }
+            });
+
+            jQuery.each(jQuery(inputSelector), function(i,item) {
+              if($(item).val() !== newValue) {
+                $(item).val(newValue);
+              }
+            });
+
+            var styleSelector = '[data-template="'+tabKey+'"] [data-template-css="'+dataTemplateCss+'"]';
+            var newStyle =   thisValue;
+            jQuery.each(jQuery(styleSelector), function(i,item) {
+              if(jQuery(item).val() !== newStyle) {
+                jQuery(item).val(newStyle);
+              }
+            });
+            options[views[tabKey].component][inputs[inputKey + type].optionName] = newValue;
+            styling[views[tabKey].component][inputs[inputKey + type].optionName] =
+                getCSSFields(styleInputs[inputKey + 'style'].inputs);
+          }
+        }
+      });
+
+      var needToRedraw = [];
+      if(tabViews.hasOwnProperty(tabKey)) {
+        needToRedraw = tabViews[tabKey];
+
+        atmTemplating.updateTemplate(
+            views[tabKey].component,
+            options[views[tabKey].component],
+            styling[views[tabKey].component]
+        );
+      } else {
+        needToRedraw = tabViews[viewKey];
+
+      }
+
+      if(!Array.isArray(needToRedraw)) {
+        needToRedraw = [needToRedraw];
+      }
+      jQuery.each(needToRedraw, function (i, type) {
+//        update template
+
+        atmTemplating.updateTemplate(
+            views[type].component,
+            options[views[type].component],
+            styling[views[type].component]
+        );
+        // redraw the view
+        views[type].expanded.redraw();
+        views[type].collapsed.redraw();
+        views[type].expanded.watch('showModalBody', toggleTemplates);
+        views[type].collapsed.watch('showModalBody', toggleTemplates);
+
+      });
+
     });
 
     var $form = $('section.views-tabs');
     var $inputs = $form.find('input');
     var $selects = $form.find('select');
     var $colorInputs = $form.find('input[type="color"]');
-    function synchFromTo(field,dataType,additionalType,eventName,from,to,trigger){
-      jQuery('[data-template="'+from+'"] '+field+'['+dataType+']'+additionalType).bind(eventName, function () {
-        var input = jQuery(jQuery('[data-template="'+to+'"] '+field+additionalType+'['+dataType+'="'+jQuery(this)
-            .attr(dataType)+'"]')[0]);
-        input.val(jQuery(this).val());
-        if (trigger) {
-          input.trigger(eventName);
-        }else{
-          setTimeout(function(){
-            views['pay'].expanded.redraw();
-            views['pay'].collapsed.redraw();
-          },100);
-        }
-      });
-    }
-    function synch(field,dataType,additionalType,eventName){
-      synchFromTo(field,dataType,additionalType,eventName,'user-pay','user',true);
-      synchFromTo(field,dataType,additionalType,eventName,'user','user-pay',false);
-    }
-    synch('input','name','','keyup');
-    synch('input','data-template-css','','keyup');
-    synch('select','data-template-css','','change');
-    synch('input','data-template-css','[type="color"]','change');
+
     $inputs.bind('keyup', throttledSync);
     $colorInputs.bind('change', throttledSync);
     $selects.bind('change', throttledSync);
@@ -538,10 +713,43 @@ jQuery(document).ready(function () {
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
-      //console.log(viewKey);
-      if (viewKey === 'position') {
-        viewKey = 'pledge';
-      }
+
+      //get compnents in this view
+      var viewComponents = {};
+      jQuery.each(components, function(i,template) {
+        if(template.hasOwnProperty('view')) {
+          var templateView = template.view;
+          if(!Array.isArray(templateView)) {
+            templateView = [templateView] ;
+          }
+          jQuery.each(templateView,function(i,view) {
+            if(view === viewKey) {
+              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                  options[template.component],
+                  styling[template.component]
+              );
+            }
+          });
+        }
+      });
+
+      jQuery.each(tabs, function(i,template) {
+        if(template.hasOwnProperty('view')) {
+          var templateView = template.view;
+          if(!Array.isArray(templateView)) {
+            templateView = [templateView] ;
+          }
+          jQuery.each(templateView,function(i,view) {
+            if(view === viewKey) {
+              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                  options[template.component],
+                  styling[template.component]
+              );
+            }
+          });
+        }
+      });
+
       var valid = addValidate(jQuery('#overall-styling-and-position'), {
         width: {
           required: true,
@@ -615,41 +823,8 @@ jQuery(document).ready(function () {
             position: JSON.stringify(getPositionFields()),
             overallStyles: getOverallStyling(),
             overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            component: views[viewKey].component,
-            template: atmTemplating.templateRendition(views[viewKey].component).render(
-                options[views[viewKey].component],
-                styling[views[viewKey].component]
-            )
-          },
-          success: function (response) {
-            removeLoader(btn);
-            showSuccess();
-          },
-          error: function (response) {
-            removeLoader(btn);
-            showError();
-          }
-        });
-
-
-        addLoader(btn);
-        viewKey = 'auth';
-        jQuery.ajax({
-          url: save_template.ajax_url,
-          type: 'post',
-          data: {
-            action: 'save_template',
-            nonce: save_template.nonce,
-            inputs: JSON.stringify(inputsToObject(inputs)),
-            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
-            position: JSON.stringify(getPositionFields()),
-            overallStyles: getOverallStyling(),
-            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            component: views[viewKey].component,
-            template: atmTemplating.templateRendition(views[viewKey].component).render(
-                options[views[viewKey].component],
-                styling[views[viewKey].component]
-            )
+            components: Object.keys(viewComponents),
+            templates: viewComponents
           },
           success: function (response) {
             removeLoader(btn);
@@ -730,19 +905,19 @@ jQuery(document).ready(function () {
       }, {
         price: {
           required: 'The field \'Content pricing\' is required.',
-          digits: 'The field \'Content pricing\' must by a digits.'
+          digits: 'The field \'Content pricing\' must be a digits.'
         },
         payment_pledged: {
           required: 'The field \'Content paywall\' is required.',
-          digits: 'The field \'Content paywall\' must by a digits.'
+          digits: 'The field \'Content paywall\' must be a digits.'
         },
         content_offset: {
           required: 'The field \'Content preview\' is required.',
-          digits: 'The field \'Content preview\' must by a digits.'
+          digits: 'The field \'Content preview\' must be a digits.'
         },
         ads_video: {
           required: false,
-          url: 'The field \'Content preview\' must by a valid url.'
+          url: 'The field \'Content preview\' must be a valid url.'
         }
       });
       if(valid.form()) {
