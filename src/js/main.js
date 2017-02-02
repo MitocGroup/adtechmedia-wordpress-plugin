@@ -943,6 +943,32 @@ jQuery(document).ready(function () {
         });
       }
     });
+
+    var generalConfValid = false;
+    jQuery('#btn-register').on('click', function (e) {
+      if (generalConfValid) {
+        jQuery('#general-config').submit();
+      } else {
+        e.preventDefault();
+
+        var valid = addValidate(jQuery('#general-config'), {
+          support_email : {
+            required : true,
+            email : true
+          }
+        }, {
+          support_email : {
+            required : 'The field \'Email address\' is required.',
+            email : 'Your email address must be in the format of name@domain.com.'
+          }
+        });
+
+        if (valid.form()) {
+          generalConfValid = true;
+          this.click();
+        }
+      }
+    });
   })(jQuery);
 
 

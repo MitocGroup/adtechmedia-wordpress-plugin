@@ -95,7 +95,7 @@ echo '</script>';
 </style>
 <main>
 	<section>
-		<form method="post" action="">
+		<form method="post" id="general-config" action="">
 			<?php settings_fields( $main_data_class ); ?>
 
 			<h1 class="heading">
