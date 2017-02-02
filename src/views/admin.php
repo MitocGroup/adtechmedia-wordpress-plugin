@@ -214,7 +214,7 @@ echo '</script>';
 											'price',
 											$plugin_meta_data['price'],
 											$this->get_plugin_option( 'price' ),
-											'e.g. 5'
+											'e.g. 10'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -239,8 +239,8 @@ echo '</script>';
 							</div>
 
 							<div class="block-info">
-								Specify the price and the currency to collect for each article, in case readers decide
-								to use the micropayments choice
+								Specify the price and the currency to be collected per article per micropayment
+								(e.g. "10" &amp; "USD" means 10&cent;, while "100" &amp; "USD" means $1)
 							</div>
 						</div>
 
