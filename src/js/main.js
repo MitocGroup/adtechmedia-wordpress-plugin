@@ -668,7 +668,7 @@ jQuery(document).ready(function () {
           if(jQuery(item).hasClass('invalid')) {
             jQuery(item).removeClass('invalid');
             var label = jQuery(item).parents('.custom-label').find('label');
-            if (label[0] === undefined) {
+            if (!label[0]) {
               label = jQuery(item).parents('.custom-input').find('label');
             }
             label.removeClass('invalid');
@@ -687,7 +687,7 @@ jQuery(document).ready(function () {
             if(!jQuery(item.element).hasClass('invalid')) {
               jQuery(item.element).addClass('invalid');
               var label = jQuery(item.element).parents('.custom-label').find('label');
-              if (label[0] === undefined) {
+              if (!label[0]) {
                 label = jQuery(item.element).parents('.custom-input').find('label');
               }
               label.addClass('invalid');
@@ -953,13 +953,14 @@ jQuery(document).ready(function () {
     });
 
     var generalConfValid = false;
+    var formGeneralConfig = jQuery('#general-config');
     jQuery('#btn-register').on('click', function (e) {
       if (generalConfValid) {
-        jQuery('#general-config').submit();
+        formGeneralConfig.submit();
       } else {
         e.preventDefault();
 
-        var valid = addValidate(jQuery('#general-config'), {
+        var valid = addValidate(formGeneralConfig, {
           support_email : {
             required : true,
             email : true
@@ -979,9 +980,6 @@ jQuery(document).ready(function () {
     });
   })(jQuery);
 
-
-
-
   jQuery('#checkbox-sticky').on('change', function () {
     if (!jQuery(this).prop('checked')) {
       jQuery('.disable-if-sticky input').attr('disabled', 'disabled');
@@ -989,12 +987,6 @@ jQuery(document).ready(function () {
       jQuery('.disable-if-sticky input').removeAttr('disabled');
     }
   });
-
-  var terms = jQuery('#terms');
-  terms.on('change', function () {
-    checkBtnRegister(this);
-  });
-  checkBtnRegister(terms);
 
   function checkBtnRegister(checkbox) {
     var button = jQuery('#btn-register');
@@ -1004,6 +996,12 @@ jQuery(document).ready(function () {
       jQuery(button).attr('disabled', 'true');
     }
   }
+
+  var terms = jQuery('#terms');
+  terms.on('change', function () {
+    checkBtnRegister(this);
+  });
+  checkBtnRegister(terms);
 
   initModal();
 

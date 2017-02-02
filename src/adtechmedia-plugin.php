@@ -242,7 +242,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	function write_sw() {
 		$path = plugins_url( '/js/sw.min.js', __FILE__ );
-		if(Adtechmedia_Config::is_localhost()) {
+		if ( Adtechmedia_Config::is_localhost() ) {
 			$path = plugins_url( '/js/sw.js', __FILE__ );
 		}
 		// @codingStandardsIgnoreStart
@@ -387,7 +387,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
 
-			if(Adtechmedia_Config::is_localhost()) {
+			if ( Adtechmedia_Config::is_localhost() ) {
 				$path = plugins_url( '/js/atm.js', __FILE__ );
 				$file = $plugin_dir . '/js/atm.js';
 			}
@@ -407,7 +407,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 
 			$sw_file = $plugin_dir . '/js/sw.min.js';
-			if(Adtechmedia_Config::is_localhost()) {
+			if ( Adtechmedia_Config::is_localhost() ) {
 				$sw_file = $plugin_dir . '/js/sw.js';
 			}
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
