@@ -46,7 +46,8 @@ class Adtechmedia_Config {
 	public static function set_api_end_point() {
 		if ( self::is_localhost() ) {
 			self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/dev/';
-		}
+            self::$conf['sw_js_url'] = 'https://adm-dev.adtechmedia.io/atm-admin/atm-build/sw.js';
+        }
 	}
 
 	/**
