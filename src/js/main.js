@@ -662,12 +662,15 @@ jQuery(document).ready(function () {
     }
     function addValidate(form, rules, messages) {
       jQuery.each(rules, function(name, item) {
-        jQuery('input[name="'+name+'"]').on('click', function() {
+        jQuery('input[name="'+name+'"]').on('focus', function() {
           var item = jQuery('input[name="'+name+'"]');
 
           if(jQuery(item).hasClass('invalid')) {
             jQuery(item).removeClass('invalid');
             var label = jQuery(item).parents('.custom-label').find('label');
+            if (label[0] === undefined) {
+              label = jQuery(item).parents('.custom-input').find('label');
+            }
             label.removeClass('invalid');
           }
         });
@@ -684,6 +687,9 @@ jQuery(document).ready(function () {
             if(!jQuery(item.element).hasClass('invalid')) {
               jQuery(item.element).addClass('invalid');
               var label = jQuery(item.element).parents('.custom-label').find('label');
+              if (label[0] === undefined) {
+                label = jQuery(item.element).parents('.custom-input').find('label');
+              }
               label.addClass('invalid');
             }
           });

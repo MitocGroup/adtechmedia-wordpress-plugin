@@ -570,8 +570,8 @@ h1.heading .custom-icon {
     position: relative;
 }
 
-.custom-label label.invalid {
-    color:red;
+label.invalid {
+    color:red !important;
 }
 
 .custom-label label {
