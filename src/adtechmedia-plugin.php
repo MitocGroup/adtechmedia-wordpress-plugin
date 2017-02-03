@@ -412,7 +412,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
-				$data = gzdecode( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
+				if(Adtechmedia_Config::is_localhost()) {
+					$data = ( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
+				} else {
+					$data = gzdecode( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
+				}
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
