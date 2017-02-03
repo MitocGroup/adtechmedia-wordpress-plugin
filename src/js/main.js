@@ -952,6 +952,41 @@ jQuery(document).ready(function () {
       }
     });
 
+      jQuery('.return-to-default-values').bind('click', function (e) {
+        var btn = jQuery(this);
+
+              addLoader(btn);
+              jQuery.ajax({
+                  url: return_to_default_values.ajax_url,
+                  type: 'post',
+                  data: {
+                      action: 'return_to_default_values',
+                      method:'get_default_values'
+                  },
+                  success: function (response) {
+                     response = jQuery.parseJSON(response);
+
+                    jQuery.each(response, function(form, values) {
+                          jQuery.each(values, function(name, value) {
+                            jQuery('#'+form+' [name="'+name+'"]').val(value);
+                          });
+
+                      jQuery('#'+form+' button').click();
+                    });
+
+
+
+                      removeLoader(btn);
+                  },
+                  error: function (response) {
+                      removeLoader(btn);
+                      showError();
+                  }
+              });
+      });
+
+
+
     var generalConfValid = false;
     var formGeneralConfig = jQuery('#general-config');
     jQuery('#btn-register').on('click', function (e) {

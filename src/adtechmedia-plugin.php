@@ -235,6 +235,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
 		add_action( 'wp_ajax_save_template', array( &$this, 'ajax_save_template' ) );
+		add_action( 'wp_ajax_return_to_default_values', array( &$this, 'ajax_return_to_default_values' ) );
 	}
 
 	/**
@@ -380,6 +381,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'ajax_url' => $this->get_ajax_url( 'save_template' ),
 			'nonce' => wp_create_nonce( 'adtechmedia-nonce' ),
 		));
+
+		wp_localize_script( 'adtechmedia-admin-js', 'return_to_default_values', array(
+			'ajax_url' => $this->get_ajax_url( 'return_to_default_values' ),
+			'nonce' => wp_create_nonce( 'adtechmedia-nonce' ),
+		));
+
 		wp_enqueue_script( 'adtechmedia-fontawesome-js', 'https://use.fontawesome.com/09d9c8deb0.js', [ 'adtechmedia-admin-js' ] );
 	}
 
@@ -525,4 +532,49 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		</div>
 		<?php
 	}
+
+    /**
+     * Return to default values
+     */
+    public function ajax_return_to_default_values()
+    {
+		if ( isset( $_POST['method'] ) &&  $_POST['method'] === 'get_default_values') {
+			$general = [
+				'country' => Adtechmedia_Config::get( 'country' ),
+				'revenue_method' => Adtechmedia_Config::get( 'revenue_method' )
+			];
+			$content = [
+				'price_currency' => Adtechmedia_Config::get( 'price_currency' ),
+				'content_paywall' => Adtechmedia_Config::get( 'content_paywall' ),
+				'content_offset' => Adtechmedia_Config::get( 'content_offset' ),
+				'content_lock' => Adtechmedia_Config::get( 'content_lock' ),
+				'ads_video' => Adtechmedia_Config::get( 'ads_video' ),
+				'price' => Adtechmedia_Config::get( 'price' ),
+				'payment_pledged' => Adtechmedia_Config::get( 'payment_pledged' ),
+				'content_offset_type' => Adtechmedia_Config::get( 'content_offset_type' ),
+			];
+
+//			return [
+//				'general-config' => $general,
+//				'content-config' => $content,
+//				'overall-styling-and-position' => [
+//					'template_position' => Adtechmedia_Config::get( 'template_position' ),
+//					'template_overall_styles' => Adtechmedia_Config::get( 'template_overall_styles' ),
+//				]
+//			];
+
+			echo json_encode([
+				'general-config' => $general,
+				'content-config' => $content,
+				'overall-styling-and-position' => [
+					'template_position' => Adtechmedia_Config::get( 'template_position' ),
+					'template_overall_styles' => Adtechmedia_Config::get( 'template_overall_styles' ),
+				]
+			]);
+			die();
+		}
+
+    }
+
+
 }

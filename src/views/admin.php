@@ -572,5 +572,8 @@ echo '</script>';
 			<div id="modal-content"></div>
 		</div>
 	</div>
-	
+
+	<div class="custom-input pull-right">
+		<a type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Return to default values</a>
+	</div>
 </main>

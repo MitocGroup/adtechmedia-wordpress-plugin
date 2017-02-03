@@ -2279,4 +2279,5 @@
             <button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
         </div>
     </div>
+
 </section>
