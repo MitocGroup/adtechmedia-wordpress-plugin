@@ -913,15 +913,15 @@ jQuery(document).ready(function () {
       }, {
         price: {
           required: 'The field \'Content pricing\' is required.',
-          digits: 'The field \'Content pricing\' must be a digits.'
+          digits: 'The field \'Content pricing\' must be a number.'
         },
         payment_pledged: {
           required: 'The field \'Content paywall\' is required.',
-          digits: 'The field \'Content paywall\' must be a digits.'
+          digits: 'The field \'Content paywall\' must be a number.'
         },
         content_offset: {
           required: 'The field \'Content preview\' is required.',
-          digits: 'The field \'Content preview\' must be a digits.'
+          digits: 'The field \'Content preview\' must be a number.'
         },
         ads_video: {
           required: false,
