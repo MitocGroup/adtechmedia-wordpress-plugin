@@ -258,6 +258,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			// @codingStandardsIgnoreStart
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file = $plugin_dir . '/js/atm.min.js';
+            if(Adtechmedia_Config::is_localhost()) {
+                $file = $plugin_dir . '/js/atm.js';
+            }
 			@unlink( $file );
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
@@ -304,26 +307,33 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				if(!is_array($templates)) {
 					$templates = [$templates];
 				}
-				foreach ($components as $key => $component) {
-					$components[$key] = sanitize_text_field( wp_unslash( $component));
-					$this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
-					$componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
-				}
+				if (!(count($components) == 1 && array_key_exists(0, $components) || $components[0] == '')) {
+                    foreach ($components as $key => $component) {
+                        $components[$key] = sanitize_text_field( wp_unslash( $component));
+                        $this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
+                        $componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
+                    }
+                }
+
+                $data = [
+                    'templates' => $componentsTemplates,
+                    'targetModal' => [
+                        'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
+                        'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
+                    ],
+                    'styles' => [
+                        'main' => base64_encode( $data[ 'template_overall_styles' ] ),
+                    ],
+                ];
+                if(count($componentsTemplates) == 0) {
+                    unset($data['templates']);
+                }
 
 
 				Adtechmedia_Request::property_update_config_by_array(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
-					[
-						'templates' => $componentsTemplates,
-						'targetModal' => [
-							'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
-							'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
-						],
-						'styles' => [
-							'main' => base64_encode( $data[ 'template_overall_styles' ] ),
-						],
-					]
+                    $data
 				);
 
 				// @codingStandardsIgnoreEnd
