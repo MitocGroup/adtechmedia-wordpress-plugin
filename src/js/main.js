@@ -163,7 +163,7 @@ function initModal() {
 }
 
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty*/
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault*/
   atmTpl.default.config({revenueMethod: 'micropayments'});
   var atmTemplating = atmTpl.default;
 
@@ -725,20 +725,21 @@ jQuery(document).ready(function () {
         timeout: 2000
       });
     }
+
     jQuery('.save-templates').bind('click', function (e) {
       var btn = jQuery(this);
       var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
 
       //get compnents in this view
       var viewComponents = {};
-      jQuery.each(components, function(i,template) {
-        if(template.hasOwnProperty('view')) {
+      jQuery.each(components, function (i, template) {
+        if (template.hasOwnProperty('view')) {
           var templateView = template.view;
-          if(!Array.isArray(templateView)) {
-            templateView = [templateView] ;
+          if (!Array.isArray(templateView)) {
+            templateView = [templateView];
           }
-          jQuery.each(templateView,function(i,view) {
-            if(view === viewKey) {
+          jQuery.each(templateView, function (i, view) {
+            if (view === viewKey) {
               viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
                   options[template.component],
                   styling[template.component]
@@ -748,14 +749,14 @@ jQuery(document).ready(function () {
         }
       });
 
-      jQuery.each(tabs, function(i,template) {
-        if(template.hasOwnProperty('view')) {
+      jQuery.each(tabs, function (i, template) {
+        if (template.hasOwnProperty('view')) {
           var templateView = template.view;
-          if(!Array.isArray(templateView)) {
-            templateView = [templateView] ;
+          if (!Array.isArray(templateView)) {
+            templateView = [templateView];
           }
-          jQuery.each(templateView,function(i,view) {
-            if(view === viewKey) {
+          jQuery.each(templateView, function (i, view) {
+            if (view === viewKey) {
               viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
                   options[template.component],
                   styling[template.component]
@@ -766,86 +767,86 @@ jQuery(document).ready(function () {
       });
 
       var valid = addValidate(jQuery('#overall-styling-and-position'), {
-        width: {
-          required: true,
-          cssSize: true
+        width : {
+          required : true,
+          cssSize : true
         },
-        offset_top: {
-          required: true,
-          cssSize: true
+        offset_top : {
+          required : true,
+          cssSize : true
         },
-        offset_left: {
-          required: true,
-          cssSize: true
+        offset_left : {
+          required : true,
+          cssSize : true
         },
-        scrolling_offset_top: {
-          required: true,
-          cssSize: true
+        scrolling_offset_top : {
+          required : true,
+          cssSize : true
         },
-        border:{
-          required: true,
+        border : {
+          required : true,
         },
-        font_family:{
-          required: true,
+        font_family : {
+          required : true,
         },
-        box_shadow:{
-          required: true,
+        box_shadow : {
+          required : true,
         },
-        footer_border:{
-          required: true,
+        footer_border : {
+          required : true,
         }
       }, {
-        width: {
-          required: 'The field \'Width\' is required.',
-          cssSize: 'The field \'Width\' must be valid CSS size.'
+        width : {
+          required : 'The field \'Width\' is required.',
+          cssSize : 'The field \'Width\' must be valid CSS size.'
         },
-        offset_top: {
-          required: 'The field \'Offset top\' is required.',
-          cssSize: 'The field \'Offset top\' must be valid CSS size.'
+        offset_top : {
+          required : 'The field \'Offset top\' is required.',
+          cssSize : 'The field \'Offset top\' must be valid CSS size.'
         },
-        offset_left: {
-          required: 'The field \'Offset from center\' is required.',
-          cssSize: 'The field \'Offset from center\' must be valid CSS size.'
+        offset_left : {
+          required : 'The field \'Offset from center\' is required.',
+          cssSize : 'The field \'Offset from center\' must be valid CSS size.'
         },
-        scrolling_offset_top: {
-          required: 'The field \'Scrolling offset top\' is required.',
-          cssSize: 'The field \'Scrolling offset top\' must be valid CSS size.'
+        scrolling_offset_top : {
+          required : 'The field \'Scrolling offset top\' is required.',
+          cssSize : 'The field \'Scrolling offset top\' must be valid CSS size.'
         },
-        border:{
-          required: 'The field \'Border\' is required.',
+        border : {
+          required : 'The field \'Border\' is required.',
         },
-        font_family:{
-          required: 'The field \'Font Family\' is required.',
+        font_family : {
+          required : 'The field \'Font Family\' is required.',
         },
-        box_shadow:{
-          required: 'The field \'Box Shadow\' is required.',
+        box_shadow : {
+          required : 'The field \'Box Shadow\' is required.',
         },
-        footer_border:{
-          required: 'The field \'Footer Border\' is required.',
+        footer_border : {
+          required : 'The field \'Footer Border\' is required.',
         }
       });
 
-      if(valid.form()) {
+      if (valid.form()) {
         addLoader(btn);
         jQuery.ajax({
-          url: save_template.ajax_url,
-          type: 'post',
-          data: {
-            action: 'save_template',
-            nonce: save_template.nonce,
-            inputs: JSON.stringify(inputsToObject(inputs)),
-            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
-            position: JSON.stringify(getPositionFields()),
-            overallStyles: getOverallStyling(),
-            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            components: Object.keys(viewComponents),
-            templates: viewComponents
+          url : save_template.ajax_url,
+          type : 'post',
+          data : {
+            action : 'save_template',
+            nonce : save_template.nonce,
+            inputs : JSON.stringify(inputsToObject(inputs)),
+            styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+            position : JSON.stringify(getPositionFields()),
+            overallStyles : getOverallStyling(),
+            overallStylesInputs : JSON.stringify(getOverallStylingFields()),
+            components : Object.keys(viewComponents),
+            templates : viewComponents
           },
-          success: function (response) {
+          success : function (response) {
             removeLoader(btn);
             showSuccess();
           },
-          error: function (response) {
+          error : function (response) {
             removeLoader(btn);
             showError();
           }
@@ -857,31 +858,31 @@ jQuery(document).ready(function () {
       var btn = jQuery(this);
       var form = jQuery('#save-revenue-model').parents('form');
       var valid = addValidate(jQuery(form), {
-        email: {
-          required: true,
-          email: true
+        email : {
+          required : true,
+          email : true
         }
       }, {
-        email: {
-          required: 'The field \'Email address\' is required.',
-          email: 'Your email address must be in the format of name@domain.com.'
+        email : {
+          required : 'The field \'Email address\' is required.',
+          email : 'Your email address must be in the format of name@domain.com.'
         }
       });
-      if(valid.form()) {
+      if (valid.form()) {
         addLoader(btn);
         jQuery.ajax({
-          url: save_template.ajax_url,
-          type: 'post',
-          data: {
-            action: 'save_template',
-            nonce: save_template.nonce,
-            revenueMethod: jQuery('select[name="revenue_method"]').val()
+          url : save_template.ajax_url,
+          type : 'post',
+          data : {
+            action : 'save_template',
+            nonce : save_template.nonce,
+            revenueMethod : jQuery('select[name="revenue_method"]').val()
           },
-          success: function (response) {
+          success : function (response) {
             removeLoader(btn);
             showSuccess();
           },
-          error: function (response) {
+          error : function (response) {
             removeLoader(btn);
             showError();
           }
@@ -890,54 +891,54 @@ jQuery(document).ready(function () {
     });
     jQuery('#country').bind('change', function (e) {
       var country = jQuery(this),
-        method = jQuery('#revenue_method');
+          method = jQuery('#revenue_method');
       method.empty();
-      $.each(country.find(':selected').data('methods'), function(key,value) {
+      $.each(country.find(':selected').data('methods'), function (key, value) {
         method.append($('<option></option>')
-          .attr('value', value).text(value));
+            .attr('value', value).text(value));
       });
     });
     jQuery('#content-config button').bind('click', function (e) {
       var btn = jQuery(this);
 
       var valid = addValidate(jQuery('#content-config'), {
-        price: {
-          required: true,
-          digits: true,
-          min:1
+        price : {
+          required : true,
+          digits : true,
+          min : 1
         },
-        payment_pledged: {
-          required: true,
-          digits: true
+        payment_pledged : {
+          required : true,
+          digits : true
         },
-        content_offset: {
-          required: true,
-          digits: true,
-          min:1
+        content_offset : {
+          required : true,
+          digits : true,
+          min : 1
         },
-        ads_video: {
-          required: false,
-          url: true
+        ads_video : {
+          required : false,
+          url : true
         }
       }, {
-        price: {
-          required: 'The field \'Content pricing\' is required.',
-          digits: 'The field \'Content pricing\' must be a number.'
+        price : {
+          required : 'The field \'Content pricing\' is required.',
+          digits : 'The field \'Content pricing\' must be a number.'
         },
-        payment_pledged: {
-          required: 'The field \'Content paywall\' is required.',
-          digits: 'The field \'Content paywall\' must be a number.'
+        payment_pledged : {
+          required : 'The field \'Content paywall\' is required.',
+          digits : 'The field \'Content paywall\' must be a number.'
         },
-        content_offset: {
-          required: 'The field \'Content preview\' is required.',
-          digits: 'The field \'Content preview\' must be a number.'
+        content_offset : {
+          required : 'The field \'Content preview\' is required.',
+          digits : 'The field \'Content preview\' must be a number.'
         },
-        ads_video: {
-          required: false,
-          url: 'The field \'Content preview\' must be a valid url.'
+        ads_video : {
+          required : false,
+          url : 'The field \'Content preview\' must be a valid url.'
         }
       });
-      if(valid.form()) {
+      if (valid.form()) {
         addLoader(btn);
         jQuery.ajax({
           url : save_template.ajax_url,
@@ -961,185 +962,183 @@ jQuery(document).ready(function () {
       }
     });
 
-      jQuery('.return-to-default-values').bind('click', function (e) {
-        var btn = jQuery(this);
-        jQuery.each(jQuery('button.btn'), function (i,button) {
-          addLoader(jQuery(button));
-        });
-
-
-
-              // addLoader(btn);
-              jQuery.ajax({
-                  url: return_to_default_values.ajax_url,
-                  type: 'post',
-                  data: {
-                      action: 'return_to_default_values',
-                      method:'get_default_values'
-                  },
-                  success: function (response) {
-                     response = jQuery.parseJSON(response);
-
-                    //restore styling and positions
-                    jQuery.each(response, function(form, values) {
-                          jQuery.each(values, function(name, value) {
-                            jQuery('#'+form+' [name="'+name+'"]').val(value);
-                          });
-                      if(form === 'overall-styling-and-position') {
-                        templatePositionInputs = jQuery.parseJSON(values['template_position']);
-                        fillPositionFields();
-                        templateOverallStylesInputs = templateOverallStylesInputsDefault;
-                        fillOverallStylesFields();
-                        applayOverallStyling(values['template_overall_styles']);
-                        // jQuery('#'+form+' button').click();
-                      } else {
-                        // jQuery('#'+form+' button').click();
-                      }
-                    });
-
-                    jQuery.each(jQuery('.views-tabs input[data-template-css]'), function (i, input) {
-                      jQuery(input).val(jQuery(input).attr('placeholder'));
-                    });
-
-                    jQuery.each(jQuery('.views-tabs select[data-template-css]'), function (i, select) {
-                      var options = jQuery(select).find('option');
-                      jQuery(select).val(options[0].value);
-                    });
-
-                    jQuery.each(components, function (i, template) {
-                      var viewKey = template.dataTab;
-                      jQuery.each(template.sections, function (j, section) {
-                        var viewTab = tabs.filter(function (tab) {
-                          return tab.id === section;
-                        });
-                        if (viewTab.length === 1) {
-                          section = viewTab[0];
-                        } else {
-                          return false;
-                        }
-                        var componentName = template.component;
-                        if(section.hasOwnProperty('component')) {
-                          componentName = section.component;
-                          viewKey = section.dataTab;
-                        } else {
-                          viewKey = template.dataTab;
-                        }
-                        jQuery.each(section.options, function (j, option) {
-                          var inputsKey = viewKey + section.dataTab + option.type;
-                          if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
-                            var val = stories[componentName][option.name].content;
-                            if(inputs[inputsKey].tabSelector === '') {
-                              jQuery(inputs[inputsKey].componentSelector).val(val);
-                            } else {
-                              jQuery(inputs[inputsKey].tabSelector).val(val);
-                            }
-                            options[componentName][option.name] = val;
-                            styling[componentName][inputs[inputsKey].optionName] =
-                                getCSSFields(styleInputs[viewKey + section.dataTab + 'style'].inputs);
-                          }
-                        });
-                      });
-                    });
-
-                    // render
-                    var needToRender = [];
-                    jQuery.each(views, function (i, view) {
-                      atmTemplating.updateTemplate(
-                          view.component,
-                          options[view.component],
-                          styling[view.component]
-                      );
-
-                      if(view.hasOwnProperty('expanded') && view.hasOwnProperty('collapsed')) {
-                        needToRender.push(view);
-                      }
-                    });
-                    jQuery.each(needToRender, function (i, view) {
-                      view.expanded.redraw();
-                      view.collapsed.redraw();
-                    });
-
-//get compnents in this view
-                    var viewComponents = {};
-                    jQuery.each(components, function(i,template) {
-                      if(template.hasOwnProperty('view')) {
-                        var templateView = template.view;
-                        if(!Array.isArray(templateView)) {
-                          templateView = [templateView] ;
-                        }
-                        jQuery.each(templateView,function(i,view) {
-                            viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                                options[template.component],
-                                styling[template.component]
-                            );
-                        });
-                      }
-                    });
-
-                    jQuery.each(tabs, function(i,template) {
-                      if(template.hasOwnProperty('view')) {
-                        var templateView = template.view;
-                        if(!Array.isArray(templateView)) {
-                          templateView = [templateView] ;
-                        }
-                        jQuery.each(templateView,function(i,view) {
-                            viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                                options[template.component],
-                                styling[template.component]
-                            );
-
-                        });
-                      }
-                    });
-
-                    jQuery.ajax({
-                      url: return_to_default_values.ajax_url,
-                      type: 'post',
-                      data: {
-                        action: 'return_to_default_values',
-                        method:'save_default_values',
-                        nonce: save_template.nonce,
-                        revenueMethod: jQuery('select[name="revenue_method"]').val(),
-                        contentConfig : JSON.stringify(getInputsData(
-                            jQuery('#content-config .content input,#content-config .content select')
-                        )),
-                        inputs: JSON.stringify(inputsToObject(inputs)),
-                        styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
-                        position: JSON.stringify(getPositionFields()),
-                        overallStyles: getOverallStyling(),
-                        overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-                        components: Object.keys(viewComponents),
-                        templates: viewComponents
-                      },
-                      success: function (response) {
-                        noty({
-                          type: 'success',
-                          text: 'AdTechMedia parameters have been return to default values',
-                          timeout: 2000
-                        });
-
-                        jQuery.each(jQuery('button.btn'), function (i,button) {
-                          removeLoader(jQuery(button));
-                        });
-                      },
-                      error: function (response) {
-                        jQuery.each(jQuery('button.btn'), function (i,button) {
-                          removeLoader(jQuery(button));
-                        });
-                        showError();
-                      }
-                    });
-
-                  },
-                  error: function (response) {
-                    jQuery.each(jQuery('button.btn'), function (i,button) {
-                      removeLoader(jQuery(button));
-                    });
-                    showError();
-                  }
-              });
+    jQuery('.return-to-default-values').bind('click', function (e) {
+      var btn = jQuery(this);
+      jQuery.each(jQuery('button.btn'), function (i, button) {
+        addLoader(jQuery(button));
       });
 
+
+      // addLoader(btn);
+      jQuery.ajax({
+        url : return_to_default_values.ajax_url,
+        type : 'post',
+        data : {
+          action : 'return_to_default_values',
+          method : 'get_default_values'
+        },
+        success : function (response) {
+          response = jQuery.parseJSON(response);
+
+          //restore styling and positions
+          jQuery.each(response, function (form, values) {
+            jQuery.each(values, function (name, value) {
+              jQuery('#' + form + ' [name="' + name + '"]').val(value);
+            });
+            if (form === 'overall-styling-and-position') {
+              templatePositionInputs = jQuery.parseJSON(values['template_position']);
+              fillPositionFields();
+              templateOverallStylesInputs = templateOverallStylesInputsDefault;
+              fillOverallStylesFields();
+              applayOverallStyling(values['template_overall_styles']);
+              // jQuery('#'+form+' button').click();
+            } else {
+              // jQuery('#'+form+' button').click();
+            }
+          });
+
+          jQuery.each(jQuery('.views-tabs input[data-template-css]'), function (i, input) {
+            jQuery(input).val(jQuery(input).attr('placeholder'));
+          });
+
+          jQuery.each(jQuery('.views-tabs select[data-template-css]'), function (i, select) {
+            var options = jQuery(select).find('option');
+            jQuery(select).val(options[0].value);
+          });
+
+          jQuery.each(components, function (i, template) {
+            var viewKey = template.dataTab;
+            jQuery.each(template.sections, function (j, section) {
+              var viewTab = tabs.filter(function (tab) {
+                return tab.id === section;
+              });
+              if (viewTab.length === 1) {
+                section = viewTab[0];
+              } else {
+                return false;
+              }
+              var componentName = template.component;
+              if (section.hasOwnProperty('component')) {
+                componentName = section.component;
+                viewKey = section.dataTab;
+              } else {
+                viewKey = template.dataTab;
+              }
+              jQuery.each(section.options, function (j, option) {
+                var inputsKey = viewKey + section.dataTab + option.type;
+                if (stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
+                  var val = stories[componentName][option.name].content;
+                  if (inputs[inputsKey].tabSelector === '') {
+                    jQuery(inputs[inputsKey].componentSelector).val(val);
+                  } else {
+                    jQuery(inputs[inputsKey].tabSelector).val(val);
+                  }
+                  options[componentName][option.name] = val;
+                  styling[componentName][inputs[inputsKey].optionName] =
+                      getCSSFields(styleInputs[viewKey + section.dataTab + 'style'].inputs);
+                }
+              });
+            });
+          });
+
+          // render
+          var needToRender = [];
+          jQuery.each(views, function (i, view) {
+            atmTemplating.updateTemplate(
+                view.component,
+                options[view.component],
+                styling[view.component]
+            );
+
+            if (view.hasOwnProperty('expanded') && view.hasOwnProperty('collapsed')) {
+              needToRender.push(view);
+            }
+          });
+          jQuery.each(needToRender, function (i, view) {
+            view.expanded.redraw();
+            view.collapsed.redraw();
+          });
+
+//get compnents in this view
+          var viewComponents = {};
+          jQuery.each(components, function (i, template) {
+            if (template.hasOwnProperty('view')) {
+              var templateView = template.view;
+              if (!Array.isArray(templateView)) {
+                templateView = [templateView];
+              }
+              jQuery.each(templateView, function (i, view) {
+                viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                    options[template.component],
+                    styling[template.component]
+                );
+              });
+            }
+          });
+
+          jQuery.each(tabs, function (i, template) {
+            if (template.hasOwnProperty('view')) {
+              var templateView = template.view;
+              if (!Array.isArray(templateView)) {
+                templateView = [templateView];
+              }
+              jQuery.each(templateView, function (i, view) {
+                viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                    options[template.component],
+                    styling[template.component]
+                );
+
+              });
+            }
+          });
+
+          jQuery.ajax({
+            url : return_to_default_values.ajax_url,
+            type : 'post',
+            data : {
+              action : 'return_to_default_values',
+              method : 'save_default_values',
+              nonce : save_template.nonce,
+              revenueMethod : jQuery('select[name="revenue_method"]').val(),
+              contentConfig : JSON.stringify(getInputsData(
+                  jQuery('#content-config .content input,#content-config .content select')
+              )),
+              inputs : JSON.stringify(inputsToObject(inputs)),
+              styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+              position : JSON.stringify(getPositionFields()),
+              overallStyles : getOverallStyling(),
+              overallStylesInputs : JSON.stringify(getOverallStylingFields()),
+              components : Object.keys(viewComponents),
+              templates : viewComponents
+            },
+            success : function (response) {
+              noty({
+                type : 'success',
+                text : 'AdTechMedia parameters have been return to default values',
+                timeout : 2000
+              });
+
+              jQuery.each(jQuery('button.btn'), function (i, button) {
+                removeLoader(jQuery(button));
+              });
+            },
+            error : function (response) {
+              jQuery.each(jQuery('button.btn'), function (i, button) {
+                removeLoader(jQuery(button));
+              });
+              showError();
+            }
+          });
+
+        },
+        error : function (response) {
+          jQuery.each(jQuery('button.btn'), function (i, button) {
+            removeLoader(jQuery(button));
+          });
+          showError();
+        }
+      });
+    });
 
 
     var generalConfValid = false;
