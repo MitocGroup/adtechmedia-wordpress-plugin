@@ -471,20 +471,29 @@ jQuery(document).ready(function () {
         };
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
-          var componentSelector = '[data-template="'+template.dataTab+'"]'
-          + '[data-template="'+section.dataTab+'"]'
+          var componentSelector = '[data-template="'+template.dataTab+'"] '
+          + '[data-template="'+section.dataTab+'"] '
           + 'input[name="' + option.inputName + '"]';
           inputs[inputsKey] = {
             input : sectionTab.find('input[name="' + option.inputName + '"]'),
             optionName : option.name,
             type : option.type,
-            tabSelector:'[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]',
+            tabSelector:'',
             componentSelector:componentSelector
           };
 
+          if(section.hasOwnProperty('component')) {
+            inputs[inputsKey]['tabSelector'] = '[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]';
+          }
+
           if (templateInputs.hasOwnProperty(inputsKey)) {
-            inputs[inputsKey].input.val(templateInputs[inputsKey]);
-            inputs[inputsKey].input.attr('placeholder', templateInputs[inputsKey]);
+            // inputs[inputsKey].input.val(templateInputs[inputsKey]);
+            if(inputs[inputsKey].tabSelector === '') {
+              jQuery(inputs[inputsKey].componentSelector).val(templateInputs[inputsKey]);
+            } else {
+              jQuery(inputs[inputsKey].tabSelector).val(templateInputs[inputsKey]);
+            }
+
             if(!options.hasOwnProperty(componentName)) {
               options[componentName] = {};
             }
@@ -494,17 +503,17 @@ jQuery(document).ready(function () {
             options[componentName][option.name] = templateInputs[inputsKey];
             styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
           } else {
+
             if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
               var val = stories[componentName][option.name].content;
-              inputs[inputsKey].input.val(val);
-              inputs[inputsKey].input.attr('placeholder', val);
-
+              // inputs[inputsKey].input.val(val);
+              if(inputs[inputsKey].tabSelector === '') {
+                jQuery(inputs[inputsKey].componentSelector).val(val);
+              } else {
+                jQuery(inputs[inputsKey].tabSelector).val(val);
+              }
               options[componentName] = {};
               options[componentName][option.name] = val;
-              // if (templateStyleInputs.hasOwnProperty(styleInputsKey)) {
-              //   styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
-              // }
-
             }
           }
 
@@ -954,8 +963,13 @@ jQuery(document).ready(function () {
 
       jQuery('.return-to-default-values').bind('click', function (e) {
         var btn = jQuery(this);
+        jQuery.each(jQuery('button.btn'), function (i,button) {
+          addLoader(jQuery(button));
+        });
 
-              addLoader(btn);
+
+
+              // addLoader(btn);
               jQuery.ajax({
                   url: return_to_default_values.ajax_url,
                   type: 'post',
@@ -966,21 +980,162 @@ jQuery(document).ready(function () {
                   success: function (response) {
                      response = jQuery.parseJSON(response);
 
+                    //restore styling and positions
                     jQuery.each(response, function(form, values) {
                           jQuery.each(values, function(name, value) {
                             jQuery('#'+form+' [name="'+name+'"]').val(value);
                           });
-
-                      jQuery('#'+form+' button').click();
+                      if(form === 'overall-styling-and-position') {
+                        templatePositionInputs = jQuery.parseJSON(values['template_position']);
+                        fillPositionFields();
+                        templateOverallStylesInputs = templateOverallStylesInputsDefault;
+                        fillOverallStylesFields();
+                        applayOverallStyling(values['template_overall_styles']);
+                        // jQuery('#'+form+' button').click();
+                      } else {
+                        // jQuery('#'+form+' button').click();
+                      }
                     });
 
+                    jQuery.each(jQuery('.views-tabs input[data-template-css]'), function (i, input) {
+                      jQuery(input).val(jQuery(input).attr('placeholder'));
+                    });
 
+                    jQuery.each(jQuery('.views-tabs select[data-template-css]'), function (i, select) {
+                      var options = jQuery(select).find('option');
+                      jQuery(select).val(options[0].value);
+                    });
 
-                      removeLoader(btn);
+                    jQuery.each(components, function (i, template) {
+                      var viewKey = template.dataTab;
+                      jQuery.each(template.sections, function (j, section) {
+                        var viewTab = tabs.filter(function (tab) {
+                          return tab.id === section;
+                        });
+                        if (viewTab.length === 1) {
+                          section = viewTab[0];
+                        } else {
+                          return false;
+                        }
+                        var componentName = template.component;
+                        if(section.hasOwnProperty('component')) {
+                          componentName = section.component;
+                          viewKey = section.dataTab;
+                        } else {
+                          viewKey = template.dataTab;
+                        }
+                        jQuery.each(section.options, function (j, option) {
+                          var inputsKey = viewKey + section.dataTab + option.type;
+                          if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
+                            var val = stories[componentName][option.name].content;
+                            if(inputs[inputsKey].tabSelector === '') {
+                              jQuery(inputs[inputsKey].componentSelector).val(val);
+                            } else {
+                              jQuery(inputs[inputsKey].tabSelector).val(val);
+                            }
+                            options[componentName][option.name] = val;
+                            styling[componentName][inputs[inputsKey].optionName] =
+                                getCSSFields(styleInputs[viewKey + section.dataTab + 'style'].inputs);
+                          }
+                        });
+                      });
+                    });
+
+                    // render
+                    var needToRender = [];
+                    jQuery.each(views, function (i, view) {
+                      atmTemplating.updateTemplate(
+                          view.component,
+                          options[view.component],
+                          styling[view.component]
+                      );
+
+                      if(view.hasOwnProperty('expanded') && view.hasOwnProperty('collapsed')) {
+                        needToRender.push(view);
+                      }
+                    });
+                    jQuery.each(needToRender, function (i, view) {
+                      view.expanded.redraw();
+                      view.collapsed.redraw();
+                    });
+
+//get compnents in this view
+                    var viewComponents = {};
+                    jQuery.each(components, function(i,template) {
+                      if(template.hasOwnProperty('view')) {
+                        var templateView = template.view;
+                        if(!Array.isArray(templateView)) {
+                          templateView = [templateView] ;
+                        }
+                        jQuery.each(templateView,function(i,view) {
+                            viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                                options[template.component],
+                                styling[template.component]
+                            );
+                        });
+                      }
+                    });
+
+                    jQuery.each(tabs, function(i,template) {
+                      if(template.hasOwnProperty('view')) {
+                        var templateView = template.view;
+                        if(!Array.isArray(templateView)) {
+                          templateView = [templateView] ;
+                        }
+                        jQuery.each(templateView,function(i,view) {
+                            viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                                options[template.component],
+                                styling[template.component]
+                            );
+
+                        });
+                      }
+                    });
+
+                    jQuery.ajax({
+                      url: return_to_default_values.ajax_url,
+                      type: 'post',
+                      data: {
+                        action: 'return_to_default_values',
+                        method:'save_default_values',
+                        nonce: save_template.nonce,
+                        revenueMethod: jQuery('select[name="revenue_method"]').val(),
+                        contentConfig : JSON.stringify(getInputsData(
+                            jQuery('#content-config .content input,#content-config .content select')
+                        )),
+                        inputs: JSON.stringify(inputsToObject(inputs)),
+                        styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
+                        position: JSON.stringify(getPositionFields()),
+                        overallStyles: getOverallStyling(),
+                        overallStylesInputs: JSON.stringify(getOverallStylingFields()),
+                        components: Object.keys(viewComponents),
+                        templates: viewComponents
+                      },
+                      success: function (response) {
+                        noty({
+                          type: 'success',
+                          text: 'AdTechMedia parameters have been return to default values',
+                          timeout: 2000
+                        });
+
+                        jQuery.each(jQuery('button.btn'), function (i,button) {
+                          removeLoader(jQuery(button));
+                        });
+                      },
+                      error: function (response) {
+                        jQuery.each(jQuery('button.btn'), function (i,button) {
+                          removeLoader(jQuery(button));
+                        });
+                        showError();
+                      }
+                    });
+
                   },
                   error: function (response) {
-                      removeLoader(btn);
-                      showError();
+                    jQuery.each(jQuery('button.btn'), function (i,button) {
+                      removeLoader(jQuery(button));
+                    });
+                    showError();
                   }
               });
       });

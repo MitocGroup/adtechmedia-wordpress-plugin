@@ -554,23 +554,86 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'content_offset_type' => Adtechmedia_Config::get( 'content_offset_type' ),
 			];
 
-//			return [
-//				'general-config' => $general,
-//				'content-config' => $content,
-//				'overall-styling-and-position' => [
-//					'template_position' => Adtechmedia_Config::get( 'template_position' ),
-//					'template_overall_styles' => Adtechmedia_Config::get( 'template_overall_styles' ),
-//				]
-//			];
-
 			echo json_encode([
 				'general-config' => $general,
 				'content-config' => $content,
 				'overall-styling-and-position' => [
 					'template_position' => Adtechmedia_Config::get( 'template_position' ),
 					'template_overall_styles' => Adtechmedia_Config::get( 'template_overall_styles' ),
+					'template_overall_styles_inputs' => Adtechmedia_Config::get( 'template_overall_styles' ),
 				]
 			]);
+			die();
+		} elseif (isset( $_POST['method'] ) &&  $_POST['method'] === 'save_default_values') {
+			$data = [];
+
+			$revenue_method = $_POST['revenueMethod'];
+			$this->add_plugin_option( 'revenue_method', $revenue_method );
+			$data['revenue_method'] = $revenue_method;
+
+			$content_config = json_decode( wp_unslash( $_POST['contentConfig'] ), true );
+			foreach ( $content_config as $a_option_key => $a_option_meta ) {
+				if ( ! empty( $content_config[ $a_option_key ] ) ) {
+					$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );
+				}
+			}
+			$this->update_prop();
+
+			$options = [
+				'template_inputs' => 'inputs',
+				'template_style_inputs' => 'styleInputs',
+				'template_position' => 'position',
+				'template_overall_styles' => 'overallStyles',
+				'template_overall_styles_inputs' => 'overallStylesInputs',
+			];
+
+			foreach ( $options as $db_key => $post_key ) {
+				$value = '';
+				if ( isset ( $_POST[ $post_key ] ) ) {
+					$value = sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) );
+				}
+				$data[ $db_key ] = $value;
+				$this->add_plugin_option( $db_key, $value );
+			}
+
+			$componentsTemplates = [];
+			$components = $_POST['components'];
+			$templates = $_POST['templates'];
+			if(!is_array($components)) {
+				$components = [$components];
+			}
+			if(!is_array($templates)) {
+				$templates = [$templates];
+			}
+			if (!(count($components) == 1 && array_key_exists(0, $components) || $components[0] == '')) {
+				foreach ($components as $key => $component) {
+					$components[$key] = sanitize_text_field( wp_unslash( $component));
+					$this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
+					$componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
+				}
+			}
+
+			$data = array_merge($data,[
+				'templates' => $componentsTemplates,
+				'targetModal' => [
+					'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
+					'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data[ 'template_position' ] ), true ) ),
+				],
+				'styles' => [
+					'main' => base64_encode( $data[ 'template_overall_styles' ] ),
+				],
+			]);
+			if(count($componentsTemplates) == 0) {
+				unset($data['templates']);
+			}
+
+			Adtechmedia_Request::property_update_config_by_array(
+				$this->get_plugin_option( 'id' ),
+				$this->get_plugin_option( 'key' ),
+				$data
+			);
+			echo 'ok';
+
 			die();
 		}
 

@@ -828,7 +828,7 @@
                             <label for="pay-ext-user" class="tab-name">
                                 User
                             </label>
-                            <div class="tab-content" data-template="user-pay">
+                            <div class="tab-content" data-template="user">
                                 <div class="custom-label" data-template="expanded">
                                     <label>Connect Message</label>
                                     <div class="custom-input">

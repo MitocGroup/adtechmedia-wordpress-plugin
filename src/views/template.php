@@ -74,7 +74,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Salutation</label>
                                     <div class="custom-input">
-                                        <input type="text" name="welcome" value="" placeholder="" required="" />
+                                        <input type="text" name="welcome" value="Dear {user}," placeholder="Dear {user}," required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -177,14 +177,14 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Message (Expanded View)</label>
                                     <div class="custom-input">
-                                        <input type="text" name="message-expanded" value="" placeholder="" required="" />
+                                        <input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
                                 <div class="custom-label" data-template="collapsed">
                                     <label>Message (Collapsed View)</label>
                                     <div class="custom-input">
-                                        <input type="text" name="message-collapsed" value="" placeholder="" required="" />
+                                        <input type="text" name="message-collapsed" value="Please support quality journalism. {pledge-button}" placeholder="Please support quality journalism." required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -285,7 +285,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Connect Message</label>
                                     <div class="custom-input">
-                                        <input type="text" name="user-used" value="" placeholder="" required="" />
+                                        <input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -293,7 +293,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Disconnect Message</label>
                                     <div class="custom-input">
-                                        <input type="text"  name="user-logged"  value="" placeholder="" required="" />
+                                        <input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -398,7 +398,7 @@
                                         <div class="custom-label">
                                             <label>Micropayments Button Text</label>
                                             <div class="custom-input">
-                                                <input type="text" value="" placeholder="" required="" />
+                                                <input type="text" value="PLEDGE {price}" placeholder="PLEDGE {price}" required="" />
                                                 <span class="bar"></span>
                                             </div>
                                         </div>
@@ -407,7 +407,7 @@
                                         <div class="custom-label">
                                             <label>Micropayments Button Icon</label>
                                             <div class="custom-input">
-                                                <input type="text" placeholder="" value="" required="" />
+                                                <input type="text" placeholder="fa-check" value="fa-check" required="" />
                                                 <span class="bar"></span>
                                             </div>
                                         </div>
@@ -544,7 +544,7 @@
                                         <div class="custom-label">
                                             <label>Closing Arrow</label>
                                             <div class="custom-input">
-                                                <input type="text" placeholder="" value="" required="" />
+                                                <input type="text" placeholder="fa-chevron-circle-up" value="fa-chevron-circle-up" required="" />
                                                 <span class="bar"></span>
                                             </div>
                                         </div>
@@ -565,7 +565,7 @@
                                         <div class="custom-label">
                                             <label>Opening Arrow</label>
                                             <div class="custom-input">
-                                                <input type="text" placeholder="" value="" required="" />
+                                                <input type="text" placeholder="fa-chevron-circle-down" value="fa-chevron-circle-down" required="" />
                                                 <span class="bar"></span>
                                             </div>
                                         </div>
@@ -620,7 +620,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Salutation</label>
                                     <div class="custom-input">
-                                        <input type="text" name="salutation" value="" placeholder="" required="" />
+                                        <input type="text" name="salutation" value="Dear {user}," placeholder="Dear {user}," required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -722,7 +722,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Message (Expanded View)</label>
                                     <div class="custom-input">
-                                        <input type="text" name="message-expanded" value="" placeholder="" required="" />
+                                        <input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -730,7 +730,7 @@
                                 <div class="custom-label" data-template="collapsed">
                                     <label>Message (Collapsed View)</label>
                                     <div class="custom-input">
-                                        <input type="text" name="message-collapsed" value="" placeholder="" required="" />
+                                        <input type="text" name="message-collapsed" value="Support quality journalism. {pay-button} " placeholder="Support quality journalism. {pay-button} " required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -832,7 +832,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Connect Message</label>
                                     <div class="custom-input">
-                                        <input type="text" name="user-used" value="" placeholder="" required="" />
+                                        <input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -840,7 +840,7 @@
                                 <div class="custom-label" data-template="expanded">
                                     <label>Disconnect Message</label>
                                     <div class="custom-input">
-                                        <input type="text"  name="user-logged"  value="" placeholder="" required="" />
+                                        <input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
@@ -2279,5 +2279,4 @@
             <button type="button" class="btn save-templates"><i class="mdi mdi-check"></i> Save</button>
         </div>
     </div>
-
 </section>

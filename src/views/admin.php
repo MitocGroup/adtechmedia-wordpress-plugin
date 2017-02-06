@@ -47,6 +47,11 @@ echo 'var templateOverallStylesInputs =JSON.parse(\'';
 $template_overall_styles_inputs = addslashes( $this->get_plugin_option( 'template_overall_styles_inputs' ) );
 echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
 echo '\');';
+echo 'var templateOverallStylesInputsDefault =JSON.parse(\'';
+$template_overall_styles_inputs_default = addslashes( Adtechmedia_Config::get ( 'template_overall_styles_inputs' ) );
+echo empty( $template_overall_styles_inputs_default ) ? '{}' : $template_overall_styles_inputs_default;
+echo '\');';
+
 // @codingStandardsIgnoreEnd
 echo '</script>';
 ?>
@@ -574,6 +579,6 @@ echo '</script>';
 	</div>
 
 	<div class="custom-input pull-right">
-		<a type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Return to default values</a>
+		<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Return to default values</button>
 	</div>
 </main>
