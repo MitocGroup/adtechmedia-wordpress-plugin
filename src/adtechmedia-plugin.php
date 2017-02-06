@@ -582,6 +582,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Show error if Property Id not exists
 	 */
 	public function property_id_not_exists_error() {
+		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
 			<p><?php esc_html_e( 'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
@@ -589,12 +590,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				); ?></p>
 		</div>
 		<?php
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
 	 * Show error if  API key not exists
 	 */
 	public function key_not_exists_error() {
+		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
 			<p><?php esc_html_e( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
@@ -602,6 +605,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				); ?></p>
 		</div>
 		<?php
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -639,12 +643,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				die();
 			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
 				$data = [];
-				if ( isset ( $_POST['revenue_method'] ) ) {
+				// @codingStandardsIgnoreStart
+				if ( isset( $_POST['revenue_method'] ) ) {
 					$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
 					$this->add_plugin_option( 'revenue_method', $revenue_method );
 					$data['revenue_method'] = $revenue_method;
 				}
-				if ( isset ( $_POST['contentConfig'] ) ) {
+				if ( isset( $_POST['contentConfig'] ) ) {
 					$content_config = json_decode( sanitize_text_field( wp_unslash( $_POST['contentConfig'] ) ), true );
 					foreach ( $content_config as $a_option_key => $a_option_meta ) {
 						if ( ! empty( $content_config[ $a_option_key ] ) ) {
@@ -652,6 +657,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						}
 					}
 				}
+				// @codingStandardsIgnoreEnd
 				$this->update_prop();
 
 				$options = [
@@ -670,15 +676,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$data[ $db_key ] = $value;
 					$this->add_plugin_option( $db_key, $value );
 				}
-				// @codingStandardsIgnoreEnd
 
 				$components_templates = [];
-				if ( isset ( $_POST['components'] ) ) {
+				if ( isset( $_POST['components'] ) ) {
 					$components = sanitize_text_field( wp_unslash( $_POST['components'] ) );
 				}
-				if ( isset ( $_POST['templates'] ) ) {
+				if ( isset( $_POST['templates'] ) ) {
 					$templates = sanitize_text_field( wp_unslash( $_POST['templates'] ) );
 				}
+				// @codingStandardsIgnoreEnd
 				if ( ! is_array( $components ) ) {
 					$components = [ $components ];
 				}
