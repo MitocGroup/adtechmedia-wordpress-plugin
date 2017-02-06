@@ -469,6 +469,7 @@ jQuery(document).ready(function () {
         styleInputs[styleInputsKey] = {
           inputs : sectionTab.find(getDatatemplate('style') + ' input, ' + getDatatemplate('style') + ' select')
         };
+        // @codingStandardsIgnoreStart
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
           var componentSelector = '[data-template="'+template.dataTab+'"] '
@@ -482,8 +483,12 @@ jQuery(document).ready(function () {
             componentSelector:componentSelector
           };
 
-          if(section.hasOwnProperty('component')) {
-            inputs[inputsKey]['tabSelector'] = '[data-template="'+section.dataTab+'"] input[name="' + option.inputName + '"]';
+          if (section.hasOwnProperty('component')) {
+            inputs[inputsKey]['tabSelector'] = '[data-template="'
+                + section.dataTab
+                + '"] input[name="'
+                + option.inputName
+                + '"]';
           }
 
           if (templateInputs.hasOwnProperty(inputsKey)) {
@@ -518,10 +523,8 @@ jQuery(document).ready(function () {
           }
 
         });
+        // @codingStandardsIgnoreEnd
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
-
-
-
       });
 
 
@@ -890,8 +893,8 @@ jQuery(document).ready(function () {
       }
     });
     jQuery('#country').bind('change', function (e) {
-      var country = jQuery(this),
-          method = jQuery('#revenue_method');
+      var country = jQuery(this);
+      var method = jQuery('#revenue_method');
       method.empty();
       $.each(country.find(':selected').data('methods'), function (key, value) {
         method.append($('<option></option>')
@@ -963,7 +966,6 @@ jQuery(document).ready(function () {
     });
 
     jQuery('.return-to-default-values').bind('click', function (e) {
-      var btn = jQuery(this);
       jQuery.each(jQuery('button.btn'), function (i, button) {
         addLoader(jQuery(button));
       });
@@ -986,9 +988,11 @@ jQuery(document).ready(function () {
               jQuery('#' + form + ' [name="' + name + '"]').val(value);
             });
             if (form === 'overall-styling-and-position') {
+              // @codingStandardsIgnoreStart
               templatePositionInputs = jQuery.parseJSON(values['template_position']);
               fillPositionFields();
               templateOverallStylesInputs = templateOverallStylesInputsDefault;
+              // @codingStandardsIgnoreEnd
               fillOverallStylesFields();
               applayOverallStyling(values['template_overall_styles']);
               // jQuery('#'+form+' button').click();
