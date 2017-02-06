@@ -308,12 +308,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				if(!is_array($templates)) {
 					$templates = [$templates];
 				}
-				if (!(count($components) == 1 && array_key_exists(0, $components) || $components[0] == '')) {
-                    foreach ($components as $key => $component) {
-                        $components[$key] = sanitize_text_field( wp_unslash( $component));
-                        $this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
-                        $componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
-                    }
+
+				if (!(count($components) == 1 && array_key_exists(0, $components) && $components[0] == '')) {
+					foreach ($components as $key => $component) {
+						$components[$key] = sanitize_text_field( wp_unslash( $component));
+						$this->add_plugin_option( 'template_' . $components[$key], $templates[$component] );
+						$componentsTemplates[$components[$key]] = base64_encode( stripslashes( $templates[$component] ) );
+					}
                 }
 
                 $data = [
