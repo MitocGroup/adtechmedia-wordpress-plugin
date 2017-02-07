@@ -496,8 +496,8 @@ jQuery(document).ready(function () {
 
     function throttle(func, ms) {
       var isThrottled = false,
-          savedArgs,
-          savedThis;
+        savedArgs,
+        savedThis;
 
       function wrapper() {
         if (isThrottled) {
@@ -528,7 +528,6 @@ jQuery(document).ready(function () {
     }, 3000);
     var invalidVar = '';
     function checkInputVars(input, tabName) {
-      /*global invalidVar */
       var inputName = input.attr('name');
       if (inputName !== '') {
         var inputWithVars = inputsVars[tabName][inputName];
