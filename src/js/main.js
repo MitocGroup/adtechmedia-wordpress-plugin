@@ -163,7 +163,7 @@ function initModal() {
 }
 
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault*/
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs */
   atmTpl.default.config({revenueMethod: 'micropayments'});
   var atmTemplating = atmTpl.default;
 
@@ -469,7 +469,7 @@ jQuery(document).ready(function () {
         styleInputs[styleInputsKey] = {
           inputs : sectionTab.find(getDatatemplate('style') + ' input, ' + getDatatemplate('style') + ' select')
         };
-        // @codingStandardsIgnoreStart
+        /*eslint complexity: ["error", 10]*/
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
           var componentSelector = '[data-template="'+template.dataTab+'"] '
@@ -523,7 +523,6 @@ jQuery(document).ready(function () {
           }
 
         });
-        // @codingStandardsIgnoreEnd
         fillCSSFields(styleInputsKey, templateStyleInputs, styleInputs);
       });
 
@@ -988,7 +987,6 @@ jQuery(document).ready(function () {
               jQuery('#' + form + ' [name="' + name + '"]').val(value);
             });
             if (form === 'overall-styling-and-position') {
-              // @codingStandardsIgnoreStart
               templatePositionInputs = jQuery.parseJSON(values['template_position']);
               fillPositionFields();
               templateOverallStylesInputs = templateOverallStylesInputsDefault;
