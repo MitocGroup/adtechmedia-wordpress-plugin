@@ -990,12 +990,9 @@ jQuery(document).ready(function () {
               templatePositionInputs = jQuery.parseJSON(values['template_position']);
               fillPositionFields();
               templateOverallStylesInputs = templateOverallStylesInputsDefault;
-              // @codingStandardsIgnoreEnd
               fillOverallStylesFields();
               applayOverallStyling(values['template_overall_styles']);
-              // jQuery('#'+form+' button').click();
             } else {
-              // jQuery('#'+form+' button').click();
             }
           });
 

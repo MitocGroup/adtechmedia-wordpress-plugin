@@ -98,13 +98,17 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
 		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
 		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
+		$this->add_plugin_option( 'theme_config_id', '' );
+		$this->add_plugin_option( 'theme_config_name', '' );
 		$this->check_api_key_exists();
 		$this->check_prop();
 
-		// Add schedule event update properties.
+        Adtechmedia_ThemeManager::init_theme_config_model();
+
+        // Add schedule event update properties.
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
-	}
+    }
 
 	/**
 	 * Check API key is exists
