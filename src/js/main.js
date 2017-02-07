@@ -964,63 +964,7 @@ jQuery(document).ready(function () {
               removeLoader(btn);
               showError();
             }
-          }, {
-            width : {
-              required : 'The field \'Width\' is required.',
-              cssSize : 'The field \'Width\' must be valid CSS size.'
-            },
-            offset_top : {
-              required : 'The field \'Offset top\' is required.',
-              cssSize : 'The field \'Offset top\' must be valid CSS size.'
-            },
-            offset_left : {
-              required : 'The field \'Offset from center\' is required.',
-              cssSize : 'The field \'Offset from center\' must be valid CSS size.'
-            },
-            scrolling_offset_top : {
-              required : 'The field \'Scrolling offset top\' is required.',
-              cssSize : 'The field \'Scrolling offset top\' must be valid CSS size.'
-            },
-            border : {
-              required : 'The field \'Border\' is required.'
-            },
-            font_family : {
-              required : 'The field \'Font Family\' is required.'
-            },
-            box_shadow : {
-              required : 'The field \'Box Shadow\' is required.'
-            },
-            footer_border : {
-              required : 'The field \'Footer Border\' is required.'
-            }
           });
-
-          if (valid.form()) {
-            addLoader(btn);
-            jQuery.ajax({
-              url : save_template.ajax_url,
-              type : 'post',
-              data : {
-                action : 'save_template',
-                nonce : save_template.nonce,
-                inputs : JSON.stringify(inputsToObject(inputs)),
-                styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
-                position : JSON.stringify(getPositionFields()),
-                overallStyles : getOverallStyling(),
-                overallStylesInputs : JSON.stringify(getOverallStylingFields()),
-                components : Object.keys(viewComponents),
-                templates : viewComponents
-              },
-              success : function (response) {
-                removeLoader(btn);
-                showSuccess();
-              },
-              error : function (response) {
-                removeLoader(btn);
-                showError();
-              }
-            });
-          }
         }
       } else {
         noty({
