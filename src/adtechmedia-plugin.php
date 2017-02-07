@@ -638,16 +638,32 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					'content_offset_type' => Adtechmedia_Config::get( 'content_offset_type' ),
 				];
 
-				echo json_encode( [
+				Adtechmedia_ThemeManager::make_current_as_default();
+				$defaultConfigs = Adtechmedia_ThemeManager::retrieve_current_theme_configs();
+				$configs = [];
+				if(!$defaultConfigs) {
+					$configs = [
 						'general-config'               => $general,
 						'content-config'               => $content,
 						'overall-styling-and-position' => [
 							'template_position'              => Adtechmedia_Config::get( 'template_position' ),
 							'template_overall_styles'        => Adtechmedia_Config::get( 'template_overall_styles' ),
-							'template_overall_styles_inputs' => Adtechmedia_Config::get( 'template_overall_styles' ),
+							'template_overall_styles_inputs' => Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
 						],
-					]
-				);
+						];
+				} else {
+					$configs = [
+						'general-config'               => $general,
+						'content-config'               => $content,
+						'overall-styling-and-position' => [
+							'template_position'              => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_position'] : Adtechmedia_Config::get( 'template_position' ),
+							'template_overall_styles'        => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_overall_styles'] : Adtechmedia_Config::get( 'template_overall_styles' ),
+							'template_overall_styles_inputs' => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_overall_styles_inputs'] : Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
+						],
+					];
+				}
+				
+				echo json_encode( $configs	);
 				die();
 			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
 				$data = [];
@@ -730,7 +746,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				);
 				echo 'ok';
 
-				Adtechmedia_ThemeManager::save_current_theme_configs();
+//				Adtechmedia_ThemeManager::save_current_theme_configs();
 				die();
 			}
 		}

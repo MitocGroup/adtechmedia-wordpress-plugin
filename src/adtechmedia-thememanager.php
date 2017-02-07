@@ -295,4 +295,11 @@ class Adtechmedia_ThemeManager {
 			$data
 		);
 	}
+
+	public static function make_current_as_default()
+	{
+		$optionManager = new Adtechmedia_OptionsManager();
+		$optionManager->update_plugin_option('theme_config_id', 'default');
+		self::add_current_theme_to_themes_history();
+	}
 }

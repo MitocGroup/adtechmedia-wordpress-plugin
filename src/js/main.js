@@ -1151,11 +1151,11 @@ jQuery(document).ready(function () {
         type : 'post',
         data : {
           action : 'return_to_default_values',
-          method : 'get_default_values'
+          method : 'get_default_values',
+          nonce : save_template.nonce
         },
         success : function (response) {
           response = jQuery.parseJSON(response);
-
           //restore styling and positions
           jQuery.each(response, function (form, values) {
             jQuery.each(values, function (name, value) {
