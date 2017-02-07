@@ -291,7 +291,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'ajax_return_to_default_values',
 			)
 		);
-		add_action('after_switch_theme', array( &$this, 'change_theme_configs' ));
+		add_action( 'after_switch_theme',
+			array(
+				&$this,
+				'change_theme_configs',
+			)
+		);
 	}
 
 	/**
@@ -307,6 +312,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreEnd
 	}
 
+	/**
+	 * Change theme config.
+	 */
 	function change_theme_configs() {
 		Adtechmedia_ThemeManager::init_theme_config_model();
 	}
@@ -675,7 +683,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					];
 				}
 
-				echo json_encode( $configs	);
+				echo json_encode( $configs );
 				die();
 			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
 				$data = [];
@@ -758,7 +766,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				);
 				echo 'ok';
 
-//				Adtechmedia_ThemeManager::save_current_theme_configs();
 				die();
 			}
 		}

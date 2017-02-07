@@ -103,12 +103,12 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->check_api_key_exists();
 		$this->check_prop();
 
-        Adtechmedia_ThemeManager::init_theme_config_model();
+		Adtechmedia_ThemeManager::init_theme_config_model();
 
-        // Add schedule event update properties.
+		// Add schedule event update properties.
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
-    }
+	}
 
 	/**
 	 * Check API key is exists

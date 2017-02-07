@@ -477,67 +477,96 @@ class Adtechmedia_Request {
 		return true;
 	}
 
-	public static function theme_config_create($data, $key)
-	{
-        $response = self::make(
-            Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/create',
-            'PUT',
-            [ 'X-Api-Key' => $key ],
-            ($data)
-        );
+	/**
+	 * Create theme config
+	 * @param $data
+	 * @param $key
+	 *
+	 * @return array|bool|mixed|object
+	 */
+	public static function theme_config_create(
+		$data,
+		$key
+	) {
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/create',
+			'PUT',
+			[ 'X-Api-Key' => $key ],
+			( $data )
+		);
 
-        if ( $response  ) {
-            return $response;
-        } else {
-            return false;
-        }
+		if ( $response ) {
+			return $response;
+		} else {
+			return false;
+		}
 	}
 
-    public static function theme_config_retrieve($id,$theme, $key)
-    {
-      if(is_null($id)) {
-            $data = [
-                'Theme' => $theme
-            ];
-        } else if (is_null($theme)){
-            $data = [
-                'Id' => $id
-            ];
-        } else {
-            $data = [
-                'Id' => $id,
-                'Theme' => $theme
-            ];
-        }
+	/**
+	 * Retrieve theme config
+	 * @param $id
+	 * @param $theme
+	 * @param $key
+	 *
+	 * @return array|bool|mixed|object
+	 */
+	public static function theme_config_retrieve(
+		$id,
+		$theme,
+		$key
+	) {
+		if ( is_null( $id ) ) {
+			$data = [
+				'Theme' => $theme,
+			];
+		} else if ( is_null( $theme ) ) {
+			$data = [
+				'Id' => $id,
+			];
+		} else {
+			$data = [
+				'Id' => $id,
+				'Theme' => $theme,
+			];
+		}
 
-        $response = self::make(
-            Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/retrieve',
-            'GET',
-            [ 'X-Api-Key' => $key ],
-            $data
-        );
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/retrieve',
+			'GET',
+			[ 'X-Api-Key' => $key ],
+			$data
+		);
 
-        if ( $response  ) {
-            return $response;
-        } else {
-            return false;
-        }
-    }
+		if ( $response ) {
+			return $response;
+		} else {
+			return false;
+		}
+	}
 
-    public static function theme_config_update($data, $key)
-    {
-        $response = self::make(
-            Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/update',
-            'POST',
-            [ 'X-Api-Key' => $key ],
-            ($data)
-        );
+	/**
+	 * Update theme config
+	 * @param $data
+	 * @param $key
+	 *
+	 * @return array|bool|mixed|object
+	 */
+	public static function theme_config_update(
+		$data,
+		$key
+	) {
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/theme-config/update',
+			'POST',
+			[ 'X-Api-Key' => $key ],
+			( $data )
+		);
 
-        if ( $response  ) {
-            return $response;
-        } else {
-            return false;
-        }
-    }
+		if ( $response ) {
+			return $response;
+		} else {
+			return false;
+		}
+	}
 
 }
