@@ -479,8 +479,9 @@ class Adtechmedia_Request {
 
 	/**
 	 * Create theme config
-	 * @param $data
-	 * @param $key
+	 *
+	 * @param array $data theme config
+	 * @param string $key API key.
 	 *
 	 * @return array|bool|mixed|object
 	 */
@@ -504,9 +505,10 @@ class Adtechmedia_Request {
 
 	/**
 	 * Retrieve theme config
-	 * @param $id
-	 * @param $theme
-	 * @param $key
+	 *
+	 * @param string $id user Id
+	 * @param string $theme name
+	 * @param string $key API key.
 	 *
 	 * @return array|bool|mixed|object
 	 */
@@ -546,8 +548,9 @@ class Adtechmedia_Request {
 
 	/**
 	 * Update theme config
-	 * @param $data
-	 * @param $key
+	 *
+	 * @param array $data theme config
+	 * @param string $key API key.
 	 *
 	 * @return array|bool|mixed|object
 	 */

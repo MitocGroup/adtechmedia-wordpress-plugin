@@ -13,7 +13,7 @@ function getCSSFields(inputs) {
   return styles;
 }
 
-function getInputsData(inputs){
+function getInputsData(inputs) {
   var styles = {};
   jQuery.each(inputs, function (i, input) {
     if (jQuery(input).val() !== '') {
@@ -55,7 +55,7 @@ function getOverallStyling() {
   }
   jQuery.each(['border', 'box-shadow'], function (i, key) {
     if (stylesData.hasOwnProperty(key)) {
-      css += '.atm-targeted-modal{'+key+': ' + stylesData[key] + ';}';
+      css += '.atm-targeted-modal{' + key + ': ' + stylesData[key] + ';}';
     }
   });
   if (stylesData.hasOwnProperty('footer-background-color')) {
@@ -128,7 +128,7 @@ function styleInputsToObject(inputs) {
   return res;
 }
 function getDatatemplate(value) {
-  if ('auth' === value){
+  if ('auth' === value) {
     value = 'pledge';
   }
   return '[data-template="' + value + '"]';
@@ -164,7 +164,7 @@ function initModal() {
 
 jQuery(document).ready(function () {
   /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs */
-  atmTpl.default.config({revenueMethod: 'micropayments'});
+  atmTpl.default.config({revenueMethod : 'micropayments'});
   var atmTemplating = atmTpl.default;
 
   //atmTpl.config({revenueMethod: 'advertising'});
@@ -173,144 +173,144 @@ jQuery(document).ready(function () {
 
   var tabs = [
     {
-      id: 'pledge-salutation',
-      dataTab: 'salutation',
-      options: [
+      id : 'pledge-salutation',
+      dataTab : 'salutation',
+      options : [
         {
-          name: 'body-welcome',
-          inputName: 'welcome',
-          type: 'expanded'
+          name : 'body-welcome',
+          inputName : 'welcome',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'pledge-message',
-      dataTab: 'message',
-      options: [
+      id : 'pledge-message',
+      dataTab : 'message',
+      options : [
         {
-          name: 'body-msg-mp',
-          inputName: 'message-expanded',
-          type: 'expanded'
+          name : 'body-msg-mp',
+          inputName : 'message-expanded',
+          type : 'expanded'
         },
         {
-          name: 'heading-headline',
-          inputName: 'message-collapsed',
-          type: 'collapsed'
+          name : 'heading-headline',
+          inputName : 'message-collapsed',
+          type : 'collapsed'
         }
       ]
     },
     {
-      id: 'auth-user',
-      dataTab: 'user',
+      id : 'auth-user',
+      dataTab : 'user',
       component : 'authComponent',
-      view:['pledge','pay'],
-      options: [
+      view : ['pledge', 'pay'],
+      options : [
         {
-          name: 'logged-headline',
-          inputName: 'user-logged',
-          type: 'collapsed'
+          name : 'logged-headline',
+          inputName : 'user-logged',
+          type : 'collapsed'
         },
         {
-          name: 'used-headline',
-          inputName: 'user-used',
-          type: 'expanded'
+          name : 'used-headline',
+          inputName : 'user-used',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'pay-salutation',
-      dataTab: 'salutation',
-      options: [
+      id : 'pay-salutation',
+      dataTab : 'salutation',
+      options : [
         {
-          name: 'body-salutation',
-          inputName: 'salutation',
-          type: 'expanded'
+          name : 'body-salutation',
+          inputName : 'salutation',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'pay-message',
-      dataTab: 'message',
-      options: [
+      id : 'pay-message',
+      dataTab : 'message',
+      options : [
         {
-          name: 'body-msg-mp',
-          inputName: 'message-expanded',
-          type: 'expanded'
+          name : 'body-msg-mp',
+          inputName : 'message-expanded',
+          type : 'expanded'
         },
         {
-          name: 'heading-headline-setup',
-          inputName: 'message-collapsed',
-          type: 'collapsed'
+          name : 'heading-headline-setup',
+          inputName : 'message-collapsed',
+          type : 'collapsed'
         }
       ]
     },
     {
-      id: 'refund-mood-ok',
-      dataTab: 'mood-ok',
-      options: [
+      id : 'refund-mood-ok',
+      dataTab : 'mood-ok',
+      options : [
         {
-          name: 'body-feeling-ok',
-          inputName: 'body-feeling-ok',
-          type: 'expanded'
+          name : 'body-feeling-ok',
+          inputName : 'body-feeling-ok',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'refund-mood',
-      dataTab: 'mood',
-      options: [
+      id : 'refund-mood',
+      dataTab : 'mood',
+      options : [
         {
-          name: 'body-feeling',
-          inputName: 'body-feeling',
-          type: 'expanded'
+          name : 'body-feeling',
+          inputName : 'body-feeling',
+          type : 'expanded'
         }
       ]
     }, {
-      id: 'refund-mood-happy',
-      dataTab: 'mood-happy',
-      options: [
+      id : 'refund-mood-happy',
+      dataTab : 'mood-happy',
+      options : [
         {
-          name: 'body-feeling-happy',
-          inputName: 'body-feeling-happy',
-          type: 'expanded'
+          name : 'body-feeling-happy',
+          inputName : 'body-feeling-happy',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'refund-mood-not-happy',
-      dataTab: 'mood-not-happy',
-      options: [
+      id : 'refund-mood-not-happy',
+      dataTab : 'mood-not-happy',
+      options : [
         {
-          name: 'body-feeling-not-happy',
-          inputName: 'body-feeling-not-happy',
-          type: 'expanded'
+          name : 'body-feeling-not-happy',
+          inputName : 'body-feeling-not-happy',
+          type : 'expanded'
         }
       ]
     },
     {
-      id: 'refund-message',
-      dataTab: 'message',
-      options: [
+      id : 'refund-message',
+      dataTab : 'message',
+      options : [
         {
-          name: 'body-msg',
-          inputName: 'message-expanded',
-          type: 'expanded'
+          name : 'body-msg',
+          inputName : 'message-expanded',
+          type : 'expanded'
         },
         {
-          name: 'heading-headline',
-          inputName: 'message-collapsed',
-          type: 'collapsed'
+          name : 'heading-headline',
+          inputName : 'message-collapsed',
+          type : 'collapsed'
         }
       ]
     },
     {
-      id: 'refund-share',
-      dataTab: 'share',
-      options: [
+      id : 'refund-share',
+      dataTab : 'share',
+      options : [
         {
-          name: 'body-share-experience',
-          inputName: 'body-share-experience',
-          type: 'expanded'
+          name : 'body-share-experience',
+          inputName : 'body-share-experience',
+          type : 'expanded'
         }
       ]
     }
@@ -319,28 +319,28 @@ jQuery(document).ready(function () {
 
   var componentsViews = [
     {
-      name:'pledge',
-      collapsed:'#render-pledge-collapsed',
-      expanded:'#render-pledge-expanded'
+      name : 'pledge',
+      collapsed : '#render-pledge-collapsed',
+      expanded : '#render-pledge-expanded'
     },
     {
-      name:'pay',
-      collapsed:'#render-pay-collapsed',
-      expanded:'#render-pay-expanded'
+      name : 'pay',
+      collapsed : '#render-pay-collapsed',
+      expanded : '#render-pay-expanded'
     },
     {
-      name:'refund',
-      collapsed:'#render-refund-collapsed',
-      expanded:'#render-refund-expanded'
+      name : 'refund',
+      collapsed : '#render-refund-collapsed',
+      expanded : '#render-refund-expanded'
     },
   ]
 
-  var components =[
+  var components = [
     {
       name : 'pledge',
       component : 'pledgeComponent',
       dataTab : 'pledge',
-      view:'pledge',
+      view : 'pledge',
       sections : [
         'pledge-salutation',
         'pledge-message',
@@ -351,7 +351,7 @@ jQuery(document).ready(function () {
       name : 'pay',
       component : 'payComponent',
       dataTab : 'pay',
-      view:'pay',
+      view : 'pay',
       sections : [
         'pay-salutation',
         'pay-message',
@@ -362,7 +362,7 @@ jQuery(document).ready(function () {
       name : 'refund',
       component : 'refundComponent',
       dataTab : 'refund',
-      view:'refund',
+      view : 'refund',
       sections : [
         'refund-mood-ok',
         'refund-mood',
@@ -438,7 +438,13 @@ jQuery(document).ready(function () {
         for (var input in inputsVars[tab]) {
           if (inputsVars[tab].hasOwnProperty(input)) {
             inputVars = stories[inputsVars[tab][input].component][inputsVars[tab][input].body].components;
-            jQuery('.tooltip__label[data-var="' + tab + '-' + input + '"]').html('Available variables: {' + inputVars.join('}, {') + '}');
+            jQuery('.tooltip__label[data-var="'
+              + tab
+              + '-'
+              + input
+              + '"]').html('Available variables: {'
+              + inputVars.join('}, {')
+              + '}');
           }
         }
       }
@@ -474,7 +480,9 @@ jQuery(document).ready(function () {
       }
       senderParent.find('[data-view="' + typeOther + '"]').attr('data-view', type);
       sender.attr('data-view', typeOther);
-      views[viewKey][typeOther]._watchers['showModalBody'].forEach(function(unwatch) {return unwatch()});
+      views[viewKey][typeOther]._watchers['showModalBody'].forEach(function (unwatch) {
+        return unwatch()
+      });
       delete views[viewKey][typeOther]._watchers['showModalBody'];
       views[viewKey][typeOther].small(small);
       views[viewKey][typeOther].watch('showModalBody', toggleTemplates);
@@ -525,11 +533,11 @@ jQuery(document).ready(function () {
 
       viewKeys.push(viewKey);
 
-      var tamplateView = componentsViews.filter(function(view) {
+      var tamplateView = componentsViews.filter(function (view) {
         return view.name === template.view;
       });
 
-      if(tamplateView.length === 1) {
+      if (tamplateView.length === 1) {
         tamplateView = tamplateView[0];
       } else {
         return false;
@@ -548,7 +556,7 @@ jQuery(document).ready(function () {
         }
 
         var componentName = template.component;
-        if(section.hasOwnProperty('component')) {
+        if (section.hasOwnProperty('component')) {
           componentName = section.component;
           viewKey = section.dataTab;
           views[viewKey] = {};
@@ -559,7 +567,7 @@ jQuery(document).ready(function () {
         }
         views[viewKey]['component'] = componentName;
         tabViews[viewKey] = tamplateView.name;
-        if(section.hasOwnProperty('view')) {
+        if (section.hasOwnProperty('view')) {
           tabViews[viewKey] = section.view;
         }
 
@@ -571,47 +579,47 @@ jQuery(document).ready(function () {
         /*eslint complexity: ["error", 10]*/
         jQuery.each(section.options, function (j, option) {
           var inputsKey = viewKey + section.dataTab + option.type;
-          var componentSelector = '[data-template="'+template.dataTab+'"] '
-          + '[data-template="'+section.dataTab+'"] '
-          + 'input[name="' + option.inputName + '"]';
+          var componentSelector = '[data-template="' + template.dataTab + '"] '
+            + '[data-template="' + section.dataTab + '"] '
+            + 'input[name="' + option.inputName + '"]';
           inputs[inputsKey] = {
             input : sectionTab.find('input[name="' + option.inputName + '"]'),
             optionName : option.name,
             type : option.type,
-            tabSelector:'',
-            componentSelector:componentSelector
+            tabSelector : '',
+            componentSelector : componentSelector
           };
 
           if (section.hasOwnProperty('component')) {
             inputs[inputsKey]['tabSelector'] = '[data-template="'
-                + section.dataTab
-                + '"] input[name="'
-                + option.inputName
-                + '"]';
+              + section.dataTab
+              + '"] input[name="'
+              + option.inputName
+              + '"]';
           }
 
           if (templateInputs.hasOwnProperty(inputsKey)) {
             // inputs[inputsKey].input.val(templateInputs[inputsKey]);
-            if(inputs[inputsKey].tabSelector === '') {
+            if (inputs[inputsKey].tabSelector === '') {
               jQuery(inputs[inputsKey].componentSelector).val(templateInputs[inputsKey]);
             } else {
               jQuery(inputs[inputsKey].tabSelector).val(templateInputs[inputsKey]);
             }
 
-            if(!options.hasOwnProperty(componentName)) {
+            if (!options.hasOwnProperty(componentName)) {
               options[componentName] = {};
             }
-            if(!styling.hasOwnProperty(componentName)) {
+            if (!styling.hasOwnProperty(componentName)) {
               styling[componentName] = {};
             }
             options[componentName][option.name] = templateInputs[inputsKey];
             styling[componentName][option.name] = templateStyleInputs[styleInputsKey];
           } else {
 
-            if(stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
+            if (stories.hasOwnProperty(componentName) && stories[componentName].hasOwnProperty(option.name)) {
               var val = stories[componentName][option.name].content;
               // inputs[inputsKey].input.val(val);
-              if(inputs[inputsKey].tabSelector === '') {
+              if (inputs[inputsKey].tabSelector === '') {
                 jQuery(inputs[inputsKey].componentSelector).val(val);
               } else {
                 jQuery(inputs[inputsKey].tabSelector).val(val);
@@ -627,7 +635,7 @@ jQuery(document).ready(function () {
 
 
       jQuery.each(viewKeys, function (j, viewKeyItem) {
-        if(!views[viewKeyItem].hasOwnProperty('component')) {
+        if (!views[viewKeyItem].hasOwnProperty('component')) {
           views[viewKeyItem]['component'] = template.component;
         }
 
@@ -637,9 +645,9 @@ jQuery(document).ready(function () {
         jQuery(tamplateView.expanded).attr('data-view-key', viewKeyItem);
         jQuery(tamplateView.collapsed).attr('data-view-key', viewKeyItem);
         atmTemplating.updateTemplate(
-            views[viewKeyItem]['component'],
-            options[views[viewKeyItem]['component']],
-            styling[views[viewKeyItem]['component']]
+          views[viewKeyItem]['component'],
+          options[views[viewKeyItem]['component']],
+          styling[views[viewKeyItem]['component']]
         );
         views[viewKeyItem].expanded.redraw();
         views[viewKeyItem].collapsed.redraw();
@@ -716,9 +724,9 @@ jQuery(document).ready(function () {
           needToRedraw = tabViews[tabKey];
 
           atmTemplating.updateTemplate(
-              views[tabKey].component,
-              options[views[tabKey].component],
-              styling[views[tabKey].component]
+            views[tabKey].component,
+            options[views[tabKey].component],
+            styling[views[tabKey].component]
           );
         } else {
           needToRedraw = tabViews[viewKey];
@@ -732,9 +740,9 @@ jQuery(document).ready(function () {
           // update template
 
           atmTemplating.updateTemplate(
-              views[type].component,
-              options[views[type].component],
-              styling[views[type].component]
+            views[type].component,
+            options[views[type].component],
+            styling[views[type].component]
           );
           // redraw the view
           views[type].expanded.redraw();
@@ -761,32 +769,34 @@ jQuery(document).ready(function () {
     jQuery('[data-template="overall-styling"] input').bind('keyup', overallSync);
     jQuery('[data-template="overall-styling"] input[type="color"]').bind('change', overallSync);
 
-    function addLoader(btn){
+    function addLoader(btn) {
       var icon = btn.find('i');
       btn.addClass('disabled');
       icon.removeClass('mdi mdi-check');
       icon.addClass('fa fa-spinner fa-spin');
     }
 
-    function removeLoader(btn){
+    function removeLoader(btn) {
       var icon = btn.find('i');
       btn.removeClass('disabled');
       icon.removeClass('fa fa-spinner fa-spin');
       icon.addClass('mdi mdi-check');
     }
-    function showSuccess(){
+
+    function showSuccess() {
       noty({
-        type: 'success',
-        text: 'AdTechMedia parameters have been saved successfully',
-        timeout: 2000
+        type : 'success',
+        text : 'AdTechMedia parameters have been saved successfully',
+        timeout : 2000
       });
     }
-    function addValidate(form, rules, messages) {
-      jQuery.each(rules, function(name, item) {
-        jQuery('input[name="'+name+'"]').on('focus', function() {
-          var item = jQuery('input[name="'+name+'"]');
 
-          if(jQuery(item).hasClass('invalid')) {
+    function addValidate(form, rules, messages) {
+      jQuery.each(rules, function (name, item) {
+        jQuery('input[name="' + name + '"]').on('focus', function () {
+          var item = jQuery('input[name="' + name + '"]');
+
+          if (jQuery(item).hasClass('invalid')) {
             jQuery(item).removeClass('invalid');
             var label = jQuery(item).parents('.custom-label').find('label');
             if (!label[0]) {
@@ -798,14 +808,14 @@ jQuery(document).ready(function () {
       });
 
       return form.validate({
-        rules: rules,
-        errorClass: 'invalid',
-        onclick: false,
-        onkeyup: false,
-        onfocusout: false,
-        showErrors: function(errorMap, errorList) {
-          jQuery.each(errorList, function(i, item) {
-            if(!jQuery(item.element).hasClass('invalid')) {
+        rules : rules,
+        errorClass : 'invalid',
+        onclick : false,
+        onkeyup : false,
+        onfocusout : false,
+        showErrors : function (errorMap, errorList) {
+          jQuery.each(errorList, function (i, item) {
+            if (!jQuery(item.element).hasClass('invalid')) {
               jQuery(item.element).addClass('invalid');
               var label = jQuery(item.element).parents('.custom-label').find('label');
               if (!label[0]) {
@@ -816,25 +826,26 @@ jQuery(document).ready(function () {
           });
 
           var errorsMeassge = '';
-          jQuery.each(errorMap, function(i, item) {
+          jQuery.each(errorMap, function (i, item) {
             errorsMeassge += '<br>' + item;
           });
-          if(errorsMeassge !== '') {
+          if (errorsMeassge !== '') {
             return noty({
-              type: 'error',
-              text: errorsMeassge,
-              timeout: 5000
+              type : 'error',
+              text : errorsMeassge,
+              timeout : 5000
             });
           }
         },
-        messages: messages
+        messages : messages
       });
     }
-    function showError(){
+
+    function showError() {
       noty({
-        type: 'error',
-        text: 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.',
-        timeout: 2000
+        type : 'error',
+        text : 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.',
+        timeout : 2000
       });
     }
 
@@ -855,8 +866,8 @@ jQuery(document).ready(function () {
             jQuery.each(templateView, function (i, view) {
               if (view === viewKey) {
                 viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                    options[template.component],
-                    styling[template.component]
+                  options[template.component],
+                  styling[template.component]
                 );
               }
             });
@@ -872,8 +883,8 @@ jQuery(document).ready(function () {
             jQuery.each(templateView, function (i, view) {
               if (view === viewKey) {
                 viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                    options[template.component],
-                    styling[template.component]
+                  options[template.component],
+                  styling[template.component]
                 );
               }
             });
@@ -1016,7 +1027,7 @@ jQuery(document).ready(function () {
       method.empty();
       $.each(country.find(':selected').data('methods'), function (key, value) {
         method.append($('<option></option>')
-            .attr('value', value).text(value));
+          .attr('value', value).text(value));
       });
     });
     jQuery('#content-config button').bind('click', function (e) {
@@ -1068,7 +1079,7 @@ jQuery(document).ready(function () {
             action : 'save_template',
             nonce : save_template.nonce,
             contentConfig : JSON.stringify(getInputsData(
-                jQuery('#content-config .content input,#content-config .content select')
+              jQuery('#content-config .content input,#content-config .content select')
             ))
           },
           success : function (response) {
@@ -1111,7 +1122,6 @@ jQuery(document).ready(function () {
               templateOverallStylesInputs = templateOverallStylesInputsDefault;
               fillOverallStylesFields();
               applayOverallStyling(values['template_overall_styles']);
-            } else {
             }
           });
 
@@ -1153,7 +1163,7 @@ jQuery(document).ready(function () {
                   }
                   options[componentName][option.name] = val;
                   styling[componentName][inputs[inputsKey].optionName] =
-                      getCSSFields(styleInputs[viewKey + section.dataTab + 'style'].inputs);
+                    getCSSFields(styleInputs[viewKey + section.dataTab + 'style'].inputs);
                 }
               });
             });
@@ -1163,9 +1173,9 @@ jQuery(document).ready(function () {
           var needToRender = [];
           jQuery.each(views, function (i, view) {
             atmTemplating.updateTemplate(
-                view.component,
-                options[view.component],
-                styling[view.component]
+              view.component,
+              options[view.component],
+              styling[view.component]
             );
 
             if (view.hasOwnProperty('expanded') && view.hasOwnProperty('collapsed')) {
@@ -1187,8 +1197,8 @@ jQuery(document).ready(function () {
               }
               jQuery.each(templateView, function (i, view) {
                 viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                    options[template.component],
-                    styling[template.component]
+                  options[template.component],
+                  styling[template.component]
                 );
               });
             }
@@ -1202,8 +1212,8 @@ jQuery(document).ready(function () {
               }
               jQuery.each(templateView, function (i, view) {
                 viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                    options[template.component],
-                    styling[template.component]
+                  options[template.component],
+                  styling[template.component]
                 );
 
               });
@@ -1219,7 +1229,7 @@ jQuery(document).ready(function () {
               nonce : save_template.nonce,
               revenueMethod : jQuery('select[name="revenue_method"]').val(),
               contentConfig : JSON.stringify(getInputsData(
-                  jQuery('#content-config .content input,#content-config .content select')
+                jQuery('#content-config .content input,#content-config .content select')
               )),
               inputs : JSON.stringify(inputsToObject(inputs)),
               styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
@@ -1314,24 +1324,25 @@ jQuery(document).ready(function () {
 
   jQuery('#modal-content').load('https://www.adtechmedia.io/terms/dialog.html');
 
-  function firstSynch(){
+  function firstSynch() {
     jQuery('[data-template="user"] input[name]').trigger('keyup');
     jQuery('[data-template="user"] input[data-template-css]').trigger('keyup');
     jQuery('[data-template="user"] select[data-template-css]').trigger('change');
     jQuery('[data-template="user"] input[type="color"][data-template-css]').trigger('change');
   }
+
   firstSynch();
 
   jQuery.get('https://www.adtechmedia.io/terms/dialog.html').done(function (data) {
     jQuery('#modal-content').append(data);
   }).fail(function () {
     var str = '<a href="https://www.adtechmedia.io/terms/dialog.html"'
-      +' target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
+      + ' target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
     jQuery('#modal-content').append(str);
   });
 
-  jQuery.validator.methods.cssSize = function( value, element ) {
-    return this.optional( element ) || /(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)/.test( value );
+  jQuery.validator.methods.cssSize = function (value, element) {
+    return this.optional(element) || /(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)/.test(value);
   }
 
 

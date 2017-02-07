@@ -1,4 +1,11 @@
 <?php
+/**
+ * Adtechmedia_ThemeManager
+ *
+ * @category Class
+ * @package  Adtechmedia_Plugin
+ * @author   yamagleb
+ */
 
 /**
  * Class Adtechmedia_ThemeManager
@@ -178,7 +185,6 @@ class Adtechmedia_ThemeManager {
 	public static function retrieve_current_theme_configs() {
 		$option_manager = new Adtechmedia_OptionsManager();
 
-//		$current_theme_id = $option_manager->get_plugin_option( 'theme_config_id' );
 		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
 		$current_theme_id = '';
 		if ( '' !== $theme_history && '{}' !== $theme_history ) {
@@ -298,9 +304,13 @@ class Adtechmedia_ThemeManager {
 		);
 	}
 
+	/**
+	 * Make default config to current theme
+	 */
 	public static function make_current_as_default() {
 		$option_manager = new Adtechmedia_OptionsManager();
 		$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 		self::add_current_theme_to_themes_history();
 	}
+
 }
