@@ -18,23 +18,9 @@ class Adtechmedia_ThemeManager {
 	public static function init_theme_config_model() {
 		$option_manager = new Adtechmedia_OptionsManager();
 
-		$new_cur_theme_id = 'default';
-		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
-		if ( '' !== $theme_history && '{}' !== $theme_history ) {
-			$theme_history = json_decode( $theme_history, true );
-			if ( is_array( $theme_history ) ) {
-				$theme_info = self::get_theme_info();
-				if ( array_key_exists( $theme_info['ThemeName'], $theme_history ) ) {
-					$new_cur_theme_id = $theme_history[ $theme_info['ThemeName'] ];
-				} else {
-					$new_cur_theme_id = 'default';
-				}
-			}
-			$option_manager->update_plugin_option( 'theme_config_id', $new_cur_theme_id );
-		}
 		$is_retrieve = self::retrieve_current_theme_configs();
 
-		if ( ! $is_retrieve ) {
+		if ( ! $is_retrieve || array_key_exists( 'errorMessage', $is_retrieve ) ) {
 			$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 			$option_manager->update_plugin_option( 'theme_config_name', '' );
 			$option_manager->update_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
@@ -44,9 +30,9 @@ class Adtechmedia_ThemeManager {
 			if ( array_key_exists( 'Default', $is_retrieve ) && true === $is_retrieve['Default'] ) {
 				$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 			} else {
-				$option_manager->update_plugin_option( 'theme_config_id', $is_retrieve['Id'] );
+				$option_manager->update_plugin_option( 'theme_config_id', array_key_exists( 'Id', $is_retrieve ) ? $is_retrieve['Id'] : 'default' );
 			}
-			$option_manager->update_plugin_option( 'theme_config_name', $is_retrieve['ConfigName'] );
+			$option_manager->update_plugin_option( 'theme_config_name', array_key_exists( 'ConfigName', $is_retrieve ) ? $is_retrieve['ConfigName'] : '' );
 			$option_manager->update_plugin_option( 'template_position',
 				array_key_exists( 'template_position', $is_retrieve['Config'] ) ?
 					$is_retrieve['Config']['template_position'] :
@@ -194,10 +180,10 @@ class Adtechmedia_ThemeManager {
 				if ( array_key_exists( $theme_info['ThemeName'], $theme_history ) ) {
 					$current_theme_id = $theme_history[ $theme_info['ThemeName'] ];
 				} else {
-					$current_theme_id = '';
+					$current_theme_id = 'default';
 				}
 			}
-			$option_manager->update_plugin_option( 'theme_config_id', 'default' );
+			$option_manager->update_plugin_option( 'theme_config_id', $current_theme_id );
 		}
 
 		if ( ! is_null( $current_theme_id ) && 'default' !== $current_theme_id && '' !== $current_theme_id ) {

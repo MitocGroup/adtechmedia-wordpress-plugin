@@ -437,9 +437,13 @@ echo '</script>';
 		<h1 class="heading">
 			<i class="custom-icon templates"></i>
 			Templates management
+			<div class=" pull-right">
+				<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Reset to default values</button>
+			</div>
 		</h1>
 
 		<div class="content templating">
+
 			<div class="templates-views templates-views-common">
 				<div class="template-view">
 					<div class="header-view">Overall styling and position
@@ -578,7 +582,4 @@ echo '</script>';
 		</div>
 	</div>
 
-	<div class="custom-input pull-right">
-		<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Return to default values</button>
-	</div>
 </main>
