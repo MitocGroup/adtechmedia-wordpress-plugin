@@ -452,6 +452,8 @@ jQuery(document).ready(function () {
   }
 
   (function ($) {
+    /*global invalidVar */
+
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
