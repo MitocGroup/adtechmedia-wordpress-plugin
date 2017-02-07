@@ -163,7 +163,7 @@ function initModal() {
 }
 
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs, invalidVar */
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs */
   atmTpl.default.config({revenueMethod : 'micropayments'});
   var atmTemplating = atmTpl.default;
 
@@ -495,6 +495,7 @@ jQuery(document).ready(function () {
     }
 
     function checkInputVars(input, tabName) {
+      /*global invalidVar */
       var inputName = input.attr('name');
       if (inputName !== '') {
         var inputWithVars = inputsVars[tabName][inputName];
