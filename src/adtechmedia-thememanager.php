@@ -11,13 +11,13 @@ class Adtechmedia_ThemeManager {
 	public static function init_theme_config_model() {
 		$optionManager = new Adtechmedia_OptionsManager();
 
-		$themeHistory   = $optionManager->get_plugin_option( 'themes_history' );
-		if( '' !== $themeHistory && '{}' !== $themeHistory) {
-			$themeHistory = json_decode($themeHistory, true);
-			if(is_array($themeHistory)) {
+		$themeHistory = $optionManager->get_plugin_option( 'themes_history' );
+		if ( '' !== $themeHistory && '{}' !== $themeHistory ) {
+			$themeHistory = json_decode( $themeHistory, true );
+			if ( is_array( $themeHistory ) ) {
 				$themeInfo = self::get_theme_info();
-				if(array_key_exists($themeInfo['ThemeName'], $themeHistory)) {
-					$newCurThemeId = $themeHistory[$themeInfo['ThemeName']];
+				if ( array_key_exists( $themeInfo['ThemeName'], $themeHistory ) ) {
+					$newCurThemeId = $themeHistory[ $themeInfo['ThemeName'] ];
 				} else {
 					$newCurThemeId = 'default';
 				}
@@ -57,6 +57,8 @@ class Adtechmedia_ThemeManager {
 		}
 
 		self::add_current_theme_to_themes_history();
+
+		self::save_template_in_api();
 	}
 
 	/**
@@ -176,13 +178,13 @@ class Adtechmedia_ThemeManager {
 		$optionManager = new Adtechmedia_OptionsManager();
 
 //		$currentThemeId = $optionManager->get_plugin_option( 'theme_config_id' );
-		$themeHistory   = $optionManager->get_plugin_option( 'themes_history' );
-		if( '' !== $themeHistory && '{}' !== $themeHistory) {
-			$themeHistory = json_decode($themeHistory, true);
-			if(is_array($themeHistory)) {
+		$themeHistory = $optionManager->get_plugin_option( 'themes_history' );
+		if ( '' !== $themeHistory && '{}' !== $themeHistory ) {
+			$themeHistory = json_decode( $themeHistory, true );
+			if ( is_array( $themeHistory ) ) {
 				$themeInfo = self::get_theme_info();
-				if(array_key_exists($themeInfo['ThemeName'], $themeHistory)) {
-					$currentThemeId = $themeHistory[$themeInfo['ThemeName']];
+				if ( array_key_exists( $themeInfo['ThemeName'], $themeHistory ) ) {
+					$currentThemeId = $themeHistory[ $themeInfo['ThemeName'] ];
 				} else {
 					$currentThemeId = '';
 				}
@@ -232,7 +234,6 @@ class Adtechmedia_ThemeManager {
 			'Id'     => $currentThemeId,
 			'Config' => $currentThemeConfigs,
 		];
-		file_put_contents( 'a3.txt', print_r( $data, true ) );
 		self::add_current_theme_to_themes_history();
 
 		return Adtechmedia_Request::theme_config_update(
@@ -242,7 +243,7 @@ class Adtechmedia_ThemeManager {
 	}
 
 	/**
-	 * Add current theme to switch history.	 *
+	 * Add current theme to switch history.     *
 	 */
 	public static function add_current_theme_to_themes_history() {
 		$needCreate    = false;
@@ -267,5 +268,31 @@ class Adtechmedia_ThemeManager {
 			}
 		}
 
+	}
+
+
+	/**
+	 * Save themes in template api.
+	 */
+	public static function save_template_in_api() {
+		$adtPlugin     = new Adtechmedia_Plugin();
+		$optionManager = new Adtechmedia_OptionsManager();
+		$adtPlugin->update_prop();
+
+		$data = [
+			'targetModal' => [
+				'targetCb' => $optionManager->get_target_cb_js( json_decode( stripslashes( $optionManager->get_plugin_option( 'template_position' ) ), true ) ),
+				'toggleCb' => $optionManager->get_toggle_cb_js( json_decode( stripslashes( $optionManager->get_plugin_option( 'template_position' ) ), true ) ),
+			],
+			'styles'      => [
+				'main' => base64_encode( $optionManager->get_plugin_option( 'template_overall_styles' ) ),
+			],
+		];
+
+		Adtechmedia_Request::property_update_config_by_array(
+			$optionManager->get_plugin_option( 'id' ),
+			$optionManager->get_plugin_option( 'key' ),
+			$data
+		);
 	}
 }
