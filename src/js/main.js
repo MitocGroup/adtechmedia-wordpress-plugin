@@ -452,7 +452,6 @@ jQuery(document).ready(function () {
   }
 
   (function ($) {
-
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
@@ -529,6 +528,7 @@ jQuery(document).ready(function () {
     }, 3000);
     var invalidVar = '';
     function checkInputVars(input, tabName) {
+      /*global invalidVar */
       var inputName = input.attr('name');
       if (inputName !== '') {
         var inputWithVars = inputsVars[tabName][inputName];
