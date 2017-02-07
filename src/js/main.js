@@ -494,6 +494,7 @@ jQuery(document).ready(function () {
       senderParentCollapsed.html(tmp);
     }
 
+    var showNoty = Date.now();
     function checkInputVars(input, tabName) {
       var inputName = input.attr('name');
       if (inputName !== '') {
@@ -507,11 +508,16 @@ jQuery(document).ready(function () {
           while ((match = reg.exec(inputValue)) !== null) {
             if (!inputVars.includes(match[1])) {
               invalidVar = match[1];
-              noty({
-                type : 'error',
-                text : 'Variable {' + match[1] + '} is not defined.',
-                timeout : 5000
-              });
+
+              if ((Date.now() - showNoty) > 3000) {
+                noty({
+                  type : 'error',
+                  text : 'Variable {' + match[1] + '} is not defined.',
+                  timeout : 5000
+                });
+                showNoty = Date.now();
+              }
+
               return false;
             }
           }
