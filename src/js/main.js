@@ -452,7 +452,6 @@ jQuery(document).ready(function () {
   }
 
   (function ($) {
-    /*global invalidVar */
 
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
@@ -528,7 +527,7 @@ jQuery(document).ready(function () {
         timeout : 3000
       });
     }, 3000);
-
+    var invalidVar = '';
     function checkInputVars(input, tabName) {
       var inputName = input.attr('name');
       if (inputName !== '') {
@@ -691,7 +690,6 @@ jQuery(document).ready(function () {
     });
 
     var varError = false;
-    var invalidVar = '';
     var throttledSync = jQuery.throttle(200, function (e) {
       var thisValue = $(this).val();
       var dataTemplateCss = $(this).attr('data-template-css');
