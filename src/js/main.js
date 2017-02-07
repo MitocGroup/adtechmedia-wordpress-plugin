@@ -496,7 +496,39 @@ jQuery(document).ready(function () {
       senderParentCollapsed.html(tmp);
     }
 
-    var showNoty = Date.now();
+    function throttle(func, ms) {
+      var isThrottled = false,
+          savedArgs,
+          savedThis;
+
+      function wrapper() {
+        if (isThrottled) {
+          savedArgs = arguments;
+          savedThis = this;
+          return;
+        }
+        func.apply(this, arguments);
+        isThrottled = true;
+        setTimeout(function () {
+          isThrottled = false;
+          if (savedArgs) {
+            wrapper.apply(savedThis, savedArgs);
+            savedArgs = savedThis = null;
+          }
+        }, ms);
+      }
+
+      return wrapper;
+    }
+
+    var showNoty = throttle(function(variable){
+      noty({
+        type : 'error',
+        text : 'Variable {' + variable + '} is not defined.',
+        timeout : 3000
+      });
+    }, 3000);
+
     function checkInputVars(input, tabName) {
       var inputName = input.attr('name');
       if (inputName !== '') {
@@ -510,15 +542,7 @@ jQuery(document).ready(function () {
           while ((match = reg.exec(inputValue)) !== null) {
             if (!inputVars.includes(match[1])) {
               invalidVar = match[1];
-
-              if ((Date.now() - showNoty) > 3000) {
-                noty({
-                  type : 'error',
-                  text : 'Variable {' + match[1] + '} is not defined.',
-                  timeout : 5000
-                });
-                showNoty = Date.now();
-              }
+              showNoty(match[1]);
 
               return false;
             }
