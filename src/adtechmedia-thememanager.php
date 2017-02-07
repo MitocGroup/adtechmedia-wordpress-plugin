@@ -11,6 +11,7 @@ class Adtechmedia_ThemeManager {
 	public static function init_theme_config_model() {
 		$option_manager = new Adtechmedia_OptionsManager();
 
+		$new_cur_theme_id = 'default';
 		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
 		if ( '' !== $theme_history && '{}' !== $theme_history ) {
 			$theme_history = json_decode( $theme_history, true );
@@ -179,6 +180,7 @@ class Adtechmedia_ThemeManager {
 
 //		$current_theme_id = $option_manager->get_plugin_option( 'theme_config_id' );
 		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
+		$current_theme_id = '';
 		if ( '' !== $theme_history && '{}' !== $theme_history ) {
 			$theme_history = json_decode( $theme_history, true );
 			if ( is_array( $theme_history ) ) {
