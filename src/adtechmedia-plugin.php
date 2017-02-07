@@ -639,9 +639,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				];
 
 				Adtechmedia_ThemeManager::make_current_as_default();
-				$defaultConfigs = Adtechmedia_ThemeManager::retrieve_current_theme_configs();
-				$configs = [];
-				if(!$defaultConfigs) {
+				$default_configs = Adtechmedia_ThemeManager::retrieve_current_theme_configs();
+				$configs         = [];
+				if ( ! $default_configs ) {
 					$configs = [
 						'general-config'               => $general,
 						'content-config'               => $content,
@@ -650,19 +650,31 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 							'template_overall_styles'        => Adtechmedia_Config::get( 'template_overall_styles' ),
 							'template_overall_styles_inputs' => Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
 						],
-						];
+					];
 				} else {
 					$configs = [
 						'general-config'               => $general,
 						'content-config'               => $content,
 						'overall-styling-and-position' => [
-							'template_position'              => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_position'] : Adtechmedia_Config::get( 'template_position' ),
-							'template_overall_styles'        => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_overall_styles'] : Adtechmedia_Config::get( 'template_overall_styles' ),
-							'template_overall_styles_inputs' => array_key_exists('Config', $defaultConfigs) && array_key_exists('template_position', $defaultConfigs['Config']) ? $defaultConfigs['Config']['template_overall_styles_inputs'] : Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
+							'template_position'              => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
+								$default_configs['Config']
+							) ?
+								$default_configs['Config']['template_position'] :
+								Adtechmedia_Config::get( 'template_position' ),
+							'template_overall_styles'        => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
+								$default_configs['Config']
+							) ?
+								$default_configs['Config']['template_overall_styles'] :
+								Adtechmedia_Config::get( 'template_overall_styles' ),
+							'template_overall_styles_inputs' => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
+								$default_configs['Config']
+							) ?
+								$default_configs['Config']['template_overall_styles_inputs'] :
+								Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
 						],
 					];
 				}
-				
+
 				echo json_encode( $configs	);
 				die();
 			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {

@@ -9,49 +9,49 @@ class Adtechmedia_ThemeManager {
 	 * Init first config theme.
 	 */
 	public static function init_theme_config_model() {
-		$optionManager = new Adtechmedia_OptionsManager();
+		$option_manager = new Adtechmedia_OptionsManager();
 
-		$themeHistory = $optionManager->get_plugin_option( 'themes_history' );
-		if ( '' !== $themeHistory && '{}' !== $themeHistory ) {
-			$themeHistory = json_decode( $themeHistory, true );
-			if ( is_array( $themeHistory ) ) {
-				$themeInfo = self::get_theme_info();
-				if ( array_key_exists( $themeInfo['ThemeName'], $themeHistory ) ) {
-					$newCurThemeId = $themeHistory[ $themeInfo['ThemeName'] ];
+		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
+		if ( '' !== $theme_history && '{}' !== $theme_history ) {
+			$theme_history = json_decode( $theme_history, true );
+			if ( is_array( $theme_history ) ) {
+				$theme_info = self::get_theme_info();
+				if ( array_key_exists( $theme_info['ThemeName'], $theme_history ) ) {
+					$new_cur_theme_id = $theme_history[ $theme_info['ThemeName'] ];
 				} else {
-					$newCurThemeId = 'default';
+					$new_cur_theme_id = 'default';
 				}
 			}
-			$optionManager->update_plugin_option( 'theme_config_id', $newCurThemeId );
+			$option_manager->update_plugin_option( 'theme_config_id', $new_cur_theme_id );
 		}
-		$isRetrieve = self::retrieve_current_theme_configs();
+		$is_retrieve = self::retrieve_current_theme_configs();
 
-		if ( ! $isRetrieve ) {
-			$optionManager->update_plugin_option( 'theme_config_id', 'default' );
-			$optionManager->update_plugin_option( 'theme_config_name', '' );
-			$optionManager->update_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
-			$optionManager->update_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
-			$optionManager->update_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
+		if ( ! $is_retrieve ) {
+			$option_manager->update_plugin_option( 'theme_config_id', 'default' );
+			$option_manager->update_plugin_option( 'theme_config_name', '' );
+			$option_manager->update_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
+			$option_manager->update_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
+			$option_manager->update_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
 		} else {
-			if ( array_key_exists( 'Default', $isRetrieve ) && true === $isRetrieve['Default'] ) {
-				$optionManager->update_plugin_option( 'theme_config_id', 'default' );
+			if ( array_key_exists( 'Default', $is_retrieve ) && true === $is_retrieve['Default'] ) {
+				$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 			} else {
-				$optionManager->update_plugin_option( 'theme_config_id', $isRetrieve['Id'] );
+				$option_manager->update_plugin_option( 'theme_config_id', $is_retrieve['Id'] );
 			}
-			$optionManager->update_plugin_option( 'theme_config_name', $isRetrieve['ConfigName'] );
-			$optionManager->update_plugin_option( 'template_position',
-				array_key_exists( 'template_position', $isRetrieve['Config'] ) ?
-					$isRetrieve['Config']['template_position'] :
+			$option_manager->update_plugin_option( 'theme_config_name', $is_retrieve['ConfigName'] );
+			$option_manager->update_plugin_option( 'template_position',
+				array_key_exists( 'template_position', $is_retrieve['Config'] ) ?
+					$is_retrieve['Config']['template_position'] :
 					Adtechmedia_Config::get( 'template_position' )
 			);
-			$optionManager->update_plugin_option( 'template_overall_styles',
-				array_key_exists( 'template_overall_styles', $isRetrieve['Config'] ) ?
-					$isRetrieve['Config']['template_overall_styles'] :
+			$option_manager->update_plugin_option( 'template_overall_styles',
+				array_key_exists( 'template_overall_styles', $is_retrieve['Config'] ) ?
+					$is_retrieve['Config']['template_overall_styles'] :
 					Adtechmedia_Config::get( 'template_overall_styles' )
 			);
-			$optionManager->update_plugin_option( 'template_overall_styles_inputs',
-				array_key_exists( 'template_overall_styles_inputs', $isRetrieve['Config'] ) ?
-					$isRetrieve['Config']['template_overall_styles_inputs'] :
+			$option_manager->update_plugin_option( 'template_overall_styles_inputs',
+				array_key_exists( 'template_overall_styles_inputs', $is_retrieve['Config'] ) ?
+					$is_retrieve['Config']['template_overall_styles_inputs'] :
 					Adtechmedia_Config::get( 'template_overall_styles_inputs' )
 			);
 		}
@@ -94,12 +94,12 @@ class Adtechmedia_ThemeManager {
 	 * @return array
 	 */
 	public static function get_current_theme_config() {
-		$optionManager = new Adtechmedia_OptionsManager();
+		$option_manager = new Adtechmedia_OptionsManager();
 
 		return [
-			'template_position'              => $optionManager->get_plugin_option( 'template_position' ),
-			'template_overall_styles'        => $optionManager->get_plugin_option( 'template_overall_styles' ),
-			'template_overall_styles_inputs' => $optionManager->get_plugin_option( 'template_overall_styles_inputs' ),
+			'template_position'              => $option_manager->get_plugin_option( 'template_position' ),
+			'template_overall_styles'        => $option_manager->get_plugin_option( 'template_overall_styles' ),
+			'template_overall_styles_inputs' => $option_manager->get_plugin_option( 'template_overall_styles_inputs' ),
 		];
 	}
 
@@ -107,9 +107,9 @@ class Adtechmedia_ThemeManager {
 	 * Save current theme config to db and api.
 	 */
 	public static function save_current_theme_configs() {
-		$optionManager   = new Adtechmedia_OptionsManager();
-		$currentConfigId = $optionManager->get_plugin_option( 'theme_config_id' );
-		if ( is_null( $currentConfigId ) || '' === $currentConfigId || 'default' === $currentConfigId ) {
+		$option_manager   = new Adtechmedia_OptionsManager();
+		$current_config_id = $option_manager->get_plugin_option( 'theme_config_id' );
+		if ( is_null( $current_config_id ) || '' === $current_config_id || 'default' === $current_config_id ) {
 			self::create_current_theme_configs();
 		} else {
 			self::update_current_theme_configs();
@@ -122,42 +122,42 @@ class Adtechmedia_ThemeManager {
 	 * @return array|bool|mixed|object
 	 */
 	public static function create_current_theme_configs() {
-		$optionManager = new Adtechmedia_OptionsManager();
+		$option_manager = new Adtechmedia_OptionsManager();
 
-		$currentThemeInfo    = self::get_theme_info();
-		$currentPlatformInfo = self::get_platform_info();
-		$currentThemeConfigs = self::get_current_theme_config();
+		$current_theme_info    = self::get_theme_info();
+		$current_platform_info = self::get_platform_info();
+		$current_theme_configs = self::get_current_theme_config();
 
 		$data = [
-			'ThemeId'         => $currentThemeInfo['ThemeName'] . '@' . $currentThemeInfo['ThemeVersion'],
-			'PropertyId'      => $optionManager->get_plugin_option( 'id' ),
-			'ThemeVersion'    => $currentThemeInfo['ThemeVersion'],
-			'ThemeName'       => $currentThemeInfo['ThemeName'],
-			'PlatformId'      => $currentPlatformInfo['PlatformId'],
-			'PlatformVersion' => $currentPlatformInfo['PlatformVersion'],
-			'ConfigName'      => $currentThemeInfo['ThemeName'] . '@' . $currentThemeInfo['ThemeVersion'] . '-' . date( 'c' ),
-			'Config'          => $currentThemeConfigs,
+			'ThemeId'         => $current_theme_info['ThemeName'] . '@' . $current_theme_info['ThemeVersion'],
+			'PropertyId'      => $option_manager->get_plugin_option( 'id' ),
+			'ThemeVersion'    => $current_theme_info['ThemeVersion'],
+			'ThemeName'       => $current_theme_info['ThemeName'],
+			'PlatformId'      => $current_platform_info['PlatformId'],
+			'PlatformVersion' => $current_platform_info['PlatformVersion'],
+			'ConfigName'      => $current_theme_info['ThemeName'] . '@' . $current_theme_info['ThemeVersion'] . '-' . date( 'c' ),
+			'Config'          => $current_theme_configs,
 		];
 
 		$result = Adtechmedia_Request::theme_config_create(
 			$data,
-			$optionManager->get_plugin_option( 'key' )
+			$option_manager->get_plugin_option( 'key' )
 		);
 
 		if ( $result ) {
-			$optionManager->update_plugin_option( 'theme_config_id', $result['Id'] );
-			$optionManager->update_plugin_option( 'theme_config_name', $result['ConfigName'] );
-			$optionManager->update_plugin_option( 'template_position',
+			$option_manager->update_plugin_option( 'theme_config_id', $result['Id'] );
+			$option_manager->update_plugin_option( 'theme_config_name', $result['ConfigName'] );
+			$option_manager->update_plugin_option( 'template_position',
 				array_key_exists( 'template_position', $result['Config'] ) ?
 					$result['Config']['template_position'] :
 					''
 			);
-			$optionManager->update_plugin_option( 'template_overall_styles',
+			$option_manager->update_plugin_option( 'template_overall_styles',
 				array_key_exists( 'template_overall_styles', $result['Config'] ) ?
 					$result['Config']['template_overall_styles'] :
 					''
 			);
-			$optionManager->update_plugin_option( 'template_overall_styles_inputs',
+			$option_manager->update_plugin_option( 'template_overall_styles_inputs',
 				array_key_exists( 'template_overall_styles_inputs', $result['Config'] ) ?
 					$result['Config']['template_overall_styles_inputs'] :
 					''
@@ -175,44 +175,44 @@ class Adtechmedia_ThemeManager {
 	 * @return array|bool|mixed|object
 	 */
 	public static function retrieve_current_theme_configs() {
-		$optionManager = new Adtechmedia_OptionsManager();
+		$option_manager = new Adtechmedia_OptionsManager();
 
-//		$currentThemeId = $optionManager->get_plugin_option( 'theme_config_id' );
-		$themeHistory = $optionManager->get_plugin_option( 'themes_history' );
-		if ( '' !== $themeHistory && '{}' !== $themeHistory ) {
-			$themeHistory = json_decode( $themeHistory, true );
-			if ( is_array( $themeHistory ) ) {
-				$themeInfo = self::get_theme_info();
-				if ( array_key_exists( $themeInfo['ThemeName'], $themeHistory ) ) {
-					$currentThemeId = $themeHistory[ $themeInfo['ThemeName'] ];
+//		$current_theme_id = $option_manager->get_plugin_option( 'theme_config_id' );
+		$theme_history = $option_manager->get_plugin_option( 'themes_history' );
+		if ( '' !== $theme_history && '{}' !== $theme_history ) {
+			$theme_history = json_decode( $theme_history, true );
+			if ( is_array( $theme_history ) ) {
+				$theme_info = self::get_theme_info();
+				if ( array_key_exists( $theme_info['ThemeName'], $theme_history ) ) {
+					$current_theme_id = $theme_history[ $theme_info['ThemeName'] ];
 				} else {
-					$currentThemeId = '';
+					$current_theme_id = '';
 				}
 			}
-			$optionManager->update_plugin_option( 'theme_config_id', 'default' );
+			$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 		}
 
-		if ( ! is_null( $currentThemeId ) && 'default' !== $currentThemeId && '' !== $currentThemeId ) {
+		if ( ! is_null( $current_theme_id ) && 'default' !== $current_theme_id && '' !== $current_theme_id ) {
 			return Adtechmedia_Request::theme_config_retrieve(
-				$currentThemeId,
+				$current_theme_id,
 				null,
-				$optionManager->get_plugin_option( 'key' )
+				$option_manager->get_plugin_option( 'key' )
 			);
 		} else {
-			$currentThemeInfo = self::get_theme_info();
+			$current_theme_info = self::get_theme_info();
 
-			$currentThemeConfig = Adtechmedia_Request::theme_config_retrieve(
+			$current_theme_config = Adtechmedia_Request::theme_config_retrieve(
 				null,
-				$currentThemeInfo['ThemeName'] . '@' . $currentThemeInfo['ThemeVersion'],
-				$optionManager->get_plugin_option( 'key' )
+				$current_theme_info['ThemeName'] . '@' . $current_theme_info['ThemeVersion'],
+				$option_manager->get_plugin_option( 'key' )
 			);
-			if ( $currentThemeConfig ) {
-				return $currentThemeConfig;
+			if ( $current_theme_config ) {
+				return $current_theme_config;
 			} else {
 				return Adtechmedia_Request::theme_config_retrieve(
 					null,
-					$currentThemeInfo['ThemeName'],
-					$optionManager->get_plugin_option( 'key' )
+					$current_theme_info['ThemeName'],
+					$option_manager->get_plugin_option( 'key' )
 				);
 			}
 		}
@@ -225,20 +225,20 @@ class Adtechmedia_ThemeManager {
 	 * @return array|bool|mixed|object
 	 */
 	public static function update_current_theme_configs() {
-		$optionManager = new Adtechmedia_OptionsManager();
+		$option_manager = new Adtechmedia_OptionsManager();
 
-		$currentThemeId      = $optionManager->get_plugin_option( 'theme_config_id' );
-		$currentThemeConfigs = self::get_current_theme_config();
+		$current_theme_id      = $option_manager->get_plugin_option( 'theme_config_id' );
+		$current_theme_configs = self::get_current_theme_config();
 
 		$data = [
-			'Id'     => $currentThemeId,
-			'Config' => $currentThemeConfigs,
+			'Id'     => $current_theme_id,
+			'Config' => $current_theme_configs,
 		];
 		self::add_current_theme_to_themes_history();
 
 		return Adtechmedia_Request::theme_config_update(
 			$data,
-			$optionManager->get_plugin_option( 'key' )
+			$option_manager->get_plugin_option( 'key' )
 		);
 	}
 
@@ -246,25 +246,25 @@ class Adtechmedia_ThemeManager {
 	 * Add current theme to switch history.     *
 	 */
 	public static function add_current_theme_to_themes_history() {
-		$needCreate    = false;
-		$optionManager = new Adtechmedia_OptionsManager();
+		$need_create    = false;
+		$option_manager = new Adtechmedia_OptionsManager();
 
-		$themesHistory = $optionManager->get_plugin_option( 'themes_history' );
-		if ( is_null( $themesHistory ) ) {
-			$themesHistory = [];
-			$needCreate    = true;
+		$themes_history = $option_manager->get_plugin_option( 'themes_history' );
+		if ( is_null( $themes_history ) ) {
+			$themes_history = [];
+			$need_create    = true;
 		} else {
-			$themesHistory = json_decode( $themesHistory, true );
+			$themes_history = json_decode( $themes_history, true );
 		}
-		$currentThemeInfo = self::get_theme_info();
-		$currentThemeId   = $optionManager->get_plugin_option( 'theme_config_id' );
-		if ( ! is_null( $currentThemeId ) ) {
-			$themesHistory[ $currentThemeInfo['ThemeName'] ] = $currentThemeId;
+		$current_theme_info = self::get_theme_info();
+		$current_theme_id   = $option_manager->get_plugin_option( 'theme_config_id' );
+		if ( ! is_null( $current_theme_id ) ) {
+			$themes_history[ $current_theme_info['ThemeName'] ] = $current_theme_id;
 
-			if ( $needCreate ) {
-				$optionManager->add_plugin_option( 'themes_history', json_encode( $themesHistory ) );
+			if ( $need_create ) {
+				$option_manager->add_plugin_option( 'themes_history', json_encode( $themes_history ) );
 			} else {
-				$optionManager->update_plugin_option( 'themes_history', json_encode( $themesHistory ) );
+				$option_manager->update_plugin_option( 'themes_history', json_encode( $themes_history ) );
 			}
 		}
 
@@ -275,31 +275,30 @@ class Adtechmedia_ThemeManager {
 	 * Save themes in template api.
 	 */
 	public static function save_template_in_api() {
-		$adtPlugin     = new Adtechmedia_Plugin();
-		$optionManager = new Adtechmedia_OptionsManager();
-		$adtPlugin->update_prop();
+		$adt_plugin     = new Adtechmedia_Plugin();
+		$option_manager = new Adtechmedia_OptionsManager();
+		$adt_plugin->update_prop();
 
 		$data = [
 			'targetModal' => [
-				'targetCb' => $optionManager->get_target_cb_js( json_decode( stripslashes( $optionManager->get_plugin_option( 'template_position' ) ), true ) ),
-				'toggleCb' => $optionManager->get_toggle_cb_js( json_decode( stripslashes( $optionManager->get_plugin_option( 'template_position' ) ), true ) ),
+				'targetCb' => $option_manager->get_target_cb_js( json_decode( stripslashes( $option_manager->get_plugin_option( 'template_position' ) ), true ) ),
+				'toggleCb' => $option_manager->get_toggle_cb_js( json_decode( stripslashes( $option_manager->get_plugin_option( 'template_position' ) ), true ) ),
 			],
 			'styles'      => [
-				'main' => base64_encode( $optionManager->get_plugin_option( 'template_overall_styles' ) ),
+				'main' => base64_encode( $option_manager->get_plugin_option( 'template_overall_styles' ) ),
 			],
 		];
 
 		Adtechmedia_Request::property_update_config_by_array(
-			$optionManager->get_plugin_option( 'id' ),
-			$optionManager->get_plugin_option( 'key' ),
+			$option_manager->get_plugin_option( 'id' ),
+			$option_manager->get_plugin_option( 'key' ),
 			$data
 		);
 	}
 
-	public static function make_current_as_default()
-	{
-		$optionManager = new Adtechmedia_OptionsManager();
-		$optionManager->update_plugin_option('theme_config_id', 'default');
+	public static function make_current_as_default() {
+		$option_manager = new Adtechmedia_OptionsManager();
+		$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 		self::add_current_theme_to_themes_history();
 	}
 }
