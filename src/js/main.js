@@ -1117,9 +1117,9 @@ jQuery(document).ready(function () {
               jQuery('#' + form + ' [name="' + name + '"]').val(value);
             });
             if (form === 'overall-styling-and-position') {
-              templatePositionInputs = jQuery.parseJSON(values['template_position']);
+              window.templatePositionInputs = jQuery.parseJSON(values['template_position']);
               fillPositionFields();
-              templateOverallStylesInputs = templateOverallStylesInputsDefault;
+              window.templateOverallStylesInputs = templateOverallStylesInputsDefault;
               fillOverallStylesFields();
               applayOverallStyling(values['template_overall_styles']);
             }

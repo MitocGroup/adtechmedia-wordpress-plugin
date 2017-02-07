@@ -20,7 +20,7 @@ class Adtechmedia_ThemeManager {
 
 		$is_retrieve = self::retrieve_current_theme_configs();
 
-		if ( ! $is_retrieve || array_key_exists('errorMessage', $is_retrieve)) {
+		if ( ! $is_retrieve || array_key_exists( 'errorMessage', $is_retrieve ) ) {
 			$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 			$option_manager->update_plugin_option( 'theme_config_name', '' );
 			$option_manager->update_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );

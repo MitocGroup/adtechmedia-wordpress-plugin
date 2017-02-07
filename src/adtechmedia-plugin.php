@@ -631,28 +631,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 
 			if ( isset( $_POST['method'] ) && 'get_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
-				$general = [
-					'country'        => Adtechmedia_Config::get( 'country' ),
-					'revenue_method' => Adtechmedia_Config::get( 'revenue_method' ),
-				];
-				$content = [
-					'price_currency'      => Adtechmedia_Config::get( 'price_currency' ),
-					'content_paywall'     => Adtechmedia_Config::get( 'content_paywall' ),
-					'content_offset'      => Adtechmedia_Config::get( 'content_offset' ),
-					'content_lock'        => Adtechmedia_Config::get( 'content_lock' ),
-					'ads_video'           => Adtechmedia_Config::get( 'ads_video' ),
-					'price'               => Adtechmedia_Config::get( 'price' ),
-					'payment_pledged'     => Adtechmedia_Config::get( 'payment_pledged' ),
-					'content_offset_type' => Adtechmedia_Config::get( 'content_offset_type' ),
-				];
-
 				Adtechmedia_ThemeManager::make_current_as_default();
 				$default_configs = Adtechmedia_ThemeManager::retrieve_current_theme_configs();
 				$configs         = [];
 				if ( ! $default_configs ) {
 					$configs = [
-//						'general-config'               => $general,
-//						'content-config'               => $content,
 						'overall-styling-and-position' => [
 							'template_position'              => Adtechmedia_Config::get( 'template_position' ),
 							'template_overall_styles'        => Adtechmedia_Config::get( 'template_overall_styles' ),
@@ -661,8 +644,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					];
 				} else {
 					$configs = [
-//						'general-config'               => $general,
-//						'content-config'               => $content,
 						'overall-styling-and-position' => [
 							'template_position'              => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
 								$default_configs['Config']
