@@ -72,7 +72,14 @@
                             </label>
                             <div class="tab-content" data-template="salutation">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Salutation</label>
+                                    <div class="custom-tooltip">
+                                        <label>Salutation <span class="fa fa-question-circle-o"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pledge-welcome"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="welcome" value="Dear {user}," placeholder="Dear {user}," required="" />
                                         <span class="bar"></span>
@@ -175,14 +182,28 @@
                             </label>
                             <div class="tab-content" data-template="message">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Message (Expanded View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Expanded View) <span class="fa fa-question-circle-o"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pledge-message-expanded"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
                                         <span class="bar"></span>
                                     </div>
                                 </div>
                                 <div class="custom-label" data-template="collapsed">
-                                    <label>Message (Collapsed View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Collapsed View) <span class="fa fa-question-circle-o"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pledge-message-collapsed"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-collapsed" value="Please support quality journalism. {pledge-button}" placeholder="Please support quality journalism." required="" />
                                         <span class="bar"></span>
@@ -283,7 +304,14 @@
                             </label>
                             <div class="tab-content" data-template="user">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Connect Message</label>
+                                    <div class="custom-tooltip">
+                                        <label>Connect Message <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pledge-user-used"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
                                         <span class="bar"></span>
@@ -291,7 +319,14 @@
                                 </div>
 
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Disconnect Message</label>
+                                    <div class="custom-tooltip">
+                                        <label>Disconnect Message <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pledge-user-logged"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
                                         <span class="bar"></span>
@@ -618,7 +653,14 @@
                             </label>
                             <div class="tab-content" data-template="salutation">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Salutation</label>
+                                    <div class="custom-tooltip">
+                                        <label>Salutation <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pay-salutation"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="salutation" value="Dear {user}," placeholder="Dear {user}," required="" />
                                         <span class="bar"></span>
@@ -720,7 +762,14 @@
                             </label>
                             <div class="tab-content" data-template="message">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Message (Expanded View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Expanded View) <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pay-message-expanded"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-expanded" value="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" placeholder="Please support quality journalism. Would you pledge to pay a small fee of {price} to continue reading?" required="" />
                                         <span class="bar"></span>
@@ -728,7 +777,14 @@
                                 </div>
 
                                 <div class="custom-label" data-template="collapsed">
-                                    <label>Message (Collapsed View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Collapsed View) <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pay-message-collapsed"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-collapsed" value="Support quality journalism. {pay-button} " placeholder="Support quality journalism. {pay-button} " required="" />
                                         <span class="bar"></span>
@@ -830,7 +886,14 @@
                             </label>
                             <div class="tab-content" data-template="user">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Connect Message</label>
+                                    <div class="custom-tooltip">
+                                        <label>Connect Message <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pay-user-used"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="user-used" value="Already used us before? {connect-link}" placeholder="Already used us before? {connect-link}" required="" />
                                         <span class="bar"></span>
@@ -838,7 +901,14 @@
                                 </div>
 
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Disconnect Message</label>
+                                    <div class="custom-tooltip">
+                                        <label>Disconnect Message <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="pay-user-logged"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text"  name="user-logged"  value="Not {user}? {disconnect-link}" placeholder="Not {user}? {disconnect-link}" required="" />
                                         <span class="bar"></span>
@@ -1303,7 +1373,14 @@
                             </label>
                             <div class="tab-content" data-template="message">
                                 <div class="custom-label" data-template="expanded">
-                                    <label>Message (Expanded View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Expanded View) <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="refund-message-expanded"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-expanded" value="Thanks for contributing {price} and help us do the job we {heart}" placeholder="Thanks for contributing {price} and help us do the job we {heart}" required="" />
                                         <span class="bar"></span>
@@ -1311,7 +1388,14 @@
                                 </div>
 
                                 <div class="custom-label" data-template="collapsed">
-                                    <label>Message (Collapsed View)</label>
+                                    <div class="custom-tooltip">
+                                        <label>Message (Collapsed View) <span class="fa fa-question-circle-o" aria-hidden="true"></span>
+                                            <div class="tooltip">
+                                                <div class="tooltip__background"></div>
+                                                <span class="tooltip__label" data-var="refund-message-collapsed"></span>
+                                            </div>
+                                        </label>
+                                    </div>
                                     <div class="custom-input">
                                         <input type="text" name="message-collapsed" value="Premium content unlocked. notSatisfied_url Get immediate" placeholder="Premium content unlocked. notSatisfied_url Get immediate" required="" />
                                         <span class="bar"></span>

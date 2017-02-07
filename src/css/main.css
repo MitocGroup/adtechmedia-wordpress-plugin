@@ -647,7 +647,7 @@ select {
 .tooltip {
     border-radius: 2px;
     left: 30px;
-    max-width: 200px;
+    /*max-width: 200px;*/
     min-width: 1px;
     opacity: 0;
     overflow: hidden;
@@ -1723,4 +1723,13 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     .modal {
         padding-left: 160px;
     }
+}
+
+.custom-label .custom-tooltip {
+    top: -20px;
+}
+
+.custom-label .custom-tooltip .tooltip {
+    top: -2px;
+    left: 100%;
 }

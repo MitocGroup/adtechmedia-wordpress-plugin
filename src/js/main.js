@@ -374,6 +374,77 @@ jQuery(document).ready(function () {
     }
   ];
 
+  var inputsVars = {
+    pledge : {
+      welcome : {
+        component : 'pledgeComponent',
+        body : 'body-welcome'
+      },
+      'message-expanded' : {
+        component : 'pledgeComponent',
+        body : 'body-msg-mp'
+      },
+      'message-collapsed' : {
+        component : 'pledgeComponent',
+        body : 'heading-headline'
+      },
+      'user-used' : {
+        component : 'authComponent',
+        body : 'used-headline'
+      },
+      'user-logged' : {
+        component : 'authComponent',
+        body : 'logged-headline'
+      }
+    },
+    pay : {
+      salutation : {
+        component : 'payComponent',
+        body : 'body-salutation'
+      },
+      'message-expanded' : {
+        component : 'payComponent',
+        body : 'body-msg-mp'
+      },
+      'message-collapsed' : {
+        component : 'payComponent',
+        body : 'heading-headline-setup'
+      },
+      'user-used' : {
+        component : 'authComponent',
+        body : 'used-headline'
+      },
+      'user-logged' : {
+        component : 'authComponent',
+        body : 'logged-headline'
+      }
+    },
+    refund : {
+      'message-expanded' : {
+        component : 'refundComponent',
+        body : 'body-msg'
+      },
+      'message-collapsed' : {
+        component : 'refundComponent',
+        body : 'heading-headline'
+      }
+    }
+  };
+
+  function fillVarsLabels(stories) {
+    var inputVars;
+    for (var tab in inputsVars) {
+      if (inputsVars.hasOwnProperty(tab)) {
+        for (var input in inputsVars[tab]) {
+          if (inputsVars[tab].hasOwnProperty(input)) {
+            inputVars = stories[inputsVars[tab][input].component][inputsVars[tab][input].body].components;
+            jQuery('.tooltip__label[data-var="' + tab + '-' + input + '"]').html('Available variables: {' + inputVars.join('}, {') + '}');
+          }
+        }
+      }
+    }
+  }
+
   (function ($) {
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
@@ -385,6 +456,8 @@ jQuery(document).ready(function () {
     var options = {};
     var styling = {};
     var styleInputs = {};
+
+    fillVarsLabels(stories);
 
     function toggleTemplates() {
       var sender = jQuery(jQuery(this.$el).parents('[data-view]')[0]),
@@ -413,6 +486,32 @@ jQuery(document).ready(function () {
       senderParentCollapsed.html(tmp);
     }
 
+    function checkInputVars(input, tabName) {
+      var inputName = input.attr('name');
+      if (inputName !== '') {
+        var inputWithVars = inputsVars[tabName][inputName];
+        if (inputWithVars) {
+          var inputVars = stories[inputWithVars.component][inputWithVars.body].components;
+          var inputValue = input.val();
+          var reg = /\{(.*?)}/g;
+          var match;
+
+          while ((match = reg.exec(inputValue)) !== null) {
+            if (!inputVars.includes(match[1])) {
+              invalidVar = match[1];
+              noty({
+                type : 'error',
+                text : 'Variable {' + match[1] + '} is not defined.',
+                timeout : 5000
+              });
+              return false;
+            }
+          }
+        }
+      }
+
+      return true;
+    }
 
     jQuery.each(components, function (i, template) {
       var tab = jQuery(getDatatemplate(template.dataTab));
@@ -549,15 +648,22 @@ jQuery(document).ready(function () {
       });
     });
 
+    var varError = false;
+    var invalidVar = '';
     var throttledSync = jQuery.throttle(200, function (e) {
       var thisValue = $(this).val();
       var dataTemplateCss = $(this).attr('data-template-css');
       var viewKey = jQuery(jQuery(this).parents('[data-template]')[2]).data('template');
       var tabKey = jQuery(jQuery(this).parents('[data-template]')[1]).data('template');
+      varError = false;
       jQuery.each(['expanded', 'collapsed'], function (i, type) {
         var inputKey = viewKey + tabKey;
 
         if (inputs.hasOwnProperty(inputKey + type)) {
+          if (!checkInputVars(inputs[inputKey + type].input, viewKey)) {
+            varError = true;
+            return false;
+          }
           options[views[viewKey].component][inputs[inputKey + type].optionName] = inputs[inputKey + type].input.val();
           styling[views[viewKey].component][inputs[inputKey + type].optionName] =
             getCSSFields(styleInputs[inputKey + 'style'].inputs);
@@ -568,70 +674,74 @@ jQuery(document).ready(function () {
           if (inputs.hasOwnProperty(inputKey + type)) {
             var inputSelector = inputs[inputKey + type].tabSelector;
 
-            var oldValue =   options[views[tabKey].component][inputs[inputKey + type].optionName];
-            var newValue =   inputs[inputKey + type].input.val();
-            if(!styling.hasOwnProperty(views[tabKey].component)) {
+            var oldValue = options[views[tabKey].component][inputs[inputKey + type].optionName];
+            var newValue = inputs[inputKey + type].input.val();
+            if (!styling.hasOwnProperty(views[tabKey].component)) {
               styling[views[tabKey].component] = {};
             }
-            jQuery.each(jQuery(inputSelector), function(i,item) {
-              if($(item).val() !== oldValue) {
+            jQuery.each(jQuery(inputSelector), function (i, item) {
+              if ($(item).val() !== oldValue) {
                 newValue = $(item).val();
               }
             });
 
-            jQuery.each(jQuery(inputSelector), function(i,item) {
-              if($(item).val() !== newValue) {
+            jQuery.each(jQuery(inputSelector), function (i, item) {
+              if ($(item).val() !== newValue) {
                 $(item).val(newValue);
               }
             });
 
-            var styleSelector = '[data-template="'+tabKey+'"] [data-template-css="'+dataTemplateCss+'"]';
-            var newStyle =   thisValue;
-            jQuery.each(jQuery(styleSelector), function(i,item) {
-              if(jQuery(item).val() !== newStyle) {
+            var styleSelector = '[data-template="' + tabKey + '"] [data-template-css="' + dataTemplateCss + '"]';
+            var newStyle = thisValue;
+            jQuery.each(jQuery(styleSelector), function (i, item) {
+              if (jQuery(item).val() !== newStyle) {
                 jQuery(item).val(newStyle);
               }
             });
             options[views[tabKey].component][inputs[inputKey + type].optionName] = newValue;
             styling[views[tabKey].component][inputs[inputKey + type].optionName] =
-                getCSSFields(styleInputs[inputKey + 'style'].inputs);
+              getCSSFields(styleInputs[inputKey + 'style'].inputs);
+            if (!checkInputVars(inputs[inputKey + type].input, viewKey)) {
+              varError = true;
+              return false;
+            }
           }
         }
       });
+      if (!varError) {
+        var needToRedraw = [];
+        if (tabViews.hasOwnProperty(tabKey)) {
+          needToRedraw = tabViews[tabKey];
 
-      var needToRedraw = [];
-      if(tabViews.hasOwnProperty(tabKey)) {
-        needToRedraw = tabViews[tabKey];
+          atmTemplating.updateTemplate(
+              views[tabKey].component,
+              options[views[tabKey].component],
+              styling[views[tabKey].component]
+          );
+        } else {
+          needToRedraw = tabViews[viewKey];
 
-        atmTemplating.updateTemplate(
-            views[tabKey].component,
-            options[views[tabKey].component],
-            styling[views[tabKey].component]
-        );
-      } else {
-        needToRedraw = tabViews[viewKey];
+        }
 
+        if (!Array.isArray(needToRedraw)) {
+          needToRedraw = [needToRedraw];
+        }
+        jQuery.each(needToRedraw, function (i, type) {
+          // update template
+
+          atmTemplating.updateTemplate(
+              views[type].component,
+              options[views[type].component],
+              styling[views[type].component]
+          );
+          // redraw the view
+          views[type].expanded.redraw();
+          views[type].collapsed.redraw();
+          views[type].expanded.watch('showModalBody', toggleTemplates);
+          views[type].collapsed.watch('showModalBody', toggleTemplates);
+
+        });
       }
-
-      if(!Array.isArray(needToRedraw)) {
-        needToRedraw = [needToRedraw];
-      }
-      jQuery.each(needToRedraw, function (i, type) {
-//        update template
-
-        atmTemplating.updateTemplate(
-            views[type].component,
-            options[views[type].component],
-            styling[views[type].component]
-        );
-        // redraw the view
-        views[type].expanded.redraw();
-        views[type].collapsed.redraw();
-        views[type].expanded.watch('showModalBody', toggleTemplates);
-        views[type].collapsed.watch('showModalBody', toggleTemplates);
-
-      });
-
     });
 
     var $form = $('section.views-tabs');
@@ -725,130 +835,139 @@ jQuery(document).ready(function () {
         timeout: 2000
       });
     }
+
     jQuery('.save-templates').bind('click', function (e) {
-      var btn = jQuery(this);
-      var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
+      if (!varError) {
+        var btn = jQuery(this);
+        var viewKey = jQuery(btn.parents('[data-template]')[0]).data('template');
 
-      //get compnents in this view
-      var viewComponents = {};
-      jQuery.each(components, function(i,template) {
-        if(template.hasOwnProperty('view')) {
-          var templateView = template.view;
-          if(!Array.isArray(templateView)) {
-            templateView = [templateView] ;
+        //get compnents in this view
+        var viewComponents = {};
+        jQuery.each(components, function (i, template) {
+          if (template.hasOwnProperty('view')) {
+            var templateView = template.view;
+            if (!Array.isArray(templateView)) {
+              templateView = [templateView];
+            }
+            jQuery.each(templateView, function (i, view) {
+              if (view === viewKey) {
+                viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                    options[template.component],
+                    styling[template.component]
+                );
+              }
+            });
           }
-          jQuery.each(templateView,function(i,view) {
-            if(view === viewKey) {
-              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                  options[template.component],
-                  styling[template.component]
-              );
+        });
+
+        jQuery.each(tabs, function (i, template) {
+          if (template.hasOwnProperty('view')) {
+            var templateView = template.view;
+            if (!Array.isArray(templateView)) {
+              templateView = [templateView];
+            }
+            jQuery.each(templateView, function (i, view) {
+              if (view === viewKey) {
+                viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
+                    options[template.component],
+                    styling[template.component]
+                );
+              }
+            });
+          }
+        });
+
+        var valid = addValidate(jQuery('#overall-styling-and-position'), {
+          width : {
+            required : true,
+            cssSize : true
+          },
+          offset_top : {
+            required : true,
+            cssSize : true
+          },
+          offset_left : {
+            required : true,
+            cssSize : true
+          },
+          scrolling_offset_top : {
+            required : true,
+            cssSize : true
+          },
+          border : {
+            required : true,
+          },
+          font_family : {
+            required : true,
+          },
+          box_shadow : {
+            required : true,
+          },
+          footer_border : {
+            required : true,
+          }
+        }, {
+          width : {
+            required : 'The field \'Width\' is required.',
+            cssSize : 'The field \'Width\' must be valid CSS size.'
+          },
+          offset_top : {
+            required : 'The field \'Offset top\' is required.',
+            cssSize : 'The field \'Offset top\' must be valid CSS size.'
+          },
+          offset_left : {
+            required : 'The field \'Offset from center\' is required.',
+            cssSize : 'The field \'Offset from center\' must be valid CSS size.'
+          },
+          scrolling_offset_top : {
+            required : 'The field \'Scrolling offset top\' is required.',
+            cssSize : 'The field \'Scrolling offset top\' must be valid CSS size.'
+          },
+          border : {
+            required : 'The field \'Border\' is required.',
+          },
+          font_family : {
+            required : 'The field \'Font Family\' is required.',
+          },
+          box_shadow : {
+            required : 'The field \'Box Shadow\' is required.',
+          },
+          footer_border : {
+            required : 'The field \'Footer Border\' is required.',
+          }
+        });
+
+        if (valid.form()) {
+          addLoader(btn);
+          jQuery.ajax({
+            url : save_template.ajax_url,
+            type : 'post',
+            data : {
+              action : 'save_template',
+              nonce : save_template.nonce,
+              inputs : JSON.stringify(inputsToObject(inputs)),
+              styleInputs : JSON.stringify(styleInputsToObject(styleInputs)),
+              position : JSON.stringify(getPositionFields()),
+              overallStyles : getOverallStyling(),
+              overallStylesInputs : JSON.stringify(getOverallStylingFields()),
+              components : Object.keys(viewComponents),
+              templates : viewComponents
+            },
+            success : function (response) {
+              removeLoader(btn);
+              showSuccess();
+            },
+            error : function (response) {
+              removeLoader(btn);
+              showError();
             }
           });
         }
-      });
-
-      jQuery.each(tabs, function(i,template) {
-        if(template.hasOwnProperty('view')) {
-          var templateView = template.view;
-          if(!Array.isArray(templateView)) {
-            templateView = [templateView] ;
-          }
-          jQuery.each(templateView,function(i,view) {
-            if(view === viewKey) {
-              viewComponents[template.component] = atmTemplating.templateRendition(template.component).render(
-                  options[template.component],
-                  styling[template.component]
-              );
-            }
-          });
-        }
-      });
-
-      var valid = addValidate(jQuery('#overall-styling-and-position'), {
-        width: {
-          required: true,
-          cssSize: true
-        },
-        offset_top: {
-          required: true,
-          cssSize: true
-        },
-        offset_left: {
-          required: true,
-          cssSize: true
-        },
-        scrolling_offset_top: {
-          required: true,
-          cssSize: true
-        },
-        border:{
-          required: true,
-        },
-        font_family:{
-          required: true,
-        },
-        box_shadow:{
-          required: true,
-        },
-        footer_border:{
-          required: true,
-        }
-      }, {
-        width: {
-          required: 'The field \'Width\' is required.',
-          cssSize: 'The field \'Width\' must be valid CSS size.'
-        },
-        offset_top: {
-          required: 'The field \'Offset top\' is required.',
-          cssSize: 'The field \'Offset top\' must be valid CSS size.'
-        },
-        offset_left: {
-          required: 'The field \'Offset from center\' is required.',
-          cssSize: 'The field \'Offset from center\' must be valid CSS size.'
-        },
-        scrolling_offset_top: {
-          required: 'The field \'Scrolling offset top\' is required.',
-          cssSize: 'The field \'Scrolling offset top\' must be valid CSS size.'
-        },
-        border:{
-          required: 'The field \'Border\' is required.',
-        },
-        font_family:{
-          required: 'The field \'Font Family\' is required.',
-        },
-        box_shadow:{
-          required: 'The field \'Box Shadow\' is required.',
-        },
-        footer_border:{
-          required: 'The field \'Footer Border\' is required.',
-        }
-      });
-
-      if(valid.form()) {
-        addLoader(btn);
-        jQuery.ajax({
-          url: save_template.ajax_url,
-          type: 'post',
-          data: {
-            action: 'save_template',
-            nonce: save_template.nonce,
-            inputs: JSON.stringify(inputsToObject(inputs)),
-            styleInputs: JSON.stringify(styleInputsToObject(styleInputs)),
-            position: JSON.stringify(getPositionFields()),
-            overallStyles: getOverallStyling(),
-            overallStylesInputs: JSON.stringify(getOverallStylingFields()),
-            components: Object.keys(viewComponents),
-            templates: viewComponents
-          },
-          success: function (response) {
-            removeLoader(btn);
-            showSuccess();
-          },
-          error: function (response) {
-            removeLoader(btn);
-            showError();
-          }
+      } else {
+        noty({
+          type: 'error',
+          text: 'Variable {' + invalidVar + '} is not defined.',
+          timeout: 5000
         });
       }
     });
