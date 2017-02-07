@@ -651,8 +651,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$configs         = [];
 				if ( ! $default_configs ) {
 					$configs = [
-						'general-config'               => $general,
-						'content-config'               => $content,
+//						'general-config'               => $general,
+//						'content-config'               => $content,
 						'overall-styling-and-position' => [
 							'template_position'              => Adtechmedia_Config::get( 'template_position' ),
 							'template_overall_styles'        => Adtechmedia_Config::get( 'template_overall_styles' ),
@@ -661,8 +661,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					];
 				} else {
 					$configs = [
-						'general-config'               => $general,
-						'content-config'               => $content,
+//						'general-config'               => $general,
+//						'content-config'               => $content,
 						'overall-styling-and-position' => [
 							'template_position'              => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
 								$default_configs['Config']

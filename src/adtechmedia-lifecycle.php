@@ -98,7 +98,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
 		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
 		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
-		$this->add_plugin_option( 'theme_config_id', '' );
+		$this->add_plugin_option( 'theme_config_id', 'default' );
 		$this->add_plugin_option( 'theme_config_name', '' );
 		$this->check_api_key_exists();
 		$this->check_prop();
