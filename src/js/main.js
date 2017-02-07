@@ -163,7 +163,7 @@ function initModal() {
 }
 
 jQuery(document).ready(function () {
-  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs */
+  /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs, invalidVar */
   atmTpl.default.config({revenueMethod : 'micropayments'});
   var atmTemplating = atmTpl.default;
 
@@ -452,8 +452,6 @@ jQuery(document).ready(function () {
   }
 
   (function ($) {
-    /*global invalidVar */
-
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
