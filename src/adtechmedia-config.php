@@ -18,6 +18,7 @@ class Adtechmedia_Config {
 	 * @var array
 	 */
 	private static $conf = [
+		'debug'                          => false,
 		'api_end_point'                  => 'https://api.adtechmedia.io/v1/',
 		'plugin_table_name'              => 'adtechmedia',
 		'plugin_cache_table_name'        => 'adtechmedia_cache',
@@ -68,12 +69,8 @@ class Adtechmedia_Config {
 	 * @return bool
 	 */
 	public static function is_localhost() {
-		$whitelist = [
-			'127.0.0.1',
-			'::1',
-		];
 
-		return isset( $_SERVER['REMOTE_ADDR'] ) && in_array( sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ), $whitelist );
+		return self::$conf['debug'];
 	}
 }
 
