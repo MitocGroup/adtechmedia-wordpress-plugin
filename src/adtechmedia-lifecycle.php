@@ -48,9 +48,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 
 		// To avoid running install() more then once.
 		$this->mark_as_installed();
-
-		// Set server options for Service Worker.
-		Adtechmedia_ServerOptions::set_options();
 	}
 
 	/**
@@ -83,25 +80,30 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$admin_email = get_option( 'admin_email' );
 		$this->add_plugin_option( 'container', '#content-for-atm' );
 		$this->add_plugin_option( 'selector', 'p,ol,ul,h1,h2,h3,h4,h5,h6,div,figure' );
-		$this->add_plugin_option( 'price', '5' );
+		$this->add_plugin_option( 'price', Adtechmedia_Config::get( 'price' ) );
 		$this->add_plugin_option( 'author_name', '' );
 		$this->add_plugin_option( 'author_avatar', '' );
-		$this->add_plugin_option( 'ads_video', '' );
+		$this->add_plugin_option( 'ads_video', Adtechmedia_Config::get( 'ads_video' ) );
 		$this->add_plugin_option( 'website_domain_name', $name );
 		$this->add_plugin_option( 'website_url', $website );
 		$this->add_plugin_option( 'support_email', $admin_email );
-		$this->add_plugin_option( 'country', 'United States' );
-		$this->add_plugin_option( 'content_offset', '2' );
-		$this->add_plugin_option( 'content_lock', 'blur+scramble' );
-		$this->add_plugin_option( 'revenue_method', 'micropayments' );
-		$this->add_plugin_option( 'payment_pledged', '2' );
-		$this->add_plugin_option( 'price_currency', 'usd' );
-		$this->add_plugin_option( 'content_paywall', 'transactions' );
-		$this->add_plugin_option( 'content_offset_type', 'paragraphs' );
+		$this->add_plugin_option( 'country', Adtechmedia_Config::get( 'country' ) );
+		$this->add_plugin_option( 'content_offset', Adtechmedia_Config::get( 'content_offset' ) );
+		$this->add_plugin_option( 'content_lock', Adtechmedia_Config::get( 'content_lock' ) );
+		$this->add_plugin_option( 'revenue_method', Adtechmedia_Config::get( 'revenue_method' ) );
+		$this->add_plugin_option( 'payment_pledged', Adtechmedia_Config::get( 'payment_pledged' ) );
+		$this->add_plugin_option( 'price_currency', Adtechmedia_Config::get( 'price_currency' ) );
+		$this->add_plugin_option( 'content_paywall', Adtechmedia_Config::get( 'content_paywall' ) );
+		$this->add_plugin_option( 'content_offset_type', Adtechmedia_Config::get( 'content_offset_type' ) );
 		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
 		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
+		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
+		$this->add_plugin_option( 'theme_config_id', 'default' );
+		$this->add_plugin_option( 'theme_config_name', '' );
 		$this->check_api_key_exists();
 		$this->check_prop();
+
+		Adtechmedia_ThemeManager::init_theme_config_model();
 
 		// Add schedule event update properties.
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
@@ -126,6 +128,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 				$this->add_plugin_option( 'key', $key );
 			}
 		}
+
 		return true;
 	}
 
@@ -147,7 +150,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'country' ),
 					$key
 				);
-				if ( ( ! isset( $prop['Id'] )) || empty( $prop['Id'] ) ) {
+				if ( ( ! isset( $prop['Id'] ) ) || empty( $prop['Id'] ) ) {
 					return false;
 				} else {
 					$this->add_plugin_option( 'BuildPath', $prop['BuildPath'] );
@@ -156,6 +159,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 				}
 			}
 		}
+
 		return true;
 	}
 
@@ -266,7 +270,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 			$display_name,
 			'manage_options',
 			$this->get_settings_slug(),
-			array( &$this, 'settings_page' )
+			array(
+				&$this,
+				'settings_page',
+			)
 		);
 	}
 
@@ -281,7 +288,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 			$display_name,
 			'manage_options',
 			$this->get_settings_slug(),
-			array( &$this, 'settings_page' )
+			array(
+				&$this,
+				'settings_page',
+			)
 		);
 	}
 
@@ -289,6 +299,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * Get plugin table prefix
 	 *
 	 * @param  string $name name of a database table.
+	 *
 	 * @return string input prefixed with the WordPress DB table prefix
 	 * plus the prefix for this plugin (lower-cased) to avoid table name collisions.
 	 * The plugin prefix is lower-cases as a best practice that all DB table names are lower case to
@@ -296,6 +307,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function prefix_table_name( $name ) {
 		global $wpdb;
+
 		return $wpdb->prefix . $name;
 	}
 
@@ -304,6 +316,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * Convenience function for creating AJAX URLs.
 	 *
 	 * @param string $action_name the name of the ajax action registered in a call.
+	 *
 	 * @return string URL that can be used in a web page to make an Ajax call to $this->functionName
 	 * Example
 	 * add_action('wp_ajax_actionName', array(&$this, 'functionName'));
