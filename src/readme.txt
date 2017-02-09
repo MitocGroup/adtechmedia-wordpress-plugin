@@ -9,7 +9,7 @@ License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
 Tested up to: 4.7
-Stable tag: 0.5
+Stable tag: 0.6
 
 
 == Description ==
@@ -37,6 +37,11 @@ Meanwhile, frequently asked questions will be compiled and published as we evolv
 
 
 == Changelog ==
+
+= 0.6 =
+- Add service workers
+- Add default positioning and styling per theme
+- Fix templates management bugs
 
 = 0.5 =
 - Fix TTL and JS related bugs
