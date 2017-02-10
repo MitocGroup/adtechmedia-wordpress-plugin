@@ -188,7 +188,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 		// Add options administration page.
 		// http://plugin.michael-simpson.com/?page_id=47.
-		if ( !empty( $_SERVER['HTTPS'] ) && 'off' !== sanitize_text_field( wp_unslash($_SERVER['HTTPS'])) || 443 === sanitize_text_field( wp_unslash($_SERVER['SERVER_PORT']))) {
+		if ( isset( $_SERVER['REQUEST_URI'] )
+				&& ! empty( $_SERVER['HTTPS'] )
+				&& 'off' !== sanitize_text_field( wp_unslash( $_SERVER['HTTPS'] ) )
+				|| 443 === sanitize_text_field( wp_unslash( $_SERVER['SERVER_PORT'] ) )
+		) {
 			Mozilla\WP_SW_Manager::get_manager()->sw()->add_content( array(
 							$this,
 							'write_sw',
