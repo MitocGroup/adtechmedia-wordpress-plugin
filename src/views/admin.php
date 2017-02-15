@@ -129,6 +129,7 @@ echo '</script>';
 							<div class="block-info">
 								Choose the country of origin where revenue will be collected
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="form-select custom-label">
 								<label>
 									<i class="mdi mdi-lan"></i> Revenue Model
@@ -154,6 +155,7 @@ echo '</script>';
 								to setup your account on AdTechMedia.io platform and enjoy the influx of revenue
 								into your bank account.
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="custom-input">
 								<?php $this->create_form_control(
 									'support_email',
@@ -168,6 +170,7 @@ echo '</script>';
 								Provide your email address that will be used to register, connect and interact
 								with AdTechMedia.io platform
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="block-info">
 								<input type="checkbox" id="terms" name="terms">
 								<label><a id="terms-btn">I agree to Terms of Use</a></label>
