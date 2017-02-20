@@ -129,8 +129,7 @@ echo '</script>';
 							<div class="block-info">
 								Choose the country of origin where revenue will be collected
 							</div>
-						</div>
-						<div class="flex-item-6">
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="form-select custom-label">
 								<label>
 									<i class="mdi mdi-lan"></i> Revenue Model
@@ -144,12 +143,19 @@ echo '</script>';
 							<div class="block-info">
 								Choose the revenue model that will be used on this blog
 							</div>
+							<div class="custom-input">
+								<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div class="general-fields">
-					<div class="flex-container">
 						<div class="flex-item-6">
+							<div class="block-info align-justify">
+								<b>IMPORTANT:</b> Registration step is not required to be able to use this plugin.
+								Once you generate some revenue and want to transfer it into your bank account,
+								then we encourage you to register here (using "Email address"). Follow the steps
+								to setup your account on AdTechMedia.io platform and enjoy the influx of revenue
+								into your bank account.
+							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="custom-input">
 								<?php $this->create_form_control(
 									'support_email',
@@ -164,33 +170,14 @@ echo '</script>';
 								Provide your email address that will be used to register, connect and interact
 								with AdTechMedia.io platform
 							</div>
-						</div>
-						<div class="flex-item-6">
-							<div class="block-info align-justify">
-								<b>IMPORTANT:</b> Registration step is not required to be able to use this plugin.
-								Once you generate some revenue and want to transfer it into your bank account,
-								then we encourage you to register here (using "Email address"). Follow the steps
-								to setup your account on AdTechMedia.io platform and enjoy the influx of revenue
-								into your bank account.
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
+							<div class="block-info">
+								<input type="checkbox" id="terms" name="terms">
+								<label><a id="terms-btn">I agree to Terms of Use</a></label>
 							</div>
-						</div>
-					</div>
-					<div class="flex-container">
-						<div class="flex-item-6">
-							<input type="checkbox" id="terms" name="terms">
-							<label><a  id="terms-btn">I agree to Terms of Use</a></label>
-						</div>
-					</div>
-					<div class="flex-container">
-						<div class="flex-item-6 ">
 							<div class="custom-input">
 								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" id="btn-register" class="btn" disabled><i class="mdi mdi-account-plus"></i> Register</a>
 							</div>
-						</div>
-						<div class="flex-item-6 flex-end">
-						<div class="custom-input">
-							<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
-						</div>
 						</div>
 					</div>
 				</div>
