@@ -595,7 +595,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$author_name   = get_the_author();
 		$author_avatar = get_avatar_url( get_the_author_meta( 'user_email' ) );
 		$script        = "<script>
-										window.ATM_FORCE_NOT_LOCALHOST = true;
+                    window.ATM_FORCE_NOT_LOCALHOST = true;
                     window.ATM_PROPERTY_ID = '$property_id'; 
                     window.ATM_CONTENT_ID = '$content_id'; 
                     window.ATM_CONTENT_PRELOADED = true;
