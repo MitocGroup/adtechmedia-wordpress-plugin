@@ -267,7 +267,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
-
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -313,7 +312,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	function write_sw() {
 		$path = plugins_url( '/js/sw.min.js', __FILE__ );
-
 		// @codingStandardsIgnoreStart
 		echo file_get_contents( $path );
 		// @codingStandardsIgnoreEnd
@@ -334,7 +332,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			// @codingStandardsIgnoreStart
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file       = $plugin_dir . '/js/atm.min.js';
-
 			@unlink( $file );
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
@@ -482,7 +479,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function add_adtechmedia_scripts() {
 		if ( ! is_single() ) {
-			return;
+      return;
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
