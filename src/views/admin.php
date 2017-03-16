@@ -17,7 +17,7 @@ if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
 		foreach ( $countries_element['Currency'] as $currency ) {
-			if ( ! in_array( $currency, $currencies ) ) {
+			if ( ! in_array( $currency, $currencies, true ) ) {
 				$currencies[] = $currency;
 			}
 		}
@@ -118,9 +118,9 @@ echo '</script>';
 								<select name="country" id="country">
 									<?php
 									foreach ( $countries as $name => $methods ) {
-										$selected = ($this->get_plugin_option( 'country' ) == $name) ? 'selected' : '';
+										$selected = ($this->get_plugin_option( 'country' ) === $name) ? 'selected' : '';
 										echo "<option value='" . esc_html( $name ) . "' data-methods='"
-											. json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
+											. wp_json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
 									}
 									?>
 								</select>
@@ -220,7 +220,7 @@ echo '</script>';
 												echo "<option value='";
 												echo esc_html( $currency );
 												echo "' " .
-													(($currency == $price_currency_value) ? 'selected' : '')
+													(($currency === $price_currency_value) ? 'selected' : '')
 													. ' >' .
 													esc_html( strtoupper( $currency ) ) . '</option>';
 											}
@@ -260,7 +260,7 @@ echo '</script>';
 												echo "<option value='";
 												echo esc_html( $content_paywall_one );
 												echo "' " .
-													(($content_paywall_one == $content_paywall_value) ? 'selected' : '')
+													(($content_paywall_one === $content_paywall_value) ? 'selected' : '')
 													. ' >' . esc_html( $content_paywall_one ) . '</option>';
 											}
 											?>
@@ -299,7 +299,7 @@ echo '</script>';
 												echo "<option value='";
 												echo esc_html( $content_offset_type );
 												echo "' " .
-													(($content_offset_type == $offset_type_value) ? 'selected' : '')
+													(($content_offset_type === $offset_type_value) ? 'selected' : '')
 													. ' >' . esc_html( $content_offset_type ) . '</option>';
 											}
 											?>

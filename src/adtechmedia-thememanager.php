@@ -256,9 +256,9 @@ class Adtechmedia_ThemeManager {
 			$themes_history[ $current_theme_info['ThemeName'] ] = $current_theme_id;
 
 			if ( $need_create ) {
-				$option_manager->add_plugin_option( 'themes_history', json_encode( $themes_history ) );
+				$option_manager->add_plugin_option( 'themes_history', wp_json_encode( $themes_history ) );
 			} else {
-				$option_manager->update_plugin_option( 'themes_history', json_encode( $themes_history ) );
+				$option_manager->update_plugin_option( 'themes_history', wp_json_encode( $themes_history ) );
 			}
 		}
 
