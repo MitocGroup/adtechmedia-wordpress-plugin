@@ -59,7 +59,7 @@ class Adtechmedia_Config {
 	public static function set_api_end_point() {
 		if ( self::is_localhost() ) {
 			self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/v1/';
-			self::$conf['sw_js_url']     = 'https://api-dev.adtechmedia.io/atm-admin/atm-build/sw.js';
+			self::$conf['sw_js_url']     = 'https://api-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 		}
 	}
 
@@ -69,8 +69,8 @@ class Adtechmedia_Config {
 	 * @return bool
 	 */
 	public static function is_localhost() {
-
-		return self::$conf['debug'];
+		return self::$conf['debug']
+			|| preg_match('/^localhost/', $_SERVER['SERVER_NAME']);
 	}
 }
 

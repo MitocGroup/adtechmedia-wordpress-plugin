@@ -267,6 +267,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
+		
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -312,9 +313,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	function write_sw() {
 		$path = plugins_url( '/js/sw.min.js', __FILE__ );
-		if ( Adtechmedia_Config::is_localhost() ) {
-			$path = plugins_url( '/js/sw.js', __FILE__ );
-		}
+
 		// @codingStandardsIgnoreStart
 		echo file_get_contents( $path );
 		// @codingStandardsIgnoreEnd
@@ -335,9 +334,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			// @codingStandardsIgnoreStart
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file       = $plugin_dir . '/js/atm.min.js';
-			if ( Adtechmedia_Config::is_localhost() ) {
-				$file = $plugin_dir . '/js/atm.js';
-			}
+
 			@unlink( $file );
 			if ( isset( $_POST['revenueMethod'] ) ) {
 				$revenue_method = $_POST['revenueMethod'];
@@ -484,6 +481,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
+		if ( !is_single() ) {
+			return;
+		}
+		
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			$is_old = empty( $is_old );
@@ -494,14 +495,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$plugin_dir = plugin_dir_path( __FILE__ );
 			$file       = $plugin_dir . '/js/atm.min.js';
 
-			if ( Adtechmedia_Config::is_localhost() ) {
-				$path = plugins_url( '/js/atm.js', __FILE__ );
-				$file = $plugin_dir . '/js/atm.js';
-			}
 			if ( ! file_exists( $file ) || $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
-				$data     = gzdecode( file_get_contents( $script . "?v=" . time() ) );
+				$data     = @gzdecode( file_get_contents( $script . "?v=" . time() ) );
 				$new_hash = md5( $data );
 				if ( empty( $hash ) || ( $hash != $new_hash ) ) {
 					$this->add_plugin_option( 'atm-js-hash', $new_hash );
@@ -514,16 +511,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 
 			$sw_file = $plugin_dir . '/js/sw.min.js';
-			if ( Adtechmedia_Config::is_localhost() ) {
-				$sw_file = $plugin_dir . '/js/sw.js';
-			}
+
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
-				if ( Adtechmedia_Config::is_localhost() ) {
-					$data = ( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
-				} else {
-					$data = gzdecode( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
-				}
+				$data = @gzdecode( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
@@ -614,8 +605,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php esc_html_e( 'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
-				'adtechmedia'
+			<p><?php echo __( 'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+				'adtechmedia-plugin'
 				); ?></p>
 		</div>
 		<?php
@@ -629,8 +620,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php esc_html_e( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
-				'adtechmedia'
+			<p><?php echo __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+				'adtechmedia-plugin'
 				); ?></p>
 		</div>
 		<?php
