@@ -35,7 +35,7 @@ ratings:
     - '**.es6'
     - '**.module'
 exclude_paths:
-  - 'src/views/template*'
+  - '**template*.php'
   - '**/bin'
   - '**/test'
   - '**/tests'
