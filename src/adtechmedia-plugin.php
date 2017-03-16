@@ -267,7 +267,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
-		
+
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -481,10 +481,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( !is_single() ) {
+		if ( ! is_single() ) {
 			return;
 		}
-		
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			$is_old = empty( $is_old );
@@ -668,7 +667,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					];
 				}
 
-				echo json_encode( $configs );
+				echo wp_json_encode( $configs );
 				die();
 			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
 				$data = [];
