@@ -820,6 +820,14 @@ jQuery(document).ready(function () {
       });
     }
 
+    var notyError = throttle(function (errorsMeassge) {
+      return noty({
+        type : 'error',
+        text : errorsMeassge,
+        timeout : 3000
+      });
+    }, 4000);
+
     function addValidate(form, rules, messages) {
       jQuery.each(rules, function (name, item) {
         jQuery('input[name="' + name + '"]').on('focus', function () {
@@ -835,7 +843,7 @@ jQuery(document).ready(function () {
           }
         });
       });
-
+      
       return form.validate({
         rules : rules,
         errorClass : 'invalid',
@@ -859,11 +867,7 @@ jQuery(document).ready(function () {
             errorsMeassge += '<br>' + item;
           });
           if (errorsMeassge !== '') {
-            return noty({
-              type : 'error',
-              text : errorsMeassge,
-              timeout : 5000
-            });
+            return notyError(errorsMeassge);
           }
         },
         messages : messages
