@@ -747,14 +747,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'key' ),
 					$data
 				);
-				
 				$this->update_prop();
-				
-				// regenerate atm.js and sw.js
+				/* regenerate atm.js and sw.js */
 				$this->add_plugin_option( 'atm-js-is-old', '1' );
-				
 				echo 'ok';
-
 				die();
 			}
 		}
