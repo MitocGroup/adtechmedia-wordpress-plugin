@@ -425,7 +425,7 @@ echo '</script>';
 			<i class="custom-icon templates"></i>
 			Templates management
 			<div class=" pull-right">
-				<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i>Reset to default values</button>
+				<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i> Reset to default values</button>
 			</div>
 		</h1>
 
