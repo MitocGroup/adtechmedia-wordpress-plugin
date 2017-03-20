@@ -35,7 +35,7 @@ class Adtechmedia_Config {
 		'payment_pledged'                => 2,
 		'ads_video'                      => '',
 		'content_lock'                   => 'blur+scramble',
-		'revenue_method'                 => 'micropayments',
+		'revenue_method'                 => 'advertising+micropayments',
 		'price_currency'                 => 'usd',
 		'content_paywall'                => 'transactions',
 		'content_offset_type'            => 'paragraphs',

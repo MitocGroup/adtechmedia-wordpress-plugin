@@ -483,6 +483,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
+			
+			//var_dump('$is_old', $is_old ? 'INVALIDATE' : 'NORMAL');die();//@todo remove
+			
 			$is_old = empty( $is_old );
 			if ( $is_old ) {
 				$this->update_prop();
@@ -683,7 +686,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					}
 				}
 				// @codingStandardsIgnoreEnd
-				$this->update_prop();
 
 				$options = [
 					'template_inputs'                => 'inputs',
@@ -704,10 +706,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 				$components_templates = [];
 				if ( isset( $_POST['components'] ) ) {
-					$components = sanitize_text_field( wp_unslash( $_POST['components'] ) );
+					$components =  json_decode( wp_unslash( $_POST['components'] ), true );
 				}
 				if ( isset( $_POST['templates'] ) ) {
-					$templates = sanitize_text_field( wp_unslash( $_POST['templates'] ) );
+					$templates = json_decode( wp_unslash( $_POST['templates'] ), true );
 				}
 				// @codingStandardsIgnoreEnd
 				if ( ! is_array( $components ) ) {
@@ -745,6 +747,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'key' ),
 					$data
 				);
+				
+				$this->update_prop();
+				
+				// regenerate atm.js and sw.js
+				$this->add_plugin_option( 'atm-js-is-old', '1' );
+				
 				echo 'ok';
 
 				die();
