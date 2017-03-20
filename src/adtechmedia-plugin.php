@@ -394,7 +394,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
 					],
 					'styles'      => [
-						'main' => base64_encode( $data['template_overall_styles'] ),
+						'main' => base64_encode(
+							$data['template_overall_styles'] .
+							$this->get_plugin_option( 'template_overall_styles_patch' )
+						),
 					],
 				];
 				if ( count( $componentsTemplates ) == 0 ) {
