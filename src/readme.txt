@@ -8,8 +8,8 @@ Tags: adtech, advertising, micropayments, media, revenue
 License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
-Tested up to: 4.7.2
-Stable tag: 0.7
+Tested up to: 4.7.3
+Stable tag: 0.8
 
 
 == Description ==
@@ -37,6 +37,11 @@ Meanwhile, frequently asked questions will be compiled and published as we evolv
 
 
 == Changelog ==
+
+= 0.8 =
+- Enable advertising
+- Fix messaging values
+- Fix responsive design
 
 = 0.7 =
 - Service workers hotfix
