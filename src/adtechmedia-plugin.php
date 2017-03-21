@@ -394,7 +394,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
 					],
 					'styles'      => [
-						'main' => base64_encode( $data['template_overall_styles'] ),
+						'main' => base64_encode(
+							$data['template_overall_styles'] .
+							$this->get_plugin_option( 'template_overall_styles_patch' )
+						),
 					],
 				];
 				if ( count( $componentsTemplates ) == 0 ) {
@@ -683,7 +686,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					}
 				}
 				// @codingStandardsIgnoreEnd
-				$this->update_prop();
 
 				$options = [
 					'template_inputs'                => 'inputs',
@@ -704,10 +706,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 				$components_templates = [];
 				if ( isset( $_POST['components'] ) ) {
-					$components = sanitize_text_field( wp_unslash( $_POST['components'] ) );
+					$components =  json_decode( wp_unslash( $_POST['components'] ), true );
 				}
 				if ( isset( $_POST['templates'] ) ) {
-					$templates = sanitize_text_field( wp_unslash( $_POST['templates'] ) );
+					$templates = json_decode( wp_unslash( $_POST['templates'] ), true );
 				}
 				// @codingStandardsIgnoreEnd
 				if ( ! is_array( $components ) ) {
@@ -745,8 +747,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'key' ),
 					$data
 				);
+				$this->update_prop();
+				/* regenerate atm.js and sw.js */
+				$this->add_plugin_option( 'atm-js-is-old', '1' );
 				echo 'ok';
-
 				die();
 			}
 		}

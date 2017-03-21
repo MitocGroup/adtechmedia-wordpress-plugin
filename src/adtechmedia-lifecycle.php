@@ -96,6 +96,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'content_paywall', Adtechmedia_Config::get( 'content_paywall' ) );
 		$this->add_plugin_option( 'content_offset_type', Adtechmedia_Config::get( 'content_offset_type' ) );
 		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
+		$this->add_plugin_option( 'template_overall_styles_patch', Adtechmedia_Config::get( 'template_overall_styles_patch' ) );
 		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
 		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
 		$this->add_plugin_option( 'theme_config_id', 'default' );

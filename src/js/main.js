@@ -2,6 +2,39 @@
  * Created by yama_gs on 21.10.2016.
  */
 
+function throttle(func, ms) {
+  var isThrottled = false,
+    savedArgs,
+    savedThis;
+
+  function wrapper() {
+    if (isThrottled) {
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+    func.apply(this, arguments);
+    isThrottled = true;
+    setTimeout(function () {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
+
+  return wrapper;
+}
+
+var notify = throttle(function (type, text) {
+  return noty({
+    type : type,
+    text : text,
+    timeout : 3000,
+  });
+}, 3500);
+
 function getCSSFields(inputs) {
   var styles = {};
 
@@ -164,7 +197,7 @@ function initModal() {
 
 jQuery(document).ready(function () {
   /*global atmTpl, templateInputs, templateStyleInputs, save_template, noty, return_to_default_values, templateOverallStylesInputsDefault, templatePositionInputs, templateOverallStylesInputs */
-  atmTpl.default.config({revenueMethod : 'micropayments'});
+  //atmTpl.default.config({revenueMethod : 'micropayments'});
   var atmTemplating = atmTpl.default;
 
   //atmTpl.config({revenueMethod: 'advertising'});
@@ -455,7 +488,7 @@ jQuery(document).ready(function () {
     // read available template stories
     //atmTpl.default.config({revenueMethod: 'advertising'});
     var stories = atmTemplating.stories();
-    console.log(stories);
+
     var views = {};
     var tabViews = {};
     var inputs = {};
@@ -494,38 +527,6 @@ jQuery(document).ready(function () {
       senderParentCollapsed.html(tmp);
     }
 
-    function throttle(func, ms) {
-      var isThrottled = false,
-        savedArgs,
-        savedThis;
-
-      function wrapper() {
-        if (isThrottled) {
-          savedArgs = arguments;
-          savedThis = this;
-          return;
-        }
-        func.apply(this, arguments);
-        isThrottled = true;
-        setTimeout(function () {
-          isThrottled = false;
-          if (savedArgs) {
-            wrapper.apply(savedThis, savedArgs);
-            savedArgs = savedThis = null;
-          }
-        }, ms);
-      }
-
-      return wrapper;
-    }
-
-    var showNoty = throttle(function(variable){
-      noty({
-        type : 'error',
-        text : 'Variable {' + variable + '} is not defined.',
-        timeout : 3000
-      });
-    }, 3000);
     var invalidVar = '';
     function checkInputVars(input, tabName) {
       var inputName = input.attr('name');
@@ -540,7 +541,7 @@ jQuery(document).ready(function () {
           while ((match = reg.exec(inputValue)) !== null) {
             if (!inputVars.includes(match[1])) {
               invalidVar = match[1];
-              showNoty(match[1]);
+              notify('error', 'Variable {' + match[1] + '} is not defined.');
 
               return false;
             }
@@ -813,20 +814,8 @@ jQuery(document).ready(function () {
     }
 
     function showSuccess() {
-      noty({
-        type : 'success',
-        text : 'AdTechMedia parameters have been saved successfully',
-        timeout : 2000
-      });
+      notify('success', 'AdTechMedia parameters have been saved successfully');
     }
-
-    var notyError = throttle(function (errorsMeassge) {
-      return noty({
-        type : 'error',
-        text : errorsMeassge,
-        timeout : 3000
-      });
-    }, 4000);
 
     function addValidate(form, rules, messages) {
       jQuery.each(rules, function (name, item) {
@@ -867,7 +856,7 @@ jQuery(document).ready(function () {
             errorsMeassge += '<br>' + item;
           });
           if (errorsMeassge !== '') {
-            return notyError(errorsMeassge);
+            return notify('error', errorsMeassge);
           }
         },
         messages : messages
@@ -875,11 +864,10 @@ jQuery(document).ready(function () {
     }
 
     function showError() {
-      noty({
-        type : 'error',
-        text : 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.',
-        timeout : 2000
-      });
+      notify(
+        'error', 
+        'AdTechMedia parameters failed to save. Please retry or contact plugin support team.'
+      );
     }
 
     jQuery('.save-templates').bind('click', function (e) {
@@ -1011,11 +999,7 @@ jQuery(document).ready(function () {
           });
         }
       } else {
-        noty({
-          type : 'error',
-          text : 'Variable {' + invalidVar + '} is not defined.',
-          timeout : 5000
-        });
+        notify('error',  'Variable {' + invalidVar + '} is not defined.');
       }
     });
 
@@ -1269,15 +1253,11 @@ jQuery(document).ready(function () {
               position : JSON.stringify(getPositionFields()),
               overallStyles : getOverallStyling(),
               overallStylesInputs : JSON.stringify(getOverallStylingFields()),
-              components : Object.keys(viewComponents),
-              templates : viewComponents
+              components : JSON.stringify(Object.keys(viewComponents)),
+              templates : JSON.stringify(viewComponents)
             },
             success : function (response) {
-              noty({
-                type : 'success',
-                text : 'AdTechMedia parameters have been return to default values',
-                timeout : 2000
-              });
+              notify('success', 'AdTechMedia parameters have been return to default values');
 
               jQuery.each(jQuery('button.btn'), function (i, button) {
                 removeLoader(jQuery(button));
