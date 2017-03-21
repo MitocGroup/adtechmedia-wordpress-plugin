@@ -75,6 +75,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return void
 	 */
 	public function activate() {
+		delete_transient( 'adtechmedia-supported-countries-new' );
 		$website = get_home_url();
 		$name = preg_replace( '/https?:\/\//', '', $website );
 		$admin_email = get_option( 'admin_email' );
