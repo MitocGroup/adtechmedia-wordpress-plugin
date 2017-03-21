@@ -2,38 +2,38 @@
  * Created by yama_gs on 21.10.2016.
  */
 
- function throttle(func, ms) {
-   var isThrottled = false,
-     savedArgs,
-     savedThis;
+function throttle(func, ms) {
+  var isThrottled = false,
+    savedArgs,
+    savedThis;
 
-   function wrapper() {
-     if (isThrottled) {
-       savedArgs = arguments;
-       savedThis = this;
-       return;
-     }
-     func.apply(this, arguments);
-     isThrottled = true;
-     setTimeout(function () {
-       isThrottled = false;
-       if (savedArgs) {
-         wrapper.apply(savedThis, savedArgs);
-         savedArgs = savedThis = null;
-       }
-     }, ms);
-   }
+  function wrapper() {
+    if (isThrottled) {
+      savedArgs = arguments;
+      savedThis = this;
+      return;
+    }
+    func.apply(this, arguments);
+    isThrottled = true;
+    setTimeout(function () {
+      isThrottled = false;
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+  }
 
-   return wrapper;
- }
+  return wrapper;
+}
 
- var notify = throttle(function (type, text) {
-   return noty({
-     type : type,
-     text : text,
-     timeout : 3000,
-   });
- }, 3500);
+var notify = throttle(function (type, text) {
+  return noty({
+    type : type,
+    text : text,
+    timeout : 3000,
+  });
+}, 3500);
 
 function getCSSFields(inputs) {
   var styles = {};
