@@ -70,11 +70,10 @@ class Adtechmedia_Config {
 	 * @return bool
 	 */
 	public static function is_localhost() {
-		return self::$conf['debug']
-		|| (
-				isset( $_SERVER['SERVER_NAME'] )
-				&& preg_match( '/^localhost/', sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) ) )
-			);
+		$server_name = isset( $_SERVER['SERVER_NAME'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) )
+			: null;
+		return self::$conf['debug'] || preg_match( '/^([^\.]+\.)?localhost/i', $server_name );
 	}
 }
 
