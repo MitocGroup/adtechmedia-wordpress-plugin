@@ -136,7 +136,7 @@ echo '</script>';
 								</label>
 								<?php $this->create_form_control(
 									'revenue_method',
-									array_merge( [ '' ] ,$countries[ $this->get_plugin_option( 'country' ) ] ),
+									array_merge( [ '' ], $countries[ $this->get_plugin_option( 'country' ) ] ),
 									$this->get_plugin_option( 'revenue_method' )
 								); ?>
 							</div>

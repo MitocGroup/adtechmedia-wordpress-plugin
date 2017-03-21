@@ -27,6 +27,7 @@ class Adtechmedia_ThemeManager {
 			$option_manager->update_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
 			$option_manager->update_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
 		} else {
+			$retrieve_config = $is_retrieve['Config'] ? $is_retrieve['Config'] : array();
 			if ( array_key_exists( 'Default', $is_retrieve ) && true === $is_retrieve['Default'] ) {
 				$option_manager->update_plugin_option( 'theme_config_id', 'default' );
 			} else {
@@ -34,24 +35,23 @@ class Adtechmedia_ThemeManager {
 			}
 			$option_manager->update_plugin_option( 'theme_config_name', array_key_exists( 'ConfigName', $is_retrieve ) ? $is_retrieve['ConfigName'] : '' );
 			$option_manager->update_plugin_option( 'template_position',
-				array_key_exists( 'template_position', $is_retrieve['Config'] ) ?
+				array_key_exists( 'template_position', $retrieve_config ) ?
 					$is_retrieve['Config']['template_position'] :
 					Adtechmedia_Config::get( 'template_position' )
 			);
 			$option_manager->update_plugin_option( 'template_overall_styles',
-				array_key_exists( 'template_overall_styles', $is_retrieve['Config'] ) ?
+				array_key_exists( 'template_overall_styles', $retrieve_config ) ?
 					$is_retrieve['Config']['template_overall_styles'] :
 					Adtechmedia_Config::get( 'template_overall_styles' )
 			);
 			$option_manager->update_plugin_option( 'template_overall_styles_inputs',
-				array_key_exists( 'template_overall_styles_inputs', $is_retrieve['Config'] ) ?
+				array_key_exists( 'template_overall_styles_inputs', $retrieve_config ) ?
 					$is_retrieve['Config']['template_overall_styles_inputs'] :
 					Adtechmedia_Config::get( 'template_overall_styles_inputs' )
 			);
 		}
 
 		self::add_current_theme_to_themes_history();
-
 		self::save_template_in_api();
 	}
 
