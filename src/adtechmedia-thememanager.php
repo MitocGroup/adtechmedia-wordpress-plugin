@@ -279,7 +279,8 @@ class Adtechmedia_ThemeManager {
 				'toggleCb' => $option_manager->get_toggle_cb_js( json_decode( stripslashes( $option_manager->get_plugin_option( 'template_position' ) ), true ) ),
 			],
 			'styles'      => [
-				'main' => base64_encode( $option_manager->get_plugin_option( 'template_overall_styles' ) ),
+				'main' => base64_encode( $option_manager->get_plugin_option( 'template_overall_styles' ) )
+					. $option_manager->get_plugin_option( 'template_overall_styles_patch' ),
 			],
 		];
 
