@@ -103,7 +103,7 @@ class Adtechmedia_Request {
 			return false;
 		}
 		$list = get_transient( 'adtechmedia-supported-countries-new' );
-		if ( false === $list ) {
+		if ( empty( $list ) ) {
 			$response = self::make(
 				Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/supported-countries',
 				'GET',
@@ -114,68 +114,101 @@ class Adtechmedia_Request {
 
 			if ( $response && isset( $response['Countries'] ) ) {
 				$list = $response['Countries'];
+				
+				set_transient( 'adtechmedia-supported-countries-new', $list, 3600 * 2 );
 			} else {
-				$list = false;
+				$list = [];
 			}
-			set_transient( 'adtechmedia-supported-countries-new', $list, 3600 * 2 );
 		}
 
 		return $list;
+	}
+	
+	/**
+	 * Request an API token
+	 *
+	 * @param string $email
+	 * @param string $returnTemplate
+	 * @return bool|mixed
+	 */
+	public static function request_api_token( $email, $returnTemplate ) {
+		$data = [
+			'email' => $email,
+			'link_tpl' => $returnTemplate,
+		];
+		
+		self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'deep-account/client/token-send',
+			'PUT',
+			[],
+			$data,
+			[]
+		);
+		
+		return false;
+	}
+	
+	/**
+	 * Exchange API token to key
+	 *
+	 * @param string $email
+	 * @param string $token
+	 * @return bool|mixed
+	 */
+	public static function api_token2key( $email, $token ) {
+		$data = [
+			'email' => $email,
+			'temp_token' => $token,
+		];
+		
+		$response = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'deep-account/client/token-exchange',
+			'GET',
+			[],
+			$data,
+			[ 'apiKey' ]
+		);
+		
+		if ( $response && isset( $response['apiKey'] ) ) {
+			return $response['apiKey'];
+		}
+		
+		return false;
 	}
 
 	/**
 	 * Create API key
 	 *
-	 * @param string $name key name.
-	 * @param string $host website host.
+	 * @param string $email
 	 * @return bool|mixed
 	 */
-	public static function api_key_create( $name, $host ) {
+	public static function api_key_create( $email ) {
 		$data = [
-			'Name' => $name,
-			'Hostname' => $host,
+			'Email' => $email,
 		];
 		$response = self::make(
-			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/api-gateway-key/create',
-			'PUT',
-			[],
-			$data,
-			[ 'Key' ]
-		);
-
-		if ( $response && isset( $response['Key'] ) ) {
-
-			return $response['Key'];
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Update API key
-	 *
-	 * @param string $id id of key.
-	 * @param string $name key name.
-	 * @param string $host website host.
-	 * @return bool|mixed
-	 */
-	public static function api_key_update( $id, $name, $host ) {
-		$data = [
-			'id' => $id,
-			'Name' => $name,
-			'Hostname' => $host,
-		];
-		$response = self::make(
-			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/api-gateway-key/update',
+			Adtechmedia_Config::get( 'api_end_point' ) . 'deep-account/client/register',
 			'POST',
 			[],
 			$data,
-			[ 'Key' ]
+			[]
 		);
 
-		if ( $response && isset( $response['Key'] ) ) {
-
-			return $response['Key'];
+		if ( $response ) {
+			if ( isset( $response['apiKey'] ) ) {
+				return $response['apiKey'];
+			} else if ( isset( $response['errorMessage'] ) ) {
+				$error = json_decode( $response['errorMessage'], true );
+				
+				if ( preg_match( '/UsernameExistsException/i', $error['errorMessage'] ) ) {
+					$error['errorMessage'] = sprintf(
+						'An existing client found for email "%s". Please login to be able to use the plugin.',
+						$email
+					);
+				}
+				
+				throw new Error( $error['errorMessage'] );
+			}
 		} else {
 			return false;
 		}
@@ -433,6 +466,7 @@ class Adtechmedia_Request {
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
+			
 			if ( self::check_response( $response, $excepted_params ) ) {
 				set_time_limit( $max_time );
 				return json_decode( $response['body'], true );
@@ -461,6 +495,7 @@ class Adtechmedia_Request {
 		} else {
 			return false;
 		}
+		
 		foreach ( $params as $key ) {
 			if ( ! isset( $body[ $key ] ) ) {
 				return false;

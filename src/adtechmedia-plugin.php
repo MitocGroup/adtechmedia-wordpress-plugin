@@ -157,12 +157,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	protected function un_install_database_tables() {
 		global $wpdb;
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"DROP TABLE IF EXISTS `$table_name`"
-		);
-		// @codingStandardsIgnoreEnd
+		// $table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// // @codingStandardsIgnoreStart
+		// $wpdb->query(
+		// 	"DROP TABLE IF EXISTS `$table_name`"
+		// );
+		// // @codingStandardsIgnoreEnd
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
 		// @codingStandardsIgnoreStart
 		$wpdb->query(
@@ -238,8 +238,34 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( ! is_admin() && ( empty( $key ) || empty( $property_id ) ) ) {
 			return;
 		}
-		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
-			$key_check      = $this->check_api_key_exists();
+		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {			
+			if ( !$this->get_plugin_option( 'api-token-sent' ) ) {
+				$this->add_plugin_option( 'api-token-sent', true );
+				$this->send_api_token();
+			}
+			
+			if ( isset( $_GET['atm-token'] ) && !empty( $_GET['atm-token'] ) ) {
+				$atmToken = $_GET['atm-token'];
+				
+				$key = Adtechmedia_Request::api_token2key(
+					$this->get_plugin_option( 'support_email' ),
+					$_GET['atm-token']
+				);
+				
+				if ( !empty( $key ) ) {
+					$this->delete_plugin_option( 'api-token-sent', false );
+					$this->add_plugin_option( 'key', $key );
+				}
+			}
+			
+			$key_check = false;
+			
+			try {
+				$key_check = $this->check_api_key_exists();
+			} catch ( Error $error ) {
+				$this->keyError = $error->getMessage();
+			}
+			
 			$property_check = $this->check_prop();
 
 			if ( ! $key_check ) {
@@ -287,6 +313,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// http://plugin.michael-simpson.com/?page_id=39.
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
+		if ( $this->get_plugin_option( 'api-token-sent' ) ) {
+			add_action( 'wp_ajax_send_api_token',
+				array(
+					&$this,
+					'send_api_token',
+				)
+			);
+		}
 		add_action( 'wp_ajax_save_template',
 			array(
 				&$this,
@@ -304,6 +338,27 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				&$this,
 				'change_theme_configs',
 			)
+		);
+	}
+
+	/**
+	 * Request an api token to be exchanged to an api key
+	 */
+	public function send_api_token() {
+		$actual_link = ( isset($_SERVER['HTTPS']) ? 'https' : 'http' ) 
+			. "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			
+		if ( preg_match( '/\?/', $actual_link ) ) {
+			$actual_link .= '&';
+		}	else {
+			$actual_link .= '?';
+		}
+		
+		$actual_link .= 'atm-token=%tmp-token%'; // this is replaced on ATM backend side
+		
+		Adtechmedia_Request::request_api_token(
+			$this->get_plugin_option( 'support_email' ),
+			$actual_link
 		);
 	}
 
@@ -457,6 +512,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'save_template',
 			array(
 				'ajax_url' => $this->get_ajax_url( 'save_template' ),
+				'nonce'    => wp_create_nonce( 'adtechmedia-nonce' ),
+			)
+		);
+		wp_localize_script( 'adtechmedia-admin-js',
+			'send_api_token',
+			array(
+				'ajax_url' => $this->get_ajax_url( 'send_api_token' ),
 				'nonce'    => wp_create_nonce( 'adtechmedia-nonce' ),
 			)
 		);
@@ -618,7 +680,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php echo __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+			<p><?php echo $this->keyError ?: __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
 				'adtechmedia-plugin'
 				); ?></p>
 		</div>

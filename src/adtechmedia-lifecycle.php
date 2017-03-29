@@ -76,6 +76,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function activate() {
 		delete_transient( 'adtechmedia-supported-countries-new' );
+		
 		$website = get_home_url();
 		$name = preg_replace( '/https?:\/\//', '', $website );
 		$admin_email = get_option( 'admin_email' );
@@ -102,14 +103,39 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
 		$this->add_plugin_option( 'theme_config_id', 'default' );
 		$this->add_plugin_option( 'theme_config_name', '' );
-		$this->check_api_key_exists();
-		$this->check_prop();
+		
+		try {
+			$this->check_api_key_exists();
+			$this->check_prop();
 
-		Adtechmedia_ThemeManager::init_theme_config_model();
-
+			Adtechmedia_ThemeManager::init_theme_config_model();
+		} catch ( Error $error ) {
+			$this->activationError = $error->getMessage();
+			
+			add_action( 'admin_notices',
+				array(
+					&$this,
+					'activation_error',
+				)
+			);
+		}
+		
 		// Add schedule event update properties.
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
+	}
+	
+	/**
+	 * Show error if activation failed
+	 */
+	public function activation_error() {
+		// @codingStandardsIgnoreStart
+		?>
+		<div class="error notice">
+			<p><?php echo $this->activationError ?></p>
+		</div>
+		<?php
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -121,8 +147,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$key = $this->get_plugin_option( 'key' );
 		if ( empty( $key ) ) {
 			$key = Adtechmedia_Request::api_key_create(
-				$this->get_plugin_option( 'website_domain_name' ),
-				$this->get_plugin_option( 'website_url' )
+				$this->get_plugin_option( 'support_email' )
 			);
 			if ( empty( $key ) ) {
 				return false;
