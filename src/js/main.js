@@ -50,12 +50,13 @@ function request_api_token(event) {
     },
     success : function (response) {
       notify('success', 'AdTechMedia api authorization token request has been sent');
-      event.target.disabled = false;
     },
     error : function (response) {
       notify('error', 'Error requesting AdTechMedia api authorization token. Please try again later...');
+    },
+    complete : function() {
       event.target.disabled = false;
-    }
+    },
   });
   
   return false;
