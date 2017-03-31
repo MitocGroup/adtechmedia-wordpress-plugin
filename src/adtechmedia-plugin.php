@@ -344,22 +344,30 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	/**
 	 * Request an api token to be exchanged to an api key
 	 */
-	public function send_api_token() {
+	public function send_api_token($direct = false) {
+		$trigger = $direct;
 		$actual_link = ( isset($_SERVER['HTTPS']) ? 'https' : 'http' ) 
 			. "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-			
-		if ( preg_match( '/\?/', $actual_link ) ) {
-			$actual_link .= '&';
-		}	else {
-			$actual_link .= '?';
+		
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
+			$trigger = true;
+			$actual_link = isset( $_POST['return_link_tpl'] ) ? sanitize_text_field( wp_unslash( $_POST['return_link_tpl'] ) ) : $actual_link;
 		}
 		
-		$actual_link .= 'atm-token=%tmp-token%'; // this is replaced on ATM backend side
-		
-		Adtechmedia_Request::request_api_token(
-			$this->get_plugin_option( 'support_email' ),
-			$actual_link
-		);
+		if ( $trigger ) {
+			if ( preg_match( '/\?/', $actual_link ) ) {
+				$actual_link .= '&';
+			}	else {
+				$actual_link .= '?';
+			}
+			
+			$actual_link .= 'atm-token=%tmp-token%'; // this is replaced on ATM backend side
+			
+			Adtechmedia_Request::request_api_token(
+				$this->get_plugin_option( 'support_email' ),
+				$actual_link
+			);
+		}
 	}
 
 	/**
@@ -624,7 +632,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'content_offset' ),
 					$this->get_plugin_option( 'key' )
 				);
-				Adtechmedia_ContentManager::set_content( $id, $new_content );
+				
+				if ( !empty( $new_content ) ) {
+					Adtechmedia_ContentManager::set_content( $id, $new_content );
+				}
 
 				return $this->content_wrapper( $new_content );
 			}

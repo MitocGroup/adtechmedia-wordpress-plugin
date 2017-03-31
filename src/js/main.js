@@ -47,6 +47,7 @@ function request_api_token(event) {
     data : {
       action : 'send_api_token',
       nonce : send_api_token.nonce,
+      return_link_tpl : window.location.toString(),
     },
     success : function (response) {
       notify('success', 'AdTechMedia api authorization token request has been sent');

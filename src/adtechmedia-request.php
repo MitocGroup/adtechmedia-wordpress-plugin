@@ -28,7 +28,7 @@ class Adtechmedia_Request {
 		$data = [
 			'ContentId' => $content_id,
 			'PropertyId' => $property_id,
-			'Content' => $content,
+			'Content' => addslashes( preg_replace( '/\n/', '', $content ) )
 		];
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/content/create',
@@ -133,8 +133,8 @@ class Adtechmedia_Request {
 	 */
 	public static function request_api_token( $email, $returnTemplate ) {
 		$data = [
-			'email' => $email,
-			'link_tpl' => $returnTemplate,
+			'Email' => $email,
+			'LinkTpl' => $returnTemplate,
 		];
 		
 		self::make(
@@ -157,8 +157,8 @@ class Adtechmedia_Request {
 	 */
 	public static function api_token2key( $email, $token ) {
 		$data = [
-			'email' => $email,
-			'temp_token' => $token,
+			'Email' => $email,
+			'TempToken' => $token,
 		];
 		
 		$response = self::make(
@@ -439,9 +439,10 @@ class Adtechmedia_Request {
 	 * @param array  $headers headers.
 	 * @param array  $body body.
 	 * @param array  $excepted_params params excepted in response.
+	 * @param mixed  $json_flags
 	 * @return array|bool|mixed|object
 	 */
-	public static function make( $url, $method = 'GET', $headers = [], $body = [], $excepted_params = [] ) {
+	public static function make( $url, $method = 'GET', $headers = [], $body = [], $excepted_params = [], $json_flags = null ) {
 		$max_time = ini_get( 'max_execution_time' );
 		set_time_limit( 0 );
 		$headers = array_merge( [ 'Content-Type' => 'application/json' ], $headers );
@@ -458,19 +459,27 @@ class Adtechmedia_Request {
 				$body = null;
 			}
 		} else {
-			$body = wp_json_encode( $body );
+			if ( null === $json_flags ) {
+				$body = wp_json_encode( $body );
+			} else {
+				$body = wp_json_encode( $body, $json_flags );
+			}
 		}
 		while ( $tries < $max_tries ) {
-
 			$response = wp_remote_request(
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
 			
-			if ( self::check_response( $response, $excepted_params ) ) {
-				set_time_limit( $max_time );
-				return json_decode( $response['body'], true );
+			if ( isset( $response ) && !( $response instanceof WP_Error ) && isset( $response['body'] ) ) {
+				if ( self::check_response( $response, $excepted_params ) ) {
+					set_time_limit( $max_time );
+					return json_decode( $response['body'], true );
+				}
+				
+				return false;
 			}
+			
 			$tries++;
 			$delay *= $factor;
 			usleep( $delay );
