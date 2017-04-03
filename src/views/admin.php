@@ -23,7 +23,7 @@ if ( is_array( $countries_list ) ) {
 		}
 	}
 }
-// mock for better UX
+/* mock for better UX */
 if ( empty( $countries ) && empty( $this->get_plugin_option( 'key' ) ) ) {
 	$countries['United States'] = [ 'advertising+micropayments' ];
 }
@@ -97,17 +97,17 @@ echo '</script>';
 <style id="overall-template-styling">
 	.atm-blured-config-section > *:not(.atm-missing-key-msg) {
 		-webkit-filter: blur(10px);
-    -moz-filter: blur(10px);
-    -o-filter: blur(10px);
-    -ms-filter: blur(10px);
-    filter: blur(10px);
-    -webkit-transition: all 5s linear;
-    transition        : all 5s linear;
-    -moz-transition   : all 5s linear;
-    -webkit-transition: all 5s linear;
-    -o-transition     : all 5s linear;
+		-moz-filter: blur(10px);
+		-o-filter: blur(10px);
+		-ms-filter: blur(10px);
+		filter: blur(10px);
+		-webkit-transition: all 5s linear;
+		transition        : all 5s linear;
+		-moz-transition   : all 5s linear;
+		-webkit-transition: all 5s linear;
+		-o-transition     : all 5s linear;
 		-webkit-touch-callout: none;
-	 	-webkit-user-select: none;
+		-webkit-user-select: none;
 		-khtml-user-select: none;
 		-moz-user-select: none;
 		-ms-user-select: none;
@@ -149,7 +149,7 @@ echo '</script>';
 			<div class="content <?php echo empty( $this->get_plugin_option( 'key' ) ) ? 'atm-blured-config-section' : '' ?>">
 				<div class="atm-missing-key-msg" <?php echo empty( $this->get_plugin_option( 'key' ) ) ? '' : 'style="display: none !important"' ?>>
 					<p>
-						The email <b>"<?php echo $this->get_plugin_option( 'support_email' ) ?>"</b> has been already used for activation.<br/>
+						The email <b>"<?php echo esc_html( $this->get_plugin_option( 'support_email' ) ) ?>"</b> has been already used for activation.<br/>
 						In order to activate this one you have to confirm your identity.<br/>
 						We've sent the confirmation email.<br/>
 						Please check out your inbox.

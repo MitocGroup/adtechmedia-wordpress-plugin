@@ -238,27 +238,27 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( ! is_admin() && ( empty( $key ) || empty( $property_id ) ) ) {
 			return;
 		}
-		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {			
+		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
 			if ( empty( $this->get_plugin_option( 'key' ) ) ) {
-				if ( !$this->get_plugin_option( 'api-token-sent' ) ) {
+				if ( ! $this->get_plugin_option( 'api-token-sent' ) ) {
 					$this->add_plugin_option( 'api-token-sent', true );
 					$this->send_api_token();
 				}
-				
-				if ( isset( $_GET['atm-token'] ) && !empty( $_GET['atm-token'] ) ) {
-					$atmToken = $_GET['atm-token'];
-					
+
+				if ( isset( $_GET['atm-token'] ) && ! empty( $_GET['atm-token'] ) ) {
+					$atm_token = sanitize_text_field( wp_unslash( $_GET['atm-token'] ) );
+
 					$key = Adtechmedia_Request::api_token2key(
 						$this->get_plugin_option( 'support_email' ),
-						$_GET['atm-token']
+						$atm_token
 					);
-					
-					if ( !empty( $key ) ) {
+
+					if ( ! empty( $key ) ) {
 						$this->delete_plugin_option( 'api-token-sent' );
 						$this->add_plugin_option( 'key', $key );
 						$this->add_plugin_option( 'admin-redirect', true );
-						
-						add_action( 'admin_init', 
+
+						add_action( 'admin_init',
 							array(
 								&$this,
 								'admin_redirect',
@@ -267,15 +267,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					}
 				}
 			}
-			
+
 			$key_check = false;
-			
+
 			try {
 				$key_check = $this->check_api_key_exists();
 			} catch ( Error $error ) {
-				$this->keyError = $error->getMessage();
+				$this->key_error = $error->getMessage();
 			}
-			
+
 			$property_check = $this->check_prop();
 
 			if ( ! $key_check ) {
@@ -355,45 +355,53 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Redirect to admin page
 	 */
 	public function admin_redirect() {
-		$this->delete_plugin_option( 'admin-redirect' );
-		wp_redirect( $_SERVER['SCRIPT_NAME'] . '?page=Adtechmedia_PluginSettings' );
-		die();
+		if ( isset( $_SERVER['SCRIPT_NAME'] ) ) {
+			$base_path = sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_NAME'] ) );
+			$this->delete_plugin_option( 'admin-redirect' );
+			wp_redirect( $base_path . '?page=Adtechmedia_PluginSettings' );
+			die();
+		}
 	}
 
 	/**
 	 * Request an api token to be exchanged to an api key
+	 *
+	 * @param boolean $direct Direct call.
 	 */
-	public function send_api_token($direct = false) {
+	public function send_api_token( $direct = false ) {
 		$trigger = $direct;
-		$isAjax = false;
-		$actual_link = ( isset($_SERVER['HTTPS']) ? 'https' : 'http' ) 
-			. "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-		
+		$is_ajax = false;
+		$actual_link = ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' )
+			. '://'
+			. isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : 'localhost'
+			. isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			$trigger = true;
-			$isAjax = true;
+			$is_ajax = true;
 			$actual_link = isset( $_POST['return_link_tpl'] ) ? sanitize_text_field( wp_unslash( $_POST['return_link_tpl'] ) ) : $actual_link;
 		}
-		
+
 		if ( $trigger ) {
 			if ( preg_match( '/\?/', $actual_link ) ) {
 				$actual_link .= '&';
-			}	else {
+			} else {
 				$actual_link .= '?';
 			}
-			
-			$actual_link .= 'atm-token=%tmp-token%'; // this is replaced on ATM backend side
-			
+
+			/* this is replaced on ATM backend side */
+			$actual_link .= 'atm-token=%tmp-token%';
+
 			Adtechmedia_Request::request_api_token(
 				$this->get_plugin_option( 'support_email' ),
 				$actual_link
 			);
-			
-			if ( $isAjax ) {
+
+			if ( $is_ajax ) {
 				echo 'ok';
 				die();
 			}
-		} else if ( $isAjax ) {
+		} else if ( $is_ajax ) {
 			echo 'ko';
 			die();
 		}
@@ -661,8 +669,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'content_offset' ),
 					$this->get_plugin_option( 'key' )
 				);
-				
-				if ( !empty( $new_content ) ) {
+
+				if ( ! empty( $new_content ) ) {
 					Adtechmedia_ContentManager::set_content( $id, $new_content );
 				}
 
@@ -720,7 +728,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php echo $this->keyError ?: __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+			<p><?php echo $this->key_error ?: __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
 				'adtechmedia-plugin'
 				); ?></p>
 		</div>

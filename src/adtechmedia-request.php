@@ -28,7 +28,7 @@ class Adtechmedia_Request {
 		$data = [
 			'ContentId' => $content_id,
 			'PropertyId' => $property_id,
-			'Content' => addslashes( preg_replace( '/\n/', '', $content ) )
+			'Content' => addslashes( preg_replace( '/\n/', '', $content ) ),
 		];
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/content/create',
@@ -114,7 +114,6 @@ class Adtechmedia_Request {
 
 			if ( $response && isset( $response['Countries'] ) ) {
 				$list = $response['Countries'];
-				
 				set_transient( 'adtechmedia-supported-countries-new', $list, 3600 * 2 );
 			} else {
 				$list = [];
@@ -123,20 +122,19 @@ class Adtechmedia_Request {
 
 		return $list;
 	}
-	
+
 	/**
 	 * Request an API token
 	 *
-	 * @param string $email
-	 * @param string $returnTemplate
+	 * @param string $email Email address.
+	 * @param string $return_template Return template.
 	 * @return bool|mixed
 	 */
-	public static function request_api_token( $email, $returnTemplate ) {
+	public static function request_api_token( $email, $return_template ) {
 		$data = [
 			'Email' => $email,
-			'LinkTpl' => $returnTemplate,
+			'LinkTpl' => $return_template,
 		];
-		
 		self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'deep-account/client/token-send',
 			'PUT',
@@ -144,15 +142,14 @@ class Adtechmedia_Request {
 			$data,
 			[]
 		);
-		
 		return false;
 	}
-	
+
 	/**
 	 * Exchange API token to key
 	 *
-	 * @param string $email
-	 * @param string $token
+	 * @param string $email Email address.
+	 * @param string $token Api exchange token.
 	 * @return bool|mixed
 	 */
 	public static function api_token2key( $email, $token ) {
@@ -160,7 +157,6 @@ class Adtechmedia_Request {
 			'Email' => $email,
 			'TempToken' => $token,
 		];
-		
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'deep-account/client/token-exchange',
 			'GET',
@@ -172,15 +168,15 @@ class Adtechmedia_Request {
 		if ( $response && isset( $response['apiKey'] ) ) {
 			return $response['apiKey'];
 		}
-		
 		return false;
 	}
 
 	/**
 	 * Create API key
 	 *
-	 * @param string $email
+	 * @param string $email Email address.
 	 * @return bool|mixed
+	 * @throws Error Server error.
 	 */
 	public static function api_key_create( $email ) {
 		$data = [
@@ -199,14 +195,13 @@ class Adtechmedia_Request {
 				return $response['apiKey'];
 			} else if ( isset( $response['errorMessage'] ) ) {
 				$error = json_decode( $response['errorMessage'], true );
-				
 				if ( preg_match( '/UsernameExistsException/i', $error['errorMessage'] ) ) {
 					$error['errorMessage'] = sprintf(
 						'An existing client found for email "%s". Please login to be able to use the plugin.',
 						$email
 					);
 				}
-				
+
 				throw new Error( $error['errorMessage'] );
 			}
 		} else {
@@ -439,7 +434,7 @@ class Adtechmedia_Request {
 	 * @param array  $headers headers.
 	 * @param array  $body body.
 	 * @param array  $excepted_params params excepted in response.
-	 * @param mixed  $json_flags
+	 * @param mixed  $json_flags json_decode flags to use.
 	 * @return array|bool|mixed|object
 	 */
 	public static function make( $url, $method = 'GET', $headers = [], $body = [], $excepted_params = [], $json_flags = null ) {
@@ -470,16 +465,13 @@ class Adtechmedia_Request {
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
-			
-			if ( isset( $response ) && !( $response instanceof WP_Error ) && isset( $response['body'] ) ) {
+			if ( isset( $response ) && ! ( $response instanceof WP_Error ) && isset( $response['body'] ) ) {
 				if ( self::check_response( $response, $excepted_params ) ) {
 					set_time_limit( $max_time );
 					return json_decode( $response['body'], true );
 				}
-				
 				return false;
 			}
-			
 			$tries++;
 			$delay *= $factor;
 			usleep( $delay );
@@ -504,7 +496,6 @@ class Adtechmedia_Request {
 		} else {
 			return false;
 		}
-		
 		foreach ( $params as $key ) {
 			if ( ! isset( $body[ $key ] ) ) {
 				return false;
