@@ -168,7 +168,7 @@ class Adtechmedia_Request {
 			$data,
 			[ 'apiKey' ]
 		);
-		
+
 		if ( $response && isset( $response['apiKey'] ) ) {
 			return $response['apiKey'];
 		}

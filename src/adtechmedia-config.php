@@ -59,10 +59,8 @@ class Adtechmedia_Config {
 	 */
 	public static function set_api_end_point() {
 		if ( self::is_localhost() ) {
-			// self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/v1/';
-			// self::$conf['sw_js_url']     = 'https://api-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
-			self::$conf['api_end_point'] = 'https://mwa9w0c1le.execute-api.us-east-1.amazonaws.com/v1/';
-			self::$conf['sw_js_url']     = 'https://ddyplyym9ztva.cloudfront.net/atm-admin/atm-build/sw.min.js';
+			self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/v1/';
+			self::$conf['sw_js_url']     = 'https://api-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 		}
 	}
 

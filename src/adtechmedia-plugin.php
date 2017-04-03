@@ -239,22 +239,32 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			return;
 		}
 		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {			
-			if ( !$this->get_plugin_option( 'api-token-sent' ) ) {
-				$this->add_plugin_option( 'api-token-sent', true );
-				$this->send_api_token();
-			}
-			
-			if ( isset( $_GET['atm-token'] ) && !empty( $_GET['atm-token'] ) ) {
-				$atmToken = $_GET['atm-token'];
+			if ( empty( $this->get_plugin_option( 'key' ) ) ) {
+				if ( !$this->get_plugin_option( 'api-token-sent' ) ) {
+					$this->add_plugin_option( 'api-token-sent', true );
+					$this->send_api_token();
+				}
 				
-				$key = Adtechmedia_Request::api_token2key(
-					$this->get_plugin_option( 'support_email' ),
-					$_GET['atm-token']
-				);
-				
-				if ( !empty( $key ) ) {
-					$this->delete_plugin_option( 'api-token-sent', false );
-					$this->add_plugin_option( 'key', $key );
+				if ( isset( $_GET['atm-token'] ) && !empty( $_GET['atm-token'] ) ) {
+					$atmToken = $_GET['atm-token'];
+					
+					$key = Adtechmedia_Request::api_token2key(
+						$this->get_plugin_option( 'support_email' ),
+						$_GET['atm-token']
+					);
+					
+					if ( !empty( $key ) ) {
+						$this->delete_plugin_option( 'api-token-sent' );
+						$this->add_plugin_option( 'key', $key );
+						$this->add_plugin_option( 'admin-redirect', true );
+						
+						add_action( 'admin_init', 
+							array(
+								&$this,
+								'admin_redirect',
+							)
+						);
+					}
 				}
 			}
 			
@@ -313,7 +323,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// http://plugin.michael-simpson.com/?page_id=39.
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
-		if ( $this->get_plugin_option( 'api-token-sent' ) ) {
+		if ( empty( $this->get_plugin_option( 'key' ) ) && $this->get_plugin_option( 'api-token-sent' ) ) {
 			add_action( 'wp_ajax_send_api_token',
 				array(
 					&$this,
@@ -342,15 +352,26 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * Redirect to admin page
+	 */
+	public function admin_redirect() {
+		$this->delete_plugin_option( 'admin-redirect' );
+		wp_redirect( $_SERVER['SCRIPT_NAME'] . '?page=Adtechmedia_PluginSettings' );
+		die();
+	}
+
+	/**
 	 * Request an api token to be exchanged to an api key
 	 */
 	public function send_api_token($direct = false) {
 		$trigger = $direct;
+		$isAjax = false;
 		$actual_link = ( isset($_SERVER['HTTPS']) ? 'https' : 'http' ) 
 			. "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 		
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			$trigger = true;
+			$isAjax = true;
 			$actual_link = isset( $_POST['return_link_tpl'] ) ? sanitize_text_field( wp_unslash( $_POST['return_link_tpl'] ) ) : $actual_link;
 		}
 		
@@ -367,6 +388,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->get_plugin_option( 'support_email' ),
 				$actual_link
 			);
+			
+			if ( $isAjax ) {
+				echo 'ok';
+				die();
+			}
+		} else if ( $isAjax ) {
+			echo 'ko';
+			die();
 		}
 	}
 
