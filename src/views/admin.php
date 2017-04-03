@@ -23,6 +23,10 @@ if ( is_array( $countries_list ) ) {
 		}
 	}
 }
+/* mock for better UX */
+if ( empty( $countries ) && empty( $this->get_plugin_option( 'key' ) ) ) {
+	$countries['United States'] = [ 'advertising+micropayments' ];
+}
 $content_paywall = [
 	'transactions',
 	'pledged currency',
@@ -91,6 +95,41 @@ echo '</script>';
 </style>
 
 <style id="overall-template-styling">
+	.atm-blured-config-section > *:not(.atm-missing-key-msg) {
+		-webkit-filter: blur(10px);
+		-moz-filter: blur(10px);
+		-o-filter: blur(10px);
+		-ms-filter: blur(10px);
+		filter: blur(10px);
+		-webkit-transition: all 5s linear;
+		transition        : all 5s linear;
+		-moz-transition   : all 5s linear;
+		-webkit-transition: all 5s linear;
+		-o-transition     : all 5s linear;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		pointer-events: none;
+	}
+	.atm-missing-key-msg {
+		z-index: 999;
+		padding: 15px;
+		background: #fdfdfd;
+		box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.08);
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin-left: auto;
+		margin-right: auto;
+		width: 500px;
+	}
+	
+	.atm-missing-key-msg button {
+		padding: 3px;
+	}
 	<?php
 	// @codingStandardsIgnoreStart
 	$template_overall_styles = $this->get_plugin_option( 'template_overall_styles' );
@@ -107,7 +146,20 @@ echo '</script>';
 				<i class="custom-icon cog"></i>
 				General configuration
 			</h1>
-			<div class="content">
+			<div class="content <?php echo empty( $this->get_plugin_option( 'key' ) ) ? 'atm-blured-config-section' : '' ?>">
+				<div class="atm-missing-key-msg" <?php echo empty( $this->get_plugin_option( 'key' ) ) ? '' : 'style="display: none !important"' ?>>
+					<p>
+						The email <b>"<?php echo esc_html( $this->get_plugin_option( 'support_email' ) ) ?>"</b> has been already used for activation.<br/>
+						In order to activate this one you have to confirm your identity.<br/>
+						We've sent the confirmation email.<br/>
+						Please check out your inbox.
+					</p>
+					<br/><br/>
+					<small><i>
+						If you haven't received the email, you can 
+						<button onclick="requestApiToken(event)">ask to resend it</button>
+					</i></small>
+				</div>
 				<div class="general-fields">
 					<div class="flex-container">
 						<div class="flex-item-6">
@@ -136,7 +188,7 @@ echo '</script>';
 								</label>
 								<?php $this->create_form_control(
 									'revenue_method',
-									array_merge( [ '' ], $countries[ $this->get_plugin_option( 'country' ) ] ),
+									array_merge( [ '' ], $countries[ $this->get_plugin_option( 'country' ) ] ? : [] ),
 									$this->get_plugin_option( 'revenue_method' )
 								); ?>
 							</div>
@@ -185,7 +237,7 @@ echo '</script>';
 		</form>
 	</section>
 
-	<section>
+	<section <?php echo empty( $this->get_plugin_option( 'key' ) ) ? 'style="display: none !important"' : '' ?>>
 		<form method="post" action="" id="content-config">
 			<?php settings_fields( $plugin_meta_data_class ); ?>
 			<h1 class="heading">
@@ -420,7 +472,7 @@ echo '</script>';
 		</form>
 	</section>
 
-	<section>
+	<section <?php echo empty( $this->get_plugin_option( 'key' ) ) ? 'style="display: none !important"' : '' ?>>
 		<h1 class="heading">
 			<i class="custom-icon templates"></i>
 			Templates management
