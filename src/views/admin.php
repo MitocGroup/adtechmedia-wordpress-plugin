@@ -157,7 +157,7 @@ echo '</script>';
 					<br/><br/>
 					<small><i>
 						If you haven't received the email, you can 
-						<button onclick="request_api_token(event)">ask to resend it</button>
+						<button onclick="requestApiToken(event)">ask to resend it</button>
 					</i></small>
 				</div>
 				<div class="general-fields">

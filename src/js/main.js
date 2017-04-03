@@ -35,7 +35,8 @@ var notify = throttle(function (type, text) {
   });
 }, 3500);
 
-function request_api_token(event) {
+/*global send_api_token*/
+function requestApiToken(event) {
   event.stopPropagation();
   event.preventDefault();
   
@@ -62,6 +63,8 @@ function request_api_token(event) {
   
   return false;
 }
+
+window.requestApiToken = requestApiToken;
 
 function getCSSFields(inputs) {
   var styles = {};
