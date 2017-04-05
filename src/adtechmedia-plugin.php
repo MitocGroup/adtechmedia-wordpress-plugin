@@ -623,7 +623,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
+			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
 		}
 	}
 
