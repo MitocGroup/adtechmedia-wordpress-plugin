@@ -592,7 +592,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
-			$is_old = empty( $is_old );
+			// @codingStandardsIgnoreStart
+			$is_old = ! empty( $is_old ) && $is_old == '1';
+			// @codingStandardsIgnoreEnd
 			if ( $is_old ) {
 				$this->update_prop();
 			}
@@ -623,7 +625,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
+			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
 		}
 	}
 
