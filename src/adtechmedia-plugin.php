@@ -241,8 +241,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
 			if ( empty( $this->get_plugin_option( 'key' ) ) ) {
 				if ( ! $this->get_plugin_option( 'api-token-sent' ) ) {
+					$this->send_api_token(true);
 					$this->add_plugin_option( 'api-token-sent', true );
-					$this->send_api_token();
 				}
 
 				if ( isset( $_GET['atm-token'] ) && ! empty( $_GET['atm-token'] ) ) {
@@ -373,8 +373,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$is_ajax = false;
 		$actual_link = ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' )
 			. '://'
-			. isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : 'localhost'
-			. isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			. ( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : 'localhost' )
+			. ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
 
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			$trigger = true;
