@@ -157,12 +157,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	protected function un_install_database_tables() {
 		global $wpdb;
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"DROP TABLE IF EXISTS `$table_name`"
-		);
-		// @codingStandardsIgnoreEnd
+		// $table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// // @codingStandardsIgnoreStart
+		// $wpdb->query(
+		// 	"DROP TABLE IF EXISTS `$table_name`"
+		// );
+		// // @codingStandardsIgnoreEnd
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
 		// @codingStandardsIgnoreStart
 		$wpdb->query(
@@ -239,7 +239,43 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			return;
 		}
 		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
-			$key_check      = $this->check_api_key_exists();
+			if ( empty( $this->get_plugin_option( 'key' ) ) ) {
+				if ( ! $this->get_plugin_option( 'api-token-sent' ) ) {
+					$this->send_api_token(true);
+					$this->add_plugin_option( 'api-token-sent', true );
+				}
+
+				if ( isset( $_GET['atm-token'] ) && ! empty( $_GET['atm-token'] ) ) {
+					$atm_token = sanitize_text_field( wp_unslash( $_GET['atm-token'] ) );
+
+					$key = Adtechmedia_Request::api_token2key(
+						$this->get_plugin_option( 'support_email' ),
+						$atm_token
+					);
+
+					if ( ! empty( $key ) ) {
+						$this->delete_plugin_option( 'api-token-sent' );
+						$this->add_plugin_option( 'key', $key );
+						$this->add_plugin_option( 'admin-redirect', true );
+
+						add_action( 'admin_init',
+							array(
+								&$this,
+								'admin_redirect',
+							)
+						);
+					}
+				}
+			}
+
+			$key_check = false;
+
+			try {
+				$key_check = $this->check_api_key_exists();
+			} catch ( Error $error ) {
+				$this->key_error = $error->getMessage();
+			}
+
 			$property_check = $this->check_prop();
 
 			if ( ! $key_check ) {
@@ -287,6 +323,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// http://plugin.michael-simpson.com/?page_id=39.
 		// Register AJAX hooks.
 		// http://plugin.michael-simpson.com/?page_id=41.
+		if ( empty( $this->get_plugin_option( 'key' ) ) && $this->get_plugin_option( 'api-token-sent' ) ) {
+			add_action( 'wp_ajax_send_api_token',
+				array(
+					&$this,
+					'send_api_token',
+				)
+			);
+		}
 		add_action( 'wp_ajax_save_template',
 			array(
 				&$this,
@@ -305,6 +349,62 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'change_theme_configs',
 			)
 		);
+	}
+
+	/**
+	 * Redirect to admin page
+	 */
+	public function admin_redirect() {
+		if ( isset( $_SERVER['SCRIPT_NAME'] ) ) {
+			$base_path = sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_NAME'] ) );
+			$this->delete_plugin_option( 'admin-redirect' );
+			wp_redirect( $base_path . '?page=Adtechmedia_PluginSettings' );
+			die();
+		}
+	}
+
+	/**
+	 * Request an api token to be exchanged to an api key
+	 *
+	 * @param boolean $direct Direct call.
+	 */
+	public function send_api_token( $direct = false ) {
+		$trigger = $direct;
+		$is_ajax = false;
+		$actual_link = ( isset( $_SERVER['HTTPS'] ) ? 'https' : 'http' )
+			. '://'
+			. ( isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : 'localhost' )
+			. ( isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '' );
+
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
+			$trigger = true;
+			$is_ajax = true;
+			$actual_link = isset( $_POST['return_link_tpl'] ) ? sanitize_text_field( wp_unslash( $_POST['return_link_tpl'] ) ) : $actual_link;
+		}
+
+		if ( $trigger ) {
+			if ( preg_match( '/\?/', $actual_link ) ) {
+				$actual_link .= '&';
+			} else {
+				$actual_link .= '?';
+			}
+
+			/* this is replaced on ATM backend side */
+			$actual_link .= 'atm-token=%tmp-token%';
+
+			Adtechmedia_Request::request_api_token(
+				$this->get_plugin_option( 'support_email' ),
+				$actual_link
+			);
+
+			if ( $is_ajax ) {
+				echo 'ok';
+				die();
+			}
+		} else if ( $is_ajax ) {
+			echo 'ko';
+			die();
+		}
 	}
 
 	/**
@@ -460,6 +560,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'nonce'    => wp_create_nonce( 'adtechmedia-nonce' ),
 			)
 		);
+		wp_localize_script( 'adtechmedia-admin-js',
+			'send_api_token',
+			array(
+				'ajax_url' => $this->get_ajax_url( 'send_api_token' ),
+				'nonce'    => wp_create_nonce( 'adtechmedia-nonce' ),
+			)
+		);
 
 		wp_localize_script( 'adtechmedia-admin-js',
 			'return_to_default_values',
@@ -485,7 +592,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
-			$is_old = empty( $is_old );
+			// @codingStandardsIgnoreStart
+			$is_old = ! empty( $is_old ) && $is_old == '1';
+			// @codingStandardsIgnoreEnd
 			if ( $is_old ) {
 				$this->update_prop();
 			}
@@ -516,7 +625,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . filemtime( $file ), null, null, true );
+			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
 		}
 	}
 
@@ -562,7 +671,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'content_offset' ),
 					$this->get_plugin_option( 'key' )
 				);
-				Adtechmedia_ContentManager::set_content( $id, $new_content );
+
+				if ( ! empty( $new_content ) ) {
+					Adtechmedia_ContentManager::set_content( $id, $new_content );
+				}
 
 				return $this->content_wrapper( $new_content );
 			}
@@ -618,7 +730,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php echo __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+			<p><?php echo $this->key_error ?: __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
 				'adtechmedia-plugin'
 				); ?></p>
 		</div>
