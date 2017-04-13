@@ -239,9 +239,17 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			return;
 		}
 		if ( isset( $_SERVER['REQUEST_URI'] ) && strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), $this->get_settings_slug() ) !== false ) {
+			$key_check = false;
+
+			try {
+				$key_check = $this->check_api_key_exists();
+			} catch ( Error $error ) {
+				$this->key_error = $error->getMessage();
+			}
+
 			if ( empty( $this->get_plugin_option( 'key' ) ) ) {
 				if ( ! $this->get_plugin_option( 'api-token-sent' ) ) {
-					$this->send_api_token(true);
+					$this->send_api_token( true );
 					$this->add_plugin_option( 'api-token-sent', true );
 				}
 
@@ -266,14 +274,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						);
 					}
 				}
-			}
-
-			$key_check = false;
-
-			try {
-				$key_check = $this->check_api_key_exists();
-			} catch ( Error $error ) {
-				$this->key_error = $error->getMessage();
 			}
 
 			$property_check = $this->check_prop();

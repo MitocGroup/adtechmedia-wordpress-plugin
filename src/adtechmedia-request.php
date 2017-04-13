@@ -465,7 +465,10 @@ class Adtechmedia_Request {
 				$url,
 				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
 			);
-			if ( isset( $response ) && ! ( $response instanceof WP_Error ) && isset( $response['body'] ) ) {
+			if ( isset( $response ) && ! ( $response instanceof WP_Error )
+				&& isset( $response['http_response'] ) && $response['http_response']->get_status() !== 403
+				&& isset( $response['body'] ) ) {
+
 				if ( self::check_response( $response, $excepted_params ) ) {
 					set_time_limit( $max_time );
 					return json_decode( $response['body'], true );
