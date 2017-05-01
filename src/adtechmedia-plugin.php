@@ -605,14 +605,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( ! file_exists( $file ) || $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
-				$data     = @gzdecode( file_get_contents( $script . "?v=" . time() ) );
-				$new_hash = md5( $data );
-				if ( empty( $hash ) || ( $hash != $new_hash ) ) {
-					$this->add_plugin_option( 'atm-js-hash', $new_hash );
-					$this->add_plugin_option( 'atm-js-is-old', '0' );
-				} else {
-					$this->add_plugin_option( 'atm-js-is-old', '1' );
-				}
+				$data     = @gzdecode( file_get_contents( $script . "?_v=" . time() ) );
+				$this->add_plugin_option( 'atm-js-hash', $new_hash );
+				$this->add_plugin_option( 'atm-js-is-old', '0' );
 				file_put_contents( $file, $data );
 				// @codingStandardsIgnoreEnd
 			}
