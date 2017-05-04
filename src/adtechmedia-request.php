@@ -427,6 +427,27 @@ class Adtechmedia_Request {
 	}
 
 	/**
+	 * Log http request
+	 *
+	 * @param string  $url url to request.
+	 * @param mixed   $response response.
+	 * @param integer $retries retries.
+	 */
+	protected static function _log_request( $url, $response, $retries ) {
+		if ( Adtechmedia_Config::is_localhost() ) {
+			// @codingStandardsIgnoreStart
+			$log = str_repeat( '-', 20 ) . PHP_EOL;
+			$log .= 'URL: ' . $url . PHP_EOL;
+			$log .= 'RESPONSE: ' . print_r( $response, true ) . PHP_EOL;
+			$log .= 'RETRIES: ' . $retries . PHP_EOL;
+			$log .= str_repeat( '-', 20 ) . PHP_EOL;
+			$log_file = $_SERVER['DOCUMENT_ROOT'] . '/atm.request.' . date( 'j.n.Y' ) . '.log';
+			file_put_contents( $log_file, $log, FILE_APPEND );
+			// @codingStandardsIgnoreEnd
+		}
+	}
+
+	/**
 	 * Make http request
 	 *
 	 * @param string $url url to request.
@@ -463,8 +484,11 @@ class Adtechmedia_Request {
 		while ( $tries < $max_tries ) {
 			$response = wp_remote_request(
 				$url,
-				[ 'method' => $method, 'timeout' => 15, 'headers' => $headers, 'body' => $body ]
+				[ 'method' => $method, 'timeout' => 150, 'headers' => $headers, 'body' => $body ]
 			);
+
+			self::_log_request( $url, $response, $tries );
+
 			if ( isset( $response ) && ! ( $response instanceof WP_Error )
 				&& isset( $response['http_response'] ) && $response['http_response']->get_status() !== 403
 				&& isset( $response['body'] ) ) {
