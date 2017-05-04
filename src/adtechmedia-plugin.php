@@ -157,12 +157,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	protected function un_install_database_tables() {
 		global $wpdb;
-		// $table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
-		// // @codingStandardsIgnoreStart
-		// $wpdb->query(
-		// 	"DROP TABLE IF EXISTS `$table_name`"
-		// );
-		// // @codingStandardsIgnoreEnd
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"DROP TABLE IF EXISTS `$table_name`"
+		);
+		// @codingStandardsIgnoreEnd
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
 		// @codingStandardsIgnoreStart
 		$wpdb->query(
