@@ -547,7 +547,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			[ 'adtechmedia-jquery-noty-js' ]
 		);
 		wp_enqueue_script( 'jquery-validate', plugins_url( '/js/jquery.validate.min.js', __FILE__ ) );
-		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://api.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
+		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
 			plugins_url( '/js/main.js', __FILE__ ),
