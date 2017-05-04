@@ -35,6 +35,37 @@ var notify = throttle(function (type, text) {
   });
 }, 3500);
 
+/*global send_api_token*/
+function requestApiToken(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  
+  event.target.disabled = true;
+  
+  jQuery.ajax({
+    url : send_api_token.ajax_url,
+    type : 'post',
+    data : {
+      action : 'send_api_token',
+      nonce : send_api_token.nonce,
+      return_link_tpl : window.location.toString(),
+    },
+    success : function (response) {
+      notify('success', 'AdTechMedia api authorization token request has been sent');
+    },
+    error : function (response) {
+      notify('error', 'Error requesting AdTechMedia api authorization token. Please try again later...');
+    },
+    complete : function() {
+      event.target.disabled = false;
+    },
+  });
+  
+  return false;
+}
+
+window.requestApiToken = requestApiToken;
+
 function getCSSFields(inputs) {
   var styles = {};
 
