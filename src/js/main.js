@@ -1338,8 +1338,6 @@ jQuery(document).ready(function () {
 
   initModal();
 
-  jQuery('#modal-content').load('https://www.adtechmedia.io/terms/dialog.html');
-
   function firstSynch() {
     jQuery('[data-template="user"] input[name]').trigger('keyup');
     jQuery('[data-template="user"] input[data-template-css]').trigger('keyup');
@@ -1349,17 +1347,14 @@ jQuery(document).ready(function () {
 
   firstSynch();
 
-  jQuery.get('https://www.adtechmedia.io/terms/dialog.html').done(function (data) {
+  jQuery.get(termsUrl).done(function (data) {
     jQuery('#modal-content').append(data);
   }).fail(function () {
-    var str = '<a href="https://www.adtechmedia.io/terms/dialog.html"'
-      + ' target="_blank">https://www.adtechmedia.io/terms/dialog.html</a>';
+    var str = '<a href="' + termsUrl + '"' + ' target="_blank">' + termsUrl + '</a>';
     jQuery('#modal-content').append(str);
   });
 
   jQuery.validator.methods.cssSize = function (value, element) {
     return this.optional(element) || /(auto|0)$|^[+-]?[0-9]+.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)/.test(value);
   }
-
-
 });
