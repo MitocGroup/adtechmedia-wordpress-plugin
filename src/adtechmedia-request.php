@@ -168,7 +168,7 @@ class Adtechmedia_Request {
 		if ( $response && isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
 			return [
 				'apiKey' 	 => $response['apiKey'],
-				'clientId' => $response['clientId']
+				'clientId' => $response['clientId'],
 			];
 		}
 		return false;
@@ -197,7 +197,7 @@ class Adtechmedia_Request {
 			if ( isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
 				return [
 					'apiKey' 	 => $response['apiKey'],
-					'clientId' => $response['clientId']
+					'clientId' => $response['clientId'],
 				];
 			} else if ( isset( $response['errorMessage'] ) ) {
 				$error = json_decode( $response['errorMessage'], true );

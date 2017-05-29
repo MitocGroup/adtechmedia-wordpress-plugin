@@ -144,14 +144,14 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	public function check_api_key_exists() {
 		$key = $this->get_plugin_option( 'key' );
 		if ( empty( $key ) ) {
-			$keyResponse = Adtechmedia_Request::api_key_create(
+			$key_response = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'support_email' )
 			);
-			$key = $keyResponse['apiKey'];
+			$key = $key_response['apiKey'];
 			if ( empty( $key ) ) {
 				return false;
 			} else {
-				$this->add_plugin_option( 'client-id', $keyResponse['clientId'] );
+				$this->add_plugin_option( 'client-id', $key_response['clientId'] );
 				$this->add_plugin_option( 'key', $key );
 			}
 		}
