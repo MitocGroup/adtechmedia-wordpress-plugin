@@ -2,6 +2,8 @@
  * Created by yama_gs on 21.10.2016.
  */
 
+/*eslint no-useless-concat:0*/
+
 function throttle(func, ms) {
   var isThrottled = false,
     savedArgs,
@@ -1347,10 +1349,10 @@ jQuery(document).ready(function () {
 
   firstSynch();
 
-  jQuery.get(termsUrl).done(function (data) {
+  jQuery.get(window.termsUrl).done(function (data) {
     jQuery('#modal-content').append(data);
   }).fail(function () {
-    var str = '<a href="' + termsUrl + '"' + ' target="_blank">' + termsUrl + '</a>';
+    var str = '<a href="' + window.termsUrl + '"' + ' target="_blank">' + window.termsUrl + '</a>';
     jQuery('#modal-content').append(str);
   });
 
