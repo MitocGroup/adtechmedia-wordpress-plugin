@@ -162,11 +162,14 @@ class Adtechmedia_Request {
 			'GET',
 			[],
 			$data,
-			[ 'apiKey' ]
+			[ 'apiKey', 'clientId' ]
 		);
 
-		if ( $response && isset( $response['apiKey'] ) ) {
-			return $response['apiKey'];
+		if ( $response && isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
+			return [
+				'apiKey' 	 => $response['apiKey'],
+				'clientId' => $response['clientId'],
+			];
 		}
 		return false;
 	}
@@ -191,8 +194,11 @@ class Adtechmedia_Request {
 		);
 
 		if ( $response ) {
-			if ( isset( $response['apiKey'] ) ) {
-				return $response['apiKey'];
+			if ( isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
+				return [
+					'apiKey' 	 => $response['apiKey'],
+					'clientId' => $response['clientId'],
+				];
 			} else if ( isset( $response['errorMessage'] ) ) {
 				$error = json_decode( $response['errorMessage'], true );
 				if ( preg_match( '/UsernameExistsException/i', $error['errorMessage'] ) ) {
@@ -203,6 +209,8 @@ class Adtechmedia_Request {
 				}
 
 				throw new Error( $error['errorMessage'] );
+			} else {
+				throw new Error( 'Missing apiKey or clientId parameters in response' );
 			}
 		} else {
 			return false;
