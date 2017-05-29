@@ -209,12 +209,7 @@ echo '</script>';
 							</div>
 							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="custom-input">
-								<?php $this->create_form_control(
-									'support_email',
-									$main_data['support_email'],
-									$this->get_plugin_option( 'support_email' ),
-									'e.g. john.smith@mail.com'
-								); ?>
+								<input type="text" id="support_email" name="support_email" value="<?php echo esc_html( $this->get_plugin_option( 'support_email' ) ) ?>" size="100"/>
 								<span class="bar"></span>
 								<label><i class="mdi mdi-email"></i> Email address</label>
 							</div>
@@ -228,7 +223,7 @@ echo '</script>';
 								<label><a id="terms-btn">I agree to Terms of Use</a></label>
 							</div>
 							<div class="custom-input">
-								<a href="https://www.adtechmedia.io/admin/accounts/signup" target="_blank" id="btn-register" class="btn" disabled><i class="mdi mdi-account-plus"></i> Register</a>
+								<a href="<?php echo empty( $this->get_plugin_option( 'client-id' ) ) ? 'javascript:void(0)' : esc_html( sprintf( Adtechmedia_Config::get( 'register_url_tpl' ), $this->get_plugin_option( 'client-id' ) ) ) ?>" target="_blank" id="btn-register" class="btn" disabled><i class="mdi mdi-account-plus"></i> Register</a>
 							</div>
 						</div>
 					</div>

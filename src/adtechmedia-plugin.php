@@ -256,14 +256,16 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				if ( isset( $_GET['atm-token'] ) && ! empty( $_GET['atm-token'] ) ) {
 					$atm_token = sanitize_text_field( wp_unslash( $_GET['atm-token'] ) );
 
-					$key = Adtechmedia_Request::api_token2key(
+					$keyResponse = Adtechmedia_Request::api_token2key(
 						$this->get_plugin_option( 'support_email' ),
 						$atm_token
 					);
+					$key = $keyResponse['apiKey'];
 
 					if ( ! empty( $key ) ) {
 						$this->delete_plugin_option( 'api-token-sent' );
 						$this->add_plugin_option( 'key', $key );
+						$this->add_plugin_option( 'client-id', $keyResponse['clientId'] );
 						$this->add_plugin_option( 'admin-redirect', true );
 
 						add_action( 'admin_init',

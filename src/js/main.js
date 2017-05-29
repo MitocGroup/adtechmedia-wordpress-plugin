@@ -1311,34 +1311,6 @@ jQuery(document).ready(function () {
         }
       });
     });
-
-
-    var generalConfValid = false;
-    var formGeneralConfig = jQuery('#general-config');
-    jQuery('#btn-register').on('click', function (e) {
-      if (generalConfValid) {
-        formGeneralConfig.submit();
-      } else {
-        e.preventDefault();
-
-        var valid = addValidate(formGeneralConfig, {
-          support_email : {
-            required : true,
-            email : true
-          }
-        }, {
-          support_email : {
-            required : 'The field \'Email address\' is required.',
-            email : 'Your email address must be in the format of name@domain.com.'
-          }
-        });
-
-        if (valid.form()) {
-          generalConfValid = true;
-          this.click();
-        }
-      }
-    });
   })(jQuery);
 
   jQuery('#checkbox-sticky').on('change', function () {
