@@ -550,10 +550,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 		wp_enqueue_script( 'jquery-validate', plugins_url( '/js/jquery.validate.min.js', __FILE__ ) );
 		wp_enqueue_script( 'adtechmedia-atm-tpl-js', Adtechmedia_Config::get( 'tpl_js_url' ), [ 'adtechmedia-jquery-throttle-js' ] );
+		wp_enqueue_script( 'adtechmedia-atm-tpl-mgmt-js', Adtechmedia_Config::get( 'tpl_mgmt_js_url' ), [ 'adtechmedia-atm-tpl-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
 			plugins_url( '/js/main.js', __FILE__ ),
-			[ 'adtechmedia-atm-tpl-js' ]
+			[ 'adtechmedia-atm-tpl-mgmt-js' ]
 		);
 		wp_localize_script( 'adtechmedia-admin-js',
 			'save_template',
@@ -589,7 +590,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( ! is_single() ) {
+		if ( ! is_single() || empty( $this->get_plugin_option( 'key' ) ) ) {
 			return;
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
@@ -647,7 +648,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function hide_content( $content ) {
 
-		if ( is_single() ) {
+		if ( is_single() && !empty( $this->get_plugin_option( 'key' ) ) ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
 			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {

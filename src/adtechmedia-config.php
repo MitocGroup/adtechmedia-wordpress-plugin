@@ -32,6 +32,7 @@ class Adtechmedia_Config {
 		'template_overall_styles_inputs' => '{"background-color":"#ffffff","border":"1px solid #d3d3d3","font-family":"\'Merriweather\', sans-serif","box-shadow":"0 1px 2px 0 rgba(0, 0, 0, 0.1)","footer-background-color":"#fafafa","footer-border":"1px solid #e3e3e3"}',
 		'sw_js_url'                      => 'https://www.adtechmedia.io/atm-admin/atm-build/sw.min.js',
 		'tpl_js_url'                     => 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js',
+		'tpl_mgmt_js_url'                => 'https://www.adtechmedia.io/atm-core/atm-build/atmTplManager.js',
 		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
 		'register_url_tpl'               => 'https://www.adtechmedia.io/admin/accounts/signup/%s',
 		'price'                          => 5,
@@ -44,6 +45,7 @@ class Adtechmedia_Config {
 		'content_paywall'                => 'transactions',
 		'content_offset_type'            => 'paragraphs',
 		'country'                        => 'United States',
+		'platform_id'										 => 'Wordpress',
 	];
 
 	/**
@@ -66,6 +68,7 @@ class Adtechmedia_Config {
 			self::$conf['sw_js_url']     		= 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 			self::$conf['register_url_tpl'] = 'https://www-dev.adtechmedia.io/admin/accounts/signup/%s';
 			self::$conf['tpl_js_url']       = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTpl.js';
+			self::$conf['tpl_mgmt_js_url']  = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
 			self::$conf['terms_url']        = 'https://www-dev.adtechmedia.io/terms/dialog.html';
 		}
 	}
