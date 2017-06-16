@@ -427,38 +427,38 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Get overall styles
 	 *
-	 * @param array $appearanceSettings array of position properties.
+	 * @param array $appearance_settings array of position properties.
 	 * @return string
 	 */
-	public function get_template_overall_styles( $appearanceSettings ) {
+	public function get_template_overall_styles( $appearance_settings ) {
 		return "
 		.atm-base-modal {
-			background-color: {$appearanceSettings['model']['body']['backgroundColor']};
+			background-color: {$appearance_settings['model']['body']['backgroundColor']};
 		}
 		.atm-targeted-modal .atm-head-modal .atm-modal-heading {
-			background-color: {$appearanceSettings['model']['body']['backgroundColor']};
+			background-color: {$appearance_settings['model']['body']['backgroundColor']};
 		}
 		.atm-targeted-modal {
-			border: {$appearanceSettings['model']['body']['border']};
-			box-shadow: {$appearanceSettings['model']['body']['boxShadow']};
+			border: {$appearance_settings['model']['body']['border']};
+			box-shadow: {$appearance_settings['model']['body']['boxShadow']};
 		}
 		.atm-base-modal .atm-footer {
-			background-color: {$appearanceSettings['model']['footer']['backgroundColor']};
-			border: {$appearanceSettings['model']['footer']['border']};
+			background-color: {$appearance_settings['model']['footer']['backgroundColor']};
+			border: {$appearance_settings['model']['footer']['border']};
 		}
 		.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal .atm-modal-body p,.atm-unlock-line .unlock-btn {
-			font-family: {$appearanceSettings['model']['body']['fontFamily']};
+			font-family: {$appearance_settings['model']['body']['fontFamily']};
 		}";
 	}
 
 	/**
 	 * Get JS to targetCb function
 	 *
-	 * @param array $appearanceSettings array of position properties.
+	 * @param array $appearance_settings array of position properties.
 	 * @return string
 	 */
-	public function get_target_cb_js( $appearanceSettings ) {
-		$position = $appearanceSettings['model']['main'];
+	public function get_target_cb_js( $appearance_settings ) {
+		$position = $appearance_settings['model']['main'];
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
 		$offset_top = ! empty( $position['offset']['top'] ) ? $position['offset']['top'] : '0px';
 		$offset_left = ! empty( $position['offset']['fromCenter'] ) ? $position['offset']['fromCenter'] : '0px';
@@ -493,11 +493,11 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Get JS to toggleCb function
 	 *
-	 * @param array $appearanceSettings array of position properties.
+	 * @param array $appearance_settings array of position properties.
 	 * @return string
 	 */
-	public function get_toggle_cb_js( $appearanceSettings ) {
-		$position = $appearanceSettings['model']['main'];
+	public function get_toggle_cb_js( $appearance_settings ) {
+		$position = $appearance_settings['model']['main'];
 		$scrolling_offset_top = ! empty( $position['offset']['scrollTop'] ) ? (int) $position['offset']['scrollTop'] : 0;
 
 		if ( empty( $position['sticky'] ) ) {

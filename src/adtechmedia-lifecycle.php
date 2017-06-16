@@ -76,7 +76,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function activate() {
 		$this->ensure_database_tables();
-		
 		delete_transient( 'adtechmedia-supported-countries-new' );
 		$website = get_home_url();
 		$name = preg_replace( '/https?:\/\//', '', $website );
@@ -103,8 +102,8 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		try {
 			$this->check_api_key_exists();
 			$this->check_prop();
-			
-			if ( !empty( $this->get_plugin_option( 'key' ) ) ) {
+
+			if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
 				$this->update_prop();
 				$this->update_appearance();
 			}
@@ -123,23 +122,25 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
 	}
-	
+
 	/**
 	 * Update appearance settings
 	 */
 	public function update_appearance() {
 		$plugin_dir = plugin_dir_path( __FILE__ );
 		$file       = $plugin_dir . '/js/atm.min.js';
+		// @codingStandardsIgnoreStart
 		@unlink( $file );
-		
-		$appearanceSettings = json_decode( $this->get_plugin_option( 'appearance_settings' ), true );
+		// @codingStandardsIgnoreEnd
 
-		$this->add_plugin_option( 'template_overall_styles', $this->get_template_overall_styles( $appearanceSettings ) );
+		$appearance_settings = json_decode( $this->get_plugin_option( 'appearance_settings' ), true );
+
+		$this->add_plugin_option( 'template_overall_styles', $this->get_template_overall_styles( $appearance_settings ) );
 
 		$data = [
 			'targetModal' => [
-				'targetCb' => $this->get_target_cb_js( $appearanceSettings ),
-				'toggleCb' => $this->get_toggle_cb_js( $appearanceSettings ),
+				'targetCb' => $this->get_target_cb_js( $appearance_settings ),
+				'toggleCb' => $this->get_toggle_cb_js( $appearance_settings ),
 			],
 			'styles'      => [
 				'main' => base64_encode(

@@ -33,8 +33,8 @@ $content_paywall = [
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
 
-echo '<script>' . PHP_EOL;
 // @codingStandardsIgnoreStart
+echo '<script>' . PHP_EOL;
 echo 'var appearanceSettings = ' . $this->get_plugin_option( 'appearance_settings' ) . ';' . PHP_EOL;
 echo 'var apiKey = "' . addslashes( $this->get_plugin_option( 'key' ) ) . '";' . PHP_EOL;
 echo 'var propertyId = "' . addslashes( $this->get_plugin_option( 'Id' ) ) . '";' . PHP_EOL;
@@ -44,8 +44,8 @@ echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . 
 echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";' . PHP_EOL;
 echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
 echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
-// @codingStandardsIgnoreEnd
 echo '</script>' . PHP_EOL;
+// @codingStandardsIgnoreEnd
 ?>
 <style>
 	.atm-targeted-modal {
