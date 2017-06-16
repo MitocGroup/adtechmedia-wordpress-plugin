@@ -48,7 +48,6 @@ echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) )
 echo '</script>' . PHP_EOL;
 ?>
 <style>
-
 	.atm-targeted-modal {
 		width: auto;
 	}
@@ -62,24 +61,6 @@ echo '</script>' . PHP_EOL;
 	.atm-targeted-container .share-block-inner .sharetool a:hover{
 		background: none!important;
 	}
-
-	/**/
-	/*.atm-base-modal {
-		background-color: #ffb7a7;
-	}
-	.atm-targeted-modal .atm-head-modal .atm-modal-heading {
-		background-color: #ffb7a7;
-	}
-	.atm-targeted-modal{
-		border: 3px solid rgba(131, 214, 255, 1);
-	}
-	.atm-base-modal .atm-footer{
-		background-color: #49ff96;
-		border: 3px solid rgb(255, 193, 22);
-	}
-	.atm-targeted-modal {
-		font-family: "FuturaICG", sans-serif;
-	}*/
 </style>
 
 <style id="overall-template-styling">

@@ -338,27 +338,27 @@ jQuery().ready(function() {
     .then(() => {
       document.getElementById('save-templates-config')
         .addEventListener('click', e => {
-          addLoader(e.target);
-          
+          var btn = jQuery(e.target);
+          addLoader(btn);
           tplManager.waitConfig(runtime)
             .then(() => tplManager.updateAll())
             .then(() => {
               jQuery.ajax({
-                  url: save_template.ajax_url,
-                  type: 'post',
-                  data: {
-                      action: 'save_template',
-                      nonce: save_template.nonce,
-                      appearanceSettings: tplManager.generalSettings,
-                  },
-                  success: function(response) {
-                      removeLoader(e.target);
-                      showSuccess();
-                  },
-                  error: function(response) {
-                      removeLoader(e.target);
-                      showError();
-                  }
+                url: save_template.ajax_url,
+                type: 'post',
+                data: {
+                  action: 'save_template',
+                  nonce: save_template.nonce,
+                  appearanceSettings: JSON.stringify(tplManager.generalSettings),
+                },
+                success: function(response) {
+                  removeLoader(btn);
+                  showSuccess();
+                },
+                error: function(response) {
+                  removeLoader(btn);
+                  showError();
+                }
               });
             });
         });
