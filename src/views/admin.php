@@ -33,40 +33,19 @@ $content_paywall = [
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
 
-echo '<script>';
+echo '<script>' . PHP_EOL;
 // @codingStandardsIgnoreStart
-echo 'var apiKey = "' . addslashes( $this->get_plugin_option( 'key' ) ) . '";';
-echo 'var propertyId = "' . addslashes( $this->get_plugin_option( 'Id' ) ) . '";';
-echo 'var themeId = "' . addslashes( wp_get_theme()->get( 'Name' ) ) . '";';
-echo 'var themeVersion = "' . addslashes( wp_get_theme()->get( 'Version' ) ) . '";';
-echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . '";';
-echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";';
-echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";';
-
-echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';';
-echo 'var templateInputs = JSON.parse(\'';
-$template_inputs = addslashes( $this->get_plugin_option( 'template_inputs' ) );
-echo empty( $template_inputs ) ? '{}' : $template_inputs;
-echo '\');';
-echo 'var templateStyleInputs = JSON.parse(\'';
-$template_style_inputs = addslashes( $this->get_plugin_option( 'template_style_inputs' ) );
-echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
-echo '\');';
-echo 'var templatePositionInputs = JSON.parse(\'';
-$template_position = addslashes( $this->get_plugin_option( 'template_position' ) );
-echo empty( $template_position ) ? '{}' : $template_position;
-echo '\');';
-echo 'var templateOverallStylesInputs = JSON.parse(\'';
-$template_overall_styles_inputs = addslashes( $this->get_plugin_option( 'template_overall_styles_inputs' ) );
-echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
-echo '\');';
-echo 'var templateOverallStylesInputsDefault = JSON.parse(\'';
-$template_overall_styles_inputs_default = addslashes( Adtechmedia_Config::get ( 'template_overall_styles_inputs' ) );
-echo empty( $template_overall_styles_inputs_default ) ? '{}' : $template_overall_styles_inputs_default;
-echo '\');';
-
+echo 'var appearanceSettings = ' . $this->get_plugin_option( 'appearance_settings' ) . ';' . PHP_EOL;
+echo 'var apiKey = "' . addslashes( $this->get_plugin_option( 'key' ) ) . '";' . PHP_EOL;
+echo 'var propertyId = "' . addslashes( $this->get_plugin_option( 'Id' ) ) . '";' . PHP_EOL;
+echo 'var themeId = "' . addslashes( wp_get_theme()->get( 'Name' ) ) . '";' . PHP_EOL;
+echo 'var themeVersion = "' . addslashes( wp_get_theme()->get( 'Version' ) ) . '";' . PHP_EOL;
+echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . '";' . PHP_EOL;
+echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";' . PHP_EOL;
+echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
+echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
 // @codingStandardsIgnoreEnd
-echo '</script>';
+echo '</script>' . PHP_EOL;
 ?>
 <style>
 

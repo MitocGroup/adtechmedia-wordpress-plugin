@@ -419,24 +419,52 @@ class Adtechmedia_OptionsManager {
 			$this->get_plugin_option( 'payment_pledged' ),
 			$this->get_plugin_option( 'content_offset_type' ),
 			$this->get_plugin_option( 'price_currency' ),
-			$this->get_plugin_option( 'content_paywall' ),
-			$this->get_target_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) ),
-			$this->get_toggle_cb_js( json_decode( stripslashes( $this->get_plugin_option( 'template_position' ) ), true ) )
+			$this->get_plugin_option( 'content_paywall' )
 		);
 		Adtechmedia_ContentManager::clear_all_content();
 	}
 
 	/**
-	 * Get JS to targetCb function
+	 * Get overall styles
 	 *
-	 * @param array $position array of position properties.
+	 * @param array $appearanceSettings array of position properties.
 	 * @return string
 	 */
-	public function get_target_cb_js( $position ) {
+	public function get_template_overall_styles( $appearanceSettings ) {
+		return "
+		.atm-base-modal {
+			background-color: {$appearanceSettings['model']['body']['backgroundColor']};
+		}
+		.atm-targeted-modal .atm-head-modal .atm-modal-heading {
+			background-color: {$appearanceSettings['model']['body']['backgroundColor']};
+		}
+		.atm-targeted-modal {
+			border: {$appearanceSettings['model']['body']['border']};
+			box-shadow: {$appearanceSettings['model']['body']['boxShadow']};
+		}
+		.atm-base-modal .atm-footer {
+			background-color: {$appearanceSettings['model']['footer']['backgroundColor']};
+			border: {$appearanceSettings['model']['footer']['border']};
+		}
+		.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal .atm-modal-body p,.atm-unlock-line .unlock-btn {
+			font-family: {$appearanceSettings['model']['body']['fontFamily']};
+		}";
+	}
+
+	/**
+	 * Get JS to targetCb function
+	 *
+	 * @param array $appearanceSettings array of position properties.
+	 * @return string
+	 */
+	public function get_target_cb_js( $appearanceSettings ) {
+		$position = $appearanceSettings['model']['main'];
 		$width = ! empty( $position['width'] ) ? $position['width'] : '600px';
-		$offset_top = ! empty( $position['offset_top'] ) ? $position['offset_top'] : '0px';
-		$offset_left = ! empty( $position['offset_left'] ) ? $position['offset_left'] : '0px';
+		$offset_top = ! empty( $position['offset']['top'] ) ? $position['offset']['top'] : '0px';
+		$offset_left = ! empty( $position['offset']['fromCenter'] ) ? $position['offset']['fromCenter'] : '0px';
+
 		$content = '';
+
 		if ( ! empty( $position['sticky'] ) ) {
 			$content .= "mainModal.rootNode.style.position = 'fixed';\n";
 			$content .= "mainModal.rootNode.style.top = '$offset_top';\n";
@@ -465,11 +493,13 @@ class Adtechmedia_OptionsManager {
 	/**
 	 * Get JS to toggleCb function
 	 *
-	 * @param array $position array of position properties.
+	 * @param array $appearanceSettings array of position properties.
 	 * @return string
 	 */
-	public function get_toggle_cb_js( $position ) {
-		$scrolling_offset_top = ! empty( $position['scrolling_offset_top'] ) ? (int) $position['scrolling_offset_top'] : 0;
+	public function get_toggle_cb_js( $appearanceSettings ) {
+		$position = $appearanceSettings['model']['main'];
+		$scrolling_offset_top = ! empty( $position['offset']['scrollTop'] ) ? (int) $position['offset']['scrollTop'] : 0;
+
 		if ( empty( $position['sticky'] ) ) {
 			$scrolling_offset_top = -10;
 		}

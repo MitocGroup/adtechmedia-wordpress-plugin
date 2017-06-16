@@ -320,8 +320,9 @@ jQuery().ready(function() {
   const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
 
-  tplManager.client.bindLoader(runtime);
   runtime.showSettings = true;
+  tplManager.client.bindLoader(runtime);
+  tplManager.generalSettings = appearanceSettings;
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
@@ -337,8 +338,29 @@ jQuery().ready(function() {
     .then(() => {
       document.getElementById('save-templates-config')
         .addEventListener('click', e => {
+          addLoader(e.target);
+          
           tplManager.waitConfig(runtime)
-            .then(() => tplManager.updateAll());
+            .then(() => tplManager.updateAll())
+            .then(() => {
+              jQuery.ajax({
+                  url: save_template.ajax_url,
+                  type: 'post',
+                  data: {
+                      action: 'save_template',
+                      nonce: save_template.nonce,
+                      appearanceSettings: tplManager.generalSettings,
+                  },
+                  success: function(response) {
+                      removeLoader(e.target);
+                      showSuccess();
+                  },
+                  error: function(response) {
+                      removeLoader(e.target);
+                      showError();
+                  }
+              });
+            });
         });
     });
 });
