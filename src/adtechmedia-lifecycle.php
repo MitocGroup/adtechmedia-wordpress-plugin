@@ -38,7 +38,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->init_options();
 
 		// Initialize DB Tables used by the plugin.
-		$this->install_database_tables();
+		$this->ensure_database_tables();
 
 		// Other Plugin initialization - for the plugin writer to override as needed.
 		$this->other_install();
@@ -55,7 +55,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 */
 	public function uninstall() {
 		$this->other_uninstall();
-		$this->un_install_database_tables();
+		$this->un_ensure_database_tables();
 		$this->delete_saved_options();
 		$this->mark_as_un_installed();
 	}
@@ -75,6 +75,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 * @return void
 	 */
 	public function activate() {
+		$this->ensure_database_tables();
 		delete_transient( 'adtechmedia-supported-countries-new' );
 		$website = get_home_url();
 		$name = preg_replace( '/https?:\/\//', '', $website );
@@ -96,17 +97,16 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'price_currency', Adtechmedia_Config::get( 'price_currency' ) );
 		$this->add_plugin_option( 'content_paywall', Adtechmedia_Config::get( 'content_paywall' ) );
 		$this->add_plugin_option( 'content_offset_type', Adtechmedia_Config::get( 'content_offset_type' ) );
-		$this->add_plugin_option( 'template_position', Adtechmedia_Config::get( 'template_position' ) );
 		$this->add_plugin_option( 'template_overall_styles_patch', Adtechmedia_Config::get( 'template_overall_styles_patch' ) );
-		$this->add_plugin_option( 'template_overall_styles', Adtechmedia_Config::get( 'template_overall_styles' ) );
-		$this->add_plugin_option( 'template_overall_styles_inputs', Adtechmedia_Config::get( 'template_overall_styles_inputs' ) );
-		$this->add_plugin_option( 'theme_config_id', 'default' );
-		$this->add_plugin_option( 'theme_config_name', '' );
+		$this->add_plugin_option( 'appearance_settings', Adtechmedia_Config::get( 'appearance_settings' ) );
 		try {
 			$this->check_api_key_exists();
 			$this->check_prop();
 
-			Adtechmedia_ThemeManager::init_theme_config_model();
+			if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
+				$this->update_prop();
+				$this->update_appearance();
+			}
 		} catch ( Error $error ) {
 			$this->activation_error = $error->getMessage();
 
@@ -121,6 +121,40 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		// Add schedule event update properties.
 		wp_clear_scheduled_hook( 'adtechmedia_update_event' );
 		wp_schedule_event( time(), 'daily', 'adtechmedia_update_event' );
+	}
+
+	/**
+	 * Update appearance settings
+	 */
+	public function update_appearance() {
+		$plugin_dir = plugin_dir_path( __FILE__ );
+		$file       = $plugin_dir . '/js/atm.min.js';
+		// @codingStandardsIgnoreStart
+		@unlink( $file );
+		// @codingStandardsIgnoreEnd
+
+		$appearance_settings = json_decode( $this->get_plugin_option( 'appearance_settings' ), true );
+
+		$this->add_plugin_option( 'template_overall_styles', $this->get_template_overall_styles( $appearance_settings ) );
+
+		$data = [
+			'targetModal' => [
+				'targetCb' => $this->get_target_cb_js( $appearance_settings ),
+				'toggleCb' => $this->get_toggle_cb_js( $appearance_settings ),
+			],
+			'styles'      => [
+				'main' => base64_encode(
+					$this->get_plugin_option( 'template_overall_styles' ) .
+					$this->get_plugin_option( 'template_overall_styles_patch' )
+				),
+			],
+		];
+		Adtechmedia_Request::property_update_config_by_array(
+			$this->get_plugin_option( 'id' ),
+			$this->get_plugin_option( 'key' ),
+			$data
+		);
+		Adtechmedia_ContentManager::clear_all_content();
 	}
 
 	/**
@@ -225,7 +259,32 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 *
 	 * @return void
 	 */
-	protected function install_database_tables() {
+	protected function ensure_database_tables() {
+		global $wpdb;
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS `$table_name` (
+                            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                            `option_name` VARCHAR(191) NOT NULL DEFAULT '',
+                            `option_value` LONGTEXT NOT NULL ,
+                            PRIMARY KEY (`id`),
+                            UNIQUE INDEX `option_name` (`option_name`)
+                        )"
+		);
+		// @codingStandardsIgnoreEnd
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS `$table_name` (
+                            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                            `item_id` VARCHAR(191) NOT NULL DEFAULT '',
+                            `value` LONGTEXT NOT NULL ,
+                            PRIMARY KEY (`id`),
+                            UNIQUE INDEX `item_id` (`item_id`)
+                        )"
+		);
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**
@@ -234,7 +293,20 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	 *
 	 * @return void
 	 */
-	protected function un_install_database_tables() {
+	protected function un_ensure_database_tables() {
+		global $wpdb;
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"DROP TABLE IF EXISTS `$table_name`"
+		);
+		// @codingStandardsIgnoreEnd
+		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
+		// @codingStandardsIgnoreStart
+		$wpdb->query(
+			"DROP TABLE IF EXISTS `$table_name`"
+		);
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**

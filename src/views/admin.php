@@ -33,35 +33,21 @@ $content_paywall = [
 ];
 $content_offset_types = [ 'paragraphs', 'words' ];
 
-echo '<script>';
 // @codingStandardsIgnoreStart
-echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';';
-echo 'var templateInputs = JSON.parse(\'';
-$template_inputs = addslashes( $this->get_plugin_option( 'template_inputs' ) );
-echo empty( $template_inputs ) ? '{}' : $template_inputs;
-echo '\');';
-echo 'var templateStyleInputs = JSON.parse(\'';
-$template_style_inputs = addslashes( $this->get_plugin_option( 'template_style_inputs' ) );
-echo empty( $template_style_inputs ) ? '{}' : $template_style_inputs;
-echo '\');';
-echo 'var templatePositionInputs = JSON.parse(\'';
-$template_position = addslashes( $this->get_plugin_option( 'template_position' ) );
-echo empty( $template_position ) ? '{}' : $template_position;
-echo '\');';
-echo 'var templateOverallStylesInputs = JSON.parse(\'';
-$template_overall_styles_inputs = addslashes( $this->get_plugin_option( 'template_overall_styles_inputs' ) );
-echo empty( $template_overall_styles_inputs ) ? '{}' : $template_overall_styles_inputs;
-echo '\');';
-echo 'var templateOverallStylesInputsDefault = JSON.parse(\'';
-$template_overall_styles_inputs_default = addslashes( Adtechmedia_Config::get ( 'template_overall_styles_inputs' ) );
-echo empty( $template_overall_styles_inputs_default ) ? '{}' : $template_overall_styles_inputs_default;
-echo '\');';
-
+echo '<script>' . PHP_EOL;
+echo 'var appearanceSettings = ' . $this->get_plugin_option( 'appearance_settings' ) . ';' . PHP_EOL;
+echo 'var apiKey = "' . addslashes( $this->get_plugin_option( 'key' ) ) . '";' . PHP_EOL;
+echo 'var propertyId = "' . addslashes( $this->get_plugin_option( 'Id' ) ) . '";' . PHP_EOL;
+echo 'var themeId = "' . addslashes( wp_get_theme()->get( 'Name' ) ) . '";' . PHP_EOL;
+echo 'var themeVersion = "' . addslashes( wp_get_theme()->get( 'Version' ) ) . '";' . PHP_EOL;
+echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . '";' . PHP_EOL;
+echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";' . PHP_EOL;
+echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
+echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
+echo '</script>' . PHP_EOL;
 // @codingStandardsIgnoreEnd
-echo '</script>';
 ?>
 <style>
-
 	.atm-targeted-modal {
 		width: auto;
 	}
@@ -73,26 +59,8 @@ echo '</script>';
 	}
 	.atm-targeted-container .share-block-inner .sharetool a,
 	.atm-targeted-container .share-block-inner .sharetool a:hover{
-		background: none!important;;
+		background: none!important;
 	}
-
-	/**/
-	/*.atm-base-modal {
-		background-color: #ffb7a7;
-	}
-	.atm-targeted-modal .atm-head-modal .atm-modal-heading {
-		background-color: #ffb7a7;
-	}
-	.atm-targeted-modal{
-		border: 3px solid rgba(131, 214, 255, 1);
-	}
-	.atm-base-modal .atm-footer{
-		background-color: #49ff96;
-		border: 3px solid rgb(255, 193, 22);
-	}
-	.atm-targeted-modal {
-		font-family: "FuturaICG", sans-serif;
-	}*/
 </style>
 
 <style id="overall-template-styling">
@@ -472,140 +440,13 @@ echo '</script>';
 		<h1 class="heading">
 			<i class="custom-icon templates"></i>
 			Templates management
-			<div class=" pull-right">
-				<button type="button" class="btn return-to-default-values"><i class="mdi mdi-check"></i> Reset to default values</button>
+			<div class="pull-right">
+				<button id="save-templates-config" type="button" class="btn"><i class="mdi mdi-check"></i> Save Configuration</button>
 			</div>
 		</h1>
-
-		<div class="content templating">
-
-			<div class="templates-views templates-views-common">
-				<div class="template-view">
-					<div class="header-view">Overall styling and position
-					</div>
-					<section class="content-view" >
-						<form id="overall-styling-and-position">
-						<div class="flex-container flex-gutter" data-template="overall-styling">
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Background Color</label>
-									<div class="custom-input">
-										<input type="color" data-template-css="background-color" value="#ffffff" placeholder="#ffffff" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Border</label>
-									<div class="custom-input">
-										<input type="text" data-template-css="border" name="border" value="1px solid #d3d3d3" placeholder="1px solid #d3d3d3" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Font Family</label>
-									<div class="custom-input">
-										<input type="text" data-template-css="font-family" name="font_family" value="'Merriweather', sans-serif" placeholder="'Merriweather', sans-serif" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Box Shadow</label>
-									<div class="custom-input">
-										<input type="text" data-template-css="box-shadow" name="box_shadow" value="0 1px 2px 0 rgba(0, 0, 0, 0.1)" placeholder="0 1px 2px 0 rgba(0, 0, 0, 0.1)" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Footer Background Color</label>
-									<div class="custom-input">
-										<input type="color" data-template-css="footer-background-color" value="#fafafa" placeholder="#fafafa" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-label">
-									<label>Footer Border</label>
-									<div class="custom-input">
-										<input type="text" data-template-css="footer-border" name="footer_border" value="1px solid #e3e3e3" placeholder="1px solid #e3e3e3" required="" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="flex-container flex-gutter flex-end" data-template="position">
-							<div class="flex-item-2">
-								<span class="accent-color">Sticky</span>
-								<div class="">
-									<input type="checkbox" name="sticky" id="checkbox-sticky" class="cbx hidden" checked />
-									<label for="checkbox-sticky" class="custom-checkbox"></label>
-								</div>
-							</div>
-							<div class="flex-item-2 disable-if-sticky">
-								<div class="custom-label">
-									<label>Width</label>
-									<div class="custom-input">
-										<input type="text" name="width" value="600px" placeholder="600px" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2 disable-if-sticky">
-								<div class="custom-label">
-									<label>Offset top</label>
-									<div class="custom-input">
-										<input type="text" name="offset_top" value="20px" placeholder="20px" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2 disable-if-sticky">
-								<div class="custom-label">
-									<label>Offset from center</label>
-									<div class="custom-input">
-										<input type="text" name="offset_left" value="-60px" placeholder="-60px" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2 disable-if-sticky">
-								<div class="custom-label">
-									<label>Scrolling offset top</label>
-									<div class="custom-input">
-										<input type="text" name="scrolling_offset_top" value="100px" placeholder="100px" />
-										<span class="bar"></span>
-									</div>
-								</div>
-							</div>
-							<div class="flex-item-2">
-								<div class="custom-input pull-right">
-									<button type="button" class="btn save-templates"><i
-											class="mdi mdi-check"></i> Save
-									</button>
-								</div>
-							</div>
-						</div>
-						</form>
-					</section>
-				</div>
-			</div>
-			<div class="clearfix">
-				<div class="">
-
-				<?php
-				include 'template.php';
-				?>
-				</div>
-			</div>
+		
+		<div id="template-editor">
+			<!-- ATM template editor here -->
 		</div>
 	</section>
 
@@ -616,5 +457,4 @@ echo '</script>';
 			<div id="modal-content"></div>
 		</div>
 	</div>
-
 </main>
