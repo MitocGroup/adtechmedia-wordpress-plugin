@@ -439,6 +439,7 @@ class Adtechmedia_OptionsManager {
 			background-color: {$appearance_settings['model']['body']['backgroundColor']};
 		}
 		.atm-targeted-modal {
+			position: relative;
 			border: {$appearance_settings['model']['body']['border']};
 			box-shadow: {$appearance_settings['model']['body']['boxShadow']};
 		}
