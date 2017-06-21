@@ -44,8 +44,12 @@ echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . 
 echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";' . PHP_EOL;
 echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
 echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
+echo 'var forceSaveTemplates = ' . ( empty( $this->get_plugin_option( 'force-save-templates' ) ) ? 'false' : 'true' )  . ';' . PHP_EOL;
 echo '</script>' . PHP_EOL;
 // @codingStandardsIgnoreEnd
+if ( !empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
+	$this->delete_plugin_option( 'force-save-templates' );
+}
 ?>
 <style>
 	.atm-targeted-modal {
