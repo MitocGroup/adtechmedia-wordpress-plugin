@@ -338,7 +338,7 @@ jQuery().ready(function() {
       return tplManager.syncConfig(runtime);
     })
     .then(function() {
-      saveTemplatesBtn.on('click', function() {
+      function syncTemplates(notify) {
         addLoader(saveTemplatesBtn);
         tplManager.waitConfig(runtime)
           .then(function() {
@@ -355,7 +355,7 @@ jQuery().ready(function() {
               },
               success: function(response) {
                 removeLoader(saveTemplatesBtn);
-                showSuccess();
+                notify && showSuccess();
               },
               error: function(response) {
                 removeLoader(saveTemplatesBtn);
@@ -367,10 +367,14 @@ jQuery().ready(function() {
             removeLoader(saveTemplatesBtn);
             showError();
           });
+      }
+      
+      saveTemplatesBtn.on('click', function() {
+        syncTemplates(true);
       });
         
       if (forceSaveTemplates) {
-        saveTemplatesBtn.click();
+        syncTemplates();
       }
     });
 });

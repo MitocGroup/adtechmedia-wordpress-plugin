@@ -109,6 +109,10 @@ if ( !empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 	echo empty( $template_overall_styles ) ? '' : $template_overall_styles;
 	// @codingStandardsIgnoreEnd
 	?>
+	
+	.atm-targeted-container {
+		z-index: 0 !important;
+	}
 </style>
 <main>
 	<section>
