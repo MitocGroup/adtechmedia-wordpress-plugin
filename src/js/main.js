@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat:0, no-undef: 0*/
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0*/
 
 function throttle(func, ms) {
   var isThrottled = false,

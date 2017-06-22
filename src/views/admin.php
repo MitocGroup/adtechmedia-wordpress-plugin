@@ -47,7 +47,7 @@ echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) )
 echo 'var forceSaveTemplates = ' . ( empty( $this->get_plugin_option( 'force-save-templates' ) ) ? 'false' : 'true' )  . ';' . PHP_EOL;
 echo '</script>' . PHP_EOL;
 // @codingStandardsIgnoreEnd
-if ( !empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
+if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 	$this->delete_plugin_option( 'force-save-templates' );
 }
 ?>
