@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat:0, no-undef: 0*/
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0*/
 
 function throttle(func, ms) {
   var isThrottled = false,
@@ -316,6 +316,7 @@ jQuery().ready(function() {
   checkBtnRegister(terms);
   initModal();
   
+  const saveTemplatesBtn = jQuery('#save-templates-config');
   const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
 
@@ -325,7 +326,7 @@ jQuery().ready(function() {
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
-    .then(exists => {        
+    .then(function(exists) {        
       return exists 
         ? tplManager.fetch() 
         : tplManager.createDefaults(
@@ -333,33 +334,47 @@ jQuery().ready(function() {
           themeVersion, platformVersion
         );
     })
-    .then(() => tplManager.syncConfig(runtime))
-    .then(() => {
-      document.getElementById('save-templates-config')
-        .addEventListener('click', e => {
-          var btn = jQuery(e.target);
-          addLoader(btn);
-          tplManager.waitConfig(runtime)
-            .then(() => tplManager.updateAll())
-            .then(() => {
-              jQuery.ajax({
-                url: save_template.ajax_url,
-                type: 'post',
-                data: {
-                  action: 'save_template',
-                  nonce: save_template.nonce,
-                  appearanceSettings: JSON.stringify(tplManager.generalSettings),
-                },
-                success: function(response) {
-                  removeLoader(btn);
-                  showSuccess();
-                },
-                error: function(response) {
-                  removeLoader(btn);
-                  showError();
-                }
-              });
+    .then(function() {
+      return tplManager.syncConfig(runtime);
+    })
+    .then(function() {
+      function syncTemplates(notify) {
+        addLoader(saveTemplatesBtn);
+        tplManager.waitConfig(runtime)
+          .then(function() {
+            return tplManager.updateAll();
+          })
+          .then(function() {
+            jQuery.ajax({
+              url: save_template.ajax_url,
+              type: 'post',
+              data: {
+                action: 'save_template',
+                nonce: save_template.nonce,
+                appearanceSettings: JSON.stringify(tplManager.generalSettings),
+              },
+              success: function(response) {
+                removeLoader(saveTemplatesBtn);
+                notify && showSuccess();
+              },
+              error: function(response) {
+                removeLoader(saveTemplatesBtn);
+                showError();
+              }
             });
-        });
+          })
+          .catch(function(error) {
+            removeLoader(saveTemplatesBtn);
+            showError();
+          });
+      }
+      
+      saveTemplatesBtn.on('click', function() {
+        syncTemplates(true);
+      });
+        
+      if (forceSaveTemplates) {
+        syncTemplates();
+      }
     });
 });
