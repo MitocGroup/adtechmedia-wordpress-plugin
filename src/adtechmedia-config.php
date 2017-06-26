@@ -26,11 +26,12 @@ class Adtechmedia_Config {
 		'minDelay'                       => 150000,
 		'factor'                         => 1.7,
 		'atm_js_cache_time'              => 86400,
-		'template_position'              => '{"sticky":true,"width":"600px","offset_top":"20px","offset_left":"-60px","scrolling_offset_top":"100px"}',
-		'template_overall_styles_patch'  => '@media (max-width: 991px) { .atm-targeted-container { width: 90% !important; left: 5% !important; transform: none !important; } } @media (max-width: 600px) { .atm-targeted-container { top: 0 !important; } }', /* @todo Replace responsive hotfix with smth sustainable and reliable */
-		'template_overall_styles'        => '.atm-base-modal {background-color: #ffffff;}.atm-targeted-modal .atm-head-modal .atm-modal-heading {background-color: #ffffff;}.atm-targeted-modal{border: 1px solid #d3d3d3;}.atm-targeted-modal{box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);}.atm-base-modal .atm-footer{background-color: #fafafa;}.atm-base-modal .atm-footer{border: 1px solid #e3e3e3;}.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal .atm-modal-body p,.atm-unlock-line .unlock-btn {font-family: \'Merriweather\', sans-serif;}',
-		'template_overall_styles_inputs' => '{"background-color":"#ffffff","border":"1px solid #d3d3d3","font-family":"\'Merriweather\', sans-serif","box-shadow":"0 1px 2px 0 rgba(0, 0, 0, 0.1)","footer-background-color":"#fafafa","footer-border":"1px solid #e3e3e3"}',
+		'template_overall_styles_patch'  => '@media (max-width: 991px) { .atm-targeted-container { width: 90% !important; left: 5% !important; transform: none !important; } } @media (max-width: 600px) { .atm-targeted-container { top: 0 !important; } }',
 		'sw_js_url'                      => 'https://www.adtechmedia.io/atm-admin/atm-build/sw.min.js',
+		'tpl_js_url'                     => 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js',
+		'tpl_mgmt_js_url'                => 'https://www.adtechmedia.io/atm-core/atm-build/atmTplManager.js',
+		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
+		'register_url_tpl'               => 'https://www.adtechmedia.io/admin/accounts/signup/%s',
 		'price'                          => 5,
 		'content_offset'                 => 2,
 		'payment_pledged'                => 2,
@@ -41,6 +42,8 @@ class Adtechmedia_Config {
 		'content_paywall'                => 'transactions',
 		'content_offset_type'            => 'paragraphs',
 		'country'                        => 'United States',
+		'platform_id'										 => 'Wordpress',
+		'appearance_settings'		 				 => '{"model":{"main":{"sticky":true,"width":"600px","offset":{"top":"20px","fromCenter":"-60px","scrollTop":"100"}},"body":{"backgroundColor":"#ffffff","border":"1px solid #d3d3d3","fontFamily":"\'Merriweather\', sans-serif","boxShadow":"0 1px 2px 0 rgba(0, 0, 0, 0.1)"},"footer":{"backgroundColor":"#fafafa","border":"1px solid #e3e3e3"}}}',
 	];
 
 	/**
@@ -57,10 +60,14 @@ class Adtechmedia_Config {
 	/**
 	 * Set API end point for localhost
 	 */
-	public static function set_api_end_point() {
+	public static function setup_endpoints() {
 		if ( self::is_localhost() ) {
-			self::$conf['api_end_point'] = 'https://api-dev.adtechmedia.io/v1/';
-			self::$conf['sw_js_url']     = 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['api_end_point'] 		= 'https://api-dev.adtechmedia.io/v1/';
+			self::$conf['sw_js_url']     		= 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['register_url_tpl'] = 'https://www-dev.adtechmedia.io/admin/accounts/signup/%s';
+			self::$conf['tpl_js_url']       = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTpl.js';
+			self::$conf['tpl_mgmt_js_url']  = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
+			self::$conf['terms_url']        = 'https://www-dev.adtechmedia.io/terms/dialog.html';
 		}
 	}
 
@@ -77,4 +84,4 @@ class Adtechmedia_Config {
 	}
 }
 
-Adtechmedia_Config::set_api_end_point();
+Adtechmedia_Config::setup_endpoints();

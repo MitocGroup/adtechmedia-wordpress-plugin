@@ -112,65 +112,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		return 'adtechmedia.php';
 	}
 
-	/**
-	 * See: http://plugin.michael-simpson.com/?page_id=101
-	 * Called by install() to create any database tables if needed.
-	 * Best Practice:
-	 * (1) Prefix all table names with $wpdb->prefix
-	 * (2) make table names lower case only
-	 *
-	 * @return void
-	 */
-	protected function install_database_tables() {
-		global $wpdb;
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"CREATE TABLE IF NOT EXISTS `$table_name` (
-                            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                            `option_name` VARCHAR(191) NOT NULL DEFAULT '',
-                            `option_value` LONGTEXT NOT NULL ,
-                            PRIMARY KEY (`id`),
-                            UNIQUE INDEX `option_name` (`option_name`)
-                        )"
-		);
-		// @codingStandardsIgnoreEnd
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"CREATE TABLE IF NOT EXISTS `$table_name` (
-                            `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                            `item_id` VARCHAR(191) NOT NULL DEFAULT '',
-                            `value` LONGTEXT NOT NULL ,
-                            PRIMARY KEY (`id`),
-                            UNIQUE INDEX `item_id` (`item_id`)
-                        )"
-		);
-		// @codingStandardsIgnoreEnd
-	}
-
-	/**
-	 * See: http://plugin.michael-simpson.com/?page_id=101
-	 * Drop plugin-created tables on uninstall.
-	 *
-	 * @return void
-	 */
-	protected function un_install_database_tables() {
-		global $wpdb;
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"DROP TABLE IF EXISTS `$table_name`"
-		);
-		// @codingStandardsIgnoreEnd
-		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
-		// @codingStandardsIgnoreStart
-		$wpdb->query(
-			"DROP TABLE IF EXISTS `$table_name`"
-		);
-		// @codingStandardsIgnoreEnd
-	}
-
 
 	/**
 	 * Perform actions when upgrading from version X to version Y
@@ -256,15 +197,20 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				if ( isset( $_GET['atm-token'] ) && ! empty( $_GET['atm-token'] ) ) {
 					$atm_token = sanitize_text_field( wp_unslash( $_GET['atm-token'] ) );
 
-					$key = Adtechmedia_Request::api_token2key(
+					$key_response = Adtechmedia_Request::api_token2key(
 						$this->get_plugin_option( 'support_email' ),
 						$atm_token
 					);
+					$key = $key_response['apiKey'];
 
 					if ( ! empty( $key ) ) {
 						$this->delete_plugin_option( 'api-token-sent' );
 						$this->add_plugin_option( 'key', $key );
+						$this->add_plugin_option( 'client-id', $key_response['clientId'] );
 						$this->add_plugin_option( 'admin-redirect', true );
+						$this->add_plugin_option( 'force-save-templates', true );
+						$this->update_prop();
+						$this->update_appearance();
 
 						add_action( 'admin_init',
 							array(
@@ -337,18 +283,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'ajax_save_template',
 			)
 		);
-		add_action( 'wp_ajax_return_to_default_values',
-			array(
-				&$this,
-				'ajax_return_to_default_values',
-			)
-		);
-		add_action( 'after_switch_theme',
-			array(
-				&$this,
-				'change_theme_configs',
-			)
-		);
 	}
 
 	/**
@@ -418,24 +352,18 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
-	 * Change theme config.
-	 */
-	function change_theme_configs() {
-		Adtechmedia_ThemeManager::init_theme_config_model();
-	}
-
-	/**
 	 * Save templates action
 	 */
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
-			$plugin_dir = plugin_dir_path( __FILE__ );
-			$file       = $plugin_dir . '/js/atm.min.js';
-			@unlink( $file );
 			if ( isset( $_POST['revenueMethod'] ) ) {
+				$plugin_dir = plugin_dir_path( __FILE__ );
+				$file       = $plugin_dir . '/js/atm.min.js';
+				@unlink( $file );
+
 				$revenue_method = $_POST['revenueMethod'];
-				$this->add_plugin_option( 'revenue_method', $revenue_method );
+				$this->update_plugin_option( 'revenue_method', $revenue_method );
 				Adtechmedia_Request::property_update_config_by_array(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
@@ -443,6 +371,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						'revenueMethod' => $revenue_method,
 					]
 				);
+				Adtechmedia_ContentManager::clear_all_content();
 			} else if ( isset( $_POST['contentConfig'] ) ) {
 				$content_config = json_decode( wp_unslash( $_POST['contentConfig'] ), true );
 				foreach ( $content_config as $a_option_key => $a_option_meta ) {
@@ -451,69 +380,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					}
 				}
 				$this->update_prop();
-			} else {
-				$options = [
-					'template_inputs'                => 'inputs',
-					'template_style_inputs'          => 'styleInputs',
-					'template_position'              => 'position',
-					'template_overall_styles'        => 'overallStyles',
-					'template_overall_styles_inputs' => 'overallStylesInputs',
-				];
-				$data    = [];
-				foreach ( $options as $db_key => $post_key ) {
-					$value = '';
-					if ( isset ( $_POST[ $post_key ] ) ) {
-						$value = sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) );
-					}
-					$data[ $db_key ] = $value;
-					$this->add_plugin_option( $db_key, $value );
-				}
-
-				$componentsTemplates = [];
-				$components          = $_POST['components'];
-				$templates           = $_POST['templates'];
-				if ( ! is_array( $components ) ) {
-					$components = [ $components ];
-				}
-				if ( ! is_array( $templates ) ) {
-					$templates = [ $templates ];
-				}
-
-				if ( ! ( count( $components ) == 1 && array_key_exists( 0, $components ) && $components[0] == '' ) ) {
-					foreach ( $components as $key => $component ) {
-						$components[ $key ] = sanitize_text_field( wp_unslash( $component ) );
-						$this->add_plugin_option( 'template_' . $components[ $key ], $templates[ $component ] );
-						$componentsTemplates[ $components[ $key ] ] = base64_encode( stripslashes( $templates[ $component ] ) );
-					}
-				}
-				$data = [
-					'templates'   => $componentsTemplates,
-					'targetModal' => [
-						'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
-						'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
-					],
-					'styles'      => [
-						'main' => base64_encode(
-							$data['template_overall_styles'] .
-							$this->get_plugin_option( 'template_overall_styles_patch' )
-						),
-					],
-				];
-				if ( count( $componentsTemplates ) == 0 ) {
-					unset( $data['templates'] );
-				}
-
-
-				Adtechmedia_Request::property_update_config_by_array(
-					$this->get_plugin_option( 'id' ),
-					$this->get_plugin_option( 'key' ),
-					$data
-				);
-
-				// @codingStandardsIgnoreEnd
+			} else if ( isset( $_POST['appearanceSettings'] ) ) {
+				$this->update_plugin_option( 'appearance_settings',  wp_unslash( $_POST['appearanceSettings'] ) );
+				$this->update_appearance();
 			}
-
-			Adtechmedia_ThemeManager::save_current_theme_configs();
+			// @codingStandardsIgnoreEnd
 
 			echo 'ok';
 		}
@@ -547,11 +418,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			[ 'adtechmedia-jquery-noty-js' ]
 		);
 		wp_enqueue_script( 'jquery-validate', plugins_url( '/js/jquery.validate.min.js', __FILE__ ) );
-		wp_enqueue_script( 'adtechmedia-atm-tpl-js', 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js', [ 'adtechmedia-jquery-throttle-js' ] );
+		wp_enqueue_script( 'adtechmedia-atm-tpl-js', Adtechmedia_Config::get( 'tpl_js_url' ), [ 'adtechmedia-jquery-throttle-js' ] );
+		wp_enqueue_script( 'adtechmedia-atm-tpl-mgmt-js', Adtechmedia_Config::get( 'tpl_mgmt_js_url' ), [ 'adtechmedia-atm-tpl-js' ] );
 		wp_enqueue_script(
 			'adtechmedia-admin-js',
 			plugins_url( '/js/main.js', __FILE__ ),
-			[ 'adtechmedia-atm-tpl-js' ]
+			[ 'adtechmedia-atm-tpl-mgmt-js' ]
 		);
 		wp_localize_script( 'adtechmedia-admin-js',
 			'save_template',
@@ -587,7 +459,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( ! is_single() ) {
+		if ( ! is_single() || empty( $this->get_plugin_option( 'key' ) ) ) {
 			return;
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
@@ -645,7 +517,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function hide_content( $content ) {
 
-		if ( is_single() ) {
+		if ( is_single() && ! empty( $this->get_plugin_option( 'key' ) ) ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
 			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
@@ -731,137 +603,5 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		</div>
 		<?php
 		// @codingStandardsIgnoreEnd
-	}
-
-	/**
-	 * Return to default values
-	 */
-	public function ajax_return_to_default_values() {
-		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
-
-			if ( isset( $_POST['method'] ) && 'get_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
-				Adtechmedia_ThemeManager::make_current_as_default();
-				$default_configs = Adtechmedia_ThemeManager::retrieve_current_theme_configs();
-				$configs         = [];
-				if ( ! $default_configs ) {
-					$configs = [
-						'overall-styling-and-position' => [
-							'template_position'              => Adtechmedia_Config::get( 'template_position' ),
-							'template_overall_styles'        => Adtechmedia_Config::get( 'template_overall_styles' ),
-							'template_overall_styles_inputs' => Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
-						],
-					];
-				} else {
-					$configs = [
-						'overall-styling-and-position' => [
-							'template_position'              => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
-								$default_configs['Config']
-							) ?
-								$default_configs['Config']['template_position'] :
-								Adtechmedia_Config::get( 'template_position' ),
-							'template_overall_styles'        => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
-								$default_configs['Config']
-							) ?
-								$default_configs['Config']['template_overall_styles'] :
-								Adtechmedia_Config::get( 'template_overall_styles' ),
-							'template_overall_styles_inputs' => array_key_exists( 'Config', $default_configs ) && array_key_exists( 'template_position',
-								$default_configs['Config']
-							) ?
-								$default_configs['Config']['template_overall_styles_inputs'] :
-								Adtechmedia_Config::get( 'template_overall_styles_inputs' ),
-						],
-					];
-				}
-
-				echo wp_json_encode( $configs );
-				die();
-			} elseif ( isset( $_POST['method'] ) && 'save_default_values' === sanitize_text_field( wp_unslash( $_POST['method'] ) ) ) {
-				$data = [];
-				// @codingStandardsIgnoreStart
-				if ( isset( $_POST['revenue_method'] ) ) {
-					$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
-					$this->add_plugin_option( 'revenue_method', $revenue_method );
-					$data['revenue_method'] = $revenue_method;
-				}
-				if ( isset( $_POST['contentConfig'] ) ) {
-					$content_config = json_decode( sanitize_text_field( wp_unslash( $_POST['contentConfig'] ) ), true );
-					foreach ( $content_config as $a_option_key => $a_option_meta ) {
-						if ( ! empty( $content_config[ $a_option_key ] ) ) {
-							$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );
-						}
-					}
-				}
-				// @codingStandardsIgnoreEnd
-
-				$options = [
-					'template_inputs'                => 'inputs',
-					'template_style_inputs'          => 'styleInputs',
-					'template_position'              => 'position',
-					'template_overall_styles'        => 'overallStyles',
-					'template_overall_styles_inputs' => 'overallStylesInputs',
-				];
-				// @codingStandardsIgnoreStart
-				foreach ( $options as $db_key => $post_key ) {
-					$value = '';
-					if ( isset ( $_POST[ $post_key ] ) ) {
-						$value = sanitize_text_field( wp_unslash( $_POST[ $post_key ] ) );
-					}
-					$data[ $db_key ] = $value;
-					$this->add_plugin_option( $db_key, $value );
-				}
-
-				$components_templates = [];
-				if ( isset( $_POST['components'] ) ) {
-					$components =  json_decode( wp_unslash( $_POST['components'] ), true );
-				}
-				if ( isset( $_POST['templates'] ) ) {
-					$templates = json_decode( wp_unslash( $_POST['templates'] ), true );
-				}
-				// @codingStandardsIgnoreEnd
-				if ( ! is_array( $components ) ) {
-					$components = [ $components ];
-				}
-				if ( ! is_array( $templates ) ) {
-					$templates = [ $templates ];
-				}
-				if ( ! ( 1 === count( $components ) && array_key_exists( 0, $components ) || '' === $components[0] ) ) {
-					foreach ( $components as $key => $component ) {
-						$components[ $key ] = sanitize_text_field( wp_unslash( $component ) );
-						$this->add_plugin_option( 'template_' . $components[ $key ], $templates[ $component ] );
-						$components_templates[ $components[ $key ] ] = base64_encode( stripslashes( $templates[ $component ] ) );
-					}
-				}
-
-				$data = array_merge( $data,
-					[
-						'templates'   => $components_templates,
-						'targetModal' => [
-							'targetCb' => $this->get_target_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
-							'toggleCb' => $this->get_toggle_cb_js( json_decode( stripslashes( $data['template_position'] ), true ) ),
-						],
-						'styles'      => [
-							'main' => base64_encode(
-								$data['template_overall_styles']
-								. $this->get_plugin_option( 'template_overall_styles_patch' )
-							),
-						],
-					]
-				);
-				if ( 0 === count( $components_templates ) ) {
-					unset( $data['templates'] );
-				}
-
-				Adtechmedia_Request::property_update_config_by_array(
-					$this->get_plugin_option( 'id' ),
-					$this->get_plugin_option( 'key' ),
-					$data
-				);
-				$this->update_prop();
-				/* regenerate atm.js and sw.js */
-				$this->add_plugin_option( 'atm-js-is-old', '1' );
-				echo 'ok';
-				die();
-			}
-		}
 	}
 }

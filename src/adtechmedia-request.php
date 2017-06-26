@@ -162,11 +162,14 @@ class Adtechmedia_Request {
 			'GET',
 			[],
 			$data,
-			[ 'apiKey' ]
+			[ 'apiKey', 'clientId' ]
 		);
 
-		if ( $response && isset( $response['apiKey'] ) ) {
-			return $response['apiKey'];
+		if ( $response && isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
+			return [
+				'apiKey' 	 => $response['apiKey'],
+				'clientId' => $response['clientId'],
+			];
 		}
 		return false;
 	}
@@ -191,8 +194,11 @@ class Adtechmedia_Request {
 		);
 
 		if ( $response ) {
-			if ( isset( $response['apiKey'] ) ) {
-				return $response['apiKey'];
+			if ( isset( $response['apiKey'] ) && isset( $response['clientId'] ) ) {
+				return [
+					'apiKey' 	 => $response['apiKey'],
+					'clientId' => $response['clientId'],
+				];
 			} else if ( isset( $response['errorMessage'] ) ) {
 				$error = json_decode( $response['errorMessage'], true );
 				if ( preg_match( '/UsernameExistsException/i', $error['errorMessage'] ) ) {
@@ -203,6 +209,8 @@ class Adtechmedia_Request {
 				}
 
 				throw new Error( $error['errorMessage'] );
+			} else {
+				throw new Error( 'Missing apiKey or clientId parameters in response' );
 			}
 		} else {
 			return false;
@@ -284,8 +292,6 @@ class Adtechmedia_Request {
 	 * @param string  $offset_type offset type.
 	 * @param string  $currency currency.
 	 * @param string  $pledged_type pledged type.
-	 * @param string  $get_target_cb_js target cb js.
-	 * @param string  $get_toggle_cb_js toggle cb js.
 	 * @return array|bool
 	 */
 	public static function property_update_config(
@@ -301,9 +307,7 @@ class Adtechmedia_Request {
 		$payment_pledged,
 		$offset_type,
 		$currency,
-		$pledged_type,
-		$get_target_cb_js,
-		$get_toggle_cb_js
+		$pledged_type
 	) {
 		if ( empty( $key ) ) {
 			return false;
@@ -334,10 +338,6 @@ class Adtechmedia_Request {
 					'pledged' => $payment_pledged,
 					'currency' => $currency,
 					'pledgedType' => self::get_pledged_type( $pledged_type ),
-				],
-				'targetModal' => [
-					'toggleCb' => $get_toggle_cb_js,
-					'targetCb' => $get_target_cb_js,
 				],
 			],
 		];
