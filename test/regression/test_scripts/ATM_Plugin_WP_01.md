@@ -1,0 +1,3 @@
+Component |	ID |	Description |	Designed Steps |	Expected Result |	Created<br> By |	Last<br> Updated |
+ --- | --- | --- | --- | --- | --- | --- |
+ ATM Plugin installation | WP_1 | Pre-requisite for Regression library execution: <br> - ATM Plugin installation | 1. Login to WordPress and Navigate to "Admin" page <br> 2. Click on "Add New" button from top-left menu of "Admin" page <br> 3. Perform search for "AdTechMedia" item from "Search" form <br> 4. Click on "Install Now" button from "AdTechMedia" module | *AdTechMedia Plugin is accessible from "Admin" page on left menu in plugins section | Alexandr Vozicov | 31.05.2017
