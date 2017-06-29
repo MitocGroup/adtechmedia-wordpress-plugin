@@ -490,8 +490,10 @@ class Adtechmedia_Request {
 			self::_log_request( $url, $response, $tries );
 
 			if ( isset( $response ) && ! ( $response instanceof WP_Error )
-				&& isset( $response['http_response'] ) && $response['http_response']->get_status() !== 403
-				&& isset( $response['body'] ) ) {
+				&& (
+					( isset( $response['http_response'] ) && 403 !== $response['http_response']->get_status() ) // >=4.6
+					|| ( isset( $response['response'] ) && 403 !== $response['response']['code'] ) // <=4.5
+				) && isset( $response['body'] ) ) {
 
 				if ( self::check_response( $response, $excepted_params ) ) {
 					set_time_limit( $max_time );
