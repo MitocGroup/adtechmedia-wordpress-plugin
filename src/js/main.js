@@ -387,7 +387,7 @@ jQuery().ready(function() {
 
   if (apiToken) {
     jQuery('.atm-missing-key-msg').addClass('preloader');
-    jQuery('.atm-missing-key-msg *').css('opacity',0);
+    jQuery('.atm-missing-key-msg *').css('opacity', 0);
     jQuery.ajax({
       url: ajaxurl,
       type: 'post',
@@ -396,8 +396,8 @@ jQuery().ready(function() {
         atm_token: apiToken
       },
       success: function(response) {
-        if (response.length>0) {
-          window.location = url.replace(/\&atm-token=([^&]+)/,'');
+        if (response.length > 0) {
+          window.location = url.replace(/\&atm-token=([^&]+)/, '');
         }
       },
       error: function(response) {
