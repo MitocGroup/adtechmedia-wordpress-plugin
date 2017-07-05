@@ -381,9 +381,10 @@ jQuery().ready(function() {
 
 jQuery().ready(function() {
   var url = window.location.href;
-  var apiToken = (/atm-token/gi.test(url)) ?
-    url.match(/atm-token=([^&]+)/)[1]
+  var apiToken = (/atm-token/gi.test(url)) 
+    ? url.match(/atm-token=([^&]+)/)[1]
     : '';
+
   if (apiToken) {
     jQuery('.atm-missing-key-msg').addClass('preloader');
     jQuery('.atm-missing-key-msg *').css('opacity',0);
@@ -393,10 +394,10 @@ jQuery().ready(function() {
       data: {
         action: 'key_from_token',
         atm_token: apiToken
-        },
+      },
       success: function(response) {
-        if(response.length>0) {
-         window.location = url.replace(/\&atm-token=([^&]+)/,'');
+        if (response.length>0) {
+          window.location = url.replace(/\&atm-token=([^&]+)/,'');
         }
       },
       error: function(response) {
