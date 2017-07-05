@@ -384,7 +384,7 @@ jQuery().ready(function() {
   var apiToken = (/atm-token/gi.test(url)) 
     ? url.match(/atm-token=([^&]+)/)[1]
     : '';
-
+  
   if (apiToken) {
     jQuery('.atm-missing-key-msg').addClass('preloader');
     jQuery('.atm-missing-key-msg *').css('opacity', 0);
