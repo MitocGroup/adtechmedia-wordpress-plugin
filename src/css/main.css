@@ -1733,3 +1733,11 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     top: -2px;
     left: 100%;
 }
+
+.content .preloader{
+    background-image: url("../images/loading.svg") ;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    box-shadow:none;
+}
