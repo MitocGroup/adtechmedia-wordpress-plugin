@@ -258,40 +258,40 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			)
 		);
 		add_action( 'wp_ajax_key_from_token',
-            array(
-                &$this,
-                'key_from_token',
-            )
-        );
+			array(
+				&$this,
+				'key_from_token',
+			)
+		);
 		
 	}
 
-	 /**
-     * Get key from token with API
-     */
-    public function key_from_token() {
-        if ( isset( $_POST['atm_token'] ) && ! empty( $_POST['atm_token'] ) ) {
-            $atm_token = sanitize_text_field( wp_unslash( $_POST['atm_token'] ) );
+	/**
+	* Get key from token with API
+	*/
+	public function key_from_token() {
+		if ( isset( $_POST['atm_token'] ) && ! empty( $_POST['atm_token'] ) ) {
+			$atm_token = sanitize_text_field( wp_unslash( $_POST['atm_token'] ) );
 
-            $key_response = Adtechmedia_Request::api_token2key(
-                $this->get_plugin_option( 'support_email' ),
-                $atm_token
-            );
-            $key = $key_response['apiKey'];
+			$key_response = Adtechmedia_Request::api_token2key(
+			$this->get_plugin_option( 'support_email' ),
+			$atm_token
+			);
+			$key = $key_response['apiKey'];
 
-            if ( ! empty( $key ) ) {
-                $this->delete_plugin_option( 'api-token-sent' );
-                $this->add_plugin_option( 'key', $key );
-                $this->add_plugin_option( 'client-id', $key_response['clientId'] );
-                $this->add_plugin_option( 'admin-redirect', true );
-                $this->add_plugin_option( 'force-save-templates', true );
-                $this->update_prop();
-                $this->update_appearance();
-                echo $key;
-            }
-            wp_die();
-        }
-    }
+			if ( ! empty( $key ) ) {
+				$this->delete_plugin_option( 'api-token-sent' );
+				$this->add_plugin_option( 'key', $key );
+				$this->add_plugin_option( 'client-id', $key_response['clientId'] );
+				$this->add_plugin_option( 'admin-redirect', true );
+				$this->add_plugin_option( 'force-save-templates', true );
+				$this->update_prop();
+				$this->update_appearance();
+				echo $key;
+			}
+			wp_die();
+		}
+	}
 	
 	/**
 	 * Redirect to admin page
