@@ -193,7 +193,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->send_api_token( true );
 					$this->add_plugin_option( 'api-token-sent', true );
 				}
-
 			}
 
 			$property_check = $this->check_prop();
@@ -291,7 +290,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			wp_die();
 		}
 	}
-	
+
 	/**
 	 * Redirect to admin page
 	 */
