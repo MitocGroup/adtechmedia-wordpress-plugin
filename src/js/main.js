@@ -33,7 +33,7 @@ var notify = throttle(function(type, text) {
   return noty({
     type: type,
     text: text,
-    timeout: 3000,
+    timeout: 3000
   });
 }, 3500);
 
@@ -49,7 +49,7 @@ function requestApiToken(event) {
     data: {
       action: 'send_api_token',
       nonce: send_api_token.nonce,
-      return_link_tpl: window.location.toString(),
+      return_link_tpl: window.location.toString()
     },
     success: function(response) {
       notify('success', 'AdTechMedia api authorization token request has been sent');
@@ -351,7 +351,7 @@ jQuery().ready(function() {
               data: {
                 action: 'save_template',
                 nonce: save_template.nonce,
-                appearanceSettings: JSON.stringify(tplManager.generalSettings),
+                appearanceSettings: JSON.stringify(tplManager.generalSettings)
               },
               success: function(response) {
                 removeLoader(saveTemplatesBtn);
