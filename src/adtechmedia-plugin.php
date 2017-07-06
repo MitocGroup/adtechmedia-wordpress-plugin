@@ -268,8 +268,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Get key from token with API
 	 */
 	public function key_from_token() {
+        // @codingStandardsIgnoreStart
 		if ( isset( $_POST['atm_token'] ) && ! empty( $_POST['atm_token'] ) ) {
 			$atm_token = sanitize_text_field( wp_unslash( $_POST['atm_token'] ) );
+            // @codingStandardsIgnoreEnd
 
 			$key_response = Adtechmedia_Request::api_token2key(
 				$this->get_plugin_option( 'support_email' ),
