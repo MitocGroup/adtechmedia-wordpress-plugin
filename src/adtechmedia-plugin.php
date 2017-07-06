@@ -287,7 +287,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->add_plugin_option( 'force-save-templates', true );
 				$this->update_prop();
 				$this->update_appearance();
+                // @codingStandardsIgnoreStart
 				echo $key;
+                // @codingStandardsIgnoreEnd
 			}
 			wp_die();
 		}
