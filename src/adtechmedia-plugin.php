@@ -263,7 +263,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'key_from_token',
 			)
 		);
-		
 	}
 
 	/**
