@@ -376,7 +376,7 @@ jQuery().ready(function() {
         syncTemplates(true);
       });
 
-      if ((forceSaveTemplates)||(firstSaveTemplates)){
+      if ((forceSaveTemplates)||(firstSaveTemplates)) {
         syncTemplates();
       }
     });
