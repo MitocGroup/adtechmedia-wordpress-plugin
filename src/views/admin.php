@@ -113,6 +113,23 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 	.atm-targeted-container {
 		z-index: 0 !important;
 	}
+	
+	/*fix for wp 4.5 and plugin All in One Schema*/
+	.vue-tabs  li.tab {
+		border:0;
+	}
+	.vue-tabs li.tab.active {
+		padding-top: 0;
+		top:0;
+	}
+	.vue-tabs li.tab.active a:focus {
+		-webkit-box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+		box-shadow: 0 0 0 1px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, .8);
+	}
+	.editor-container .tabs-container .tab-container {
+		width: initial;
+		float: initial;
+	}
 </style>
 <main>
 	<section>

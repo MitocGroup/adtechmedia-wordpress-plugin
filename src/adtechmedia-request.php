@@ -28,7 +28,7 @@ class Adtechmedia_Request {
 		$data = [
 			'ContentId' => $content_id,
 			'PropertyId' => $property_id,
-			'Content' => addslashes( preg_replace( '/\n/', '', $content ) ),
+			'Content' => $content,
 		];
 		$response = self::make(
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/content/create',
