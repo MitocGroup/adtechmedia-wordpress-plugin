@@ -332,7 +332,7 @@ jQuery().ready(function() {
       if (exists) {
         result = tplManager.fetch();
       } else {
-        result = tplManager.createDefaults(ropertyId, themeId, platformId, themeVersion, platformVersion);
+        result = tplManager.createDefaults(propertyId, themeId, platformId, themeVersion, platformVersion);
         firstSaveTemplates = true;
       }
       return result;
