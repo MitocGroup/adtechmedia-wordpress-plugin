@@ -33,7 +33,7 @@ var notify = throttle(function(type, text) {
   return noty({
     type: type,
     text: text,
-    timeout: 3000,
+    timeout: 3000
   });
 }, 3500);
 
@@ -49,7 +49,7 @@ function requestApiToken(event) {
     data: {
       action: 'send_api_token',
       nonce: send_api_token.nonce,
-      return_link_tpl: window.location.toString(),
+      return_link_tpl: window.location.toString()
     },
     success: function(response) {
       notify('success', 'AdTechMedia api authorization token request has been sent');
@@ -319,6 +319,7 @@ jQuery().ready(function() {
   const saveTemplatesBtn = jQuery('#save-templates-config');
   const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
+  let firstSaveTemplates = false;
 
   runtime.showSettings = true;
   tplManager.client.bindLoader(runtime);
@@ -326,13 +327,15 @@ jQuery().ready(function() {
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
-    .then(function(exists) {        
-      return exists 
-        ? tplManager.fetch() 
-        : tplManager.createDefaults(
-          propertyId, themeId, platformId,
-          themeVersion, platformVersion
-        );
+    .then(function(exists) {
+      let result;
+      if (exists) {
+        result = tplManager.fetch();
+      } else {
+        result = tplManager.createDefaults(ropertyId, themeId, platformId, themeVersion, platformVersion);
+        firstSaveTemplates = true;
+      }
+      return result;
     })
     .then(function() {
       return tplManager.syncConfig(runtime);
@@ -351,7 +354,7 @@ jQuery().ready(function() {
               data: {
                 action: 'save_template',
                 nonce: save_template.nonce,
-                appearanceSettings: JSON.stringify(tplManager.generalSettings),
+                appearanceSettings: JSON.stringify(tplManager.generalSettings)
               },
               success: function(response) {
                 removeLoader(saveTemplatesBtn);
@@ -372,9 +375,37 @@ jQuery().ready(function() {
       saveTemplatesBtn.on('click', function() {
         syncTemplates(true);
       });
-        
-      if (forceSaveTemplates) {
+
+      if (forceSaveTemplates || firstSaveTemplates) {
         syncTemplates();
       }
     });
+});
+
+jQuery().ready(function() {
+  var url = window.location.href;
+  var apiToken = (/atm-token/gi.test(url)) 
+    ? url.match(/atm-token=([^&]+)/)[1]
+    : '';
+  
+  if (apiToken) {
+    jQuery('.atm-missing-key-msg').addClass('preloader');
+    jQuery('.atm-missing-key-msg *').css('opacity', 0);
+    jQuery.ajax({
+      url: ajaxurl,
+      type: 'post',
+      data: {
+        action: 'key_from_token',
+        atm_token: apiToken
+      },
+      success: function(response) {
+        if (response.length > 0) {
+          window.location = url.replace(/\&atm-token=([^&]+)/, '');
+        }
+      },
+      error: function(response) {
+        notify('error', 'Error requesting AdTechMedia api authorization token. Please try again later...');
+      }
+    });
+  }
 });

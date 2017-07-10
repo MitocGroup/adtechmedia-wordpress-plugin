@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AdTechMedia
  * Plugin URI: https://wordpress.org/plugins/adtechmedia/
- * Version: 0.10.1
+ * Version: 0.10.3
  * Author: AdTechMedia.io
  * Description: AdTechMedia is an advertising platform with micropayments capabilities for media content monetization. We help publishers and content providers to generate complimentary revenue streams that are immune to ad blocking software (e.g. native advertising or native micropayments). Our solutions are white labeled, data driven and realtime. To learn more, contact hello@adtechmedia.io or visit www.adtechmedia.io.
  * Text Domain: adtechmedia
