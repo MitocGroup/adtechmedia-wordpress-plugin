@@ -319,6 +319,7 @@ jQuery().ready(function() {
   const saveTemplatesBtn = jQuery('#save-templates-config');
   const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
+  let firstSaveTemplates = false;
 
   runtime.showSettings = true;
   tplManager.client.bindLoader(runtime);
@@ -326,13 +327,15 @@ jQuery().ready(function() {
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
-    .then(function(exists) {        
-      return exists 
-        ? tplManager.fetch() 
-        : tplManager.createDefaults(
-          propertyId, themeId, platformId,
-          themeVersion, platformVersion
-        );
+    .then(function(exists) {
+      let result;
+      if (exists) {
+        result = tplManager.fetch();
+      } else {
+        result = tplManager.createDefaults(ropertyId, themeId, platformId, themeVersion, platformVersion);
+        firstSaveTemplates = true;
+      }
+      return result;
     })
     .then(function() {
       return tplManager.syncConfig(runtime);
@@ -372,8 +375,8 @@ jQuery().ready(function() {
       saveTemplatesBtn.on('click', function() {
         syncTemplates(true);
       });
-        
-      if (forceSaveTemplates) {
+
+      if (forceSaveTemplates || firstSaveTemplates) {
         syncTemplates();
       }
     });
