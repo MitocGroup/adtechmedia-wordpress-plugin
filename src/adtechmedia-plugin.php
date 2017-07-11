@@ -487,7 +487,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( ! file_exists( $file ) || $is_old || ( time() - filemtime( $file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
-				$data     = @gzdecode( file_get_contents( $script . "?_v=" . time() ) );
+				$data = wp_remote_get( $script . "?_v=" . time() );
+				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
 				$this->add_plugin_option( 'atm-js-hash', $new_hash );
 				$this->add_plugin_option( 'atm-js-is-old', '0' );
 				file_put_contents( $file, $data );
@@ -498,7 +499,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
-				$data = @gzdecode( file_get_contents( Adtechmedia_Config::get( 'sw_js_url' ) ) );
+				$data = wp_remote_get( Adtechmedia_Config::get( 'sw_js_url' ) );
+				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
 				file_put_contents( $sw_file, $data );
 				// @codingStandardsIgnoreEnd
 			}
