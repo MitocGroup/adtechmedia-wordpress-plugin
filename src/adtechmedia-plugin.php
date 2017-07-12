@@ -489,7 +489,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// @codingStandardsIgnoreStart
 				$data = wp_remote_get( $script . "?_v=" . time() );
 				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
-				$this->add_plugin_option( 'atm-js-hash', $new_hash );
+				$this->add_plugin_option( 'atm-js-hash', time() );
 				$this->add_plugin_option( 'atm-js-is-old', '0' );
 				file_put_contents( $file, $data );
 				// @codingStandardsIgnoreEnd
