@@ -204,12 +204,11 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="custom-input">
 								<input type="text" id="support_email" name="support_email" value="<?php echo esc_html( $this->get_plugin_option( 'support_email' ) ) ?>" size="100"/>
-								<span class="bar"></span>
 								<label><i class="mdi mdi-email"></i> Email address</label>
 							</div>
 							<div class="block-info">
-								Provide your email address that will be used to register, connect and interact
-								with AdTechMedia.io platform
+								This email address will be used to register, connect and interact
+								with AdTechMedia.io platform.
 							</div>
 							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="block-info">

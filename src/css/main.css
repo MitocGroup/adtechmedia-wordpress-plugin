@@ -1741,3 +1741,8 @@ input:disabled:-ms-input-placeholder { /* Internet Explorer 10+ */
     background-color: transparent;
     box-shadow: none;
 }
+
+input#support_email{
+    pointer-events: none;
+    font-weight: bold;
+}
