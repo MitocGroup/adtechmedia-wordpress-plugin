@@ -34,7 +34,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	private function country_UN_to_full($un) {
-		echo $iso;	
 		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ));
 		foreach ($list as $country) {
 			if($country['UN']===$un) {
