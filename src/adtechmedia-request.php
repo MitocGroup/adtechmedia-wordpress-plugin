@@ -93,6 +93,24 @@ class Adtechmedia_Request {
 	}
 
 	/**
+	 * Get property API request
+	 *
+	 * @param string $key API key.
+	 * @return bool|mixed
+	 */
+	public static function property_retrieve() {
+		$key = Adtechmedia_OptionsManager::get_plugin_option('key');
+		if( empty( $key ) ) {
+			return false;
+		}
+		return self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/retrieve',
+			'GET',
+			[ 'X-Api-Key' => $key ]
+		) [0];
+	}
+
+	/**
 	 * Get lis of countries
 	 *
 	 * @param string $key API key.
