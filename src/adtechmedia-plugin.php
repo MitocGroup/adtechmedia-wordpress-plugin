@@ -27,16 +27,28 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		return array();
 	}
 
-	private function update_from_api_option ( $sqlName, $apiValue ) {
-		if ( !ctype_space($apiName) ) {
-			$this->update_plugin_option( $sqlName, $apiValue );
+	/**
+	 * Checking if value is ok and update the option based on API one
+	 *
+	 * @param string $api_name field name.
+	 * @param string $api_value filed value.
+	 */
+	private function update_from_api_option( $api_name, $api_value ) {
+		if ( ! ctype_space( $api_name ) ) {
+			$this->update_plugin_option( $api_name, $api_value );
 		}
 	}
 
-	private function country_UN_to_full($un) {
-		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ));
-		foreach ($list as $country) {
-			if($country['UN']===$un) {
+	/**
+	 * Transform UN into Country Name
+	 *
+	 * @param string $un UN name of country.
+	 * @return string
+	 */
+	private function country_UN_to_full( $un ) {
+		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
+		foreach ( $list as $country ) {
+			if ( $country['UN'] === $un ) {
 				return $country['Name'];
 			}
 		}
@@ -46,23 +58,23 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Gethering data from API and put it into mysql
 	 */
 	public function api_to_plugin_options() {
-		$apiResult = Adtechmedia_Request::property_retrieve();
-		$plededTypes = [
+		$api_result = Adtechmedia_Request::property_retrieve();
+		$pleded_types = [
 			'count' => 'transactions',
 			'amount' => 'pledged currency',
 		];
-		if ( $apiResult ) {
-			$this->update_from_api_option('selector', $apiResult['Config']['defaults']['content']['selector']);
-			$this->update_from_api_option('price', $apiResult['Config']['defaults']['payment']['price']);
-			$this->update_from_api_option('support_email', $apiResult['SupportEmail']);
-			$this->update_from_api_option('country', $this->country_UN_to_full($apiResult['Country']));
-			$this->update_from_api_option('content_offset', $apiResult['Config']['defaults']['content']['offset']);
-			$this->update_from_api_option('content_lock', $apiResult['Config']['defaults']['content']['lock']);
-			$this->update_from_api_option('revenue_method', $apiResult['Config']['defaults']['revenueMethod']);
-			$this->update_from_api_option('payment_pledged', $apiResult['Config']['defaults']['payment']['pledged']);
-			$this->update_from_api_option('price_currency', $apiResult['Config']['defaults']['payment']['currency']);
-			$this->update_from_api_option('content_paywall', $plededTypes[$apiResult['Config']['defaults']['payment']['pledgedType']]);
-			$this->update_from_api_option('content_offset_type', $apiResult['Config']['defaults']['content']['offsetType']);
+		if ( $api_result ) {
+			$this->update_from_api_option( 'selector', $api_result['Config']['defaults']['content']['selector'] );
+			$this->update_from_api_option( 'price', $api_result['Config']['defaults']['payment']['price'] );
+			$this->update_from_api_option( 'support_email', $api_result['SupportEmail'] );
+			$this->update_from_api_option( 'country', $this->country_UN_to_full( $api_result['Country'] ) );
+			$this->update_from_api_option( 'content_offset', $api_result['Config']['defaults']['content']['offset'] );
+			$this->update_from_api_option( 'content_lock', $api_result['Config']['defaults']['content']['lock'] );
+			$this->update_from_api_option( 'revenue_method', $api_result['Config']['defaults']['revenueMethod'] );
+			$this->update_from_api_option( 'payment_pledged', $api_result['Config']['defaults']['payment']['pledged'] );
+			$this->update_from_api_option( 'price_currency', $api_result['Config']['defaults']['payment']['currency'] );
+			$this->update_from_api_option( 'content_paywall', $pleded_types[ $api_result['Config']['defaults']['payment']['pledgedType'] ] );
+			$this->update_from_api_option( 'content_offset_type', $api_result['Config']['defaults']['content']['offsetType'] );
 		}
 	}
 
