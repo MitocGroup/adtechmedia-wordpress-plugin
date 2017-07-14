@@ -16,7 +16,7 @@ $countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
-		$currencies [ $countries_element['Name'] ] =  $countries_element['Currency'];
+		$currencies [ $countries_element['Name'] ] = $countries_element['Currency'];
 	}
 }
 /* mock for better UX */
