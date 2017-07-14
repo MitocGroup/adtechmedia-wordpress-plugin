@@ -101,10 +101,8 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'appearance_settings', Adtechmedia_Config::get( 'appearance_settings' ) );
 		try {
 			$this->check_api_key_exists();
-			$this->check_prop();
 
 			if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
-				$this->update_prop();
 				$this->update_appearance();
 			}
 		} catch ( Error $error ) {
