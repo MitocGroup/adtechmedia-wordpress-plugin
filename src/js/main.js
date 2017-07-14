@@ -231,8 +231,14 @@ jQuery().ready(function() {
     var country = jQuery(this);
     var method = jQuery('#revenue_method');
     method.empty();
+    var currency = jQuery('#price_currency');
+    currency.empty();
     jQuery.each(country.find(':selected').data('methods'), function(key, value) {
       method.append(jQuery('<option></option>')
+        .attr('value', value).text(value));
+    });
+    jQuery.each(country.find(':selected').data('currency'), function(key, value) {
+      currency.append(jQuery('<option></option>')
         .attr('value', value).text(value));
     });
   });
