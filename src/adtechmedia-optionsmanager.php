@@ -557,6 +557,7 @@ class Adtechmedia_OptionsManager {
 			$this->update_prop();
 		}
 
+		Adtechmedia_Plugin::api_to_plugin_options();
 		require_once 'views/admin.php';
 	}
 
