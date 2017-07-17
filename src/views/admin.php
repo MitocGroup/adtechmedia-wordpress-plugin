@@ -16,11 +16,7 @@ $countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
-		foreach ( $countries_element['Currency'] as $currency ) {
-			if ( ! in_array( $currency, $currencies, true ) ) {
-				$currencies[] = $currency;
-			}
-		}
+		$currencies [ $countries_element['Name'] ] = $countries_element['Currency'];
 	}
 }
 /* mock for better UX */
@@ -166,7 +162,8 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 									foreach ( $countries as $name => $methods ) {
 										$selected = ($this->get_plugin_option( 'country' ) === $name) ? 'selected' : '';
 										echo "<option value='" . esc_html( $name ) . "' data-methods='"
-											. wp_json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
+											. wp_json_encode( $methods ) . "' data-currency='"
+											. wp_json_encode( $currencies[ $name ] ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
 									}
 									?>
 								</select>
@@ -256,7 +253,8 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 										<select name="price_currency" id="price_currency">
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
-											foreach ( $currencies as $currency ) {
+											$coutry = $this->get_plugin_option( 'country' );
+											foreach ( $currencies[ $coutry ] as $currency ) {
 												echo "<option value='";
 												echo esc_html( $currency );
 												echo "' " .
