@@ -31,7 +31,7 @@ class Adtechmedia_Config {
 		'tpl_js_url'                     => 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js',
 		'tpl_mgmt_js_url'                => 'https://www.adtechmedia.io/atm-core/atm-build/atmTplManager.js',
 		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
-		'register_url_tpl'               => 'https://www.adtechmedia.io/admin/accounts/signup/%s',
+		'register_url_tpl'               => 'https://www.manage.adtechmedia.io/accounts/signup/%s',
 		'price'                          => 5,
 		'content_offset'                 => 2,
 		'payment_pledged'                => 2,
@@ -64,7 +64,7 @@ class Adtechmedia_Config {
 		if ( self::is_localhost() ) {
 			self::$conf['api_end_point'] 		= 'https://api-dev.adtechmedia.io/v1/';
 			self::$conf['sw_js_url']     		= 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
-			self::$conf['register_url_tpl'] = 'https://www-dev.adtechmedia.io/admin/accounts/signup/%s';
+			self::$conf['register_url_tpl'] = 'https://www-dev.manage.adtechmedia.io/accounts/signup/%s';
 			self::$conf['tpl_js_url']       = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTpl.js';
 			self::$conf['tpl_mgmt_js_url']  = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
 			self::$conf['terms_url']        = 'https://www-dev.adtechmedia.io/terms/dialog.html';
