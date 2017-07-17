@@ -62,12 +62,12 @@ class Adtechmedia_Config {
 	 */
 	public static function setup_endpoints() {
 		if ( self::is_localhost() ) {
-			self::$conf['api_end_point'] 		= 'https://api-dev.adtechmedia.io/v1/';
-			self::$conf['sw_js_url']     		= 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
-			self::$conf['register_url_tpl'] = 'https://www-dev.adtechmedia.io/admin/accounts/signup/%s';
-			self::$conf['tpl_js_url']       = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTpl.js';
-			self::$conf['tpl_mgmt_js_url']  = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
-			self::$conf['terms_url']        = 'https://www-dev.adtechmedia.io/terms/dialog.html';
+			self::$conf['api_end_point'] 		= 'https://api-test.adtechmedia.io/v1/';
+			self::$conf['sw_js_url']     		= 'https://www-test.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['register_url_tpl'] = 'https://www-test.adtechmedia.io/admin/accounts/signup/%s';
+			self::$conf['tpl_js_url']       = 'https://www-test.adtechmedia.io/atm-core/atm-build/atmTpl.js';
+			self::$conf['tpl_mgmt_js_url']  = 'https://www-test.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
+			self::$conf['terms_url']        = 'https://www-test.adtechmedia.io/terms/dialog.html';
 		}
 	}
 

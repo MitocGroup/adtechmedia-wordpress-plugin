@@ -323,7 +323,7 @@ jQuery().ready(function() {
   initModal();
   
   const saveTemplatesBtn = jQuery('#save-templates-config');
-  const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
+  const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
   let firstSaveTemplates = false;
 
