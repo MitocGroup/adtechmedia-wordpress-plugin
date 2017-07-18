@@ -22,6 +22,8 @@ class Adtechmedia_Config {
 		'api_end_point'                  => 'https://api.adtechmedia.io/v1/',
 		'plugin_table_name'              => 'adtechmedia',
 		'plugin_cache_table_name'        => 'adtechmedia_cache',
+		'plugin_ab_cookie_name'        	 => 'adtechmedia_ab',
+		'plugin_ab_test_name'        	 	 => 'adtechmedia_ab',
 		'maxTries'                       => 7,
 		'minDelay'                       => 150000,
 		'factor'                         => 1.7,

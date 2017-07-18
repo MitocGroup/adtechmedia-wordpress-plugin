@@ -11,6 +11,7 @@
  * Inclide Adtechmedia_LifeCycle
  */
 include_once( 'adtechmedia-lifecycle.php' );
+include_once( 'adtechmedia-ab.php' );
 
 /**
  * Class Adtechmedia_Plugin
@@ -506,7 +507,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( ! is_single() || empty( $this->get_plugin_option( 'key' ) ) ) {
+		if ( !$this->is_enabled() ) {
 			return;
 		}
 		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
@@ -558,6 +559,20 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function is_enabled() {
+		if ( ! isset( $this->ab ) ) {
+			$percentage = $this->get_plugin_option( 'ab_percentage', 50 );
+			
+			$this->ab = Adtechmedia_AB::instance()->setPercentage( $percentage )->start();
+    }
+
+		return $this->ab->variant === Adtechmedia_AB::SHOW
+			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
+	}
+
+	/**
 	 * Hide post content
 	 *
 	 * @param string $content content of post.
@@ -565,8 +580,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return bool|mixed|null
 	 */
 	public function hide_content( $content ) {
-
-		if ( is_single() && ! empty( $this->get_plugin_option( 'key' ) ) ) {
+		if ( $this->is_enabled() ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
 			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
