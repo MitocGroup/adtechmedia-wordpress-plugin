@@ -63,14 +63,7 @@ class Adtechmedia_Config {
 	 * Set API end point for localhost
 	 */
 	public static function setup_endpoints() {
-		if ( self::is_dev() ) {
-			self::$conf['api_end_point'] 		= 'https://api-dev.adtechmedia.io/v1/';
-			self::$conf['sw_js_url']     		= 'https://www-dev.adtechmedia.io/atm-admin/atm-build/sw.min.js';
-			self::$conf['register_url_tpl'] = 'https://manage-dev.adtechmedia.io/accounts/signup/%s';
-			self::$conf['tpl_js_url']       = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTpl.js';
-			self::$conf['tpl_mgmt_js_url']  = 'https://www-dev.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
-			self::$conf['terms_url']        = 'https://www-dev.adtechmedia.io/terms/dialog.html';
-		} elseif ( self::is_localhost() ) {
+		if ( self::is_localhost() ) {
 			self::$conf['api_end_point'] 		= 'https://api-test.adtechmedia.io/v1/';
 			self::$conf['sw_js_url']     		= 'https://www-test.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 			self::$conf['register_url_tpl'] = 'https://manage-test.adtechmedia.io/accounts/signup/%s';
@@ -78,17 +71,6 @@ class Adtechmedia_Config {
 			self::$conf['tpl_mgmt_js_url']  = 'https://www-test.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
 			self::$conf['terms_url']        = 'https://www-test.adtechmedia.io/terms/dialog.html';
 		}
-	}
-	
-	/**
-	 * @return bool
-	 */
-	public static function is_dev() {
-		return self::is_localhost()
-			&& (
-				sanitize_text_field( wp_unslash( $_SERVER['ATM_ENV'] ) ) === 'dev'
-				|| getenv('ATM_ENV') === 'dev'
-			);
 	}
 
 	/**
