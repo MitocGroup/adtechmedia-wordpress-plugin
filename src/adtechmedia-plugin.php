@@ -39,20 +39,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		}
 	}
 
-	/**
-	 * Transform UN into Country Name
-	 *
-	 * @param string $un UN name of country.
-	 * @return string
-	 */
-	private function country_UN_to_full( $un ) {
-		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
-		foreach ( $list as $country ) {
-			if ( $country['UN'] === $un ) {
-				return $country['Name'];
-			}
-		}
-	}
 
 	/**
 	 * Gethering data from API and put it into mysql
@@ -67,7 +53,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$this->update_from_api_option( 'selector', $api_result['Config']['defaults']['content']['selector'] );
 			$this->update_from_api_option( 'price', $api_result['Config']['defaults']['payment']['price'] );
 			$this->update_from_api_option( 'support_email', $api_result['SupportEmail'] );
-			$this->update_from_api_option( 'country', $this->country_UN_to_full( $api_result['Country'] ) );
+			$this->update_from_api_option( 'country', $api_result['Country'] );
 			$this->update_from_api_option( 'content_offset', $api_result['Config']['defaults']['content']['offset'] );
 			$this->update_from_api_option( 'content_lock', $api_result['Config']['defaults']['content']['lock'] );
 			$this->update_from_api_option( 'revenue_method', $api_result['Config']['defaults']['revenueMethod'] );
