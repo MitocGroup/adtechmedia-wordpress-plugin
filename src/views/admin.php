@@ -254,13 +254,15 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
 											$coutry = $this->get_plugin_option( 'country' );
-											foreach ( $currencies[ $coutry ] as $currency ) {
-												echo "<option value='";
-												echo esc_html( $currency );
-												echo "' " .
-													(($currency === $price_currency_value) ? 'selected' : '')
-													. ' >' .
-													esc_html( strtoupper( $currency ) ) . '</option>';
+											if ( isset( $currencies[ $coutry ] ) ) {
+												foreach ( $currencies[ $coutry ] as $currency ) {
+													echo "<option value='";
+													echo esc_html( $currency );
+													echo "' " .
+														(($currency === $price_currency_value) ? 'selected' : '')
+														. ' >' .
+														esc_html( strtoupper( $currency ) ) . '</option>';
+												}
 											}
 											?>
 										</select>
