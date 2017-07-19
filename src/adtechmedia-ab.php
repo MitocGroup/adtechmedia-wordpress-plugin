@@ -23,11 +23,12 @@
 class Adtechmedia_AB {
   const SHOW = 'show';
   const HIDE = 'hide';
+  const DEFAULT_PERCENTAGE = 50;
   
   /**
    * @param string $percentage A/B percentage.
    */
-  function __construct( $percentage = 50 ) {
+  function __construct( $percentage = self::DEFAULT_PERCENTAGE ) {
     $this->storage = new Storage( new Cookie( Adtechmedia_Config::get( 'plugin_ab_cookie_name' ) ) );
     $this->manager = new Manager( $this->storage );
     $this->dispatcher = new Dispatcher();

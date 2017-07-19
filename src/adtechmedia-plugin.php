@@ -325,9 +325,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->add_plugin_option( 'force-save-templates', true );
 				$this->update_prop();
 				$this->update_appearance();
-                // @codingStandardsIgnoreStart
+        // @codingStandardsIgnoreStart
 				echo $key;
-                // @codingStandardsIgnoreEnd
+        // @codingStandardsIgnoreEnd
 			}
 			wp_die();
 		}
@@ -410,8 +410,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$file       = $plugin_dir . '/js/atm.min.js';
 				@unlink( $file );
 
-				$revenue_method = $_POST['revenueMethod'];
+				$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
 				$this->update_plugin_option( 'revenue_method', $revenue_method );
+
+				$ab_percentage = (int) sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
+				$this->update_plugin_option( 'ab_percentage', $ab_percentage );
+
 				Adtechmedia_Request::property_update_config_by_array(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
@@ -507,10 +511,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( !$this->is_enabled() ) {
-			return;
-		}
-		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
+		$script = $this->get_plugin_option( 'BuildPath' );
+		
+		if ( $this->is_enabled() && isset( $script ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			// @codingStandardsIgnoreStart
 			$is_old = ! empty( $is_old ) && $is_old == '1';
@@ -526,10 +529,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
 				$data = wp_remote_get( $script . "?_v=" . time() );
-				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
-				$this->add_plugin_option( 'atm-js-hash', time() );
-				$this->add_plugin_option( 'atm-js-is-old', '0' );
-				file_put_contents( $file, $data );
+				if ( is_array($data) ) {
+					$decodedData = @gzdecode( $data['body'] );
+					$this->add_plugin_option( 'atm-js-hash', time() );
+					$this->add_plugin_option( 'atm-js-is-old', '0' );
+					file_put_contents( $file, $decodedData ? $decodedData : $data['body'] );
+				}
 				// @codingStandardsIgnoreEnd
 			}
 
@@ -538,11 +543,16 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
 				$data = wp_remote_get( Adtechmedia_Config::get( 'sw_js_url' ) );
-				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
-				file_put_contents( $sw_file, $data );
+				if ( is_array($data) ) {
+					$decodedData = @gzdecode( $data['body'] );
+					file_put_contents( $sw_file, $decodedData ? $decodedData : $data['body'] );
+				}
 				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
+			
+			if ( file_exists( $file ) ) {
+				wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
+			}
 		}
 	}
 
@@ -563,7 +573,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function is_enabled() {
 		if ( ! isset( $this->ab ) ) {
-			$percentage = $this->get_plugin_option( 'ab_percentage', 50 );
+			$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
+
+			if ( $percentage <= 0 ) {
+				return false;
+			}
 			
 			$this->ab = Adtechmedia_AB::instance()->setPercentage( $percentage )->start();
     }

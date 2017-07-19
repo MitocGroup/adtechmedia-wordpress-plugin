@@ -186,6 +186,17 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<div class="block-info">
 								Choose the revenue model that will be used on this blog
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
+							<div class="custom-label">
+								<label>
+									<i class="mdi mdi-target"></i> A/B target
+								</label>
+								<input style="width: 100%;" type="number" id="ab_percentage" name="ab_percentage" 
+									value="<?php echo esc_html( $this->get_plugin_option( 'ab_percentage' ) ) ?>"/>
+							</div>
+							<div class="block-info">
+								Choose the percentage of users having the plugin shown
+							</div>
 							<div class="custom-input">
 								<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
 							</div>

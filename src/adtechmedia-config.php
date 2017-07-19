@@ -19,6 +19,7 @@ class Adtechmedia_Config {
 	 */
 	private static $conf = [
 		'debug'                          => false,
+		'ab_default_percentage'					 => 0,
 		'api_end_point'                  => 'https://api.adtechmedia.io/v1/',
 		'plugin_table_name'              => 'adtechmedia',
 		'plugin_cache_table_name'        => 'adtechmedia_cache',
@@ -29,15 +30,15 @@ class Adtechmedia_Config {
 		'factor'                         => 1.7,
 		'atm_js_cache_time'              => 86400,
 		'template_overall_styles_patch'  => '@media (max-width: 991px) { .atm-targeted-container { width: 90% !important; left: 5% !important; transform: none !important; } } @media (max-width: 600px) { .atm-targeted-container { top: 0 !important; } }',
-		'sw_js_url'                      => 'https://www.adtechmedia.io/atm-admin/atm-build/sw.min.js',
-		'tpl_js_url'                     => 'https://www.adtechmedia.io/atm-core/atm-build/atmTpl.js',
-		'tpl_mgmt_js_url'                => 'https://www.adtechmedia.io/atm-core/atm-build/atmTplManager.js',
-		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
+		'sw_js_url'                      => 'https://manage.adtechmedia.io/atm-admin/atm-build/sw.min.js',
+		'tpl_js_url'                     => 'https://manage.adtechmedia.io/atm-admin/atm-build/atmTpl.js',
+		'tpl_mgmt_js_url'                => 'https://manage.adtechmedia.io/atm-admin/atm-build/atmTplManager.js',
+		'terms_url'                      => 'https://manage.adtechmedia.io/terms/dialog.html',
 		'register_url_tpl'               => 'https://manage.adtechmedia.io/accounts/signup/%s',
 		'price'                          => 5,
 		'content_offset'                 => 2,
 		'payment_pledged'                => 2,
-		'ads_video'                      => 'https://www.adtechmedia.io/adtechmedia-website/demo-vast.xml',
+		'ads_video'                      => 'https://manage.adtechmedia.io/atm-admin/atm-build/demo-vast.xml',
 		'content_lock'                   => 'blur+scramble',
 		'revenue_method'                 => 'advertising+micropayments',
 		'price_currency'                 => 'usd',
@@ -65,11 +66,12 @@ class Adtechmedia_Config {
 	public static function setup_endpoints() {
 		if ( self::is_localhost() ) {
 			self::$conf['api_end_point'] 		= 'https://api-test.adtechmedia.io/v1/';
-			self::$conf['sw_js_url']     		= 'https://www-test.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['ads_video']     		= 'https://manage-test.adtechmedia.io/atm-admin/atm-build/demo-vast.xml';
+			self::$conf['sw_js_url']     		= 'https://manage-test.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['tpl_js_url']       = 'https://manage-test.adtechmedia.io/atm-admin/atm-build/atmTpl.js';
+			self::$conf['tpl_mgmt_js_url']  = 'https://manage-test.adtechmedia.io/atm-admin/atm-build/atmTplManager.js';
 			self::$conf['register_url_tpl'] = 'https://manage-test.adtechmedia.io/accounts/signup/%s';
-			self::$conf['tpl_js_url']       = 'https://www-test.adtechmedia.io/atm-core/atm-build/atmTpl.js';
-			self::$conf['tpl_mgmt_js_url']  = 'https://www-test.adtechmedia.io/atm-core/atm-build/atmTplManager.js';
-			self::$conf['terms_url']        = 'https://www-test.adtechmedia.io/terms/dialog.html';
+			self::$conf['terms_url']        = 'https://manage-test.adtechmedia.io/terms/dialog.html';
 		}
 	}
 
