@@ -423,7 +423,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
 					[
-						'revenueMethod' => $revenue_method
+						'revenueMethod' => $revenue_method,
 					]
 				);
 				Adtechmedia_Request::property_update(
