@@ -214,7 +214,8 @@ jQuery().ready(function() {
         data: {
           action: 'save_template',
           nonce: save_template.nonce,
-          revenueMethod: jQuery('select[name="revenue_method"]').val()
+          revenueMethod: jQuery('select[name="revenue_method"]').val(),
+          abPercentage: jQuery('input[name="ab_percentage"]').val(),
         },
         success: function(response) {
           removeLoader(btn);

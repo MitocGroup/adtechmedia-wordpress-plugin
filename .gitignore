@@ -141,5 +141,5 @@ _vars.sh
 
 # Composer stuff
 composer.lock
-**/vendor
+/vendor
 **/wpcs

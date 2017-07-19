@@ -186,6 +186,17 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<div class="block-info">
 								Choose the revenue model that will be used on this blog
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
+							<div class="custom-label">
+								<label>
+									<i class="mdi mdi-target"></i> A/B target
+								</label>
+								<input style="width: 100%;" type="number" id="ab_percentage" name="ab_percentage" 
+									value="<?php echo esc_html( $this->get_plugin_option( 'ab_percentage' ) ) ?>"/>
+							</div>
+							<div class="block-info">
+								Choose the percentage of users having the plugin enabled
+							</div>
 							<div class="custom-input">
 								<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
 							</div>
@@ -254,13 +265,15 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
 											$coutry = $this->get_plugin_option( 'country' );
-											foreach ( $currencies[ $coutry ] as $currency ) {
-												echo "<option value='";
-												echo esc_html( $currency );
-												echo "' " .
-													(($currency === $price_currency_value) ? 'selected' : '')
-													. ' >' .
-													esc_html( strtoupper( $currency ) ) . '</option>';
+											if ( isset( $currencies[ $coutry ] ) ) {
+												foreach ( $currencies[ $coutry ] as $currency ) {
+													echo "<option value='";
+													echo esc_html( $currency );
+													echo "' " .
+														(($currency === $price_currency_value) ? 'selected' : '')
+														. ' >' .
+														esc_html( strtoupper( $currency ) ) . '</option>';
+												}
 											}
 											?>
 										</select>

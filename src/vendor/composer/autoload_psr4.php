@@ -6,5 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
+    'PhpAb\\' => array($vendorDir . '/phpab/phpab/src'),
     'Mozilla\\' => array($vendorDir . '/marco-c/wp_serve_file', $vendorDir . '/mozilla/wp-sw-manager'),
 );
