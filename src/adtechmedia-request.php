@@ -107,10 +107,10 @@ class Adtechmedia_Request {
 			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/property/retrieve',
 			'GET',
 			[
-				'X-Api-Key' => $key
+				'X-Api-Key' => $key,
 			],
 			[
-				'Id' => $id
+				'Id' => $id,
 			]
 		);
 	}
