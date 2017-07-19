@@ -512,7 +512,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 */
 	public function add_adtechmedia_scripts() {
 		$script = $this->get_plugin_option( 'BuildPath' );
-		
+
 		if ( $this->is_enabled() && isset( $script ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			// @codingStandardsIgnoreStart
@@ -549,7 +549,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				}
 				// @codingStandardsIgnoreEnd
 			}
-			
+
 			if ( file_exists( $file ) ) {
 				wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
 			}
@@ -569,6 +569,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * Check if widget should be enabled.
+	 *
 	 * @return bool
 	 */
 	public function is_enabled() {
@@ -578,11 +580,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( $percentage <= 0 ) {
 				return false;
 			}
-			
-			$this->ab = Adtechmedia_AB::instance()->setPercentage( $percentage )->start();
-    }
 
-		return $this->ab->variant === Adtechmedia_AB::SHOW
+			$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
+		}
+
+		return Adtechmedia_AB::SHOW === $this->ab->variant
 			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
 	}
 

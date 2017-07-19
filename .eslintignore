@@ -68,3 +68,5 @@ config.core.js
 config.system.js
 config.test.js
 
+**/vendor
+

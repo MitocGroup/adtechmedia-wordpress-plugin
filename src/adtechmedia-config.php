@@ -76,6 +76,8 @@ class Adtechmedia_Config {
 	}
 
 	/**
+	 * Is local installation
+	 *
 	 * @return bool
 	 */
 	public static function is_localhost() {
