@@ -449,7 +449,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			// @codingStandardsIgnoreEnd
 
 			echo 'ok';
-		}
+		} // End if($_POST['nonce'])
 		die();
 	}
 
