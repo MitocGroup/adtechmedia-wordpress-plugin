@@ -403,8 +403,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Save templates action
 	 */
 	public function ajax_save_template() {
-		// @codingStandardsIgnoreStart
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
+			// @codingStandardsIgnoreStart
 			if ( isset( $_POST['revenueMethod'] ) && isset( $_POST['country'] ) ) {
 				$plugin_dir = plugin_dir_path( __FILE__ );
 				$file       = $plugin_dir . '/js/atm.min.js';
@@ -447,7 +447,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 			// @codingStandardsIgnoreEnd
 			echo 'ok';
-		} // End if().
+		}
 		die();
 	}
 

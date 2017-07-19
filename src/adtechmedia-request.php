@@ -112,7 +112,6 @@ class Adtechmedia_Request {
 			[
 				'Id' => $id
 			]
-
 		);
 	}
 
