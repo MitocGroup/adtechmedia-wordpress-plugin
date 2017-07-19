@@ -446,9 +446,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->update_appearance();
 			}
 			// @codingStandardsIgnoreEnd
-
 			echo 'ok';
-		}
+		} // End if().
 		die();
 	}
 
