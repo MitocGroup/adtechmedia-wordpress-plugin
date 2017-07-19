@@ -99,6 +99,7 @@ class Adtechmedia_Request {
 	 */
 	public static function property_retrieve() {
 		$key = Adtechmedia_OptionsManager::get_plugin_option( 'key' );
+		$id = Adtechmedia_OptionsManager::get_plugin_option( 'Id' );
 		if ( empty( $key ) ) {
 			return false;
 		}
@@ -107,8 +108,12 @@ class Adtechmedia_Request {
 			'GET',
 			[
 				'X-Api-Key' => $key,
+			],
+			[
+				'Id' => $id
 			]
-		) [0];
+
+		);
 	}
 
 	/**
