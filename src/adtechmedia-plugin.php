@@ -431,7 +431,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 					$this->get_plugin_option( 'support_email' ),
 					$country,
 					$this->get_plugin_option( 'key' )
-
 				);
 				Adtechmedia_ContentManager::clear_all_content();
 			} else if ( isset( $_POST['contentConfig'] ) ) {
@@ -449,7 +448,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			// @codingStandardsIgnoreEnd
 
 			echo 'ok';
-		} // End if($_POST['nonce'])
+		}
 		die();
 	}
 
