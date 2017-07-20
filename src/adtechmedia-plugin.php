@@ -67,8 +67,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 		}
 	}
-
-	/*
+	/**
 	 * Gethering data from API and put it into mysql
 	 */
 	public function api_to_plugin_options() {
