@@ -393,7 +393,7 @@ class Adtechmedia_Request {
 			return false;
 		}
 		$data = [
-			'Name' => $id,
+			'Id' => $id,
 			'SupportEmail' => $support_email,
 			'Country' => $country,
 		];
