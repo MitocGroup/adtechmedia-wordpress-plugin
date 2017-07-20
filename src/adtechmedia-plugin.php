@@ -405,7 +405,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
-			if ( isset( $_POST['revenueMethod'] ) && isset( $_POST['country'] ) ) {
+			if ( isset( $_POST['revenueMethod'], $_POST['country'] ) ) {
 				$plugin_dir = plugin_dir_path( __FILE__ );
 				$file       = $plugin_dir . '/js/atm.min.js';
 				@unlink( $file );
@@ -416,7 +416,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$ab_percentage = (int) sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
 				$this->update_plugin_option( 'ab_percentage', $ab_percentage );
 
-				$country = sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
+				$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
 				$this->update_plugin_option( 'country', $country );
 
 				Adtechmedia_Request::property_update_config_by_array(
