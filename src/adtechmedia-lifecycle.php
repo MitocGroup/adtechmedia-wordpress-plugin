@@ -211,7 +211,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'website_domain_name' ),
 					$this->get_plugin_option( 'website_url' ),
 					$this->get_plugin_option( 'support_email' ),
-					$this->get_plugin_option( 'country' ),
+					$this->country_full_to_UN( $this->get_plugin_option( 'country' ) ),
 					$key
 				);
 				if ( ( ! isset( $prop['Id'] ) ) || empty( $prop['Id'] ) ) {
