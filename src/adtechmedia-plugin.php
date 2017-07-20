@@ -53,11 +53,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 		}
 	}
-
 	/**
-	 * Transform UN into Country Name
+	 * Transform Full into Country UN
 	 *
-	 * @param string $un UN name of country.
+	 * @param string $name  name of country.
 	 * @return string
 	 */
 	function country_full_to_UN( $name ) {
@@ -68,7 +67,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 		}
 	}
-	/**
+
+	/*
 	 * Gethering data from API and put it into mysql
 	 */
 	public function api_to_plugin_options() {
