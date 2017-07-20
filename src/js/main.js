@@ -216,7 +216,7 @@ jQuery().ready(function() {
           nonce: save_template.nonce,
           revenueMethod: jQuery('select[name="revenue_method"]').val(),
           abPercentage: jQuery('input[name="ab_percentage"]').val(),
-          country: jQuery('input[name="country"]').val()
+          country: jQuery('select[name="country"]').val()
         },
         success: function(response) {
           removeLoader(btn);
