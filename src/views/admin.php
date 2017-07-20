@@ -191,7 +191,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 								<label>
 									<i class="mdi mdi-target"></i> A/B target
 								</label>
-								<input style="width: 100%;" type="number" id="ab_percentage" name="ab_percentage" 
+								<input style="width: 100%;" min="0" max="100" step="1" type="number" id="ab_percentage" name="ab_percentage" 
 									value="<?php echo esc_html( $this->get_plugin_option( 'ab_percentage' ) ) ?>"/>
 							</div>
 							<div class="block-info">
