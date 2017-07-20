@@ -592,8 +592,30 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
 		}
 
-		return Adtechmedia_AB::SHOW === $this->ab->variant
+		$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
 			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
+
+		if ( ! $is_enabled ) {
+			return false;
+		}
+		// @codingStandardsIgnoreStart
+		$data = array(
+			'time'				=> get_post_time( 'U', true ),
+			'url'					=> get_permalink(),
+			'categories' 	=> join( ',', array_map( function ( $category ) {
+					return $category->name;
+				}, get_the_category() ? get_the_category() : array()  ) ),
+			'tags'				=> join( ',', array_map( function( $tag ) {
+					return $tag->name;
+				}, get_the_tags() ? get_the_tags() : array() ) )
+		);
+		// @codingStandardsIgnoreEnd
+		return Adtechmedia_Request::br_decide_show(
+			$this->get_plugin_option( 'Id' ),
+			'load',
+			$data,
+			$this->get_plugin_option( 'key' )
+		);
 	}
 
 	/**

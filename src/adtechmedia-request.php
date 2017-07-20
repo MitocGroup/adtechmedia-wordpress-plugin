@@ -11,6 +11,34 @@
  * Class Adtechmedia_Request
  */
 class Adtechmedia_Request {
+	/**
+	 * Create content API request
+	 *
+	 * @param string $property_id id of property.
+	 * @param string $type type of decision.
+	 * @param array $data decision content.
+	 * @param string $key API key.
+	 * @return mixed
+	 *
+	 * @todo return false by default?
+	 */
+	public static function br_decide_show( $property_id, $type, $data, $key ) {
+		if ( empty( $key ) ) {
+			return null;
+		}
+		$data = [
+			'Id' => $property_id,
+			'Type' => $type,
+			'Data' => $data,
+		];
+		$result = self::make(
+			Adtechmedia_Config::get( 'api_end_point' ) . 'atm-admin/business-rules/decide',
+			'GET',
+			[ 'X-Api-Key' => $key ],
+			$data
+		);
+		return $result['matched'] ? $result['result'] : true;
+	}
 
 	/**
 	 * Create content API request
