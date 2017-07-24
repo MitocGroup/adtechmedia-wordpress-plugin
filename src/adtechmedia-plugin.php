@@ -286,6 +286,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
+		add_filter( 'after_setup_theme',
+			array(
+				&$this,
+				'init_adtechmedia_AB',
+			)
+		);
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -328,6 +334,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 	}
 
+	/**
+	 * The first init function Adtechmedia_AB
+	 */
+	public function init_adtechmedia_AB() {
+		new Adtechmedia_AB;
+	}
 	/**
 	 * Get key from token with API
 	 */
