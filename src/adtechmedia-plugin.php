@@ -286,6 +286,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
+		add_filter( 'after_setup_theme',
+			array(
+				&$this,
+				'init_adtechmedia_AB',
+			)
+		);
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -345,6 +351,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		wp_die();
 	}
 
+	/**
+	 * The first init function Adtechmedia_AB
+	 */
+	public function init_adtechmedia_AB() {
+		$this->is_enabled();
+	}
 	/**
 	 * Get key from token with API
 	 */
