@@ -416,4 +416,13 @@ jQuery().ready(function() {
       }
     });
   }
+  if (updatedAppearance === 0) {
+    jQuery.ajax({
+      url: ajaxurl,
+      type: 'post',
+      data: {
+        action: 'update_appearance'
+      }
+    });
+  }
 });

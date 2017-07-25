@@ -45,7 +45,8 @@ class Adtechmedia_Config {
 		'content_paywall'                => 'transactions',
 		'content_offset_type'            => 'paragraphs',
 		'country'                        => 'United States',
-		'platform_id'										 => 'Wordpress',
+		'platform_id'					 => 'Wordpress',
+		'updated_appearance'			 => '0',
 		'appearance_settings'		 				 => '{"model":{"main":{"sticky":true,"width":"600px","offset":{"top":"20px","fromCenter":"-60px","scrollTop":"100"}},"body":{"backgroundColor":"#ffffff","border":"1px solid #d3d3d3","fontFamily":"\'Merriweather\', sans-serif","boxShadow":"0 1px 2px 0 rgba(0, 0, 0, 0.1)"},"footer":{"backgroundColor":"#fafafa","border":"1px solid #e3e3e3"}}}',
 	];
 

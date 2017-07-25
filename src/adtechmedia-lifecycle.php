@@ -102,10 +102,6 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'ab_percentage', Adtechmedia_Config::get( 'ab_default_percentage' ) );
 		try {
 			$this->check_api_key_exists();
-
-			if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
-				$this->update_appearance();
-			}
 		} catch ( Error $error ) {
 			$this->activation_error = $error->getMessage();
 

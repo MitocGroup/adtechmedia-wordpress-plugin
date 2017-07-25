@@ -326,6 +326,23 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'key_from_token',
 			)
 		);
+		add_action( 'wp_ajax_update_appearance',
+			array(
+				&$this,
+				'one_update_appearance',
+			)
+		);
+	}
+
+	/**
+	 * Call function update_appearance after activation
+	 */
+	public function one_update_appearance() {
+		if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
+			$this->update_appearance();
+			$this->add_plugin_option( 'updated_appearance', 1 );
+		}
+		wp_die();
 	}
 
 	/**
