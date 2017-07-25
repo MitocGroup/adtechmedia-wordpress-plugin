@@ -100,6 +100,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'template_overall_styles_patch', Adtechmedia_Config::get( 'template_overall_styles_patch' ) );
 		$this->add_plugin_option( 'appearance_settings', Adtechmedia_Config::get( 'appearance_settings' ) );
 		$this->add_plugin_option( 'ab_percentage', Adtechmedia_Config::get( 'ab_default_percentage' ) );
+		$this->add_plugin_option( 'updated_appearance', Adtechmedia_Config::get( 'updated_appearance' ) );
 		try {
 			$this->check_api_key_exists();
 		} catch ( Error $error ) {
