@@ -338,7 +338,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * The first init function Adtechmedia_AB
 	 */
 	public function init_adtechmedia_AB() {
-		new Adtechmedia_AB;
+		$this->is_enabled();
 	}
 	/**
 	 * Get key from token with API
