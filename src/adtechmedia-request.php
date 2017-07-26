@@ -291,7 +291,8 @@ class Adtechmedia_Request {
 	private static function get_offset_type( $offset_type ) {
 		$types = [
 			'words' => 'words',
-			'paragraphs' => 'elements',
+			'paragraphs' => 'elements', // legacy...
+			'elements'	=> 'elements',
 		];
 		return $types[ $offset_type ];
 	}
