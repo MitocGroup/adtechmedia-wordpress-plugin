@@ -99,14 +99,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 		$this->add_plugin_option( 'content_offset_type', Adtechmedia_Config::get( 'content_offset_type' ) );
 		$this->add_plugin_option( 'template_overall_styles_patch', Adtechmedia_Config::get( 'template_overall_styles_patch' ) );
 		$this->add_plugin_option( 'appearance_settings', Adtechmedia_Config::get( 'appearance_settings' ) );
+		$this->add_plugin_option( 'ab_percentage', Adtechmedia_Config::get( 'ab_default_percentage' ) );
+		$this->add_plugin_option( 'updated_appearance', Adtechmedia_Config::get( 'updated_appearance' ) );
 		try {
 			$this->check_api_key_exists();
-			$this->check_prop();
-
-			if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
-				$this->update_prop();
-				$this->update_appearance();
-			}
 		} catch ( Error $error ) {
 			$this->activation_error = $error->getMessage();
 
@@ -178,6 +174,10 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 	public function check_api_key_exists() {
 		$key = $this->get_plugin_option( 'key' );
 		if ( empty( $key ) ) {
+			if ( $this->get_plugin_option( 'api-token-sent' ) === '1' ) {
+				return false;
+			}
+
 			$key_response = Adtechmedia_Request::api_key_create(
 				$this->get_plugin_option( 'support_email' )
 			);
@@ -208,7 +208,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
 					$this->get_plugin_option( 'website_domain_name' ),
 					$this->get_plugin_option( 'website_url' ),
 					$this->get_plugin_option( 'support_email' ),
-					$this->get_plugin_option( 'country' ),
+					$this->country_full_to_UN( $this->get_plugin_option( 'country' ) ),
 					$key
 				);
 				if ( ( ! isset( $prop['Id'] ) ) || empty( $prop['Id'] ) ) {

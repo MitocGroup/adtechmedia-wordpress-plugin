@@ -214,7 +214,9 @@ jQuery().ready(function() {
         data: {
           action: 'save_template',
           nonce: save_template.nonce,
-          revenueMethod: jQuery('select[name="revenue_method"]').val()
+          revenueMethod: jQuery('select[name="revenue_method"]').val(),
+          abPercentage: jQuery('input[name="ab_percentage"]').val(),
+          country: jQuery('select[name="country"]').val()
         },
         success: function(response) {
           removeLoader(btn);
@@ -231,8 +233,14 @@ jQuery().ready(function() {
     var country = jQuery(this);
     var method = jQuery('#revenue_method');
     method.empty();
+    var currency = jQuery('#price_currency');
+    currency.empty();
     jQuery.each(country.find(':selected').data('methods'), function(key, value) {
       method.append(jQuery('<option></option>')
+        .attr('value', value).text(value));
+    });
+    jQuery.each(country.find(':selected').data('currency'), function(key, value) {
+      currency.append(jQuery('<option></option>')
         .attr('value', value).text(value));
     });
   });
@@ -317,7 +325,7 @@ jQuery().ready(function() {
   initModal();
   
   const saveTemplatesBtn = jQuery('#save-templates-config');
-  const tplManager = atmTplManager(isLocalhost ? 'dev' : 'prod');
+  const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
   let firstSaveTemplates = false;
 
@@ -405,6 +413,15 @@ jQuery().ready(function() {
       },
       error: function(response) {
         notify('error', 'Error requesting AdTechMedia api authorization token. Please try again later...');
+      }
+    });
+  }
+  if (updatedAppearance === 0) {
+    jQuery.ajax({
+      url: ajaxurl,
+      type: 'post',
+      data: {
+        action: 'update_appearance'
       }
     });
   }

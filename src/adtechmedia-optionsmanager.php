@@ -157,7 +157,7 @@ class Adtechmedia_OptionsManager {
 	public function get_option( $option_name, $default = null ) {
 		$prefixed_option_name = $this->prefix( $option_name ); // how it is stored in DB.
 		$ret_val = get_option( $prefixed_option_name );
-		if ( ! $ret_val && $default ) {
+		if ( ! isset( $ret_val ) && $default ) {
 			$ret_val = $default;
 		}
 		return $ret_val;
@@ -186,7 +186,7 @@ class Adtechmedia_OptionsManager {
 			$ret_val = $row->option_value;
 		}
 
-		if ( ! $ret_val && $default ) {
+		if ( ! isset( $ret_val ) && $default ) {
 			$ret_val = $default;
 		}
 		return $ret_val;
@@ -557,6 +557,7 @@ class Adtechmedia_OptionsManager {
 			$this->update_prop();
 		}
 
+		Adtechmedia_Plugin::api_to_plugin_options();
 		require_once 'views/admin.php';
 	}
 

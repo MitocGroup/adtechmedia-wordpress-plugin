@@ -1,0 +1,20 @@
+{
+  "name": "mitocgroup/adtechmedia-plugin-wordpress",
+  "description": "WordPress plugin for AdTechMedia platform",
+  "type": "project",
+  "license": "MIT",
+  "authors": [{
+    "name": "AlexanderC",
+    "email": "acucer@mitocgroup.com"
+  }],
+  "minimum-stability": "dev",
+  "repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/mozilla/wp-sw-manager"
+  }],
+  "require": {
+    "mozilla/wp-sw-manager": "dev-master",
+    "marco-c/wp_serve_file": "dev-master",
+    "phpab/phpab": "dev-master"
+  }
+}

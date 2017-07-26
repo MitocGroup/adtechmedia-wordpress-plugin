@@ -11,6 +11,7 @@
  * Inclide Adtechmedia_LifeCycle
  */
 include_once( 'adtechmedia-lifecycle.php' );
+include_once( 'adtechmedia-ab.php' );
 
 /**
  * Class Adtechmedia_Plugin
@@ -25,6 +26,69 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function get_option_meta_data() {
 		// http://plugin.michael-simpson.com/?page_id=31.
 		return array();
+	}
+
+	/**
+	 * Checking if value is ok and update the option based on API one
+	 *
+	 * @param string $api_name field name.
+	 * @param string $api_value filed value.
+	 */
+	private function update_from_api_option( $api_name, $api_value ) {
+		if ( ! ctype_space( $api_name ) ) {
+			$this->update_plugin_option( $api_name, $api_value );
+		}
+	}
+	/**
+	 * Transform UN into Country Name
+	 *
+	 * @param string $un UN name of country.
+	 * @return string
+	 */
+	function country_UN_to_full( $un ) {
+		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
+		foreach ( $list as $country ) {
+			if ( $country['UN'] === $un ) {
+				return $country['Name'];
+			}
+		}
+	}
+	/**
+	 * Transform Full into Country UN
+	 *
+	 * @param string $name  name of country.
+	 * @return string
+	 */
+	function country_full_to_UN( $name ) {
+		$list = Adtechmedia_Request::get_countries_list( $this->get_plugin_option( 'key' ) );
+		foreach ( $list as $country ) {
+			if ( $country['Name'] === $name ) {
+				return $country['UN'];
+			}
+		}
+	}
+	/**
+	 * Gethering data from API and put it into mysql
+	 */
+	public function api_to_plugin_options() {
+		$api_result = Adtechmedia_Request::property_retrieve();
+		$pleded_types = [
+			'count' => 'transactions',
+			'amount' => 'pledged currency',
+		];
+		if ( $api_result ) {
+			$this->update_from_api_option( 'selector', $api_result['Config']['defaults']['content']['selector'] );
+			$this->update_from_api_option( 'price', $api_result['Config']['defaults']['payment']['price'] );
+			$this->update_from_api_option( 'support_email', $api_result['SupportEmail'] );
+			$this->update_from_api_option( 'country', $this->country_UN_to_full( $api_result['Country'] ) );
+			$this->update_from_api_option( 'content_offset', $api_result['Config']['defaults']['content']['offset'] );
+			$this->update_from_api_option( 'content_lock', $api_result['Config']['defaults']['content']['lock'] );
+			$this->update_from_api_option( 'revenue_method', $api_result['Config']['defaults']['revenueMethod'] );
+			$this->update_from_api_option( 'payment_pledged', $api_result['Config']['defaults']['payment']['pledged'] );
+			$this->update_from_api_option( 'price_currency', $api_result['Config']['defaults']['payment']['currency'] );
+			$this->update_from_api_option( 'content_paywall', $pleded_types[ $api_result['Config']['defaults']['payment']['pledgedType'] ] );
+			$this->update_from_api_option( 'content_offset_type', $api_result['Config']['defaults']['content']['offsetType'] );
+		}
 	}
 
 	/**
@@ -222,6 +286,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				)
 			);
 		}
+		add_filter( 'after_setup_theme',
+			array(
+				&$this,
+				'init_adtechmedia_AB',
+			)
+		);
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -262,8 +332,31 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'key_from_token',
 			)
 		);
+		add_action( 'wp_ajax_update_appearance',
+			array(
+				&$this,
+				'one_update_appearance',
+			)
+		);
 	}
 
+	/**
+	 * Call function update_appearance after activation
+	 */
+	public function one_update_appearance() {
+		if ( ! empty( $this->get_plugin_option( 'key' ) ) ) {
+			$this->update_appearance();
+			$this->add_plugin_option( 'updated_appearance', 1 );
+		}
+		wp_die();
+	}
+
+	/**
+	 * The first init function Adtechmedia_AB
+	 */
+	public function init_adtechmedia_AB() {
+		$this->is_enabled();
+	}
 	/**
 	 * Get key from token with API
 	 */
@@ -287,9 +380,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->add_plugin_option( 'force-save-templates', true );
 				$this->update_prop();
 				$this->update_appearance();
-                // @codingStandardsIgnoreStart
+        // @codingStandardsIgnoreStart
 				echo $key;
-                // @codingStandardsIgnoreEnd
+        // @codingStandardsIgnoreEnd
 			}
 			wp_die();
 		}
@@ -367,19 +460,32 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	public function ajax_save_template() {
 		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'adtechmedia-nonce' ) ) {
 			// @codingStandardsIgnoreStart
-			if ( isset( $_POST['revenueMethod'] ) ) {
+			if ( isset( $_POST['revenueMethod'], $_POST['country'] ) ) {
 				$plugin_dir = plugin_dir_path( __FILE__ );
 				$file       = $plugin_dir . '/js/atm.min.js';
 				@unlink( $file );
 
-				$revenue_method = $_POST['revenueMethod'];
+				$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
 				$this->update_plugin_option( 'revenue_method', $revenue_method );
+
+				$ab_percentage = (int) sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
+				$this->update_plugin_option( 'ab_percentage', $ab_percentage );
+
+				$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
+				$this->update_plugin_option( 'country', $country );
+
 				Adtechmedia_Request::property_update_config_by_array(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'key' ),
 					[
 						'revenueMethod' => $revenue_method,
 					]
+				);
+				Adtechmedia_Request::property_update(
+					$this->get_plugin_option( 'id' ),
+					$this->get_plugin_option( 'support_email' ),
+					$this->country_full_to_UN( $country ),
+					$this->get_plugin_option( 'key' )
 				);
 				Adtechmedia_ContentManager::clear_all_content();
 			} else if ( isset( $_POST['contentConfig'] ) ) {
@@ -395,7 +501,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$this->update_appearance();
 			}
 			// @codingStandardsIgnoreEnd
-
 			echo 'ok';
 		}
 		die();
@@ -469,10 +574,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * Register atm.js
 	 */
 	public function add_adtechmedia_scripts() {
-		if ( ! is_single() || empty( $this->get_plugin_option( 'key' ) ) ) {
-			return;
-		}
-		if ( $script = $this->get_plugin_option( 'BuildPath' ) ) {
+		$script = $this->get_plugin_option( 'BuildPath' );
+
+		if ( $this->is_enabled() && isset( $script ) ) {
 			$is_old = $this->get_plugin_option( 'atm-js-is-old' );
 			// @codingStandardsIgnoreStart
 			$is_old = ! empty( $is_old ) && $is_old == '1';
@@ -488,10 +592,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$hash = $this->get_plugin_option( 'atm-js-hash' );
 				// @codingStandardsIgnoreStart
 				$data = wp_remote_get( $script . "?_v=" . time() );
-				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
-				$this->add_plugin_option( 'atm-js-hash', time() );
-				$this->add_plugin_option( 'atm-js-is-old', '0' );
-				file_put_contents( $file, $data );
+				if ( is_array($data) ) {
+					$decodedData = @gzdecode( $data['body'] );
+					$this->add_plugin_option( 'atm-js-hash', time() );
+					$this->add_plugin_option( 'atm-js-is-old', '0' );
+					file_put_contents( $file, $decodedData ? $decodedData : $data['body'] );
+				}
 				// @codingStandardsIgnoreEnd
 			}
 
@@ -500,11 +606,16 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			if ( ! file_exists( $sw_file ) || ( time() - filemtime( $sw_file ) ) > Adtechmedia_Config::get( 'atm_js_cache_time' ) ) {
 				// @codingStandardsIgnoreStart
 				$data = wp_remote_get( Adtechmedia_Config::get( 'sw_js_url' ) );
-				$data = gzdecode( $data['body'] ) ? gzdecode( $data['body'] ) : $data['body'];
-				file_put_contents( $sw_file, $data );
+				if ( is_array($data) ) {
+					$decodedData = @gzdecode( $data['body'] );
+					file_put_contents( $sw_file, $decodedData ? $decodedData : $data['body'] );
+				}
 				// @codingStandardsIgnoreEnd
 			}
-			wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
+
+			if ( file_exists( $file ) ) {
+				wp_enqueue_script( 'Adtechmedia', $path . '?v=' . $this->get_plugin_option( 'atm-js-hash' ), null, null, true );
+			}
 		}
 	}
 
@@ -521,6 +632,48 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * Check if widget should be enabled.
+	 *
+	 * @return bool
+	 */
+	public function is_enabled() {
+		if ( ! isset( $this->ab ) ) {
+			$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
+
+			if ( $percentage <= 0 ) {
+				return false;
+			}
+
+			$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
+		}
+
+		$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
+			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
+
+		if ( ! $is_enabled ) {
+			return false;
+		}
+		// @codingStandardsIgnoreStart
+		$data = array(
+			'time'				=> get_post_time( 'U', true ),
+			'url'					=> get_permalink(),
+			'categories' 	=> join( ',', array_map( function ( $category ) {
+					return $category->name;
+				}, get_the_category() ? get_the_category() : array()  ) ),
+			'tags'				=> join( ',', array_map( function( $tag ) {
+					return $tag->name;
+				}, get_the_tags() ? get_the_tags() : array() ) )
+		);
+		// @codingStandardsIgnoreEnd
+		return Adtechmedia_Request::br_decide_show(
+			$this->get_plugin_option( 'Id' ),
+			'load',
+			$data,
+			$this->get_plugin_option( 'key' )
+		);
+	}
+
+	/**
 	 * Hide post content
 	 *
 	 * @param string $content content of post.
@@ -528,8 +681,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return bool|mixed|null
 	 */
 	public function hide_content( $content ) {
-
-		if ( is_single() && ! empty( $this->get_plugin_option( 'key' ) ) ) {
+		if ( $this->is_enabled() ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
 			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {

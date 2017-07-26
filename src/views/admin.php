@@ -16,11 +16,7 @@ $countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
-		foreach ( $countries_element['Currency'] as $currency ) {
-			if ( ! in_array( $currency, $currencies, true ) ) {
-				$currencies[] = $currency;
-			}
-		}
+		$currencies [ $countries_element['Name'] ] = $countries_element['Currency'];
 	}
 }
 /* mock for better UX */
@@ -45,6 +41,7 @@ echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' 
 echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
 echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
 echo 'var forceSaveTemplates = ' . ( empty( $this->get_plugin_option( 'force-save-templates' ) ) ? 'false' : 'true' )  . ';' . PHP_EOL;
+echo 'var updatedAppearance = ' . $this->get_plugin_option( 'updated_appearance' ) . ';' . PHP_EOL;
 echo '</script>' . PHP_EOL;
 // @codingStandardsIgnoreEnd
 if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
@@ -166,7 +163,8 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 									foreach ( $countries as $name => $methods ) {
 										$selected = ($this->get_plugin_option( 'country' ) === $name) ? 'selected' : '';
 										echo "<option value='" . esc_html( $name ) . "' data-methods='"
-											. wp_json_encode( $methods ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
+											. wp_json_encode( $methods ) . "' data-currency='"
+											. wp_json_encode( $currencies[ $name ] ) . "' " . esc_html( $selected ) . '>' . esc_html( $name ) . '</option>';
 									}
 									?>
 								</select>
@@ -189,6 +187,17 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<div class="block-info">
 								Choose the revenue model that will be used on this blog
 							</div>
+							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
+							<div class="custom-label">
+								<label>
+									<i class="mdi mdi-target"></i> A/B target
+								</label>
+								<input style="width: 100%;" min="0" max="100" step="1" type="number" id="ab_percentage" name="ab_percentage" 
+									value="<?php echo esc_html( $this->get_plugin_option( 'ab_percentage' ) ) ?>"/>
+							</div>
+							<div class="block-info">
+								Choose the percentage of users having the plugin enabled
+							</div>
 							<div class="custom-input">
 								<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
 							</div>
@@ -204,12 +213,11 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="custom-input">
 								<input type="text" id="support_email" name="support_email" value="<?php echo esc_html( $this->get_plugin_option( 'support_email' ) ) ?>" size="100"/>
-								<span class="bar"></span>
 								<label><i class="mdi mdi-email"></i> Email address</label>
 							</div>
 							<div class="block-info">
-								Provide your email address that will be used to register, connect and interact
-								with AdTechMedia.io platform
+								This email address will be used to register, connect and interact
+								with AdTechMedia.io platform.
 							</div>
 							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
 							<div class="block-info">
@@ -257,13 +265,16 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 										<select name="price_currency" id="price_currency">
 											<?php
 											$price_currency_value = $this->get_plugin_option( 'price_currency' );
-											foreach ( $currencies as $currency ) {
-												echo "<option value='";
-												echo esc_html( $currency );
-												echo "' " .
-													(($currency === $price_currency_value) ? 'selected' : '')
-													. ' >' .
-													esc_html( strtoupper( $currency ) ) . '</option>';
+											$coutry = $this->get_plugin_option( 'country' );
+											if ( isset( $currencies[ $coutry ] ) ) {
+												foreach ( $currencies[ $coutry ] as $currency ) {
+													echo "<option value='";
+													echo esc_html( $currency );
+													echo "' " .
+														(($currency === $price_currency_value) ? 'selected' : '')
+														. ' >' .
+														esc_html( strtoupper( $currency ) ) . '</option>';
+												}
 											}
 											?>
 										</select>
