@@ -729,11 +729,11 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                         window.ATM_CONTENT_PRELOADED = true;
                         window.WP_ATM_AUTHOR_NAME = '$author_name';
                         window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';";
-
+        // @codingStandardsIgnoreStart
 		$isHttps = !empty($_SERVER['HTTPS']) && 'off' !== strtolower($_SERVER['HTTPS']);
 		if ($isHttps) $script .= "window.ATM_SERVICE_WORKER = '/sw.min.js';";
-
-		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span><script>" . $script . "</script>";
+		// @codingStandardsIgnoreEnd
+		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span><script>" . $script . '</script>';
 	}
 
 	/**
