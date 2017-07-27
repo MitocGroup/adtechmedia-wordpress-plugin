@@ -723,17 +723,17 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$content_id    = (string) get_the_ID();
 		$author_name   = get_the_author();
 		$author_avatar = get_avatar_url( get_the_author_meta( 'user_email' ) );
-		$script        = "<script>
-                    window.ATM_FORCE_NOT_LOCALHOST = true;
-                    window.ATM_PROPERTY_ID = '$property_id'; 
-                    window.ATM_CONTENT_ID = '$content_id'; 
-                    window.ATM_CONTENT_PRELOADED = true;
-                    window.WP_ATM_AUTHOR_NAME = '$author_name';
-                    window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
-                    window.ATM_SERVICE_WORKER = '/sw.min.js';
-                    </script>";
-
-		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
+		$script        = "window.ATM_FORCE_NOT_LOCALHOST = true;
+                        window.ATM_PROPERTY_ID = '$property_id'; 
+                        window.ATM_CONTENT_ID = '$content_id'; 
+                        window.ATM_CONTENT_PRELOADED = true;
+                        window.WP_ATM_AUTHOR_NAME = '$author_name';
+                        window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';";
+        // @codingStandardsIgnoreStart
+		$isHttps = !empty($_SERVER['HTTPS']) && 'off' !== strtolower($_SERVER['HTTPS']);
+		if ($isHttps) $script .= "window.ATM_SERVICE_WORKER = '/sw.min.js';";
+		// @codingStandardsIgnoreEnd
+		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span><script>" . $script . '</script>';
 	}
 
 	/**
