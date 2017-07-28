@@ -88,6 +88,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			$this->update_from_api_option( 'price_currency', $api_result['Config']['defaults']['payment']['currency'] );
 			$this->update_from_api_option( 'content_paywall', $pleded_types[ $api_result['Config']['defaults']['payment']['pledgedType'] ] );
 			$this->update_from_api_option( 'content_offset_type', $api_result['Config']['defaults']['content']['offsetType'] );
+
+			$plugin_dir = plugin_dir_path( __FILE__ );
+			$file       = $plugin_dir . '/js/atm.min.js';
+			// @codingStandardsIgnoreStart
+			@unlink( $file );
+			// @codingStandardsIgnoreEnd
+
 		}
 	}
 
