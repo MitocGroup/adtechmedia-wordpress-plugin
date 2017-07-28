@@ -459,6 +459,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
 				$this->update_plugin_option( 'country', $country );
 
+				$currency = sanitize_text_field( wp_unslash( $_POST['currency'] ) );
+				$this->update_plugin_option( 'price_currency', $currency );
+
 				// Adtechmedia_Request::property_update_config_by_array(
 				// 	$this->get_plugin_option( 'id' ),
 				// 	$this->get_plugin_option( 'key' ),
