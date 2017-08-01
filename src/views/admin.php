@@ -276,7 +276,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 													echo "<option value='";
 													echo esc_html( $currency );
 													echo "' " .
-														(($currency === $price_currency_value) ? 'selected' : '')
+														(( strnatcasecmp( $currency , $price_currency_value ) === 0 ) ? 'selected' : '')
 														. ' >' .
 														esc_html( strtoupper( $currency ) ) . '</option>';
 												}
