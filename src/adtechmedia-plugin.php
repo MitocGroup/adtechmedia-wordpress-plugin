@@ -268,14 +268,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 			$property_check = $this->check_prop();
 
-			if ( ! $key_check ) {
-				add_action( 'admin_notices',
-					array(
-						&$this,
-						'key_not_exists_error',
-					)
-				);
-			}
 			if ( ! $property_check ) {
 				add_action( 'admin_notices',
 					array(
@@ -761,18 +753,4 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreEnd
 	}
 
-	/**
-	 * Show error if  API key not exists
-	 */
-	public function key_not_exists_error() {
-		// @codingStandardsIgnoreStart
-		?>
-		<div class="error notice">
-			<p><?php echo $this->key_error ?: __( 'An error occurred. API key has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
-				'adtechmedia-plugin'
-				); ?></p>
-		</div>
-		<?php
-		// @codingStandardsIgnoreEnd
-	}
 }
