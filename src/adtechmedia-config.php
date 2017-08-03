@@ -35,7 +35,7 @@ class Adtechmedia_Config {
 		'tpl_mgmt_js_url'                => 'https://manage.adtechmedia.io/atm-admin/atm-build/atmTplManager.js',
 		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
 		'register_url_tpl'               => 'https://manage.adtechmedia.io/accounts/signup/%s',
-		'price'                          => 5,
+		'price'                          => 0.05,
 		'content_offset'                 => 2,
 		'payment_pledged'                => 2,
 		'ads_video'                      => 'https://manage.adtechmedia.io/atm-admin/atm-build/demo-vast.xml',
