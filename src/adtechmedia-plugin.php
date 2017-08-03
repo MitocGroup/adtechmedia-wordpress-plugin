@@ -725,6 +725,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$content_id    = (string) get_the_ID();
 		$author_name   = get_the_author();
 		$author_avatar = get_avatar_url( get_the_author_meta( 'user_email' ) );
+		$currency = $this->get_plugin_option( 'country' );
+		$locale = 'en';
+		switch ( $locale ) {
+			case 'Romania':
+				$locale = 'ro';
+				break;
+			default:
+				$locale = 'en';
+		}
 		$script        = "<script>
                     window.ATM_FORCE_NOT_LOCALHOST = true;
                     window.ATM_PROPERTY_ID = '$property_id'; 
@@ -733,6 +742,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     window.WP_ATM_AUTHOR_NAME = '$author_name';
                     window.WP_ATM_AUTHOR_AVATAR = '$author_avatar';
                     window.ATM_SERVICE_WORKER = '/sw.min.js';
+										window.ATM_LOCALE = '$locale';
                     </script>";
 
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
