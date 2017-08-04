@@ -725,9 +725,9 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$content_id    = (string) get_the_ID();
 		$author_name   = get_the_author();
 		$author_avatar = get_avatar_url( get_the_author_meta( 'user_email' ) );
-		$currency = $this->get_plugin_option( 'country' );
-		$locale = 'en';
-		switch ( $locale ) {
+		$country = $this->get_plugin_option( 'country' );
+		$locale = null;
+		switch ( $country ) {
 			case 'Romania':
 				$locale = 'ro';
 				break;
