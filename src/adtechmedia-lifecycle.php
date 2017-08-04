@@ -270,7 +270,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
                             `option_value` LONGTEXT NOT NULL ,
                             PRIMARY KEY (`id`),
                             UNIQUE INDEX `option_name` (`option_name`)
-                        )"
+                        ) DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci"
 		);
 		// @codingStandardsIgnoreEnd
 		$table_name = $this->prefix_table_name( Adtechmedia_Config::get( 'plugin_cache_table_name' ) );
@@ -282,7 +282,7 @@ class Adtechmedia_LifeCycle extends Adtechmedia_InstallIndicator {
                             `value` LONGTEXT NOT NULL ,
                             PRIMARY KEY (`id`),
                             UNIQUE INDEX `item_id` (`item_id`)
-                        )"
+                        ) DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci"
 		);
 		// @codingStandardsIgnoreEnd
 	}
