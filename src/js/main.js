@@ -317,7 +317,7 @@ jQuery().ready(function() {
     var valid = addValidate(jQuery('#content-config'), {
       price: {
         required: true,
-        regex: '^[0-9]{1,7}(\.|,)[0-9]{1,2}$'
+        regex: '^([0-9]{1,7})?(\.|,)?([0-9]{1,2})$'
       },
       payment_pledged: {
         required: true,
