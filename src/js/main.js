@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0*/
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10] */
 
 function throttle(func, ms) {
   var isThrottled = false,
@@ -160,6 +160,15 @@ function addValidate(form, rules, messages) {
   });
 }
 
+jQuery.validator.addMethod(
+  'regex',
+  function(value, element, regexp) {
+    var re = new RegExp(regexp);
+    return this.optional(element) || re.test(value);
+  },
+  'Please check your input.'
+);
+
 function showError() {
   notify(
     'error',
@@ -245,14 +254,70 @@ jQuery().ready(function() {
         .attr('value', value).text(value));
     });
   });
+
+  $price = jQuery('#price');
+  $price.keypress(function(event) {
+    var $this = jQuery(this);
+    var text = $this.val();
+
+    if ((event.which !== 46 || text.indexOf('.') !== -1)
+        && ((event.which < 48 || event.which > 57)
+        && (event.which !== 0 && event.which !== 8))) {
+      event.preventDefault();
+    }
+    if (parseInt(text) > 9999999) {
+      event.preventDefault();
+    }
+    if ((text.split('.')[0].length === 0) && ((event.which === 46) || (event.which === 47))) {
+      $this.val('0.');
+      event.preventDefault();
+    }
+    if ((event.which === 46) && (text.indexOf('.') === -1)) {
+      setTimeout(function() {
+        if ($this.val().substring(text.indexOf('.')).length > 3) {
+          $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
+        }
+      }, 1);
+    }
+    if ((text.indexOf('.') !== -1) &&
+            (text.substring(text.indexOf('.')).length > 2) &&
+            (event.which !== 0 && event.which !== 8) &&
+            (jQuery(this)[0].selectionStart >= text.length - 2)) {
+      event.preventDefault();
+    }
+  });
+
+  $price.bind('paste', function(e) {
+    var text = e.originalEvent.clipboardData.getData('Text');
+    if (jQuery.isNumeric(text)) {
+      if ((text.substring(text.indexOf('.')).length > 3) && (text.indexOf('.') > -1)) {
+        e.preventDefault();
+        jQuery(this).val(text.substring(0, text.indexOf('.') + 3));
+      }
+    }
+    else {
+      e.preventDefault();
+    }
+  });
+
+  $pristine = jQuery('#payment_pledged, #content_offset');
+  $pristine.keyup(function(event) {
+    var $this = jQuery(this);
+    var text = $this.val();
+    if (text.length > 7) { event.preventDefault(); }
+    if ((text.indexOf('.') !== -1) || (text.length > 7)) {
+      $this.val($this.val().replace('.','').substring(0,7));
+      event.preventDefault();
+    }
+  });
+
   jQuery('#content-config button').bind('click', function(e) {
     var btn = jQuery(this);
 
     var valid = addValidate(jQuery('#content-config'), {
       price: {
         required: true,
-        digits: true,
-        min: 1
+        regex: '^[0-9]{1,7}(\.|,)[0-9]{1,2}$'
       },
       payment_pledged: {
         required: true,
