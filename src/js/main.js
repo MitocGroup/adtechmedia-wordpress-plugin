@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0*/
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10] */
 
 function throttle(func, ms) {
   var isThrottled = false,
@@ -258,35 +258,27 @@ jQuery().ready(function() {
   $price = jQuery('#price');
   $price.keypress(function(event) {
     var $this = jQuery(this);
-    if ((event.which !== 46 || $this.val().indexOf('.') !== -1) &&
-            ((event.which < 48 || event.which > 57) &&
-                (event.which !== 0 && event.which !== 8))) {
+    var text = $this.val();
+
+    if ((event.which !== 46 || text.indexOf('.') !== -1)
+        && ((event.which < 48 || event.which > 57)
+        && (event.which !== 0 && event.which !== 8))) {
       event.preventDefault();
     }
-
-    var text = jQuery(this).val();
-    if (parseInt(text) > 9999999) { event.preventDefault(); }
+    if (parseInt(text) > 9999999) {
+      event.preventDefault();
+    }
     if ((text.split('.')[0].length === 0) && ((event.which === 46) || (event.which === 47))) {
       $this.val('0.');
       event.preventDefault();
     }
-
     if ((event.which === 46) && (text.indexOf('.') === -1)) {
       setTimeout(function() {
-        if ($this.val().substring($this.val().indexOf('.')).length > 3) {
+        if ($this.val().substring(text.indexOf('.')).length > 3) {
           $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
         }
       }, 1);
     }
-
-    if ((event.which === 46) && (text.indexOf('.') === -1)) {
-      setTimeout(function() {
-        if ($this.val().substring($this.val().indexOf('.')).length > 3) {
-          $this.val($this.val().substring(0, $this.val().indexOf('.') + 3));
-        }
-      }, 1);
-    }
-
     if ((text.indexOf('.') !== -1) &&
             (text.substring(text.indexOf('.')).length > 2) &&
             (event.which !== 0 && event.which !== 8) &&
