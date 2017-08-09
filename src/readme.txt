@@ -9,7 +9,7 @@ License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
 Tested up to: 4.8
-Stable tag: 0.10.8
+Stable tag: 0.12.0
 
 
 == Description ==
@@ -37,6 +37,17 @@ Meanwhile, frequently asked questions will be compiled and published as we evolv
 
 
 == Changelog ==
+
+= 0.12 =
+- Added localization support
+- Added default database tables charset
+- Changed default currencies and default price
+- Fixed bugs related to config sync between WP Admin and AdTechMedia Manager
+
+= 0.11 =
+- Integrated business rules support
+- Added multiple countries and currencies
+- Fixed bugs related to cookies and registration
 
 = 0.10 =
 - Integrated improved authentication process

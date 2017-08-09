@@ -35,18 +35,18 @@ class Adtechmedia_Config {
 		'tpl_mgmt_js_url'                => 'https://manage.adtechmedia.io/atm-admin/atm-build/atmTplManager.js',
 		'terms_url'                      => 'https://www.adtechmedia.io/terms/dialog.html',
 		'register_url_tpl'               => 'https://manage.adtechmedia.io/accounts/signup/%s',
-		'price'                          => 5,
+		'price'                          => 0.05,
 		'content_offset'                 => 2,
 		'payment_pledged'                => 2,
 		'ads_video'                      => 'https://manage.adtechmedia.io/atm-admin/atm-build/demo-vast.xml',
 		'content_lock'                   => 'blur+scramble',
-		'revenue_method'                 => 'advertising+micropayments',
+		'revenue_method'                 => 'advertising+micropayments', // @todo change it to 'micropayments+subscriptions' when subscriptions implemented
 		'price_currency'                 => 'usd',
 		'content_paywall'                => 'transactions',
 		'content_offset_type'            => 'paragraphs',
 		'country'                        => 'United States',
-		'platform_id'					 => 'Wordpress',
-		'updated_appearance'			 => '0',
+		'platform_id'										 => 'Wordpress',
+		'updated_appearance'						 => '0',
 		'appearance_settings'		 				 => '{"model":{"main":{"sticky":true,"width":"600px","offset":{"top":"20px","fromCenter":"-60px","scrollTop":"100"}},"body":{"backgroundColor":"#ffffff","border":"1px solid #d3d3d3","fontFamily":"\'Merriweather\', sans-serif","boxShadow":"0 1px 2px 0 rgba(0, 0, 0, 0.1)"},"footer":{"backgroundColor":"#fafafa","border":"1px solid #e3e3e3"}}}',
 	];
 

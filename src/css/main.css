@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @font-face {
     font-family: FuturaICG;
-    src: url(../fonts/FuturaICG.ttf);
+    src: url(../fonts/FuturaICG.woff);
 }
 
 .flex-item-1 {
@@ -1578,7 +1578,6 @@ select {
     }
 }
 
-/*# sourceMappingURL=main.css.map */
 .btn.disabled, .disabled.btn-large, .btn-floating.disabled, .btn-large.disabled, .btn-flat.disabled, .btn:disabled, .btn-large:disabled, .btn-floating:disabled, .btn-large:disabled, .btn-flat:disabled, .btn[disabled], .btn-large[disabled], .btn-floating[disabled], .btn-large[disabled], .btn-flat[disabled] {
     background-color: #dfdfdf !important;
     box-shadow: none;

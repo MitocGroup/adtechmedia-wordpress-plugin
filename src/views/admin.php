@@ -16,7 +16,12 @@ $countries = [];
 if ( is_array( $countries_list ) ) {
 	foreach ( $countries_list as $countries_element ) {
 		$countries[ $countries_element['Name'] ] = $countries_element['RevenueModel'];
-		$currencies [ $countries_element['Name'] ] = $countries_element['Currency'];
+		$currencies[ $countries_element['Name'] ] = array_map(
+			function ( $a ) {
+				return strtoupper( $a );
+			},
+			$countries_element['Currency']
+		);
 	}
 }
 /* mock for better UX */
@@ -271,7 +276,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 													echo "<option value='";
 													echo esc_html( $currency );
 													echo "' " .
-														(($currency === $price_currency_value) ? 'selected' : '')
+														(( strnatcasecmp( $currency , $price_currency_value ) === 0 ) ? 'selected' : '')
 														. ' >' .
 														esc_html( strtoupper( $currency ) ) . '</option>';
 												}
@@ -284,7 +289,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 
 							<div class="block-info">
 								Specify the price and the currency to be collected per article per micropayment
-								(e.g. "10" &amp; "USD" means 10&cent;, while "100" &amp; "USD" means $1)
+								(e.g. "0.05" &amp; "USD" means 5&cent;, while "5" &amp; "USD" means $5)
 							</div>
 						</div>
 

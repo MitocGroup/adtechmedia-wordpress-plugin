@@ -534,47 +534,8 @@ class Adtechmedia_OptionsManager {
 		$main_data_class = get_class( $this ) . '-main-settings-group';
 		$plugin_meta_data_class = get_class( $this ) . '-data-settings-group';
 
-		// Save Posted Options.
-		if ( isset( $_POST['option_page'] )
-			&& isset( $_POST['_wpnonce'] )
-			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), $main_data_class . '-options' )
-			&& sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $main_data_class
-		) {
-			$this->try_to_save_post( $main_data, $_POST );
-			Adtechmedia_Request::property_update(
-				$this->get_plugin_option( 'id' ),
-				$this->get_plugin_option( 'support_email' ),
-				$this->get_plugin_option( 'country' ),
-				$this->get_plugin_option( 'key' )
-			);
-			$this->update_prop();
-		} elseif ( isset( $_POST['option_page'] )
-			&& isset( $_POST['_wpnonce'] )
-			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), $plugin_meta_data_class . '-options' )
-			&& sanitize_text_field( wp_unslash( $_POST['option_page'] ) ) == $plugin_meta_data_class
-		) {
-			$this->try_to_save_post( $plugin_meta_data, $_POST );
-			$this->update_prop();
-		}
-
 		Adtechmedia_Plugin::api_to_plugin_options();
 		require_once 'views/admin.php';
-	}
-
-	/**
-	 * Try to save data from request
-	 *
-	 * @param array $options request data.
-	 * @param array $post request data.
-	 */
-	public function try_to_save_post( $options, $post ) {
-		if ( null != $options ) {
-			foreach ( $options as $a_option_key => $a_option_meta ) {
-				if ( isset( $post[ $a_option_key ] ) ) {
-					$this->update_plugin_option( $a_option_key, $post[ $a_option_key ] );
-				}
-			}
-		}
 	}
 
 	/**
