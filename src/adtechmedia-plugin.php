@@ -20,10 +20,10 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 	/**
 	 * Variable indicate AMP view
-     *
-     * @param boolean $is_amp first value is false.
+	 *
+	 * @var boolean $is_amp first value is false.
 	 */
-    protected $is_amp = false;
+	protected $is_amp = false;
 
 	/**
 	 * See: http://plugin.michael-simpson.com/?page_id=31
@@ -779,7 +779,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * AMP one paragraf
 	 *
 	 * @param string $content content of post.
-     * @param integer $id of post.
+	 * @id string $id of post.
 	 *
 	 * @return string
 	 */
