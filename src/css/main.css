@@ -128,14 +128,6 @@ ul li {
     float: right;
 }
 
-.radio {
-    cursor: pointer;
-    display: inline-block;
-    line-height: 22px;
-    padding: 10px 50px 0 0;
-    text-transform: uppercase;
-}
-
 .radio:hover .inner {
     opacity: .5;
     transform: scale(0.5);
