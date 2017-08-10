@@ -19,6 +19,13 @@ include_once( 'adtechmedia-ab.php' );
 class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 	/**
+	 * Variable indicate AMP view
+	 *
+	 * @var boolean $is_amp first value is false.
+	 */
+	protected $is_amp = false;
+
+	/**
 	 * See: http://plugin.michael-simpson.com/?page_id=31
 	 *
 	 * @return array of option meta data.
@@ -291,6 +298,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'init_adtechmedia_AB',
 			)
 		);
+		add_filter( 'pre_amp_render_post',
+			array(
+				&$this,
+				'init_AMP',
+			)
+		);
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -339,6 +352,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 	}
 
+	/**
+	 * Page is AMP
+	 */
+	public function init_AMP() {
+		$this->is_amp = true;
+	}
 	/**
 	 * The first init function Adtechmedia_AB
 	 */
@@ -683,7 +702,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( $this->is_enabled() ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
-			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
+			if ( $this->is_amp ) {
+				add_action( 'amp_post_template_css',
+					array(
+						&$this,
+						'xyz_amp_my_additional_css_styles',
+					)
+				);
+				return $this->amp_content( $content , $id );
+			} else if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
 				return $this->content_wrapper( $saved_content );
 			} else {
 				Adtechmedia_Request::content_create(
@@ -746,6 +773,34 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     </script>";
 
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
+	}
+
+	/**
+	 * AMP one paragraf
+	 *
+	 * @param string  $content content of post.
+	 * @param integer $id id of post.
+	 *
+	 * @return string
+	 */
+	public function amp_content( $content, $id ) {
+		$dom = new DOMDocument();
+		$dom->loadHTML( '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head><body>' . $content . '</body></html>' );
+		$result = $dom->getElementsByTagName( 'p' );
+		$html = '';
+		// @codingStandardsIgnoreStart
+		foreach ( $result as $paragraf ) {
+			if ( $paragraf->nodeValue ) {
+				$html .= $paragraf->ownerDocument->saveHTML( $paragraf );
+				break;
+			} else {
+				$html .= $paragraf->ownerDocument->saveHTML( $paragraf );
+			}
+
+		}
+		$html.= '<div class="atm-unlock-line"><a  href="'. get_page_link($id)  .'">Get full content</a></div>';
+		// @codingStandardsIgnoreEnd
+		return $html;
 	}
 
 	/**
