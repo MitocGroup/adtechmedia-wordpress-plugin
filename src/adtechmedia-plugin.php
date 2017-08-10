@@ -709,7 +709,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 						'xyz_amp_my_additional_css_styles',
 					)
 				);
-				return $this->amp_content( $content , $id);
+				return $this->amp_content( $content , $id );
 			} else if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
 				return $this->content_wrapper( $saved_content );
 			} else {
