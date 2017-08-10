@@ -778,8 +778,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	/**
 	 * AMP one paragraf
 	 *
-	 * @param string $content content of post.
-	 * @id string $id of post.
+	 * @param string  $content content of post.
+	 * @param integer $id id of post.
 	 *
 	 * @return string
 	 */
