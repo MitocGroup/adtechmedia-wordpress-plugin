@@ -816,6 +816,32 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	}
 
 	/**
+	 * AMP button view
+	 */
+	public function xyz_amp_my_additional_css_styles() {
+		$css = '.atm-unlock-line{
+                    text-align:center;
+                    }
+                    .atm-unlock-line a{
+                        color: #fff;
+                        background: #00a7f7;
+                        font-size: 11px;
+                        width: 190px;
+                        display: block;
+                        line-height: 35px;
+                        text-transform: uppercase;
+                        text-decoration: none;
+                        margin: 0 auto;
+                        border-radius: 2px;
+                        font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+                    }
+                    ';
+		// @codingStandardsIgnoreStart
+		echo $css;
+		// @codingStandardsIgnoreEnd
+	}
+
+	/**
 	 * Show error if Property Id not exists
 	 */
 	public function property_id_not_exists_error() {
