@@ -26,6 +26,13 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	protected $is_amp = false;
 
 	/**
+	 * Variable indicate that ATM enabled
+	 *
+	 * @var boolean $enabled first value is null.
+	 */
+	public $enabled = null;
+
+	/**
 	 * See: http://plugin.michael-simpson.com/?page_id=31
 	 *
 	 * @return array of option meta data.
@@ -655,40 +662,45 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return bool
 	 */
 	public function is_enabled() {
-		if ( ! isset( $this->ab ) ) {
-			$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
+		if ( null === $this->enabled ) {
+			if ( ! isset( $this->ab ) ) {
+				$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
 
-			if ( $percentage <= 0 ) {
-				return false;
+				if ( $percentage <= 0 ) {
+					$this->is_enabled = false;
+					return $this->enabled;
+				}
+
+				$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
 			}
 
-			$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
-		}
+			$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
+				&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
 
-		$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
-			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
-
-		if ( ! $is_enabled ) {
-			return false;
-		}
-		// @codingStandardsIgnoreStart
-		$data = array(
-			'time'				=> get_post_time( 'U', true ),
-			'url'					=> get_permalink(),
-			'categories' 	=> join( ',', array_map( function ( $category ) {
+			if ( ! $is_enabled ) {
+				$this->is_enabled = false;
+				return $this->enabled;
+			}
+            // @codingStandardsIgnoreStart
+			$data = array(
+				'time'				=> get_post_time( 'U', true ),
+				'url'					=> get_permalink(),
+				'categories' 	=> join( ',', array_map( function ( $category ) {
 					return $category->name;
 				}, get_the_category() ? get_the_category() : array()  ) ),
-			'tags'				=> join( ',', array_map( function( $tag ) {
+				'tags'				=> join( ',', array_map( function( $tag ) {
 					return $tag->name;
 				}, get_the_tags() ? get_the_tags() : array() ) )
-		);
-		// @codingStandardsIgnoreEnd
-		return Adtechmedia_Request::br_decide_show(
-			$this->get_plugin_option( 'Id' ),
-			'load',
-			$data,
-			$this->get_plugin_option( 'key' )
-		);
+			);
+			// @codingStandardsIgnoreEnd
+			$this->enabled = Adtechmedia_Request::br_decide_show(
+				$this->get_plugin_option( 'Id' ),
+				'load',
+				$data,
+				$this->get_plugin_option( 'key' )
+			);
+		}  // End if().
+		return $this->enabled;
 	}
 
 	/**
