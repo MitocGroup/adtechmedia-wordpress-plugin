@@ -326,7 +326,7 @@ jQuery().ready(function() {
       content_offset: {
         required: true,
         digits: true,
-        min: 1
+        min: 0
       },
       ads_video: {
         required: false,
