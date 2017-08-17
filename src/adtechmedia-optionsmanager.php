@@ -568,8 +568,8 @@ class Adtechmedia_OptionsManager {
 
 		} else { // Simple input field.
 			?>
-			<input <?php echo $input_options ?> 
-					 type="<?php echo esc_html($type) ?>" 
+			<input <?php echo esc_html( $input_options ) ?> 
+					 type="<?php echo esc_html( $type ) ?>" 
 					 placeholder="<?php echo esc_html( $placeholder ) ?>"
 				   name="<?php echo esc_html( $a_option_key ) ?>"
 				   id="<?php echo esc_html( $a_option_key ) ?>"
