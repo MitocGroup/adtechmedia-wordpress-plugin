@@ -498,7 +498,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			} else if ( isset( $_POST['contentConfig'] ) ) {
 				$content_config = json_decode( wp_unslash( $_POST['contentConfig'] ), true );
 				foreach ( $content_config as $a_option_key => $a_option_meta ) {
-					if ( ! isset( $content_config[ $a_option_key ] ) || ! $content_config[ $a_option_key ] ) {
+					if ( isset( $content_config[ $a_option_key ] ) || $content_config[ $a_option_key ] ) {
 						$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );
 					}
 				}
