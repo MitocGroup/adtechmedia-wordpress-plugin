@@ -224,7 +224,6 @@ jQuery().ready(function() {
           action: 'save_template',
           nonce: save_template.nonce,
           revenueMethod: jQuery('select[name="revenue_method"]').val(),
-          abPercentage: jQuery('input[name="ab_percentage"]').val(),
           country: jQuery('select[name="country"]').val(),
           currency: jQuery('#price_currency').val()
         },
