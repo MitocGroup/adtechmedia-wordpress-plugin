@@ -399,6 +399,8 @@ jQuery().ready(function() {
   tplManager.client.bindLoader(runtime);
   tplManager.generalSettings = appearanceSettings;
 
+  if (!apiKey) { return false }
+
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
     .then(function(exists) {
