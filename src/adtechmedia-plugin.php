@@ -160,6 +160,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'price_currency'      => array( __( 'price.currency', 'adtechmedia-plugin' ) ),
 			'content_paywall'     => array( __( 'content.paywall', 'adtechmedia-plugin' ) ),
 			'content_offset_type' => array( __( 'Offset type', 'adtechmedia-plugin' ) ),
+			'ab_percentage' => array( __( 'A/B target audience', 'adtechmedia-plugin' ) ),
 		);
 	}
 
@@ -478,9 +479,6 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
 				$this->update_plugin_option( 'revenue_method', $revenue_method );
 
-				$ab_percentage = (int) sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
-				$this->update_plugin_option( 'ab_percentage', $ab_percentage );
-
 				$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
 				$this->update_plugin_option( 'country', $country );
 
@@ -497,6 +495,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// Adtechmedia_ContentManager::clear_all_content();
 			} else if ( isset( $_POST['contentConfig'] ) ) {
 				$content_config = json_decode( wp_unslash( $_POST['contentConfig'] ), true );
+
+				if ( isset( $content_config['ab_percentage'] ) ) {
+					$this->update_plugin_option( 'ab_percentage', (int) $content_config['ab_percentage'] );
+					unset($content_config['ab_percentage']);
+				}
+
 				foreach ( $content_config as $a_option_key => $a_option_meta ) {
 					if ( isset( $content_config[ $a_option_key ] ) || $content_config[ $a_option_key ] ) {
 						$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );

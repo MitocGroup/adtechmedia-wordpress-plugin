@@ -545,9 +545,11 @@ class Adtechmedia_OptionsManager {
 	 * @param mixed  $a_option_meta meta-data for $aOptionKey (either a string display-name or an array(display-name, option1, option2, ...).
 	 * @param string $saved_option_value current value for $a_option_key.
 	 * @param string $placeholder placeholder to field.
+	 * @param string $type input type.
+	 * @param string $input_options input options.
 	 * @return void
 	 */
-	protected function create_form_control( $a_option_key, $a_option_meta, $saved_option_value, $placeholder = '' ) {
+	protected function create_form_control( $a_option_key, $a_option_meta, $saved_option_value, $placeholder = '', $type = 'text', $input_options = '' ) {
 		if ( is_array( $a_option_meta ) && count( $a_option_meta ) >= 2 ) { // Drop-down list.
 			$choices = array_slice( $a_option_meta, 1 );
 			?>
@@ -566,7 +568,9 @@ class Adtechmedia_OptionsManager {
 
 		} else { // Simple input field.
 			?>
-			<input type="text" placeholder="<?php echo esc_html( $placeholder ) ?>"
+			<input <?php echo $input_options ?> 
+					 type="<?php echo esc_html($type) ?>" 
+					 placeholder="<?php echo esc_html( $placeholder ) ?>"
 				   name="<?php echo esc_html( $a_option_key ) ?>"
 				   id="<?php echo esc_html( $a_option_key ) ?>"
 				   value="<?php echo esc_attr( $saved_option_value ) ?>" size="100"/>
