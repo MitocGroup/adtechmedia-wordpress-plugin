@@ -19,6 +19,20 @@ include_once( 'adtechmedia-ab.php' );
 class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 
 	/**
+	 * Variable indicate AMP view
+	 *
+	 * @var boolean $is_amp first value is false.
+	 */
+	protected $is_amp = false;
+
+	/**
+	 * Variable indicate that ATM enabled
+	 *
+	 * @var boolean $enabled first value is null.
+	 */
+	public $enabled = null;
+
+	/**
 	 * See: http://plugin.michael-simpson.com/?page_id=31
 	 *
 	 * @return array of option meta data.
@@ -146,6 +160,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'price_currency'      => array( __( 'price.currency', 'adtechmedia-plugin' ) ),
 			'content_paywall'     => array( __( 'content.paywall', 'adtechmedia-plugin' ) ),
 			'content_offset_type' => array( __( 'Offset type', 'adtechmedia-plugin' ) ),
+			'ab_percentage' => array( __( 'A/B target audience', 'adtechmedia-plugin' ) ),
 		);
 	}
 
@@ -291,6 +306,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				'init_adtechmedia_AB',
 			)
 		);
+		add_filter( 'pre_amp_render_post',
+			array(
+				&$this,
+				'init_AMP',
+			)
+		);
 		add_filter( 'the_content',
 			array(
 				&$this,
@@ -339,6 +360,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		);
 	}
 
+	/**
+	 * Page is AMP
+	 */
+	public function init_AMP() {
+		$this->is_amp = true;
+	}
 	/**
 	 * The first init function Adtechmedia_AB
 	 */
@@ -452,22 +479,12 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$revenue_method = sanitize_text_field( wp_unslash( $_POST['revenueMethod'] ) );
 				$this->update_plugin_option( 'revenue_method', $revenue_method );
 
-				$ab_percentage = (int) sanitize_text_field( wp_unslash( $_POST['abPercentage'] ) );
-				$this->update_plugin_option( 'ab_percentage', $ab_percentage );
-
 				$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
 				$this->update_plugin_option( 'country', $country );
 
 				$currency = sanitize_text_field( wp_unslash( $_POST['currency'] ) );
 				$this->update_plugin_option( 'price_currency', $currency );
 
-				// Adtechmedia_Request::property_update_config_by_array(
-				// 	$this->get_plugin_option( 'id' ),
-				// 	$this->get_plugin_option( 'key' ),
-				// 	[
-				// 		'revenueMethod' => $revenue_method,
-				// 	]
-				// );
 				Adtechmedia_Request::property_update(
 					$this->get_plugin_option( 'id' ),
 					$this->get_plugin_option( 'support_email' ),
@@ -478,8 +495,14 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				// Adtechmedia_ContentManager::clear_all_content();
 			} else if ( isset( $_POST['contentConfig'] ) ) {
 				$content_config = json_decode( wp_unslash( $_POST['contentConfig'] ), true );
+
+				if ( isset( $content_config['ab_percentage'] ) ) {
+					$this->update_plugin_option( 'ab_percentage', (int) $content_config['ab_percentage'] );
+					unset($content_config['ab_percentage']);
+				}
+
 				foreach ( $content_config as $a_option_key => $a_option_meta ) {
-					if ( ! empty( $content_config[ $a_option_key ] ) ) {
+					if ( isset( $content_config[ $a_option_key ] ) || $content_config[ $a_option_key ] ) {
 						$this->update_plugin_option( $a_option_key, $content_config[ $a_option_key ] );
 					}
 				}
@@ -636,40 +659,45 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 	 * @return bool
 	 */
 	public function is_enabled() {
-		if ( ! isset( $this->ab ) ) {
-			$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
+		if ( null === $this->enabled ) {
+			if ( ! isset( $this->ab ) ) {
+				$percentage = (int) $this->get_plugin_option( 'ab_percentage', Adtechmedia_AB::DEFAULT_PERCENTAGE );
 
-			if ( $percentage <= 0 ) {
-				return false;
+				if ( $percentage <= 0 ) {
+					$this->is_enabled = false;
+					return $this->enabled;
+				}
+
+				$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
 			}
 
-			$this->ab = Adtechmedia_AB::instance()->set_percentage( $percentage )->start();
-		}
+			$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
+				&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
 
-		$is_enabled = Adtechmedia_AB::SHOW === $this->ab->variant
-			&& is_single() && ! empty( $this->get_plugin_option( 'key' ) );
-
-		if ( ! $is_enabled ) {
-			return false;
-		}
-		// @codingStandardsIgnoreStart
-		$data = array(
-			'time'				=> get_post_time( 'U', true ),
-			'url'					=> get_permalink(),
-			'categories' 	=> join( ',', array_map( function ( $category ) {
+			if ( ! $is_enabled ) {
+				$this->is_enabled = false;
+				return $this->enabled;
+			}
+            // @codingStandardsIgnoreStart
+			$data = array(
+				'time'				=> get_post_time( 'U', true ),
+				'url'					=> get_permalink(),
+				'categories' 	=> join( ',', array_map( function ( $category ) {
 					return $category->name;
 				}, get_the_category() ? get_the_category() : array()  ) ),
-			'tags'				=> join( ',', array_map( function( $tag ) {
+				'tags'				=> join( ',', array_map( function( $tag ) {
 					return $tag->name;
 				}, get_the_tags() ? get_the_tags() : array() ) )
-		);
-		// @codingStandardsIgnoreEnd
-		return Adtechmedia_Request::br_decide_show(
-			$this->get_plugin_option( 'Id' ),
-			'load',
-			$data,
-			$this->get_plugin_option( 'key' )
-		);
+			);
+			// @codingStandardsIgnoreEnd
+			$this->enabled = Adtechmedia_Request::br_decide_show(
+				$this->get_plugin_option( 'Id' ),
+				'load',
+				$data,
+				$this->get_plugin_option( 'key' )
+			);
+		}  // End if().
+		return $this->enabled;
 	}
 
 	/**
@@ -683,7 +711,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		if ( $this->is_enabled() ) {
 			$id            = (string) get_the_ID();
 			$saved_content = Adtechmedia_ContentManager::get_content( $id );
-			if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
+			if ( $this->is_amp ) {
+				add_action( 'amp_post_template_css',
+					array(
+						&$this,
+						'xyz_amp_my_additional_css_styles',
+					)
+				);
+				return $this->amp_content( $content , $id );
+			} else if ( isset( $saved_content ) && ! empty( $saved_content ) ) {
 				return $this->content_wrapper( $saved_content );
 			} else {
 				Adtechmedia_Request::content_create(
@@ -746,6 +782,60 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
                     </script>";
 
 		return "<span id='content-for-atm-modal'>&nbsp;</span><span id='content-for-atm'>$content</span>" . $script;
+	}
+
+	/**
+	 * AMP one paragraf
+	 *
+	 * @param string  $content content of post.
+	 * @param integer $id id of post.
+	 *
+	 * @return string
+	 */
+	public function amp_content( $content, $id ) {
+		$dom = new DOMDocument();
+		$dom->loadHTML( '<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"></head><body>' . $content . '</body></html>' );
+		$result = $dom->getElementsByTagName( 'p' );
+		$html = '';
+		// @codingStandardsIgnoreStart
+		foreach ( $result as $paragraf ) {
+			if ( $paragraf->nodeValue ) {
+				$html .= $paragraf->ownerDocument->saveHTML( $paragraf );
+				break;
+			} else {
+				$html .= $paragraf->ownerDocument->saveHTML( $paragraf );
+			}
+
+		}
+		$html.= '<div class="atm-unlock-line"><a  href="'. get_page_link($id)  .'">Get full content</a></div>';
+		// @codingStandardsIgnoreEnd
+		return $html;
+	}
+
+	/**
+	 * AMP button view
+	 */
+	public function xyz_amp_my_additional_css_styles() {
+		$css = '.atm-unlock-line{
+                    text-align:center;
+                    }
+                    .atm-unlock-line a{
+                        color: #fff;
+                        background: #00a7f7;
+                        font-size: 11px;
+                        width: 190px;
+                        display: block;
+                        line-height: 35px;
+                        text-transform: uppercase;
+                        text-decoration: none;
+                        margin: 0 auto;
+                        border-radius: 2px;
+                        font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, sans-serif;
+                    }
+                    ';
+		// @codingStandardsIgnoreStart
+		echo $css;
+		// @codingStandardsIgnoreEnd
 	}
 
 	/**

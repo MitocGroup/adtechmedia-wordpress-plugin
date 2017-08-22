@@ -192,17 +192,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 							<div class="block-info">
 								Choose the revenue model that will be used on this blog
 							</div>
-							<br/><!-- ToDo: Remove <br/> and add spacer through CSS -->
-							<div class="custom-label">
-								<label>
-									<i class="mdi mdi-target"></i> A/B target
-								</label>
-								<input style="width: 100%;" min="0" max="100" step="1" type="number" id="ab_percentage" name="ab_percentage" 
-									value="<?php echo esc_html( $this->get_plugin_option( 'ab_percentage' ) ) ?>"/>
-							</div>
-							<div class="block-info">
-								Choose the percentage of users having the plugin enabled
-							</div>
+							
 							<div class="custom-input">
 								<button type="button" id="save-revenue-model" class="btn"><i class="mdi mdi-check"></i> Save</button>
 							</div>
@@ -303,7 +293,9 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 											'payment_pledged',
 											$plugin_meta_data['payment_pledged'],
 											$this->get_plugin_option( 'payment_pledged' ),
-											'e.g. 5'
+											'e.g. 2',
+											'number',
+											'min=0 step=1'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -342,7 +334,9 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 											'content_offset',
 											$plugin_meta_data['content_offset'],
 											$this->get_plugin_option( 'content_offset' ),
-											'e.g. 2'
+											'e.g. 2',
+											'number',
+											'min=0 step=1'
 										); ?>
 										<span class="bar"></span>
 									</div>
@@ -371,38 +365,43 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 						</div>
 
 						<div class="custom-label mixed-fields">
-							<label>
-								<i class="mdi mdi-lock-open"></i> Content unlocking algorithm
-							</label>
-							<div class="form-select">
-								<?php $this->create_form_control(
-									'content_lock',
-									$plugin_meta_data['content_lock'],
-									$this->get_plugin_option( 'content_lock' )
-								); ?>
-							</div>
-							<div class="block-info">
-								Provide which unlocking algorithm will be used to hide premium content
-							</div>
-						</div>
-						<div class="custom-label mixed-fields">
-							<label><i class="mdi mdi-link"></i> Link to video ad</label>
 							<div class="flex-container">
-								<div class="flex-item-12">
+								<div class="flex-item-6">
+									<label style="position: relative"><i class="mdi mdi-lock-open"></i> Content locking algorithm</label>
+								</div>
+								<div class="flex-item-6">
+									<label style="position: relative"><i class="mdi mdi-target"></i> A/B target audience</label>
+								</div>
+							</div>
+
+							<div class="flex-container">
+								<div class="flex-item-6">
 									<div class="custom-input">
 										<?php $this->create_form_control(
-											'ads_video',
-											$plugin_meta_data['ads_video'],
-											$this->get_plugin_option( 'ads_video' ),
-											'e.g. https://youtu.be/DiBh8r3lPpM'
+											'content_lock',
+											$plugin_meta_data['content_lock'],
+											$this->get_plugin_option( 'content_lock' )
+										); ?>
+										<span class="bar"></span>
+									</div>
+								</div>
+
+								<div class="flex-item-6">
+									<div class="custom-input">
+										<?php $this->create_form_control(
+											'ab_percentage',
+											$plugin_meta_data['ab_percentage'],
+											$this->get_plugin_option( 'ab_percentage' ),
+											'',
+											'number',
+											'min=0 max=100 step=1'
 										); ?>
 										<span class="bar"></span>
 									</div>
 								</div>
 							</div>
-
 							<div class="block-info">
-								Specify the link to video ad that will be used for demo purposes
+								Provide which unlocking algorithm will be used to hide premium content
 							</div>
 						</div>
 

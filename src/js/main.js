@@ -224,7 +224,6 @@ jQuery().ready(function() {
           action: 'save_template',
           nonce: save_template.nonce,
           revenueMethod: jQuery('select[name="revenue_method"]').val(),
-          abPercentage: jQuery('input[name="ab_percentage"]').val(),
           country: jQuery('select[name="country"]').val(),
           currency: jQuery('#price_currency').val()
         },
@@ -326,7 +325,7 @@ jQuery().ready(function() {
       content_offset: {
         required: true,
         digits: true,
-        min: 1
+        min: 0
       },
       ads_video: {
         required: false,
@@ -398,6 +397,8 @@ jQuery().ready(function() {
   runtime.showSettings = true;
   tplManager.client.bindLoader(runtime);
   tplManager.generalSettings = appearanceSettings;
+
+  if (!apiKey) { return false }
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
