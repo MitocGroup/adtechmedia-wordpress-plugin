@@ -845,7 +845,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		// @codingStandardsIgnoreStart
 		?>
 		<div class="error notice">
-			<p><?php echo __( 'An error occurred. Property Id has not been created, please reload the page or contact support service at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
+			<p><?php echo __( 'We detected a delayed response from AdTechMedia platform. Please reload the page to try again. If this problem persists, contact us at <a href="mailto:support@adtechmedia.io">support@adtechmedia.io</a>.',
 				'adtechmedia-plugin'
 				); ?></p>
 		</div>
