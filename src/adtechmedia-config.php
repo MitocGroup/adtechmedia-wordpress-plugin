@@ -71,7 +71,7 @@ class Adtechmedia_Config {
 			self::$conf['ads_video']     		= 'https://manage-test.adtechmedia.io/atm-admin/atm-build/demo-vast.xml';
 			self::$conf['sw_js_url']     		= 'https://manage-test.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 			self::$conf['tpl_js_url']       = 'https://manage-test.adtechmedia.io/atm-admin/atm-build/atmTpl.js';
-			self::$conf['br_js_url']        = 'https://manage.adtechmedia.io/atm-admin/atm-build/atmBr.js';
+			self::$conf['br_js_url']        = 'https://manage-test.adtechmedia.io/atm-admin/atm-build/atmBr.js';
 			self::$conf['tpl_mgmt_js_url']  = 'https://manage-test.adtechmedia.io/atm-admin/atm-build/atmTplManager.js';
 			self::$conf['register_url_tpl'] = 'https://manage-test.adtechmedia.io/accounts/signup/%s';
 			self::$conf['terms_url']        = 'https://manage-test.adtechmedia.io/deep-account/terms/dialog.html';
