@@ -169,11 +169,10 @@ jQuery.validator.addMethod(
   'Please check your input.'
 );
 
-function showError() {
-  notify(
-    'error',
-    'AdTechMedia parameters failed to save. Please retry or contact plugin support team.'
-  );
+function showError(msg = null) {
+  msg = msg || 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.';
+
+  notify('error', msg);
 }
 
 function getInputsData(inputs) {
@@ -388,6 +387,31 @@ jQuery().ready(function() {
   
   checkBtnRegister(terms);
   initModal();
+
+  if (!apiKey) { return false }
+
+  const saveBrBtn = jQuery('#save-br');
+  const brEngine = atmBr(isLocalhost ? 'test' : 'prod');
+  const brRendition = brEngine.authorize(apiKey).render('#br-manager').defaultSchema();
+
+  brEngine.sync(propertyId, brRendition)
+    .then(save => {
+      saveBrBtn.on('click', () => {
+        addLoader(saveBrBtn);
+
+        save()
+          .then(() => {
+            removeLoader(saveBrBtn);
+          })
+          .catch(error => {
+            removeLoader(saveBrBtn);
+            showError('Error saving Business Rules. Please retry or contact plugin support team.');
+          });
+      });
+    })
+    .catch(error => {
+      showError('Error synchronizing Business Rules. Please reload the page or contact plugin support team.');
+    });
   
   const saveTemplatesBtn = jQuery('#save-templates-config');
   const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
@@ -397,8 +421,6 @@ jQuery().ready(function() {
   runtime.showSettings = true;
   tplManager.client.bindLoader(runtime);
   tplManager.generalSettings = appearanceSettings;
-
-  if (!apiKey) { return false }
 
   tplManager
     .authorizeAndSetup(apiKey, propertyId)
@@ -437,13 +459,13 @@ jQuery().ready(function() {
               },
               error: function(response) {
                 removeLoader(saveTemplatesBtn);
-                showError();
+                showError('Error saving Templates Configuration. Please retry or contact plugin support team.');
               }
             });
           })
           .catch(function(error) {
             removeLoader(saveTemplatesBtn);
-            showError();
+            showError('Error saving Templates Configuration. Please retry or contact plugin support team.');
           });
       }
       

@@ -490,6 +490,20 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 		</div>
 	</section>
 
+	<section <?php echo empty( $this->get_plugin_option( 'key' ) ) ? 'style="display: none !important"' : '' ?>>
+		<h1 class="heading">
+			<i class="custom-icon templates"></i>
+			Business Rules
+			<div class="pull-right">
+				<button id="save-br" type="button" class="btn"><i class="mdi mdi-check"></i> Save Business Rules</button>
+			</div>
+		</h1>
+		
+		<div id="br-manager">
+			<!-- ATM template editor here -->
+		</div>
+	</section>
+
 	<div id="terms-modal" class="modal">
 		<div class="modal-content">
 			<span class="close">&times;</span>
