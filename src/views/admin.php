@@ -494,9 +494,9 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 		<h1 class="heading">
 			<i class="custom-icon templates"></i>
 			Business Rules
-			<div class="pull-right">
+			<!-- <div class="pull-right">
 				<button id="save-br" type="button" class="btn"><i class="mdi mdi-check"></i> Save Business Rules</button>
-			</div>
+			</div> -->
 		</h1>
 		
 		<div id="br-manager">

@@ -390,23 +390,18 @@ jQuery().ready(function() {
 
   if (!apiKey) { return false }
 
-  const saveBrBtn = jQuery('#save-br');
   const brEngine = atmBr(isLocalhost ? 'test' : 'prod');
   const brRendition = brEngine.authorize(apiKey).render('#br-manager').defaultSchema();
 
   brEngine.sync(propertyId, brRendition)
     .then(save => {
-      saveBrBtn.on('click', () => {
-        addLoader(saveBrBtn);
-
-        save()
-          .then(() => {
-            removeLoader(saveBrBtn);
-          })
-          .catch(error => {
-            removeLoader(saveBrBtn);
-            showError('Error saving Business Rules. Please retry or contact plugin support team.');
-          });
+      brRendition.emitter.on('update', () => {
+        setTimeout(() => {
+          save()
+            .catch(error => {
+              showError('Error saving Business Rules. Please retry or contact plugin support team.');
+            });
+        }, 100);
       });
     })
     .catch(error => {
