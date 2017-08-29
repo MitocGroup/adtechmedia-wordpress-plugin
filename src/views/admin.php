@@ -104,7 +104,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 	.atm-missing-key-msg button {
 		padding: 3px;
 	}
-    .atm-targeted-container {
+	.atm-targeted-container {
 		z-index: 0 !important;
 	}
 	
