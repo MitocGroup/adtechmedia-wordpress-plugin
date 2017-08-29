@@ -101,18 +101,10 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 		margin-right: auto;
 		width: 500px;
 	}
-	
 	.atm-missing-key-msg button {
 		padding: 3px;
 	}
-	<?php
-	// @codingStandardsIgnoreStart
-	$template_overall_styles = $this->get_plugin_option( 'template_overall_styles' );
-	echo empty( $template_overall_styles ) ? '' : $template_overall_styles;
-	// @codingStandardsIgnoreEnd
-	?>
-	
-	.atm-targeted-container {
+    .atm-targeted-container {
 		z-index: 0 !important;
 	}
 	
@@ -133,6 +125,7 @@ if ( ! empty( $this->get_plugin_option( 'force-save-templates' ) ) ) {
 		float: initial;
 	}
 </style>
+<style id="overall-template-api"></style>
 <main>
 	<section>
 		<form method="post" id="general-config" action="">
