@@ -415,17 +415,17 @@ jQuery().ready(function() {
   function applyOverallStyles(appearanceSettings) {
     var overallHtml = '';
     var $overallTemplate = jQuery('#overall-template-api');
-    overallHtml = '.atm-base-modal { background-color: '+appearance_settings.model.body.backgroundColor+'}\n'+
+    overallHtml = '.atm-base-modal { background-color: '+appearanceSettings.model.body.backgroundColor+'}\n'+
         '.atm-targeted-modal .atm-head-modal .atm-modal-heading { background-color: '+
-        appearance_settings.model.body.backgroundColor+'}\n' +
+        appearanceSettings.model.body.backgroundColor+'}\n' +
         '.atm-targeted-modal { position: relative; border: '+
-        appearance_settings.model.body.border+'; box-shadow: '+appearance_settings.model.body.boxShadow+'}\n'+
+        appearanceSettings.model.body.border+'; box-shadow: '+appearanceSettings.model.body.boxShadow+'}\n'+
         '.atm-base-modal .atm-footer  { background-color: '+
-        appearance_settings.model.footer.backgroundColor+'; border: '+
-        appearance_settings.model.body.backgroundColor+'}\n'+
+        appearanceSettings.model.footer.backgroundColor+'; border: '+
+        appearanceSettings.model.body.backgroundColor+'}\n'+
         '.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal '+
         '.atm-modal-body p,.atm-unlock-line .unlock-btn  { font-family: '+
-        appearance_settings.model.footer.fontFamily+'}';
+        appearanceSettings.model.footer.fontFamily+'}';
 
     $overallTemplate.html( overallHtml );
 
