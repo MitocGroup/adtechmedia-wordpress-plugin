@@ -411,7 +411,37 @@ jQuery().ready(function() {
   const saveTemplatesBtn = jQuery('#save-templates-config');
   const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
   const runtime = tplManager.rendition().render('#template-editor');
-  let firstSaveTemplates = false;
+
+  function applyOverallStyles(appearanceSettings) {
+    var overallHtml = '';
+    var $overallTemplate = jQuery('#overall-template-api');
+    overallHtml = '.atm-base-modal { background-color: '+appearanceSettings.model.body.backgroundColor+'}\n'+
+        '.atm-targeted-modal .atm-head-modal .atm-modal-heading { background-color: '+
+        appearanceSettings.model.body.backgroundColor+'}\n' +
+        '.atm-targeted-modal { position: relative; border: '+
+        appearanceSettings.model.body.border+'; box-shadow: '+appearanceSettings.model.body.boxShadow+'}\n'+
+        '.atm-base-modal .atm-footer  { background-color: '+
+        appearanceSettings.model.footer.backgroundColor+'; border: '+
+        appearanceSettings.model.body.backgroundColor+'}\n'+
+        '.atm-targeted-container .mood-block-info,.atm-targeted-modal,.atm-targeted-modal .atm-head-modal '+
+        '.atm-modal-body p,.atm-unlock-line .unlock-btn  { font-family: '+
+        appearanceSettings.model.footer.fontFamily+'}';
+
+    $overallTemplate.html( overallHtml );
+
+    jQuery.ajax({
+      url: save_template.ajax_url,
+      type: 'post',
+      data: {
+        action: 'save_template',
+        nonce: save_template.nonce,
+        appearanceSettings: JSON.stringify(tplManager.generalSettings)
+      },
+      error: function(response) {
+        showError();
+      }
+    });
+  }
 
   runtime.showSettings = true;
   tplManager.client.bindLoader(runtime);
@@ -425,7 +455,6 @@ jQuery().ready(function() {
         result = tplManager.fetch();
       } else {
         result = tplManager.createDefaults(propertyId, themeId, platformId, themeVersion, platformVersion);
-        firstSaveTemplates = true;
       }
       return result;
     })
@@ -440,23 +469,7 @@ jQuery().ready(function() {
             return tplManager.updateAll();
           })
           .then(function() {
-            jQuery.ajax({
-              url: save_template.ajax_url,
-              type: 'post',
-              data: {
-                action: 'save_template',
-                nonce: save_template.nonce,
-                appearanceSettings: JSON.stringify(tplManager.generalSettings)
-              },
-              success: function(response) {
-                removeLoader(saveTemplatesBtn);
-                notify && showSuccess();
-              },
-              error: function(response) {
-                removeLoader(saveTemplatesBtn);
-                showError('Error saving Templates Configuration. Please retry or contact plugin support team.');
-              }
-            });
+            applyOverallStyles(tplManager.generalSettings);
           })
           .catch(function(error) {
             removeLoader(saveTemplatesBtn);
@@ -468,9 +481,11 @@ jQuery().ready(function() {
         syncTemplates(true);
       });
 
-      if (forceSaveTemplates || firstSaveTemplates) {
+      if (forceSaveTemplates) {
         syncTemplates();
       }
+
+      applyOverallStyles(tplManager.generalSettings);
     });
 });
 
