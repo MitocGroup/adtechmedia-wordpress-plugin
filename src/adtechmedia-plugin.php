@@ -811,7 +811,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 		$country = $this->get_plugin_option( 'country' );
 		switch ( $country ) {
 			case 'Romania':
-				$text = 'citeste articolul';
+				$text = 'Citeste articolul';
 				break;
 			default:
 				$text = 'Get full conten';
