@@ -808,7 +808,15 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			}
 
 		}
-		$html.= '<div class="atm-unlock-line"><a  href="'. get_page_link($id)  .'">Get full content</a></div>';
+		$country = $this->get_plugin_option( 'country' );
+		switch ( $country ) {
+			case 'Romania':
+				$text = 'Citeste articolul';
+				break;
+			default:
+				$text = 'Get full conten';
+		}
+		$html.= '<div class="atm-unlock-line"><a  href="'. get_page_link($id)  .'">'.$text.'</a></div>';
 		// @codingStandardsIgnoreEnd
 		return $html;
 	}
