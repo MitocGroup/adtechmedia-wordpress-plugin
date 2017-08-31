@@ -814,7 +814,7 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 				$text = 'Citeste articolul';
 				break;
 			default:
-				$text = 'Get full content';
+				$text = 'Read full article';
 		}
 		$html.= '<div class="atm-unlock-line"><a  href="'. get_page_link($id)  .'">'.$text.'</a></div>';
 		// @codingStandardsIgnoreEnd
