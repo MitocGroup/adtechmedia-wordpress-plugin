@@ -469,6 +469,7 @@ jQuery().ready(function() {
             return tplManager.updateAll();
           })
           .then(function() {
+            removeLoader(saveTemplatesBtn);
             applyOverallStyles(tplManager.generalSettings);
           })
           .catch(function(error) {
