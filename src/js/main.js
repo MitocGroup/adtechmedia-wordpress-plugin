@@ -413,6 +413,7 @@ jQuery().ready(function() {
   const runtime = tplManager.rendition().render('#template-editor');
 
   function applyOverallStyles(appearanceSettings) {
+    if (!appearanceSettings) { return; }
     var overallHtml = '';
     var $overallTemplate = jQuery('#overall-template-api');
     overallHtml = '.atm-base-modal { background-color: '+appearanceSettings.model.body.backgroundColor+'}\n'+
