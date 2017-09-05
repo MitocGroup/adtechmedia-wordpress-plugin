@@ -172,7 +172,7 @@ jQuery.validator.addMethod(
 jQuery.validator.addMethod(
   'notEqual',
   function(value, element, param) {
-    return this.optional(element) || value !== param;
+    return this.optional(element) || parseFloat(value) !== param;
   },
   'Please check your input.'
 );
