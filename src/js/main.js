@@ -169,6 +169,14 @@ jQuery.validator.addMethod(
   'Please check your input.'
 );
 
+jQuery.validator.addMethod(
+  'notEqual',
+  function(value, element, param) {
+    return this.optional(element) || value !== param;
+  },
+  'Please check your input.'
+);
+
 function showError(msg = null) {
   msg = msg || 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.';
 
@@ -315,7 +323,8 @@ jQuery().ready(function() {
     var valid = addValidate(jQuery('#content-config'), {
       price: {
         required: true,
-        regex: '^([0-9]{1,7})?(\.|,)?([0-9]{1,2})$'
+        regex: '^([0-9]{1,7})?(\.|,)?([0-9]{1,2})$',
+        notEqual: 0
       },
       payment_pledged: {
         required: true,
