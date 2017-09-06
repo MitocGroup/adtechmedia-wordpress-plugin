@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10] */
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10], no-use-before-define: ["error", { "variables": false }]*/
 
 function throttle(func, ms) {
   var isThrottled = false,
@@ -359,6 +359,7 @@ jQuery().ready(function() {
     });
     if (valid.form()) {
       addLoader(btn);
+      addLoader(saveTemplatesBtn);
       jQuery.ajax({
         url: save_template.ajax_url,
         type: 'post',
@@ -371,6 +372,7 @@ jQuery().ready(function() {
         },
         success: function(response) {
           removeLoader(btn);
+          removeLoader(saveTemplatesBtn);
           showSuccess();
         },
         error: function(response) {
@@ -489,6 +491,7 @@ jQuery().ready(function() {
       }
       
       saveTemplatesBtn.on('click', function() {
+        if (jQuery(this).hasClass('disabled')) { return; }
         syncTemplates(true);
       });
 
