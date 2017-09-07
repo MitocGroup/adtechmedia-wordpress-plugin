@@ -2,7 +2,7 @@
  * Created by yama_gs on 21.10.2016.
  */
 
-/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10] */
+/*eslint no-useless-concat: 0, no-undef: 0, no-unused-expressions: 0, complexity: [2, 10], no-use-before-define: 0*/
 
 function throttle(func, ms) {
   var isThrottled = false,
@@ -169,6 +169,14 @@ jQuery.validator.addMethod(
   'Please check your input.'
 );
 
+jQuery.validator.addMethod(
+  'notEqual',
+  function(value, element, param) {
+    return this.optional(element) || parseFloat(value) !== param;
+  },
+  'Please check your input.'
+);
+
 function showError(msg = null) {
   msg = msg || 'AdTechMedia parameters failed to save. Please retry or contact plugin support team.';
 
@@ -315,7 +323,8 @@ jQuery().ready(function() {
     var valid = addValidate(jQuery('#content-config'), {
       price: {
         required: true,
-        regex: '^([0-9]{1,7})?(\.|,)?([0-9]{1,2})$'
+        regex: '^([0-9]{1,7})?(\.|,)?([0-9]{1,2})$',
+        notEqual: 0
       },
       payment_pledged: {
         required: true,
@@ -350,6 +359,7 @@ jQuery().ready(function() {
     });
     if (valid.form()) {
       addLoader(btn);
+      addLoader(saveTemplatesBtn);
       jQuery.ajax({
         url: save_template.ajax_url,
         type: 'post',
@@ -362,6 +372,7 @@ jQuery().ready(function() {
         },
         success: function(response) {
           removeLoader(btn);
+          removeLoader(saveTemplatesBtn);
           showSuccess();
         },
         error: function(response) {
@@ -413,6 +424,7 @@ jQuery().ready(function() {
   const runtime = tplManager.rendition().render('#template-editor');
 
   function applyOverallStyles(appearanceSettings) {
+    if (!appearanceSettings) { return; }
     var overallHtml = '';
     var $overallTemplate = jQuery('#overall-template-api');
     overallHtml = '.atm-base-modal { background-color: '+appearanceSettings.model.body.backgroundColor+'}\n'+
@@ -479,6 +491,7 @@ jQuery().ready(function() {
       }
       
       saveTemplatesBtn.on('click', function() {
+        if (jQuery(this).hasClass('disabled')) { return; }
         syncTemplates(true);
       });
 
