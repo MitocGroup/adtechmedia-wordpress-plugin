@@ -401,7 +401,15 @@ jQuery().ready(function() {
 
   if (!apiKey) { return false }
 
-  const brEngine = atmBr(isLocalhost ? 'test' : 'prod');
+  var atmEnv = 'prod';
+
+  if (isLocalhost) {
+    atmEnv = 'test';
+  } else if (isStage) {
+    atmEnv = 'stage';
+  }
+
+  const brEngine = atmBr(atmEnv);
   const brRendition = brEngine.authorize(apiKey).render('#br-manager').defaultSchema();
 
   brEngine.sync(propertyId, brRendition)
@@ -420,7 +428,7 @@ jQuery().ready(function() {
     });
   
   const saveTemplatesBtn = jQuery('#save-templates-config');
-  const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
+  const tplManager = atmTplManager(atmEnv);
   const runtime = tplManager.rendition().render('#template-editor');
 
   function applyOverallStyles(appearanceSettings) {
