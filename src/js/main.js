@@ -431,7 +431,7 @@ jQuery().ready(function() {
   const tplManager = atmTplManager(atmEnv);
   const runtime = tplManager.rendition().render('#template-editor');
 
-  function applyOverallStyles(appearanceSettings) {
+  function applyOverallStyles(appearanceSettings, showNotify = false) {
     if (!appearanceSettings) { return; }
     var overallHtml = '';
     var $overallTemplate = jQuery('#overall-template-api');
@@ -456,6 +456,9 @@ jQuery().ready(function() {
         action: 'save_template',
         nonce: save_template.nonce,
         appearanceSettings: JSON.stringify(tplManager.generalSettings)
+      },
+      success: function () {
+        if (showNotify) { removeLoader(saveTemplatesBtn); }
       },
       error: function(response) {
         showError();
@@ -489,8 +492,7 @@ jQuery().ready(function() {
             return tplManager.updateAll();
           })
           .then(function() {
-            removeLoader(saveTemplatesBtn);
-            applyOverallStyles(tplManager.generalSettings);
+            applyOverallStyles(tplManager.generalSettings, true);
           })
           .catch(function(error) {
             removeLoader(saveTemplatesBtn);
