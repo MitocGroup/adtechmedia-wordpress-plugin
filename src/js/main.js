@@ -401,7 +401,15 @@ jQuery().ready(function() {
 
   if (!apiKey) { return false }
 
-  const brEngine = atmBr(isLocalhost ? 'test' : 'prod');
+  var atmEnv = 'prod';
+
+  if (isLocalhost) {
+    atmEnv = 'test';
+  } else if (isStage) {
+    atmEnv = 'stage';
+  }
+
+  const brEngine = atmBr(atmEnv);
   const brRendition = brEngine.authorize(apiKey).render('#br-manager').defaultSchema();
 
   brEngine.sync(propertyId, brRendition)
@@ -420,10 +428,10 @@ jQuery().ready(function() {
     });
   
   const saveTemplatesBtn = jQuery('#save-templates-config');
-  const tplManager = atmTplManager(isLocalhost ? 'test' : 'prod');
+  const tplManager = atmTplManager(atmEnv);
   const runtime = tplManager.rendition().render('#template-editor');
 
-  function applyOverallStyles(appearanceSettings) {
+  function applyOverallStyles(appearanceSettings, showNotify = false) {
     if (!appearanceSettings) { return; }
     var overallHtml = '';
     var $overallTemplate = jQuery('#overall-template-api');
@@ -448,6 +456,9 @@ jQuery().ready(function() {
         action: 'save_template',
         nonce: save_template.nonce,
         appearanceSettings: JSON.stringify(tplManager.generalSettings)
+      },
+      success: function () {
+        if (showNotify) { removeLoader(saveTemplatesBtn); }
       },
       error: function(response) {
         showError();
@@ -481,8 +492,7 @@ jQuery().ready(function() {
             return tplManager.updateAll();
           })
           .then(function() {
-            removeLoader(saveTemplatesBtn);
-            applyOverallStyles(tplManager.generalSettings);
+            applyOverallStyles(tplManager.generalSettings, true);
           })
           .catch(function(error) {
             removeLoader(saveTemplatesBtn);

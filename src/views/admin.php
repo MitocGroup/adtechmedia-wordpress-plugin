@@ -42,6 +42,7 @@ echo 'var propertyId = "' . addslashes( $this->get_plugin_option( 'Id' ) ) . '";
 echo 'var themeId = "' . addslashes( wp_get_theme()->get( 'Name' ) ) . '";' . PHP_EOL;
 echo 'var themeVersion = "' . addslashes( wp_get_theme()->get( 'Version' ) ) . '";' . PHP_EOL;
 echo 'var isLocalhost = "' . addslashes( Adtechmedia_Config::is_localhost() ) . '";' . PHP_EOL;
+echo 'var isStage = "' . addslashes( Adtechmedia_Config::is_stage() ) . '";' . PHP_EOL;
 echo 'var platformId = "' . addslashes( Adtechmedia_Config::get ( 'platform_id' ) ) . '";' . PHP_EOL;
 echo 'var platformVersion = "' . addslashes( preg_replace( '/^(\d+)([^\d].*)?$/', '$1', get_bloginfo( 'version' ) ) ) . '";' . PHP_EOL;
 echo 'var termsUrl = \'' . addslashes( Adtechmedia_Config::get ( 'terms_url' ) ) . '\';' . PHP_EOL;
