@@ -91,7 +91,8 @@ class Adtechmedia_Plugin extends Adtechmedia_LifeCycle {
 			'amount' => 'pledged currency',
 		];
 		if ( $api_result ) {
-			$this->update_from_api_option( 'selector', $api_result['Config']['defaults']['content']['selector'] );
+
+			//$this->update_from_api_option( 'selector', $api_result['Config']['defaults']['content']['selector'] );
 			$this->update_from_api_option( 'price', $api_result['Config']['defaults']['payment']['price'] );
 			$this->update_from_api_option( 'support_email', $api_result['SupportEmail'] );
 			$this->update_from_api_option( 'country', $this->country_UN_to_full( $api_result['Country'] ) );
