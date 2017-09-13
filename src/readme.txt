@@ -9,7 +9,7 @@ License: MIT
 License URI: https://opensource.org/licenses/MIT
 Requires at least: 3.6
 Tested up to: 4.8
-Stable tag: 0.12.6
+Stable tag: 0.12.7
 
 
 == Description ==
