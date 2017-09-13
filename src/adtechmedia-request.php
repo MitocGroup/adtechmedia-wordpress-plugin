@@ -16,7 +16,7 @@ class Adtechmedia_Request {
 	 *
 	 * @param string $property_id id of property.
 	 * @param string $type type of decision.
-	 * @param array $data decision content.
+	 * @param array  $data decision content.
 	 * @param string $key API key.
 	 * @return mixed
 	 *

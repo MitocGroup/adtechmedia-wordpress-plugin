@@ -92,12 +92,12 @@ class Adtechmedia_Config {
 	 *
 	 * @return bool
 	 */
-	 public static function is_stage() {
+	public static function is_stage() {
 		$server_name = isset( $_SERVER['SERVER_NAME'] )
 			? sanitize_text_field( wp_unslash( $_SERVER['SERVER_NAME'] ) )
 			: null;
 		return preg_match( '/dev-[^\.]+\.pantheonsite\.io/i', $server_name );
-	 }
+	}
 
 	/**
 	 * Is local installation
