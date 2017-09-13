@@ -76,9 +76,9 @@ class Adtechmedia_Config {
 			self::$conf['register_url_tpl'] = 'https://manage-test.adtechmedia.io/accounts/signup/%s';
 			self::$conf['terms_url']        = 'https://manage-test.adtechmedia.io/deep-account/terms/dialog.html';
 		} else if ( self::is_stage() ) {
-			self::$conf['api_end_point'] 		= 'https://api-stage.adtechmedia.io/v1/';
-			self::$conf['ads_video']     		= 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/demo-vast.xml';
-			self::$conf['sw_js_url']     		= 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/sw.min.js';
+			self::$conf['api_end_point']    = 'https://api-stage.adtechmedia.io/v1/';
+			self::$conf['ads_video']        = 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/demo-vast.xml';
+			self::$conf['sw_js_url']        = 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/sw.min.js';
 			self::$conf['tpl_js_url']       = 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/atmTpl.js';
 			self::$conf['br_js_url']        = 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/atmBr.js';
 			self::$conf['tpl_mgmt_js_url']  = 'https://manage-stage.adtechmedia.io/atm-admin/atm-build/atmTplManager.js';
