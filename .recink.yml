@@ -1,0 +1,35 @@
+---
+$:
+  preprocess: []
+  npm:
+    scripts: []
+  emit:
+    pattern:
+      - /.+\.js$/i
+    ignore:
+      - /^(.*\/)?bin(\/?$)?/i
+      - /^(.*\/)?node_modules(\/?$)?/i
+  test:
+    mocha:
+      options:
+        ui: 'bdd'
+        reporter: 'spec'
+    pattern:
+      - /.+\.spec\.js$/i
+    ignore: ~ 
+  e2e:
+    pattern:
+      - /.+\.e2e\.js$/i
+    ignore: []
+    browsers: 
+      - puppeteer
+    wait:
+      interval: 500
+      timeout: 60000
+      uri:
+        - 'https://dev-atm-wp.pantheonsite.io'                                             
+
+test-suite:
+  root: 'tests'
+  dependencies:
+    chance: 'latest'  
