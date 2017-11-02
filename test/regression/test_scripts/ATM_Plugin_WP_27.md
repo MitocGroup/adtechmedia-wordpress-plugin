@@ -1,3 +1,0 @@
-Component |	ID |	Description |	Designed Steps |	Expected Result |	Created<br> By |	Last<br> Updated |
- --- | --- | --- | --- | --- | --- | --- |
- Setup Payment | WP_27 | Error message is displayed after trying to connect with invalid code | Prerequisites: user must not be logged in <br> 1. Open "Demo" post <br> 2. Click on "Connect Here" link <br> 3. Input invalid code into "Temporary code" field, click on [Connect] button | 1. "Demo" post article is displayed <br> 2. "Your email" input becomes displayed with [Send Code] button <br> 3. "Error signing in" error message is displayed and [Connect] button becomes enabled | Alexandr Vozicov | 31.05.2017

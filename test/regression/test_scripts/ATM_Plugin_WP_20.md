@@ -1,3 +1,0 @@
-Component |	ID |	Description |	Designed Steps |	Expected Result |	Created<br> By |	Last<br> Updated |
- --- | --- | --- | --- | --- | --- | --- |
- Setup Payment | WP_20 | "Setup Payment" view doesn't appear after 2 add watches | 1. Open "Demo" post <br> 2. Make [Show Ad] on the first article and open the second article <br> 3. Make [Show Ad] on the second article and open the third article | 1. "Demo" post article is displayed <br> 2. Default view with [Pledge] and [Show Ad] buttons is displayed <br> 3. [Pledge] and [Show Ad] buttons are still displayed in the third article | Alexandr Vozicov | 31.05.2017

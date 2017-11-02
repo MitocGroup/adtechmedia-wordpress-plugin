@@ -1,3 +1,0 @@
-Component |	ID |	Description |	Designed Steps |	Expected Result |	Created<br> By |	Last<br> Updated |
- --- | --- | --- | --- | --- | --- | --- |
- ATM Plugin installation | WP_4 | Content becomes visible after clicking on "Pledge" button  | - User should be already registerd in ATM Platform <br> - ATM WordPress Plugin should be already installed and activated <br> - User should have published content <br> <br>1. Navigate to "Content" page <br> 2. Click on "Pledge" button from ATM Widget | 1. "Demo" post article is displayed and ATM Plugin is displayed <br> 2. All article content becomes unscrambled. Text in plugin changes to "Premium content unlocked. Not satisfied? Get immediate" and the [Refund] button | Alexandr Vozicov | 31.05.2017
