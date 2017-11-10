@@ -1,5 +1,6 @@
 export default {
-  www_base_host: 'https://dev-atm-wp.pantheonsite.io',
+  // www_base_host: 'http://localhost/~admin/wordpress_4.8.2/wp-admin/',
+  www_base_host: process.env.DEPLOY_HOST,
   speed: { speed: 0.7 },
   isVisible: {
     visibilityCheck: true,

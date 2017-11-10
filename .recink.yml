@@ -19,7 +19,8 @@ $:
     ignore: ~ 
   e2e:
     pattern:
-      - /.+\.e2e\.js$/i
+      # - /.+\.e2e\.js$/i
+      - debug.e2e.js
     ignore: []
     browsers: 
       - puppeteer
@@ -27,7 +28,7 @@ $:
       interval: 500
       timeout: 60000
       uri:
-        - 'https://dev-atm-wp.pantheonsite.io'                                             
+        - 'http://localhost/~admin/wordpress_4.8.2/wp-admin/'                                             
 
 test-suite:
   root: 'tests'
