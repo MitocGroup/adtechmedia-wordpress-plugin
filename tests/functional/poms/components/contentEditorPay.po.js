@@ -73,7 +73,10 @@ export default class payPreview {
     this.payPayPalInfoText = Selector('#wpbody-content > main > section:nth-child(3) > div > div.tabs-container > div > div > div > div > div > div.preview.col-xs-6 > div:nth-child(1) > div > div > div > div > div.atm-pay.atm-main-addition > div.pay-help-text > span');
     this.payMoreBtn = Selector('#wpbody-content > main > section:nth-child(3) > div > div.tabs-container > div > div > div > div > div > div.preview.col-xs-6 > div:nth-child(1) > div > div > div > div > div.atm-main > div.pledge-bottom.clearfix > div:nth-child(2) > button > i');
     this.payMoreBtn1 = Selector('#wpbody-content > main > section:nth-child(3) > div > div.tabs-container > div > div > div > div > div > div.preview.col-xs-6 > div:nth-child(1) > div > div > div > div > div.atm-main > div.pledge-bottom.clearfix > div:nth-child(2) > button > .more');
+<<<<<<< HEAD
     this.paySaveBtn = Selector('#save-templates-config');
+=======
+>>>>>>> 454ddaed6d94599ac9f7bad7055f1bfeae234c61
     // this.payMoreThisMonthYellow = Selector('#wpbody-content > main > section:nth-child(3) > div > div.tabs-container > div > div > div > div > div > div.preview.col-xs-6 > div:nth-child(2) > div > div > div > div > div.atm-main > div.pay-tabs > div:nth-child(3) > div > div.flex-item.bc-yellow');
     // this.payMoreThisMonthYellow = Selector('#tab1 > .pay-content > .flex-row > .bc-yellow');
     // this.payMoreThisMonthGreen = Selector('#wpbody-content > main > section:nth-child(3) > div > div.tabs-container > div > div > div > div > div > div.preview.col-xs-6 > div:nth-child(2) > div > div > div > div > div.atm-main > div.pay-tabs > div:nth-child(3) > div > div.flex-item.bc-green');

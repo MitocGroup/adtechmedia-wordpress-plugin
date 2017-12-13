@@ -20,7 +20,10 @@ export default class widget {
       this.priceCheck = Selector('#content-for-atm-modal > div > div > div > div > div > div.atm-main > div.flex-row > div > span:nth-child(1)',isVisible);
       this.payPledgeBtn = Selector('#content-for-atm-modal > div > div > div > div > div > div.atm-footer > div.footer-buttons > button.atm-button.pledge',isVisible);
       this.subscribeBtn = Selector('#content-for-atm-modal > div > div > div > div > div > div.atm-footer > div.footer-buttons > button.atm-button.show-ad',isVisible);
+<<<<<<< HEAD
       this.subscribeBtn1 = Selector('.accent-button',isVisible);
+=======
+>>>>>>> 454ddaed6d94599ac9f7bad7055f1bfeae234c61
       this.showADBtn = Selector('.show-ad',isVisible);
 
 

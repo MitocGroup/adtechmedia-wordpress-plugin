@@ -21,7 +21,10 @@ $:
     pattern:
       # - /.+\.e2e\.js$/i
       - debug.e2e.js
+<<<<<<< HEAD
       # - changeWidgetUS.e2e.js
+=======
+>>>>>>> 454ddaed6d94599ac9f7bad7055f1bfeae234c61
     ignore: []
     browsers: 
       - puppeteer
